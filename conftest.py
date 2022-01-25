@@ -11,7 +11,6 @@ def clear_database_auto(clear_database):  # pylint: disable=unused-argument
 
 
 @pytest.fixture(scope='function')
-def castep_addons_code(aiida_local_code_factory):
-    """Get a castep_addons code.
-    """
-    return aiida_local_code_factory(executable='diff', entry_point='castep_addons')
+def mock_castep_code(aiida_local_code_factory):
+   """Get a mock CASTEP code."""
+   return aiida_local_code_factory(executable='castep.mock', entry_point='castep.castep')
