@@ -22,7 +22,7 @@
             "castep_addons = aiida_castep_addons.calculations:DiffCalculation"
         ],
         "aiida.parsers": [
-            "castep_addons = aiida_castep_addons.parsers:DiffParser"
+            "castep_addons.phonon_parser = aiida_castep_addons.parsers:PhononParser"
         ],
         "aiida.cmdline.data": [
             "castep_addons = aiida_castep_addons.cli:data_cli"
@@ -41,7 +41,11 @@
         "sqlalchemy<1.4",
         "six",
         "psycopg2-binary<2.9",
-        "voluptuous"
+        "voluptuous",
+	"pymatgen",
+	"ase",
+	"sumo",
+	"aiida-castep>=1.2.0"
     ],
     "extras_require": {
         "testing": [
