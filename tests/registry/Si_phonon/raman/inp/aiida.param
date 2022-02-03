@@ -3,7 +3,7 @@
 # # AiiDA User: Alp Samli (asamli1998@gmail.com)
 # AiiDA profile: alp
 # Information of the calculation node
-# label: MgO_pbesol_phonon
+# label: Si_pbesol_phonon
 # description:
 # 
 ## Information of input nodes used:
@@ -24,4 +24,4 @@ calculate_raman     : True
 phonon_max_cycles   : 100
 iprint              : 1
 run_time            : 3420
-comment             : MgO_pbesol_phonon
+comment             : Si_pbesol_phonon

@@ -55,7 +55,7 @@ def phonon_analysis(prefix, ir_folder, kpoints, raman_folder, structure, uuid, l
 
         #Plotting the phonon band structure with sumo and pymatgen
         qpoints = np.array(ir_phonon_data.qpoints)
-        frequencies = np.array(ir_phonon_data.frequencies)
+        frequencies = np.array(ir_phonon_data.frequencies) / 33.36
         bands = np.transpose(frequencies)
         lattice = Lattice(ir_phonon_data.cell)
         rec_lattice = lattice.reciprocal_lattice
@@ -69,7 +69,7 @@ def phonon_analysis(prefix, ir_folder, kpoints, raman_folder, structure, uuid, l
             else:
                 label_dict[label] = qpoint
         pmg_bands = PhononBandStructureSymmLine(qpoints, bands, rec_lattice, labels_dict=label_dict, structure=pmg_structure)
-        phonon_plotter = SPhononBSPlotter(pmg_bands).get_plot(units='eV')
+        phonon_plotter = SPhononBSPlotter(pmg_bands).get_plot(ymin=-2)
         phonon_plotter.plot()
         phonon_plotter.savefig(fname=f'{temp}/{prefix.value}_phonon_bands.pdf', bbox_inches='tight')
         phonon_plotter.close()
@@ -77,7 +77,7 @@ def phonon_analysis(prefix, ir_folder, kpoints, raman_folder, structure, uuid, l
         #Create BandsData for the phonon band structure
         band_data = BandsData()
         band_data.set_kpoints(qpoints)
-        band_data.set_bands(frequencies, units='eV')
+        band_data.set_bands(frequencies, units='THz')
         band_data.labels = labels
         
         #Adding metadata to phonon bands with PyPDF2

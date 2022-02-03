@@ -19,8 +19,8 @@ def test_phonon_wc(mock_castep_code):
     silicon = StructureData(ase=bulk('Si', 'diamond', 5.43))
     bld.calc.structure = silicon
     bld.calc_options = {'max_wallclock_seconds':3600, 'resources':{"num_machines":1, "tot_num_mpiprocs":4}}
-    bld.metadata.label = 'MgO_pbesol_phonon'
-    bld.metadata.description = 'Phonon band structure and vibrational spectra of MgO with the PBEsol functional'
+    bld.metadata.label = 'Si_pbesol_phonon'
+    bld.metadata.description = 'Phonon band structure and vibrational spectra of Si with the PBEsol functional'
     bld.clean_workdir = True
     _, dfpt_node = run_get_node(bld)
     

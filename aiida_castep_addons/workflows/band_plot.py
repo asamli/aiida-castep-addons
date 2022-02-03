@@ -65,13 +65,11 @@ def analysis(dos_data, band_data, band_kpoints, prefix, structure, uuid, label, 
         dos_out.close()
         dos_plot = SinglefileData(f'{temp}/{prefix.value}_dos.pdf')
 
-    #Plotting band structure
-    labelled_bands = deepcopy(band_data)
-    labelled_bands.labels = band_kpoints.labels
-    band_plotter = get_sumo_bands_plotter(labelled_bands).get_plot()
-    band_plotter.plot()
-    
-    with TemporaryDirectory() as temp:
+        #Plotting band structure
+        labelled_bands = deepcopy(band_data)
+        labelled_bands.labels = band_kpoints.labels
+        band_plotter = get_sumo_bands_plotter(labelled_bands).get_plot()
+        band_plotter.plot()
         band_plotter.savefig(fname=f'{temp}/{prefix.value}_bands.pdf', bbox_inches='tight')
 
         #Adding metadata to band structure plot with PyPDF2

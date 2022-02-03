@@ -51,7 +51,8 @@ class PhononParser:
         vib_modes = self.lines[self.lines.index('END header') + 2 : self.lines.index('Phonon Eigenvectors')]
         vib_modes = [line.split() for line in vib_modes]
         self.vib_frequencies = [float(line[1]) for line in vib_modes]
-        self.ir_intensities = [float(line[2]) for line in vib_modes]
+        if len(vib_modes[0]) >= 3:
+            self.ir_intensities = [float(line[2]) for line in vib_modes]
         if len(vib_modes[0]) == 4:
             self.raman_activities = [float(line[-1]) for line in vib_modes]
 
@@ -74,7 +75,7 @@ class PhononParser:
                         break
                     else:
                         next_line = next_line.split()
-                        freqs.append(float(next_line[1]) / 8065)
+                        freqs.append(float(next_line[1]))
                 self.frequencies.append(freqs)
                 freqs = []
 
