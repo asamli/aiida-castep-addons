@@ -42,10 +42,11 @@
         "six",
         "psycopg2-binary<2.9",
         "voluptuous",
-	"pymatgen",
-	"ase",
-	"sumo",
-	"aiida-castep>=1.2.0"
+        "pymatgen",
+        "ase",
+	    "sumo",
+        "PyPDF2",
+	    "aiida-castep@git+https://github.com/zhubonan/aiida-castep@<b0e8f82>"
     ],
     "extras_require": {
         "testing": [

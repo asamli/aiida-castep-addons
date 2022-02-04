@@ -62,28 +62,28 @@
  FFT Lib : mkl
  Fundamental constants values: CODATA 2014
 
- Run started: Thu, 20 Jan 2022 15:44:10 +0000
+ Run started: Thu, 03 Feb 2022 10:59:20 +0000
 
  Atomic calculation performed for Si: 1s2 2s2 2p6 3s2 3p2
 
- Converged in 56 iterations to an ae energy of -7872.211 eV
+ Converged in 55 iterations to an ae energy of -7859.183 eV
 
    ============================================================                
-   | Pseudopotential Report - Date of generation 20-01-2022   |                
+   | Pseudopotential Report - Date of generation  3-02-2022   |                
    ------------------------------------------------------------                
-   | Element: Si Ionic charge:  4.00 Level of theory: PBESOL  |                
+   | Element: Si Ionic charge:  4.00 Level of theory: LDA     |                
    | Atomic Solver: Koelling-Harmon                           |                
    |                                                          |                
    |               Reference Electronic Structure             |                
    |         Orbital         Occupation         Energy        |                
-   |            3s              2.000           -0.396        |                
-   |            3p              2.000           -0.149        |                
+   |            3s              2.000           -0.400        |                
+   |            3p              2.000           -0.153        |                
    |                                                          |                
    |                 Pseudopotential Definition               |                
    |        Beta     l      e      Rc     scheme   norm       |                
-   |          1      0   -0.396   1.797     qc      0         |                
+   |          1      0   -0.400   1.797     qc      0         |                
    |          2      0    0.250   1.797     qc      0         |                
-   |          3      1   -0.149   1.797     qc      0         |                
+   |          3      1   -0.153   1.797     qc      0         |                
    |          4      1    0.250   1.797     qc      0         |                
    |          5      2    0.000   1.797     qc      0         |                
    |          6      2    0.250   1.797     qc      0         |                
@@ -99,7 +99,7 @@
 
  Pseudo atomic calculation performed for Si 3s2 3p2
 
- Converged in 15 iterations to a total energy of -163.1843 eV
+ Converged in 8 iterations to a total energy of -163.0624 eV
  Calculation parallelised over 4 processes.
  Data is distributed by k-point(4-way)
 
@@ -149,13 +149,13 @@
  output    efield chi2 unit                     : pm/V
   
  wavefunctions paging                           : none
- random number generator seed                   : randomised (154410995)
+ random number generator seed                   : randomised (105921397)
  data distribution                              : optimal for this architecture
  optimization strategy                          : balance speed and memory
 
  *********************** Exchange-Correlation Parameters ***********************
   
- using functional                               : PBE for solids (2008)
+ using functional                               : Local Density Approximation
  relativistic treatment                         : Koelling-Harmon
  DFT+D: Semi-empirical dispersion correction    : off
 
@@ -307,23 +307,23 @@ Calculating total energy with cut-off of  500.000 eV.
 SCF loop      Energy           Fermi           Energy gain       Timer   <-- SCF
                                energy          per atom          (sec)   <-- SCF
 ------------------------------------------------------------------------ <-- SCF
-Initial  -1.33456707E+001  0.00000000E+000                        16.71  <-- SCF
-      1  -3.16060811E+002  6.74600290E+000   1.51357570E+002      19.83  <-- SCF
-      2  -3.37185338E+002  3.77413337E+000   1.05622637E+001      22.63  <-- SCF
-      3  -3.38081556E+002  4.32509338E+000   4.48109035E-001      23.49  <-- SCF
-      4  -3.37894850E+002  4.55004326E+000  -9.33530433E-002      24.00  <-- SCF
-      5  -3.37883203E+002  4.65129482E+000  -5.82332195E-003      24.63  <-- SCF
-      6  -3.37883838E+002  4.66001988E+000   3.17317364E-004      25.06  <-- SCF
-      7  -3.37883946E+002  4.66605157E+000   5.38502604E-005      25.78  <-- SCF
-      8  -3.37883946E+002  4.66608502E+000   2.45361407E-007      26.25  <-- SCF
-      9  -3.37883946E+002  4.66615165E+000   3.46748106E-008      26.55  <-- SCF
+Initial  -1.37444831E+001  0.00000000E+000                         9.61  <-- SCF
+      1  -3.15157245E+002  6.80652946E+000   1.50706381E+002       9.99  <-- SCF
+      2  -3.37383112E+002  4.61208196E+000   1.11129333E+001      10.24  <-- SCF
+      3  -3.38275839E+002  4.29397441E+000   4.46363416E-001      10.51  <-- SCF
+      4  -3.38063946E+002  4.52426888E+000  -1.05946518E-001      11.07  <-- SCF
+      5  -3.38049377E+002  4.62024344E+000  -7.28432606E-003      11.44  <-- SCF
+      6  -3.38049703E+002  4.62617344E+000   1.63156765E-004      11.77  <-- SCF
+      7  -3.38049741E+002  4.63030441E+000   1.88191175E-005      12.01  <-- SCF
+      8  -3.38049741E+002  4.63020475E+000   1.02849308E-007      12.15  <-- SCF
+      9  -3.38049741E+002  4.63023603E+000   2.17933034E-008      12.28  <-- SCF
 ------------------------------------------------------------------------ <-- SCF
  
-Final energy, E             =  -337.8838600494     eV
-Final free energy (E-TS)    =  -337.8839462956     eV
+Final energy, E             =  -338.0496603217     eV
+Final free energy (E-TS)    =  -338.0497410875     eV
 (energies not corrected for finite basis set)
  
-NB est. 0K energy (E-0.5TS)      =  -337.8839031725     eV
+NB est. 0K energy (E-0.5TS)      =  -338.0497007046     eV
  
 
 Writing analysis data to aiida.castep_bin
@@ -343,20 +343,20 @@ Writing model to aiida.check
 
  Pseudo atomic calculation performed for Si 3s2 3p2
 
- Converged in 15 iterations to a total energy of -163.1843 eV
-Charge spilling parameter for spin component 1 = 0.98%
+ Converged in 8 iterations to a total energy of -163.0624 eV
+Charge spilling parameter for spin component 1 = 0.99%
 
             Orbital Populations       
      Ion    Atom   Orbital             Charge
   -------------------------------------------
-     Si     1      S                    1.369
-     Si     1      Px                   0.853
+     Si     1      S                    1.372
+     Si     1      Px                   0.851
      Si     1      Py                   0.903
-     Si     1      Pz                   0.875
-     Si     2      S                    1.369
-     Si     2      Px                   0.853
+     Si     1      Pz                   0.874
+     Si     2      S                    1.372
+     Si     2      Px                   0.851
      Si     2      Py                   0.903
-     Si     2      Pz                   0.875
+     Si     2      Pz                   0.874
   -------------------------------------------
                            Total:       8.000
   -------------------------------------------
@@ -382,16 +382,16 @@ Writing model to aiida.check
  A BibTeX formatted list of references used in this run has been written to 
  aiida.bib
  
-Initialisation time =     14.34 s
-Calculation time    =     12.92 s
-Finalisation time   =      0.02 s
-Total time          =     27.28 s
+Initialisation time =      8.76 s
+Calculation time    =      4.08 s
+Finalisation time   =      0.01 s
+Total time          =     12.85 s
 Peak Memory Use     = 751112 kB
   
-Overall parallel efficiency rating: Terrible (33%)                              
+Overall parallel efficiency rating: Poor (38%)                                  
   
 Data was distributed by:-
-k-point (4-way); efficiency rating: Terrible (34%)                              
+k-point (4-way); efficiency rating: Poor (38%)                                  
   
 Parallel notes:
-1) Calculation only took 27.3 s, so efficiency estimates may be inaccurate.     
+1) Calculation only took 12.8 s, so efficiency estimates may be inaccurate.     
