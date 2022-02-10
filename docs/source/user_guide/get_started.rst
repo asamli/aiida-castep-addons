@@ -2,8 +2,9 @@
 Getting started
 ===============
 
-This page should contain a short guide on what the plugin does and
-a short example on how to use the plugin.
+This package contains additional workflows and other addons for the ``aiida-castep`` plugin. 
+The usage of these workflows is identical to those in ``aiida-castep`` and they can be accessed
+through ``WorkflowFactory`` with their entry points (in the format ``castep_addons.xxxxxx``).
 
 Installation
 ++++++++++++
@@ -12,31 +13,14 @@ Use the following commands to install the plugin::
 
     git clone https://github.com/asamli/aiida-castep-addons .
     cd aiida-castep-addons
-    pip install -e .  # also installs aiida, if missing (but not postgres)
+    pip install -e .  # also installs all dependencies
     #pip install -e .[pre-commit,testing] # install extras for more features
-    verdi quicksetup  # better to set up a new profile
-    verdi calculation plugins  # should now show your calclulation plugins
+    verdi quicksetup  # set up a new profile
 
-Then use ``verdi code setup`` with the ``castep_addons`` input plugin
-to set up an AiiDA code for aiida-castep-addons.
+Then use ``verdi computer setup`` and ``verdi code setup`` to add computer and code nodes
+to the AiiDA database.
 
 Usage
 +++++
 
-A quick demo of how to submit a calculation::
-
-    verdi daemon start         # make sure the daemon is running
-    cd examples
-    verdi run test_submit.py        # submit test calculation
-    verdi calculation list -a  # check status of calculation
-
-If you have already set up your own aiida_castep_addons code using
-``verdi code setup``, you may want to try the following command::
-
-    castep_addons-submit  # uses aiida_castep_addons.cli
-
-Available calculations
-++++++++++++++++++++++
-
-.. aiida-calcjob:: DiffCalculation
-    :module: aiida_castep_addons.calculations
+See the tutorial page for an example calculation using a workflow.

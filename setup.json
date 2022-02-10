@@ -15,17 +15,8 @@
     ],
     "version": "0.1.0a0",
     "entry_points": {
-        "aiida.data": [
-            "castep_addons = aiida_castep_addons.data:DiffParameters"
-        ],
-        "aiida.calculations": [
-            "castep_addons = aiida_castep_addons.calculations:DiffCalculation"
-        ],
         "aiida.parsers": [
             "castep_addons.phonon_parser = aiida_castep_addons.parsers:PhononParser"
-        ],
-        "aiida.cmdline.data": [
-            "castep_addons = aiida_castep_addons.cli:data_cli"
         ],
 	"aiida.workflows": [
 	    "castep_addons.converge = aiida_castep_addons.workflows.converge:CastepConvergeWorkChain",
@@ -42,11 +33,9 @@
         "six",
         "psycopg2-binary<2.9",
         "voluptuous",
-        "pymatgen",
-        "ase",
 	    "sumo",
         "PyPDF2",
-	    "aiida-castep@git+https://github.com/zhubonan/aiida-castep@<b0e8f82>"
+	    "aiida-castep@git+https://github.com/zhubonan/aiida-castep"
     ],
     "extras_require": {
         "testing": [

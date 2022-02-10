@@ -13,7 +13,7 @@ import sys
 this_path = os.path.split(os.path.realpath(__file__))[0]
 
 # Get content of setup.json
-SETUP_FNAME = 'setup.json'
+SETUP_FNAME = "setup.json"
 SETUP_PATH = os.path.join(this_path, os.pardir, SETUP_FNAME)
 with open(SETUP_PATH) as f:
     setup_content = json.load(f)
@@ -21,17 +21,18 @@ with open(SETUP_PATH) as f:
 # Get version from python package
 sys.path.insert(0, os.path.join(this_path, os.pardir))
 import aiida_castep_addons  # pylint: disable=wrong-import-position
+
 VERSION = aiida_castep_addons.__version__
 
-if VERSION != setup_content['version']:
-    print('Version number mismatch detected:')
-    print("Version number in '{}': {}".format(SETUP_FNAME,
-                                              setup_content['version']))
-    print("Version number in '{}/__init__.py': {}".format(
-        'aiida_castep_addons', VERSION))
+if VERSION != setup_content["version"]:
+    print("Version number mismatch detected:")
+    print("Version number in '{}': {}".format(SETUP_FNAME, setup_content["version"]))
+    print(
+        "Version number in '{}/__init__.py': {}".format("aiida_castep_addons", VERSION)
+    )
     sys.exit(1)
 
 # Overwrite version in setup.json
-#setup_content['version'] = version
-#with open(SETUP_PATH, 'w') as f:
-#	json.dump(setup_content, f, indent=4, sort_keys=True)
+# setup_content['version'] = version
+# with open(SETUP_PATH, 'w') as f:
+# 	json.dump(setup_content, f, indent=4, sort_keys=True)

@@ -18,7 +18,7 @@ def get_pmg_bandstructure(bands_node, structure=None, efermi=None):
 
     Arguments:
         bands_node: A BandsData object
-        structure (optionsal): a StructureData object, required if `bands_node`
+        structure: a StructureData object, required if `bands_node`
           does not have information about the cell.
         efermi (float): Explicit value of the fermi energy.
 
@@ -26,25 +26,27 @@ def get_pmg_bandstructure(bands_node, structure=None, efermi=None):
         A `BandStructureSymmLine` object
     """
     if not isinstance(bands_node, BandsData):
-        raise ValueError('The input argument must be a BandsData')
+        raise ValueError("The input argument must be a BandsData")
     # Load the data
-    bands = bands_node.get_array('bands')  # In (num_spin, kpoints, bands) or just (kpoints, bands)
-    kpoints = bands_node.get_array('kpoints')  # in (num_kpoints, 3)
+    bands = bands_node.get_array(
+        "bands"
+    )  # In (num_spin, kpoints, bands) or just (kpoints, bands)
+    kpoints = bands_node.get_array("kpoints")  # in (num_kpoints, 3)
     try:
-        occupations = bands_node.get_array('occupations')
+        occupations = bands_node.get_array("occupations")
     except (KeyError, AttributeError):
         occupations = None
 
     try:
-        efermi_raw = bands_node.get_attribute('efermi')
+        efermi_raw = bands_node.get_attribute("efermi")
     except (KeyError, AttributeError):
         efermi_raw = None
 
     if efermi:
         efermi_raw = efermi
 
-    labels = bands_node.get_attribute('labels')
-    label_numbers = bands_node.get_attribute('label_numbers')
+    labels = bands_node.get_attribute("labels")
+    label_numbers = bands_node.get_attribute("label_numbers")
 
     # Construct the band_dict
     bands_shape = bands.shape
@@ -52,8 +54,7 @@ def get_pmg_bandstructure(bands_node, structure=None, efermi=None):
         if bands_shape[0] == 2:
             bands_dict = {
                 Spin.up: bands[0].T,  # Have to be (bands, kpoints)
-                Spin.down:
-                    bands[1].T  # Have to be (bands, kpoints)
+                Spin.down: bands[1].T,  # Have to be (bands, kpoints)
             }
         else:
             bands_dict = {
@@ -62,8 +63,8 @@ def get_pmg_bandstructure(bands_node, structure=None, efermi=None):
     else:
         bands_dict = {Spin.up: bands.T}
 
-    if 'cell' in bands_node.attributes_keys():
-        lattice = Lattice(bands_node.get_attribute('cell'))
+    if "cell" in bands_node.attributes_keys():
+        lattice = Lattice(bands_node.get_attribute("cell"))
     else:
         lattice = Lattice(structure.cell)
 
@@ -78,11 +79,19 @@ def get_pmg_bandstructure(bands_node, structure=None, efermi=None):
             efermi = find_vbm(bands, occupations)
         else:
             efermi = 0
-            warnings.warn('Cannot find fermi energy - setting it to 0, this is probably wrong!')
+            warnings.warn(
+                "Cannot find fermi energy - setting it to 0, this is probably wrong!"
+            )
     else:
         efermi = efermi_raw
 
-    bands_structure = BandStructureSymmLine(kpoints, bands_dict, lattice.reciprocal_lattice, efermi=efermi, labels_dict=labels_dict)
+    bands_structure = BandStructureSymmLine(
+        kpoints,
+        bands_dict,
+        lattice.reciprocal_lattice,
+        efermi=efermi,
+        labels_dict=labels_dict,
+    )
     return bands_structure
 
 
@@ -92,7 +101,7 @@ def get_sumo_bands_plotter(bands, efermi=None):
 
     Arguments:
         bands_node: A BandsData object
-        structure (optionsal): a StructureData object, required if `bands_node`
+        structure: a StructureData object, required if `bands_node`
           does not have information about the cell.
         efermi (float): Explicit value of the fermi energy.
 
@@ -115,9 +124,9 @@ def find_vbm(bands, occupations, tol=1e-4):
 def make_latex_labels(labels):
     """Convert labels to laxtex style"""
     label_mapping = {
-        'GAMMA': r'\Gamma',
-        'LAMBDA': r'\Lambda',
-        'SIGMA': r'\Sigma',
+        "GAMMA": r"\Gamma",
+        "LAMBDA": r"\Lambda",
+        "SIGMA": r"\Sigma",
     }
     out_labels = []
     for label in labels:
@@ -125,5 +134,5 @@ def make_latex_labels(labels):
             if tag in label:
                 label = label.replace(tag, replace)
                 break
-        out_labels.append(f'{label}')
+        out_labels.append(f"{label}")
     return out_labels
