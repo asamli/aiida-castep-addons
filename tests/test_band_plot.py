@@ -1,5 +1,4 @@
 from copy import deepcopy
-from tempfile import TemporaryDirectory
 from pathlib import Path
 
 import aiida.orm as orm

@@ -1,6 +1,7 @@
 from aiida.engine import run_get_node
 from aiida.plugins import DataFactory, WorkflowFactory
 from aiida_castep.data.otfg import upload_otfg_family
+from aiida_castep_addons.workflows.converge import seekpath_analysis
 from ase.build import bulk
 
 StructureData = DataFactory("structure")

@@ -1,7 +1,59 @@
+from pathlib import Path
+
+import aiida.orm as orm
 from aiida.engine import run_get_node
 from aiida.plugins import DataFactory, WorkflowFactory
 from aiida_castep.data.otfg import upload_otfg_family
+from aiida_castep_addons.workflows.phonon import (
+    add_metadata,
+    phonon_analysis,
+    seekpath_analysis,
+)
 from ase.build import bulk
+
+StructureData = DataFactory("structure")
+SinglefileData = DataFactory("singlefile")
+Folderdata = DataFactory("folder")
+
+
+def test_seekpath_analysis():
+    silicon = StructureData(ase=bulk("Si", "diamond", 5.43))
+    seekpath = seekpath_analysis(silicon, orm.Dict(dict={}))
+
+    assert "kpoints" in seekpath
+    assert "prim_cell" in seekpath
+
+
+def test_add_metadata():
+    file = SinglefileData(Path("registry/test.pdf").resolve())
+    new_file = add_metadata(
+        file,
+        orm.Str("changed_test.pdf"),
+        orm.Str("test_formula"),
+        orm.Str("test_uuid"),
+        orm.Str("test_label"),
+        orm.Str("test_description"),
+    )
+
+    assert new_file.filename == "changed_test.pdf"
+
+
+def test_phonon_analysis():
+    silicon = StructureData(ase=bulk("Si", "diamond", 5.43))
+    seekpath = seekpath_analysis(silicon, orm.Dict(dict={}))
+    kpoints = seekpath["kpoints"]
+    ir_folder = Folderdata(tree=Path("registry/Si_phonon/dfpt/out").resolve())
+    raman_folder = Folderdata(tree=Path("registry/Si_phonon/raman/out").resolve())
+    results = phonon_analysis(
+        orm.Str("test_prefix"), ir_folder, kpoints, raman_folder, silicon
+    )
+
+    assert "band_data" in results
+    assert "band_plot" in results
+    assert "ir_data" in results
+    assert "ir_spectrum" in results
+    assert "raman_data" in results
+    assert "raman_spectrum" in results
 
 
 def test_phonon_wc(mock_castep_code):
