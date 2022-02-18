@@ -40,16 +40,32 @@ def seekpath_analysis(structure, parameters):
 
 
 @calcfunction
-def phonon_analysis(
-    prefix, ir_folder, kpoints, raman_folder, structure, uuid, label, description
-):
+def add_metadata(file, fname, formula, uuid, label, description):
+    """Add workflow metadata to a PDF file with PyPDF2"""
+    with TemporaryDirectory() as temp:
+        with file.open(mode="rb") as fin:
+            reader = PdfFileReader(fin)
+            writer = PdfFileWriter()
+            writer.appendPagesFromReader(reader)
+            metadata = reader.getDocumentInfo()
+        writer.addMetadata(metadata)
+        writer.addMetadata(
+            {
+                "/Formula": formula.value,
+                "/WorkchainUUID": uuid.value,
+                "/WorkchainLabel": label.value,
+                "/WorkchainDescription": description.value,
+            }
+        )
+        with open(f"{temp}/{fname.value}", "ab") as fout:
+            writer.write(fout)
+        output_file = SinglefileData(f"{temp}/{fname.value}")
+    return output_file
+
+
+@calcfunction
+def phonon_analysis(prefix, ir_folder, kpoints, raman_folder, structure):
     """Parse and plot the phonon band structure, IR spectrum and Raman spectrum"""
-    extra_metadata = {
-        "/Formula": structure.get_formula(),
-        "/WorkchainUUID": uuid.value,
-        "/WorkchainLabel": label.value,
-        "/WorkchainDescription": description.value,
-    }
     ir_dot_phonon = ir_folder.get_object_content("aiida.phonon")
     raman_dot_phonon = raman_folder.get_object_content("aiida.phonon")
     with TemporaryDirectory() as temp:
@@ -86,26 +102,14 @@ def phonon_analysis(
             fname=f"{temp}/{prefix.value}_phonon_bands.pdf", bbox_inches="tight"
         )
         phonon_plotter.close()
+        band_plot = SinglefileData(f"{temp}/{prefix.value}_phonon_bands.pdf")
 
         # Create BandsData for the phonon band structure
         band_data = BandsData()
+        band_data.set_cell_from_structure(structure)
         band_data.set_kpoints(qpoints)
         band_data.set_bands(frequencies, units="THz")
         band_data.labels = labels
-
-        # Adding metadata to phonon bands with PyPDF2
-        bands_in = open(f"{temp}/{prefix.value}_phonon_bands.pdf", "rb")
-        reader = PdfFileReader(bands_in)
-        writer = PdfFileWriter()
-        writer.appendPagesFromReader(reader)
-        metadata = reader.getDocumentInfo()
-        writer.addMetadata(metadata)
-        writer.addMetadata(extra_metadata)
-        bands_out = open(f"{temp}/{prefix.value}_phonon_bands.pdf", "ab")
-        writer.write(bands_out)
-        bands_in.close()
-        bands_out.close()
-        band_plot = SinglefileData(f"{temp}/{prefix.value}_phonon_bands.pdf")
 
         # Plotting IR spectrum with matplotlib and saving IR data as XyData
         ir_frequencies = ir_phonon_data.vib_frequencies
@@ -121,19 +125,6 @@ def phonon_analysis(
         plt.ylabel(f"Intensity ({ir_intensity_unit})")
         plt.savefig(fname=f"{temp}/{prefix.value}_ir.pdf", bbox_inches="tight")
         plt.close()
-
-        # Adding metadata to IR spectrum with PyPDF2
-        ir_in = open(f"{temp}/{prefix.value}_ir.pdf", "rb")
-        reader = PdfFileReader(ir_in)
-        writer = PdfFileWriter()
-        writer.appendPagesFromReader(reader)
-        metadata = reader.getDocumentInfo()
-        writer.addMetadata(metadata)
-        writer.addMetadata(extra_metadata)
-        ir_out = open(f"{temp}/{prefix.value}_ir.pdf", "ab")
-        writer.write(ir_out)
-        ir_in.close()
-        ir_out.close()
         ir_spectrum = SinglefileData(f"{temp}/{prefix.value}_ir.pdf")
 
         # Plotting Raman spectrum with matplotlib and saving Raman data as XyData
@@ -151,24 +142,11 @@ def phonon_analysis(
         plt.ylabel(f"Intensity ({raman_activity_unit})")
         plt.savefig(fname=f"{temp}/{prefix.value}_raman.pdf", bbox_inches="tight")
         plt.close()
-
-        # Adding metadata to Raman spectrum with PyPDF2
-        raman_in = open(f"{temp}/{prefix.value}_raman.pdf", "rb")
-        reader = PdfFileReader(raman_in)
-        writer = PdfFileWriter()
-        writer.appendPagesFromReader(reader)
-        metadata = reader.getDocumentInfo()
-        writer.addMetadata(metadata)
-        writer.addMetadata(extra_metadata)
-        raman_out = open(f"{temp}/{prefix.value}_raman.pdf", "ab")
-        writer.write(raman_out)
-        raman_in.close()
-        raman_out.close()
         raman_spectrum = SinglefileData(f"{temp}/{prefix.value}_raman.pdf")
 
     return {
         "band_data": band_data,
-        "bands": band_plot,
+        "band_plot": band_plot,
         "ir_data": ir_data,
         "ir_spectrum": ir_spectrum,
         "raman_data": raman_data,
@@ -182,9 +160,9 @@ class CastepPhononWorkChain(WorkChain):
     the IR spectrum and Raman spectrum for materials.
     """
 
-    # Define the workchain
     @classmethod
     def define(cls, spec):
+        """Define the WorkChain"""
         super(CastepPhononWorkChain, cls).define(spec)
 
         # The inputs
@@ -311,16 +289,34 @@ class CastepPhononWorkChain(WorkChain):
             self.ctx.band_kpoints,
             self.ctx.raman.called[-1].outputs.retrieved,
             self.ctx.inputs.calc.structure,
+        )
+        self.ctx.phonon_bands = outputs["band_data"]
+        self.ctx.phonon_band_plot = add_metadata(
+            outputs["band_plot"],
+            orm.Str(f"{self.ctx.prefix}_phonon_bands.pdf"),
+            orm.Str(self.ctx.inputs.calc.structure.get_formula()),
             orm.Str(self.uuid),
             orm.Str(self.inputs.metadata.label),
             orm.Str(self.inputs.metadata.description),
         )
-        self.ctx.phonon_bands = outputs["band_data"]
-        self.ctx.phonon_band_plot = outputs["bands"]
         self.ctx.ir_data = outputs["ir_data"]
-        self.ctx.ir_spectrum = outputs["ir_spectrum"]
+        self.ctx.ir_spectrum = add_metadata(
+            outputs["ir_spectrum"],
+            orm.Str(f"{self.ctx.prefix}_ir.pdf"),
+            orm.Str(self.ctx.inputs.calc.structure.get_formula()),
+            orm.Str(self.uuid),
+            orm.Str(self.inputs.metadata.label),
+            orm.Str(self.inputs.metadata.description),
+        )
         self.ctx.raman_data = outputs["raman_data"]
-        self.ctx.raman_spectrum = outputs["raman_spectrum"]
+        self.ctx.raman_spectrum = add_metadata(
+            outputs["ir_spectrum"],
+            orm.Str(f"{self.ctx.prefix}_ir.pdf"),
+            orm.Str(self.ctx.inputs.calc.structure.get_formula()),
+            orm.Str(self.uuid),
+            orm.Str(self.inputs.metadata.label),
+            orm.Str(self.inputs.metadata.description),
+        )
         self.report("Phonon analysis complete")
 
     def results(self):

@@ -4,12 +4,10 @@ Use sumo to plot the AiiDA BandsData
 
 import warnings
 
-from pymatgen.electronic_structure.bandstructure import BandStructureSymmLine, Spin
-from pymatgen.core.lattice import Lattice
-
-from sumo.plotting.bs_plotter import SBSPlotter
-
 from aiida.orm import BandsData
+from pymatgen.core.lattice import Lattice
+from pymatgen.electronic_structure.bandstructure import BandStructureSymmLine, Spin
+from sumo.plotting.bs_plotter import SBSPlotter
 
 
 def get_pmg_bandstructure(bands_node, structure=None, efermi=None):
@@ -108,7 +106,7 @@ def get_sumo_bands_plotter(bands, efermi=None):
     Returns:
         A `SBSPlotter` object
     """
-    bands_structure = get_pmg_bandstructure(bands, efermi)
+    bands_structure = get_pmg_bandstructure(bands, efermi=efermi)
     return SBSPlotter(bands_structure)
 
 

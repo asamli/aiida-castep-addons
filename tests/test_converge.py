@@ -1,7 +1,17 @@
-from ase.build import bulk
-from aiida.plugins import DataFactory, WorkflowFactory
 from aiida.engine import run_get_node
+from aiida.plugins import DataFactory, WorkflowFactory
 from aiida_castep.data.otfg import upload_otfg_family
+from ase.build import bulk
+
+StructureData = DataFactory("structure")
+
+
+def test_seekpath_analysis():
+    silicon = StructureData(ase=bulk("Si", "diamond", 5.43))
+    seekpath = seekpath_analysis(silicon)
+
+    assert "kpoints" in seekpath
+    assert "prim_cell" in seekpath
 
 
 def test_converge_wc(mock_castep_code):
@@ -16,7 +26,6 @@ def test_converge_wc(mock_castep_code):
         "symmetry_generate": True,
     }
     bld.kpoints_spacing = 0.1
-    StructureData = DataFactory("structure")
     silicon = StructureData(ase=bulk("Si", "diamond", 5.43))
     bld.calc.structure = silicon
     bld.calc_options = {

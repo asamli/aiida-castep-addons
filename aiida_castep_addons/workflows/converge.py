@@ -1,16 +1,17 @@
 """Module for Convergence WorkChain"""
 
 from __future__ import absolute_import
-from aiida.engine import WorkChain, while_, calcfunction
+
+from copy import deepcopy
+from tempfile import TemporaryDirectory
+
 import aiida.orm as orm
+import numpy as np
+from aiida.engine import WorkChain, calcfunction, while_
 from aiida.orm.nodes.data.base import to_aiida_type
 from aiida.tools.data.array.kpoints import get_explicit_kpoints_path
 from aiida_castep.workflows.base import CastepBaseWorkChain
 from aiida_castep_addons.parsers.phonon import PhononParser
-
-from copy import deepcopy
-import numpy as np
-from tempfile import TemporaryDirectory
 
 __version__ = "0.0.1"
 
@@ -31,7 +32,7 @@ def seekpath_analysis(structure):
 class CastepConvergeWorkChain(WorkChain):
     """
     WorkChain to converge the plane-wave energy cutoff and/or k-point grid spacing with respect to
-    the ground state energy. The supercell size for phonon dispersion calculations can also be 
+    the ground state energy. The supercell size for phonon dispersion calculations can also be
     converged if needed.
     """
 
@@ -288,12 +289,12 @@ class CastepConvergeWorkChain(WorkChain):
         parameters = deepcopy(self.ctx.parameters)
         parameters["cut_off_energy"] = self.inputs.initial_pwcutoff.value
         inputs.calc.parameters = parameters
-        kspacings = np.arange(
+        self.ctx.kspacings = np.arange(
             self.ctx.coarse_kspacing,
             self.ctx.fine_kspacing,
             -self.inputs.kspacing_step.value,
         )
-        for kspacing in kspacings:
+        for kspacing in self.ctx.kspacings:
             inputs.kpoints_spacing = kspacing
             running = self.submit(CastepBaseWorkChain, **inputs)
             key = f"kspacing_{kspacing}"
@@ -303,13 +304,8 @@ class CastepConvergeWorkChain(WorkChain):
     def analyse_kspacing_conv(self):
         """Analyse previous k-point spacing convergence calculations"""
         keys = []
-        kspacings = np.arange(
-            self.ctx.coarse_kspacing,
-            self.ctx.fine_kspacing - 0.01,
-            -self.inputs.kspacing_step.value,
-        )
-        for i in range(len(kspacings)):
-            key = f"kspacing_{kspacings[i]}"
+        for i, kspacing in enumerate(self.ctx.kspacings):
+            key = f"kspacing_{kspacing}"
             keys.append(key)
             if len(keys) == 1:
                 continue
@@ -322,13 +318,19 @@ class CastepConvergeWorkChain(WorkChain):
                 / self.ctx[key].outputs.output_parameters["num_ions"]
             )
             if energy_diff_per_atom < self.inputs.energy_error:
-                self.report(f"K-point spacing converged at {kspacings[i - 1]} A-1")
-                self.ctx.converged_kspacing = orm.Float(kspacings[i - 1])
+                self.report(
+                    f"K-point spacing converged at {self.ctx.kspacings[i - 1]} A-1"
+                )
+                self.ctx.converged_kspacing = orm.Float(self.ctx.kspacings[i - 1])
                 self.ctx.kspacing_converged = True
                 return
         self.ctx.coarse_kspacing = self.ctx.fine_kspacing
-        if self.ctx.coarse_spacing <= 0.02:
-            self.ctx.fine_kspacing = 0.0
+        if self.ctx.coarse_kspacing <= 0.02:
+            self.report(
+                "K-point spacing too low to decrease further. Ending convergence test."
+            )
+            self.ctx.converged_kspacing = kspacing
+            self.ctx.kspacing_converged = True
         else:
             self.ctx.fine_kspacing -= 0.02
         self.report(
@@ -353,12 +355,12 @@ class CastepConvergeWorkChain(WorkChain):
         inputs.calc.structure = seekpath_data["prim_cell"]
         inputs.kpoints_spacing = self.inputs.coarse_kspacing.value
         pmg_lattice = inputs.calc.structure.get_pymatgen().lattice
-        supercell_lengths = np.arange(
+        self.ctx.supercell_lengths = np.arange(
             self.ctx.initial_supercell_length,
             self.ctx.final_supercell_length + 0.1,
             self.inputs.supercell_step.value,
         )
-        for length in supercell_lengths:
+        for length in self.ctx.supercell_lengths:
             matrix_a = int(np.ceil(length / pmg_lattice.a))
             matrix_b = int(np.ceil(length / pmg_lattice.b))
             matrix_c = int(np.ceil(length / pmg_lattice.c))
@@ -376,13 +378,8 @@ class CastepConvergeWorkChain(WorkChain):
     def analyse_supercell_conv(self):
         """Analyse previous supercell convergence calculations"""
         keys = []
-        supercell_lengths = np.arange(
-            self.ctx.initial_supercell_length,
-            self.ctx.final_supercell_length + 0.1,
-            self.inputs.supercell_step.value,
-        )
-        for i in range(len(supercell_lengths)):
-            key = f"supercell_{supercell_lengths[i]}"
+        for i, length in enumerate(self.ctx.supercell_lengths):
+            key = f"supercell_{length}"
             if key in self.ctx:
                 keys.append(key)
                 if len(keys) == 1:
@@ -409,7 +406,7 @@ class CastepConvergeWorkChain(WorkChain):
                 mean_percentage_error = np.mean(percentage_errors)
                 if mean_percentage_error < (self.inputs.frequency_error / 100):
                     self.report(
-                        f"Supercell converged at {supercell_lengths[i - 1]} Angstroms"
+                        f"Supercell converged at {self.ctx.supercell_lengths[i - 1]} Angstroms"
                     )
                     self.ctx.supercell_converged = True
                     self.ctx.converged_supercell = orm.ArrayData()

@@ -1,0 +1,768 @@
+ +-------------------------------------------------+
+ |                                                 |
+ |      CCC   AA    SSS  TTTTT  EEEEE  PPPP        |
+ |     C     A  A  S       T    E      P   P       |
+ |     C     AAAA   SS     T    EEE    PPPP        |
+ |     C     A  A     S    T    E      P           |
+ |      CCC  A  A  SSS     T    EEEEE  P           |
+ |                                                 |
+ +-------------------------------------------------+
+ |                                                 |
+ | Welcome to Academic Release CASTEP version 20.11|          
+ | Ab Initio Total Energy Program                  |
+ |                                                 |
+ | Authors:                                        |
+ | M. Segall, M. Probert, C. Pickard, P. Hasnip,   |
+ | S. Clark, K. Refson, J. R. Yates, M. Payne      |
+ |                                                 |
+ | Contributors:                                   |
+ | P. Lindan, P. Haynes, J. White, V. Milman,      |
+ | N. Govind, M. Gibson, P. Tulip, V. Cocula,      |
+ | B. Montanari, D. Quigley, M. Glover,            |
+ | L. Bernasconi, A. Perlov, M. Plummer,           |
+ | E. McNellis, J. Meyer, J. Gale, D. Jochym       |
+ | J. Aarons, B. Walker, R. Gillen, D. Jones       |
+ | T. Green, I. J. Bush, C. J. Armstrong,          |
+ | E. J. Higgins, E. L. Brown, M. S. McFly,        |
+ | J. Wilkins, B-C. Shih, P. J. P. Byrne,          |
+ | R. J. Maurer, J. C. Womack, J. Dziedzic,        |
+ | J. R. Kermode, A. Bartok-Partay                 |
+ |                                                 |
+ | Copyright (c) 2000 - 2020                       |
+ |                                                 |
+ |     Distributed under license from Cambridge    |
+ |     Enterprise for academic use only.           |
+ |                                                 |
+ | Please cite                                     |
+ |                                                 |
+ |     "First principles methods using CASTEP"     |
+ |                                                 |
+ |         Zeitschrift fuer Kristallographie       |
+ |           220(5-6) pp. 567-570 (2005)           |
+ |                                                 |
+ | S. J. Clark, M. D. Segall, C. J. Pickard,       |
+ | P. J. Hasnip, M. J. Probert, K. Refson,         |
+ | M. C. Payne                                     |
+ |                                                 |
+ |       in all publications arising from          |
+ |              your use of CASTEP                 |
+ |                                                 |
+ +-------------------------------------------------+
+ |                                                 |
+ |              http://www.castep.org              |
+ |                                                 |
+ +-------------------------------------------------+
+
+
+
+ Compiled for linux_x86_64_gfortran10 on Fri, 26 Nov 2021 11:30:39 +0000
+ from code version 328d1dd6+  Castep201_branch  Wed Mar 10 09:27:36 2021 +0000
+ Compiler: GNU Fortran 10.3.0; Optimisation: fast
+ MATHLIBS: Intel MKL(2020.0.0) (LAPACK version 3.7.0)
+ FFT Lib : mkl
+ Fundamental constants values: CODATA 2014
+
+ Run started: Tue, 15 Feb 2022 13:59:57 +0000
+
+ Atomic calculation performed for Fe: 1s2 2s2 2p6 3s2 3p6 3d6 4s2
+
+ Converged in 103 iterations to an ae energy of -34592.796 eV
+
+   ============================================================                
+   | Pseudopotential Report - Date of generation 15-02-2022   |                
+   ------------------------------------------------------------                
+   | Element: Fe Ionic charge:  8.00 Level of theory: PBESOL  |                
+   | Atomic Solver: Koelling-Harmon                           |                
+   |                                                          |                
+   |               Reference Electronic Structure             |                
+   |         Orbital         Occupation         Energy        |                
+   |            3d              6.000           -0.277        |                
+   |            4s              2.000           -0.195        |                
+   |                                                          |                
+   |                 Pseudopotential Definition               |                
+   |        Beta     l      e      Rc     scheme   norm       |                
+   |          1      0   -0.195   2.399     qc      0         |                
+   |          2      0    0.250   2.399     qc      0         |                
+   |          3      1    0.000   2.399     qc      0         |                
+   |          4      1    0.250   2.399     qc      0         |                
+   |          5      2   -0.277   1.997     qc      0         |                
+   |          6      2    0.250   1.997     qc      0         |                
+   |         loc     3    0.000   2.399     pn      0         |                
+   |                                                          |                
+   | Augmentation charge Rinner = 1.000                       |                
+   | Partial core correction Rc = 1.000                       |                
+   ------------------------------------------------------------                
+   | "3|2.4|2.4|1.0|8|9|10|40:41:32U2U2(qc=5.5)"              |                
+   ------------------------------------------------------------                
+   |      Author: Chris J. Pickard, Cambridge University      |                
+   ============================================================                
+
+ Pseudo atomic calculation performed for Fe 3d6 4s2
+
+ Converged in 32 iterations to a total energy of -849.1691 eV
+ Calculation parallelised over 4 processes.
+ Data is distributed by G-vector(2-way) and k-point(2-way)
+
+ ************************************ Title ************************************
+ Fe_pbesol_dos+bands
+
+ ***************************** General Parameters ******************************
+  
+ output verbosity                               : normal  (1)
+ write checkpoint data to                       : aiida.check
+ type of calculation                            : Electronic Spectroscopy
+ stress calculation                             : off
+ density difference calculation                 : off
+ electron localisation func (ELF) calculation   : off
+ Hirshfeld analysis                             : off
+ molecular orbital projected DOS                : off
+ deltaSCF calculation                           : off
+ calculation limited to maximum                 :       3420   seconds
+ timing information                             : on
+ memory usage estimate                          : on
+ write extra output files                       : on
+ write final potential to formatted file        : off
+ write final density to formatted file          : off
+ write BibTeX reference list                    : on
+ write OTFG pseudopotential files               : on
+ write electrostatic potential file             : on
+ write bands file                               : on
+ checkpoint writing                             : both castep_bin and check files
+  
+ output         length unit                     : A
+ output           mass unit                     : amu
+ output           time unit                     : ps
+ output         charge unit                     : e
+ output           spin unit                     : hbar/2
+ output         energy unit                     : eV
+ output          force unit                     : eV/A
+ output       velocity unit                     : A/ps
+ output       pressure unit                     : GPa
+ output     inv_length unit                     : 1/A
+ output      frequency unit                     : cm-1
+ output force constant unit                     : eV/A**2
+ output         volume unit                     : A**3
+ output   IR intensity unit                     : (D/A)**2/amu
+ output         dipole unit                     : D
+ output         efield unit                     : eV/A/e
+ output        entropy unit                     : J/mol/K
+ output    efield chi2 unit                     : pm/V
+  
+ wavefunctions paging                           : none
+ random number generator seed                   : randomised (135958001)
+ data distribution                              : optimal for this architecture
+ optimization strategy                          : balance speed and memory
+
+ *********************** Exchange-Correlation Parameters ***********************
+  
+ using functional                               : PBE for solids (2008)
+ relativistic treatment                         : Koelling-Harmon
+ DFT+D: Semi-empirical dispersion correction    : off
+
+ ************************* Pseudopotential Parameters **************************
+  
+ pseudopotential representation                 : reciprocal space
+ <beta|phi> representation                      : reciprocal space
+ spin-orbit coupling                            : off
+
+ **************************** Basis Set Parameters *****************************
+  
+ plane wave basis set cut-off                   :   450.0000   eV
+ size of standard grid                          :     1.7500
+ size of   fine   gmax                          :    19.0188   1/A
+ finite basis set correction                    : none
+
+ **************************** Electronic Parameters ****************************
+  
+ number of  electrons                           :  8.000    
+ net charge of system                           :  0.000    
+ net spin   of system                           :  1.000    
+ number of  up  spins                           :  4.500    
+ number of down spins                           :  3.500    
+ treating system as spin-polarized
+ number of bands                                :          9
+
+ ********************* Electronic Minimization Parameters **********************
+  
+ Method: Treating system as metallic with density mixing treatment of electrons,
+         and number of  SD  steps               :          1
+         and number of  CG  steps               :          4
+  
+ total energy / atom convergence tol.           : 0.1000E-04   eV
+ eigen-energy convergence tolerance             : 0.1000E-05   eV
+ max force / atom convergence tol.              : ignored
+ convergence tolerance window                   :          3   cycles
+ max. number of SCF cycles                      :         30
+ number of fixed-spin iterations                :         10
+ smearing scheme                                : Gaussian
+ smearing width                                 : 0.2000       eV
+ Fermi energy convergence tolerance             : 0.2721E-13   eV
+ periodic dipole correction                     : NONE
+
+ ************************** Density Mixing Parameters **************************
+  
+ density-mixing scheme                          : Broyden
+ max. length of mixing history                  :         20
+ charge density mixing amplitude                : 0.8000    
+   spin density mixing amplitude                :  2.000    
+ cut-off energy for mixing                      :  450.0       eV
+
+ *********************** Population Analysis Parameters ************************
+  
+ Population analysis with cutoff                :  3.000       A
+ Population analysis output                     : summary and pdos components
+
+ ********************* Electronic Spectroscopy Parameters **********************
+  
+ electronic spectroscopy with theory level      : DFT       
+ spectroscopy calculation                       : density of states
+ max. number of iterations                      :         60
+ max. steps per iteration                       :          5
+ number of bands / k-point                      :          8
+ band convergence tolerance                     : 0.1000E-05   eV
+ write orbitals file                            : off
+
+ *******************************************************************************
+  
+
+                           -------------------------------
+                                      Unit Cell
+                           -------------------------------
+        Real Lattice(A)                      Reciprocal Lattice(1/A)
+    -1.4350000     1.4350000     1.4350000        0.000000000   2.189263173   2.189263173
+     1.4350000    -1.4350000     1.4350000        2.189263173   0.000000000   2.189263173
+     1.4350000     1.4350000    -1.4350000        2.189263173   2.189263173   0.000000000
+
+                       Lattice parameters(A)       Cell Angles
+                    a =      2.485493          alpha =  109.471221
+                    b =      2.485493          beta  =  109.471221
+                    c =      2.485493          gamma =  109.471221
+
+                       Current cell volume =            11.819952       A**3
+                                   density =             4.724639   AMU/A**3
+                                           =             7.845447     g/cm^3
+
+                           -------------------------------
+                                     Cell Contents
+                           -------------------------------
+                         Total number of ions in cell =    1
+                      Total number of species in cell =    1
+                        Max number of any one species =    1
+
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            x  Element    Atom        Fractional coordinates of atoms  x
+            x            Number           u          v          w      x
+            x----------------------------------------------------------x
+            x  Fe           1         0.000000   0.000000   0.000000   x 
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+
+                         No user defined ionic velocities
+
+                           -------------------------------
+                                   Details of Species
+                           -------------------------------
+
+                               Mass of species in AMU
+                                    Fe   55.8450000
+
+                          Electric Quadrupole Moment (Barn)
+                                    Fe    0.1600000 Isotope 57
+
+                          Files used for pseudopotentials:
+                                    Fe 3|2.4|2.4|1.0|8|9|10|40:41:32U2U2(qc=5.5)
+
+                           -------------------------------
+                              k-Points For BZ Sampling
+                           -------------------------------
+                       MP grid size for SCF calculation is  8  8  8
+                            with an offset of   0.000  0.000  0.000
+                       Number of kpoints used =            26
+
+                           -------------------------------
+                               Symmetry and Constraints
+                           -------------------------------
+
+                      Maximum deviation from symmetry = 0.235002E-15     ANG
+
+                      Number of symmetry operations   =          48
+                      Number of ionic constraints     =           3
+                      Point group of crystal =    32: Oh, m-3m, 4/m -3 2/m
+                      Space group of crystal =   229: Im-3m, -I 4 2 3
+
+             Set iprint > 1 for details on symmetry rotations/translations
+
+                         Centre of mass is constrained
+             Set iprint > 1 for details of linear ionic constraints
+
+                         Number of cell constraints= 5
+                         Cell constraints are:  1 1 1 0 0 0
+
+                         External pressure/stress (GPa)
+                          0.00000   0.00000   0.00000
+                                    0.00000   0.00000
+                                              0.00000
+  
++---------------- MEMORY AND SCRATCH DISK ESTIMATES PER PROCESS --------------+
+|                                                     Memory          Disk    |
+| Baseline code, static data and system overhead      349.0 MB         0.0 MB |
+| BLAS internal memory storage                          0.0 MB         0.0 MB |
+| Model and support data                               84.2 MB         5.8 MB |
+| Electronic energy minimisation requirements           2.0 MB         0.0 MB |
+| Force calculation requirements                        0.5 MB         0.0 MB |
+|                                               ----------------------------- |
+| Approx. total storage required per process          435.2 MB         5.8 MB |
+|                                                                             |
+| Requirements will fluctuate during execution and may exceed these estimates |
++-----------------------------------------------------------------------------+
+Calculating total energy with cut-off of  450.000 eV.
+------------------------------------------------------------------------ <-- SCF
+SCF loop      Energy           Fermi           Energy gain       Timer   <-- SCF
+                               energy          per atom          (sec)   <-- SCF
+------------------------------------------------------------------------ <-- SCF
+Initial  -6.78465180E+002  0.00000000E+000                         6.04  <-- SCF
+      1  -8.48709100E+002  7.35619198E+000   1.70243920E+002       6.16  <-- SCF
+      2  -8.58454370E+002  5.52365725E+000   9.74527012E+000       6.26  <-- SCF
+      3  -8.58627329E+002  5.50029041E+000   1.72959597E-001       6.34  <-- SCF
+      4  -8.58826274E+002  3.86510594E+000   1.98944481E-001       6.44  <-- SCF
+      5  -8.58627854E+002  4.85727400E+000  -1.98419238E-001       6.56  <-- SCF
+      6  -8.58628121E+002  4.82795971E+000   2.66913142E-004       6.66  <-- SCF
+      7  -8.58628304E+002  4.82697869E+000   1.82881399E-004       6.76  <-- SCF
+      8  -8.58628489E+002  4.82579208E+000   1.85225843E-004       6.87  <-- SCF
+      9  -8.58628493E+002  4.82556893E+000   3.74039859E-006       6.96  <-- SCF
+     10  -8.58744467E+002  4.83079662E+000   1.15973888E-001       7.05  <-- SCF
+     11  -8.58909677E+002  4.88751401E+000   1.65209907E-001       7.17  <-- SCF
+     12  -8.58951553E+002  4.88770534E+000   4.18755708E-002       7.31  <-- SCF
+     13  -8.58962033E+002  4.80577900E+000   1.04807143E-002       7.42  <-- SCF
+     14  -8.58962031E+002  4.83759489E+000  -2.35326155E-006       7.52  <-- SCF
+     15  -8.58962299E+002  4.82972309E+000   2.67552513E-004       7.60  <-- SCF
+     16  -8.58962313E+002  4.82939580E+000   1.40182736E-005       7.67  <-- SCF
+     17  -8.58962314E+002  4.82962555E+000   1.61375216E-006       7.76  <-- SCF
+     18  -8.58962315E+002  4.82997607E+000   7.05806809E-007       7.85  <-- SCF
+------------------------------------------------------------------------ <-- SCF
+ 
+Integrated Spin Density     =     2.17036     hbar/2                        
+Integrated |Spin Density|   =     2.28651     hbar/2                        
+ 
+Final energy, E             =  -858.9460513040     eV
+Final free energy (E-TS)    =  -858.9623148383     eV
+(energies not corrected for finite basis set)
+ 
+NB est. 0K energy (E-0.5TS)      =  -858.9541830712     eV
+ 
+
+Writing analysis data to aiida.castep_bin
+
+Writing model to aiida.check
+ 
++---------------- MEMORY AND SCRATCH DISK ESTIMATES PER PROCESS --------------+
+|                                                     Memory          Disk    |
+|                                               ----------------------------- |
+| Approx. total storage required per process           97.7 MB         5.8 MB |
+|                                                                             |
+| Requirements will fluctuate during execution and may exceed these estimates |
++-----------------------------------------------------------------------------+
+ 
+  =====================================================================
+  +                                                                   +
+  +                 Calculation of Spectral Properties                +
+  +                                                                   +
+  + Calculation re-parallelised over 4 processes.                     +
+  + Data distributed by G-vector(2-way), k-point(2-way), band(1-way)  +
+  + Data distributed by G-vector(2-way), k-point(2-way)               +
+  +                                                                   +
+  =====================================================================
+  Starting k-point:        1 of      161 on this process      |<-- SPEC
+  Starting k-point:        2 of      161 on this process      |<-- SPEC
+  Starting k-point:        3 of      161 on this process      |<-- SPEC
+  Starting k-point:        4 of      161 on this process      |<-- SPEC
+  Starting k-point:        5 of      161 on this process      |<-- SPEC
+  Starting k-point:        6 of      161 on this process      |<-- SPEC
+  Starting k-point:        7 of      161 on this process      |<-- SPEC
+  Starting k-point:        8 of      161 on this process      |<-- SPEC
+  Starting k-point:        9 of      161 on this process      |<-- SPEC
+  Starting k-point:       10 of      161 on this process      |<-- SPEC
+  Starting k-point:       11 of      161 on this process      |<-- SPEC
+  Starting k-point:       12 of      161 on this process      |<-- SPEC
+  Starting k-point:       13 of      161 on this process      |<-- SPEC
+  Starting k-point:       14 of      161 on this process      |<-- SPEC
+  Starting k-point:       15 of      161 on this process      |<-- SPEC
+  Starting k-point:       16 of      161 on this process      |<-- SPEC
+  Starting k-point:       17 of      161 on this process      |<-- SPEC
+  Starting k-point:       18 of      161 on this process      |<-- SPEC
+  Starting k-point:       19 of      161 on this process      |<-- SPEC
+  Starting k-point:       20 of      161 on this process      |<-- SPEC
+  Starting k-point:       21 of      161 on this process      |<-- SPEC
+  Starting k-point:       22 of      161 on this process      |<-- SPEC
+  Starting k-point:       23 of      161 on this process      |<-- SPEC
+  Starting k-point:       24 of      161 on this process      |<-- SPEC
+  Starting k-point:       25 of      161 on this process      |<-- SPEC
+  Starting k-point:       26 of      161 on this process      |<-- SPEC
+  Starting k-point:       27 of      161 on this process      |<-- SPEC
+  Starting k-point:       28 of      161 on this process      |<-- SPEC
+  Starting k-point:       29 of      161 on this process      |<-- SPEC
+  Starting k-point:       30 of      161 on this process      |<-- SPEC
+  Starting k-point:       31 of      161 on this process      |<-- SPEC
+  Starting k-point:       32 of      161 on this process      |<-- SPEC
+  Starting k-point:       33 of      161 on this process      |<-- SPEC
+  Starting k-point:       34 of      161 on this process      |<-- SPEC
+  Starting k-point:       35 of      161 on this process      |<-- SPEC
+  Starting k-point:       36 of      161 on this process      |<-- SPEC
+  Starting k-point:       37 of      161 on this process      |<-- SPEC
+  Starting k-point:       38 of      161 on this process      |<-- SPEC
+  Starting k-point:       39 of      161 on this process      |<-- SPEC
+  Starting k-point:       40 of      161 on this process      |<-- SPEC
+  Starting k-point:       41 of      161 on this process      |<-- SPEC
+  Starting k-point:       42 of      161 on this process      |<-- SPEC
+  Starting k-point:       43 of      161 on this process      |<-- SPEC
+  Starting k-point:       44 of      161 on this process      |<-- SPEC
+  Starting k-point:       45 of      161 on this process      |<-- SPEC
+  Starting k-point:       46 of      161 on this process      |<-- SPEC
+  Starting k-point:       47 of      161 on this process      |<-- SPEC
+  Starting k-point:       48 of      161 on this process      |<-- SPEC
+  Starting k-point:       49 of      161 on this process      |<-- SPEC
+  Starting k-point:       50 of      161 on this process      |<-- SPEC
+  Starting k-point:       51 of      161 on this process      |<-- SPEC
+  Starting k-point:       52 of      161 on this process      |<-- SPEC
+  Starting k-point:       53 of      161 on this process      |<-- SPEC
+  Starting k-point:       54 of      161 on this process      |<-- SPEC
+  Starting k-point:       55 of      161 on this process      |<-- SPEC
+  Starting k-point:       56 of      161 on this process      |<-- SPEC
+  Starting k-point:       57 of      161 on this process      |<-- SPEC
+  Starting k-point:       58 of      161 on this process      |<-- SPEC
+  Starting k-point:       59 of      161 on this process      |<-- SPEC
+  Starting k-point:       60 of      161 on this process      |<-- SPEC
+  Starting k-point:       61 of      161 on this process      |<-- SPEC
+  Starting k-point:       62 of      161 on this process      |<-- SPEC
+  Starting k-point:       63 of      161 on this process      |<-- SPEC
+  Starting k-point:       64 of      161 on this process      |<-- SPEC
+  Starting k-point:       65 of      161 on this process      |<-- SPEC
+  Starting k-point:       66 of      161 on this process      |<-- SPEC
+  Starting k-point:       67 of      161 on this process      |<-- SPEC
+  Starting k-point:       68 of      161 on this process      |<-- SPEC
+  Starting k-point:       69 of      161 on this process      |<-- SPEC
+  Starting k-point:       70 of      161 on this process      |<-- SPEC
+  Starting k-point:       71 of      161 on this process      |<-- SPEC
+  Starting k-point:       72 of      161 on this process      |<-- SPEC
+  Starting k-point:       73 of      161 on this process      |<-- SPEC
+  Starting k-point:       74 of      161 on this process      |<-- SPEC
+  Starting k-point:       75 of      161 on this process      |<-- SPEC
+  Starting k-point:       76 of      161 on this process      |<-- SPEC
+  Starting k-point:       77 of      161 on this process      |<-- SPEC
+  Starting k-point:       78 of      161 on this process      |<-- SPEC
+  Starting k-point:       79 of      161 on this process      |<-- SPEC
+  Starting k-point:       80 of      161 on this process      |<-- SPEC
+  Starting k-point:       81 of      161 on this process      |<-- SPEC
+  Starting k-point:       82 of      161 on this process      |<-- SPEC
+  Starting k-point:       83 of      161 on this process      |<-- SPEC
+  Starting k-point:       84 of      161 on this process      |<-- SPEC
+  Starting k-point:       85 of      161 on this process      |<-- SPEC
+  Starting k-point:       86 of      161 on this process      |<-- SPEC
+  Starting k-point:       87 of      161 on this process      |<-- SPEC
+  Starting k-point:       88 of      161 on this process      |<-- SPEC
+  Starting k-point:       89 of      161 on this process      |<-- SPEC
+  Starting k-point:       90 of      161 on this process      |<-- SPEC
+  Starting k-point:       91 of      161 on this process      |<-- SPEC
+  Starting k-point:       92 of      161 on this process      |<-- SPEC
+  Starting k-point:       93 of      161 on this process      |<-- SPEC
+  Starting k-point:       94 of      161 on this process      |<-- SPEC
+  Starting k-point:       95 of      161 on this process      |<-- SPEC
+  Starting k-point:       96 of      161 on this process      |<-- SPEC
+  Starting k-point:       97 of      161 on this process      |<-- SPEC
+  Starting k-point:       98 of      161 on this process      |<-- SPEC
+  Starting k-point:       99 of      161 on this process      |<-- SPEC
+  Starting k-point:      100 of      161 on this process      |<-- SPEC
+  Starting k-point:      101 of      161 on this process      |<-- SPEC
+  Starting k-point:      102 of      161 on this process      |<-- SPEC
+  Starting k-point:      103 of      161 on this process      |<-- SPEC
+  Starting k-point:      104 of      161 on this process      |<-- SPEC
+  Starting k-point:      105 of      161 on this process      |<-- SPEC
+  Starting k-point:      106 of      161 on this process      |<-- SPEC
+  Starting k-point:      107 of      161 on this process      |<-- SPEC
+  Starting k-point:      108 of      161 on this process      |<-- SPEC
+  Starting k-point:      109 of      161 on this process      |<-- SPEC
+  Starting k-point:      110 of      161 on this process      |<-- SPEC
+  Starting k-point:      111 of      161 on this process      |<-- SPEC
+  Starting k-point:      112 of      161 on this process      |<-- SPEC
+  Starting k-point:      113 of      161 on this process      |<-- SPEC
+  Starting k-point:      114 of      161 on this process      |<-- SPEC
+  Starting k-point:      115 of      161 on this process      |<-- SPEC
+  Starting k-point:      116 of      161 on this process      |<-- SPEC
+  Starting k-point:      117 of      161 on this process      |<-- SPEC
+  Starting k-point:      118 of      161 on this process      |<-- SPEC
+  Starting k-point:      119 of      161 on this process      |<-- SPEC
+  Starting k-point:      120 of      161 on this process      |<-- SPEC
+  Starting k-point:      121 of      161 on this process      |<-- SPEC
+  Starting k-point:      122 of      161 on this process      |<-- SPEC
+  Starting k-point:      123 of      161 on this process      |<-- SPEC
+  Starting k-point:      124 of      161 on this process      |<-- SPEC
+  Starting k-point:      125 of      161 on this process      |<-- SPEC
+  Starting k-point:      126 of      161 on this process      |<-- SPEC
+  Starting k-point:      127 of      161 on this process      |<-- SPEC
+  Starting k-point:      128 of      161 on this process      |<-- SPEC
+  Starting k-point:      129 of      161 on this process      |<-- SPEC
+  Starting k-point:      130 of      161 on this process      |<-- SPEC
+  Starting k-point:      131 of      161 on this process      |<-- SPEC
+  Starting k-point:      132 of      161 on this process      |<-- SPEC
+  Starting k-point:      133 of      161 on this process      |<-- SPEC
+  Starting k-point:      134 of      161 on this process      |<-- SPEC
+  Starting k-point:      135 of      161 on this process      |<-- SPEC
+  Starting k-point:      136 of      161 on this process      |<-- SPEC
+  Starting k-point:      137 of      161 on this process      |<-- SPEC
+  Starting k-point:      138 of      161 on this process      |<-- SPEC
+  Starting k-point:      139 of      161 on this process      |<-- SPEC
+  Starting k-point:      140 of      161 on this process      |<-- SPEC
+  Starting k-point:      141 of      161 on this process      |<-- SPEC
+  Starting k-point:      142 of      161 on this process      |<-- SPEC
+  Starting k-point:      143 of      161 on this process      |<-- SPEC
+  Starting k-point:      144 of      161 on this process      |<-- SPEC
+  Starting k-point:      145 of      161 on this process      |<-- SPEC
+  Starting k-point:      146 of      161 on this process      |<-- SPEC
+  Starting k-point:      147 of      161 on this process      |<-- SPEC
+  Starting k-point:      148 of      161 on this process      |<-- SPEC
+  Starting k-point:      149 of      161 on this process      |<-- SPEC
+  Starting k-point:      150 of      161 on this process      |<-- SPEC
+  Starting k-point:      151 of      161 on this process      |<-- SPEC
+  Starting k-point:      152 of      161 on this process      |<-- SPEC
+  Starting k-point:      153 of      161 on this process      |<-- SPEC
+  Starting k-point:      154 of      161 on this process      |<-- SPEC
+  Starting k-point:      155 of      161 on this process      |<-- SPEC
+  Starting k-point:      156 of      161 on this process      |<-- SPEC
+  Starting k-point:      157 of      161 on this process      |<-- SPEC
+  Starting k-point:      158 of      161 on this process      |<-- SPEC
+  Starting k-point:      159 of      161 on this process      |<-- SPEC
+  Starting k-point:      160 of      161 on this process      |<-- SPEC
+  Starting k-point:      161 of      161 on this process      |<-- SPEC
+  Starting k-point:        1 of      161 on this process      |<-- SPEC
+  Starting k-point:        2 of      161 on this process      |<-- SPEC
+  Starting k-point:        3 of      161 on this process      |<-- SPEC
+  Starting k-point:        4 of      161 on this process      |<-- SPEC
+  Starting k-point:        5 of      161 on this process      |<-- SPEC
+  Starting k-point:        6 of      161 on this process      |<-- SPEC
+  Starting k-point:        7 of      161 on this process      |<-- SPEC
+  Starting k-point:        8 of      161 on this process      |<-- SPEC
+  Starting k-point:        9 of      161 on this process      |<-- SPEC
+  Starting k-point:       10 of      161 on this process      |<-- SPEC
+  Starting k-point:       11 of      161 on this process      |<-- SPEC
+  Starting k-point:       12 of      161 on this process      |<-- SPEC
+  Starting k-point:       13 of      161 on this process      |<-- SPEC
+  Starting k-point:       14 of      161 on this process      |<-- SPEC
+  Starting k-point:       15 of      161 on this process      |<-- SPEC
+  Starting k-point:       16 of      161 on this process      |<-- SPEC
+  Starting k-point:       17 of      161 on this process      |<-- SPEC
+  Starting k-point:       18 of      161 on this process      |<-- SPEC
+  Starting k-point:       19 of      161 on this process      |<-- SPEC
+  Starting k-point:       20 of      161 on this process      |<-- SPEC
+  Starting k-point:       21 of      161 on this process      |<-- SPEC
+  Starting k-point:       22 of      161 on this process      |<-- SPEC
+  Starting k-point:       23 of      161 on this process      |<-- SPEC
+  Starting k-point:       24 of      161 on this process      |<-- SPEC
+  Starting k-point:       25 of      161 on this process      |<-- SPEC
+  Starting k-point:       26 of      161 on this process      |<-- SPEC
+  Starting k-point:       27 of      161 on this process      |<-- SPEC
+  Starting k-point:       28 of      161 on this process      |<-- SPEC
+  Starting k-point:       29 of      161 on this process      |<-- SPEC
+  Starting k-point:       30 of      161 on this process      |<-- SPEC
+  Starting k-point:       31 of      161 on this process      |<-- SPEC
+  Starting k-point:       32 of      161 on this process      |<-- SPEC
+  Starting k-point:       33 of      161 on this process      |<-- SPEC
+  Starting k-point:       34 of      161 on this process      |<-- SPEC
+  Starting k-point:       35 of      161 on this process      |<-- SPEC
+  Starting k-point:       36 of      161 on this process      |<-- SPEC
+  Starting k-point:       37 of      161 on this process      |<-- SPEC
+  Starting k-point:       38 of      161 on this process      |<-- SPEC
+  Starting k-point:       39 of      161 on this process      |<-- SPEC
+  Starting k-point:       40 of      161 on this process      |<-- SPEC
+  Starting k-point:       41 of      161 on this process      |<-- SPEC
+  Starting k-point:       42 of      161 on this process      |<-- SPEC
+  Starting k-point:       43 of      161 on this process      |<-- SPEC
+  Starting k-point:       44 of      161 on this process      |<-- SPEC
+  Starting k-point:       45 of      161 on this process      |<-- SPEC
+  Starting k-point:       46 of      161 on this process      |<-- SPEC
+  Starting k-point:       47 of      161 on this process      |<-- SPEC
+  Starting k-point:       48 of      161 on this process      |<-- SPEC
+  Starting k-point:       49 of      161 on this process      |<-- SPEC
+  Starting k-point:       50 of      161 on this process      |<-- SPEC
+  Starting k-point:       51 of      161 on this process      |<-- SPEC
+  Starting k-point:       52 of      161 on this process      |<-- SPEC
+  Starting k-point:       53 of      161 on this process      |<-- SPEC
+  Starting k-point:       54 of      161 on this process      |<-- SPEC
+  Starting k-point:       55 of      161 on this process      |<-- SPEC
+  Starting k-point:       56 of      161 on this process      |<-- SPEC
+  Starting k-point:       57 of      161 on this process      |<-- SPEC
+  Starting k-point:       58 of      161 on this process      |<-- SPEC
+  Starting k-point:       59 of      161 on this process      |<-- SPEC
+  Starting k-point:       60 of      161 on this process      |<-- SPEC
+  Starting k-point:       61 of      161 on this process      |<-- SPEC
+  Starting k-point:       62 of      161 on this process      |<-- SPEC
+  Starting k-point:       63 of      161 on this process      |<-- SPEC
+  Starting k-point:       64 of      161 on this process      |<-- SPEC
+  Starting k-point:       65 of      161 on this process      |<-- SPEC
+  Starting k-point:       66 of      161 on this process      |<-- SPEC
+  Starting k-point:       67 of      161 on this process      |<-- SPEC
+  Starting k-point:       68 of      161 on this process      |<-- SPEC
+  Starting k-point:       69 of      161 on this process      |<-- SPEC
+  Starting k-point:       70 of      161 on this process      |<-- SPEC
+  Starting k-point:       71 of      161 on this process      |<-- SPEC
+  Starting k-point:       72 of      161 on this process      |<-- SPEC
+  Starting k-point:       73 of      161 on this process      |<-- SPEC
+  Starting k-point:       74 of      161 on this process      |<-- SPEC
+  Starting k-point:       75 of      161 on this process      |<-- SPEC
+  Starting k-point:       76 of      161 on this process      |<-- SPEC
+  Starting k-point:       77 of      161 on this process      |<-- SPEC
+  Starting k-point:       78 of      161 on this process      |<-- SPEC
+  Starting k-point:       79 of      161 on this process      |<-- SPEC
+  Starting k-point:       80 of      161 on this process      |<-- SPEC
+  Starting k-point:       81 of      161 on this process      |<-- SPEC
+  Starting k-point:       82 of      161 on this process      |<-- SPEC
+  Starting k-point:       83 of      161 on this process      |<-- SPEC
+  Starting k-point:       84 of      161 on this process      |<-- SPEC
+  Starting k-point:       85 of      161 on this process      |<-- SPEC
+  Starting k-point:       86 of      161 on this process      |<-- SPEC
+  Starting k-point:       87 of      161 on this process      |<-- SPEC
+  Starting k-point:       88 of      161 on this process      |<-- SPEC
+  Starting k-point:       89 of      161 on this process      |<-- SPEC
+  Starting k-point:       90 of      161 on this process      |<-- SPEC
+  Starting k-point:       91 of      161 on this process      |<-- SPEC
+  Starting k-point:       92 of      161 on this process      |<-- SPEC
+  Starting k-point:       93 of      161 on this process      |<-- SPEC
+  Starting k-point:       94 of      161 on this process      |<-- SPEC
+  Starting k-point:       95 of      161 on this process      |<-- SPEC
+  Starting k-point:       96 of      161 on this process      |<-- SPEC
+  Starting k-point:       97 of      161 on this process      |<-- SPEC
+  Starting k-point:       98 of      161 on this process      |<-- SPEC
+  Starting k-point:       99 of      161 on this process      |<-- SPEC
+  Starting k-point:      100 of      161 on this process      |<-- SPEC
+  Starting k-point:      101 of      161 on this process      |<-- SPEC
+  Starting k-point:      102 of      161 on this process      |<-- SPEC
+  Starting k-point:      103 of      161 on this process      |<-- SPEC
+  Starting k-point:      104 of      161 on this process      |<-- SPEC
+  Starting k-point:      105 of      161 on this process      |<-- SPEC
+  Starting k-point:      106 of      161 on this process      |<-- SPEC
+  Starting k-point:      107 of      161 on this process      |<-- SPEC
+  Starting k-point:      108 of      161 on this process      |<-- SPEC
+  Starting k-point:      109 of      161 on this process      |<-- SPEC
+  Starting k-point:      110 of      161 on this process      |<-- SPEC
+  Starting k-point:      111 of      161 on this process      |<-- SPEC
+  Starting k-point:      112 of      161 on this process      |<-- SPEC
+  Starting k-point:      113 of      161 on this process      |<-- SPEC
+  Starting k-point:      114 of      161 on this process      |<-- SPEC
+  Starting k-point:      115 of      161 on this process      |<-- SPEC
+  Starting k-point:      116 of      161 on this process      |<-- SPEC
+  Starting k-point:      117 of      161 on this process      |<-- SPEC
+  Starting k-point:      118 of      161 on this process      |<-- SPEC
+  Starting k-point:      119 of      161 on this process      |<-- SPEC
+  Starting k-point:      120 of      161 on this process      |<-- SPEC
+  Starting k-point:      121 of      161 on this process      |<-- SPEC
+  Starting k-point:      122 of      161 on this process      |<-- SPEC
+  Starting k-point:      123 of      161 on this process      |<-- SPEC
+  Starting k-point:      124 of      161 on this process      |<-- SPEC
+  Starting k-point:      125 of      161 on this process      |<-- SPEC
+  Starting k-point:      126 of      161 on this process      |<-- SPEC
+  Starting k-point:      127 of      161 on this process      |<-- SPEC
+  Starting k-point:      128 of      161 on this process      |<-- SPEC
+  Starting k-point:      129 of      161 on this process      |<-- SPEC
+  Starting k-point:      130 of      161 on this process      |<-- SPEC
+  Starting k-point:      131 of      161 on this process      |<-- SPEC
+  Starting k-point:      132 of      161 on this process      |<-- SPEC
+  Starting k-point:      133 of      161 on this process      |<-- SPEC
+  Starting k-point:      134 of      161 on this process      |<-- SPEC
+  Starting k-point:      135 of      161 on this process      |<-- SPEC
+  Starting k-point:      136 of      161 on this process      |<-- SPEC
+  Starting k-point:      137 of      161 on this process      |<-- SPEC
+  Starting k-point:      138 of      161 on this process      |<-- SPEC
+  Starting k-point:      139 of      161 on this process      |<-- SPEC
+  Starting k-point:      140 of      161 on this process      |<-- SPEC
+  Starting k-point:      141 of      161 on this process      |<-- SPEC
+  Starting k-point:      142 of      161 on this process      |<-- SPEC
+  Starting k-point:      143 of      161 on this process      |<-- SPEC
+  Starting k-point:      144 of      161 on this process      |<-- SPEC
+  Starting k-point:      145 of      161 on this process      |<-- SPEC
+  Starting k-point:      146 of      161 on this process      |<-- SPEC
+  Starting k-point:      147 of      161 on this process      |<-- SPEC
+  Starting k-point:      148 of      161 on this process      |<-- SPEC
+  Starting k-point:      149 of      161 on this process      |<-- SPEC
+  Starting k-point:      150 of      161 on this process      |<-- SPEC
+  Starting k-point:      151 of      161 on this process      |<-- SPEC
+  Starting k-point:      152 of      161 on this process      |<-- SPEC
+  Starting k-point:      153 of      161 on this process      |<-- SPEC
+  Starting k-point:      154 of      161 on this process      |<-- SPEC
+  Starting k-point:      155 of      161 on this process      |<-- SPEC
+  Starting k-point:      156 of      161 on this process      |<-- SPEC
+  Starting k-point:      157 of      161 on this process      |<-- SPEC
+  Starting k-point:      158 of      161 on this process      |<-- SPEC
+  Starting k-point:      159 of      161 on this process      |<-- SPEC
+  Starting k-point:      160 of      161 on this process      |<-- SPEC
+  Starting k-point:      161 of      161 on this process      |<-- SPEC
+  Total time to compute matrix elements              7.88 sec |<-- SPEC
+  
+  + Calculation re-parallelised over 4 processes.                     +
+  + Data distributed by G-vector(2-way), k-point(2-way)               +
+
+ ******************** Symmetrised Forces ********************
+ *                                                          *
+ *               Cartesian components (eV/A)                *
+ * -------------------------------------------------------- *
+ *                         x            y            z      *
+ *                                                          *
+ * Fe              1      0.00000      0.00000      0.00000 *
+ *                                                          *
+ ************************************************************
+
+ Pseudo atomic calculation performed for Fe 3d6 4s2
+
+ Converged in 32 iterations to a total energy of -849.1691 eV
+Charge spilling parameter for spin component 1 = 0.11%
+Charge spilling parameter for spin component 2 = 0.42%
+
+                   Orbital Populations                  
+  ---------------------------------------------------------------
+     Ion    Atom   Orbital              Up        Down      Spin
+  ---------------------------------------------------------------
+     Fe     1      Dzz                  0.939     0.322     0.617
+     Fe     1      Dzy                  0.861     0.482     0.379
+     Fe     1      Dzx                  0.886     0.527     0.359
+     Fe     1      Dxx-yy               0.944     0.315     0.629
+     Fe     1      Dxy                  0.859     0.504     0.354
+     Fe     1      S                    0.339     0.362    -0.023
+     Fe     1      Px                   0.065     0.111    -0.046
+     Fe     1      Py                   0.075     0.108    -0.033
+     Fe     1      Pz                   0.117     0.185    -0.067
+  ---------------------------------------------------------------
+                           Total:       5.085     2.915     2.170
+  ---------------------------------------------------------------
+
+     Atomic Populations (Mulliken)
+     -----------------------------
+Species          Ion Spin      s      p      d      f     Total  Charge(e)   Spin(hbar/2)
+=========================================================================================
+  Fe              1   up:     0.34   0.26   4.49   0.00   5.09     0.00        2.17
+                  1   dn:     0.36   0.40   2.15   0.00   2.91
+=========================================================================================
+
+                 Bond                   Population        Spin       Length (A)
+================================================================================
+================================================================================
+
+
+Writing analysis data to aiida.castep_bin
+
+Writing model to aiida.check
+ 
+ A BibTeX formatted list of references used in this run has been written to 
+ aiida.bib
+ 
+Initialisation time =      4.99 s
+Calculation time    =     11.18 s
+Finalisation time   =      0.01 s
+Total time          =     16.18 s
+Peak Memory Use     = 773352 kB
+  
+Overall parallel efficiency rating: Poor (47%)                                  
+  
+Data was distributed by:-
+G-vector (2-way); efficiency rating: Mediocre (57%)                             
+k-point (2-way); efficiency rating: Good (74%)                                  
+  
+Parallel notes:
+1) Calculation only took 16.2 s, so efficiency estimates may be inaccurate.     

@@ -1,21 +1,21 @@
 """Module for Density of States and Band Structure WorkChain"""
-
 from __future__ import absolute_import
-from aiida.engine import WorkChain, ToContext, calcfunction
-import aiida.orm as orm
-from aiida.orm.nodes.data.base import to_aiida_type
-from aiida.tools.data.array.kpoints import get_explicit_kpoints_path
-from aiida_castep.workflows.base import CastepBaseWorkChain
-from aiida.plugins import DataFactory
-from aiida_castep.utils.dos import DOSProcessor
-from aiida_castep_addons.utils.sumo_plotter import get_sumo_bands_plotter
 
 from copy import deepcopy
 from tempfile import TemporaryDirectory
-from pymatgen.electronic_structure.dos import Dos
+
+import aiida.orm as orm
+from aiida.engine import ToContext, WorkChain, calcfunction
+from aiida.orm.nodes.data.base import to_aiida_type
+from aiida.plugins import DataFactory
+from aiida.tools.data.array.kpoints import get_explicit_kpoints_path
+from aiida_castep.utils.dos import DOSProcessor
+from aiida_castep.workflows.base import CastepBaseWorkChain
+from aiida_castep_addons.utils.sumo_plotter import get_sumo_bands_plotter
 from pymatgen.electronic_structure.core import Spin
-from sumo.plotting.dos_plotter import SDOSPlotter
+from pymatgen.electronic_structure.dos import Dos
 from PyPDF2 import PdfFileReader, PdfFileWriter
+from sumo.plotting.dos_plotter import SDOSPlotter
 
 SinglefileData = DataFactory("singlefile")
 
@@ -36,67 +36,68 @@ def seekpath_analysis(structure, parameters):
 
 
 @calcfunction
-def analysis(
-    dos_data, band_data, band_kpoints, prefix, structure, uuid, label, description
-):
-    """Plot the density of states and band structure with sumo and add workflow metadata to the PDF files"""
-    extra_metadata = {
-        "/Formula": structure.get_formula(),
-        "/WorkchainUUID": uuid.value,
-        "/WorkchainLabel": label.value,
-        "/WorkchainDescription": description.value,
-    }
+def add_metadata(file, fname, formula, uuid, label, description):
+    """Add workflow metadata to a PDF file with PyPDF2"""
+    with TemporaryDirectory() as temp:
+        with file.open(mode="rb") as fin:
+            reader = PdfFileReader(fin)
+            writer = PdfFileWriter()
+            writer.appendPagesFromReader(reader)
+            metadata = reader.getDocumentInfo()
+        writer.addMetadata(metadata)
+        writer.addMetadata(
+            {
+                "/Formula": formula.value,
+                "/WorkchainUUID": uuid.value,
+                "/WorkchainLabel": label.value,
+                "/WorkchainDescription": description.value,
+            }
+        )
+        with open(f"{temp}/{fname.value}", "ab") as fout:
+            writer.write(fout)
+        output_file = SinglefileData(f"{temp}/{fname.value}")
+    return output_file
 
+
+@calcfunction
+def analysis(dos_data, band_data, band_kpoints, prefix):
+    """Plot the density of states and band structure with sumo"""
     # Plotting DOS from parsed BandsData
     dos_processor = DOSProcessor(
         dos_data.get_bands(), dos_data.get_array("weights"), smearing=0.2
     )
     dos = dos_processor.get_dos()
     dos_energies = dos[0]
-    dos_densities = dos[1][0]
-    dos_efermi = dos_data.get_attribute("efermi")
-    pmg_dos = Dos(dos_efermi, dos_energies, {Spin.up: dos_densities})
+    dos_densities = dos[1]
+    if dos_data.get_attribute("nspins") > 1:
+        dos_efermi = dos_data.get_attribute("efermi")[0]
+        pmg_dos = Dos(
+            dos_efermi,
+            dos_energies,
+            {Spin.up: dos_densities[0], Spin.down: dos_densities[1]},
+        )
+    else:
+        dos_efermi = dos_data.get_attribute("efermi")
+        pmg_dos = Dos(dos_efermi, dos_energies, {Spin.up: dos_densities[0]})
     dos_plotter = SDOSPlotter(pmg_dos, {}).get_plot()
     dos_plotter.plot()
 
     with TemporaryDirectory() as temp:
         dos_plotter.savefig(fname=f"{temp}/{prefix.value}_dos.pdf", bbox_inches="tight")
-
-        # Adding metadata to DOS plot with PyPDF2
-        dos_in = open(f"{temp}/{prefix.value}_dos.pdf", "rb")
-        reader = PdfFileReader(dos_in)
-        writer = PdfFileWriter()
-        writer.appendPagesFromReader(reader)
-        metadata = reader.getDocumentInfo()
-        writer.addMetadata(metadata)
-        writer.addMetadata(extra_metadata)
-        dos_out = open(f"{temp}/{prefix.value}_dos.pdf", "ab")
-        writer.write(dos_out)
-        dos_in.close()
-        dos_out.close()
         dos_plot = SinglefileData(f"{temp}/{prefix.value}_dos.pdf")
 
         # Plotting band structure
         labelled_bands = deepcopy(band_data)
         labelled_bands.labels = band_kpoints.labels
-        band_plotter = get_sumo_bands_plotter(labelled_bands).get_plot()
+        if labelled_bands.get_attribute("nspins") > 1:
+            bands_efermi = labelled_bands.get_attribute("efermi")[0]
+        else:
+            bands_efermi = labelled_bands.get_attribute("efermi")
+        band_plotter = get_sumo_bands_plotter(labelled_bands, bands_efermi).get_plot()
         band_plotter.plot()
         band_plotter.savefig(
             fname=f"{temp}/{prefix.value}_bands.pdf", bbox_inches="tight"
         )
-
-        # Adding metadata to band structure plot with PyPDF2
-        bands_in = open(f"{temp}/{prefix.value}_bands.pdf", "rb")
-        reader = PdfFileReader(bands_in)
-        writer = PdfFileWriter()
-        writer.appendPagesFromReader(reader)
-        metadata = reader.getDocumentInfo()
-        writer.addMetadata(metadata)
-        writer.addMetadata(extra_metadata)
-        bands_out = open(f"{temp}/{prefix.value}_bands.pdf", "ab")
-        writer.write(bands_out)
-        bands_in.close()
-        bands_out.close()
         band_plot = SinglefileData(f"{temp}/{prefix.value}_bands.pdf")
 
     return {
@@ -112,9 +113,9 @@ class CastepBandPlotWorkChain(WorkChain):
     of a material
     """
 
-    # Define the workchain
     @classmethod
     def define(cls, spec):
+        """Define the WorkChain"""
         super(CastepBandPlotWorkChain, cls).define(spec)
 
         # The inputs
@@ -234,14 +235,24 @@ class CastepBandPlotWorkChain(WorkChain):
             self.ctx.bands.outputs.output_bands,
             self.ctx.band_kpoints,
             orm.Str(self.ctx.prefix),
-            self.ctx.inputs.calc.structure,
+        )
+        self.ctx.dos_plot = add_metadata(
+            outputs["dos_plot"],
+            orm.Str(f"{self.ctx.prefix}_dos.pdf"),
+            orm.Str(self.ctx.inputs.calc.structure.get_formula()),
             orm.Str(self.uuid),
             orm.Str(self.inputs.metadata.label),
             orm.Str(self.inputs.metadata.description),
         )
-        self.ctx.dos_plot = outputs["dos_plot"]
         self.ctx.labelled_bands = outputs["labelled_bands"]
-        self.ctx.band_plot = outputs["band_plot"]
+        self.ctx.band_plot = add_metadata(
+            outputs["band_plot"],
+            orm.Str(f"{self.ctx.prefix}_bands.pdf"),
+            orm.Str(self.ctx.inputs.calc.structure.get_formula()),
+            orm.Str(self.uuid),
+            orm.Str(self.inputs.metadata.label),
+            orm.Str(self.inputs.metadata.description),
+        )
         self.report("Density of states and band structure plotted")
 
     def results(self):
