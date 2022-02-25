@@ -5,6 +5,7 @@ from copy import deepcopy
 from tempfile import TemporaryDirectory
 
 import aiida.orm as orm
+import numpy as np
 from aiida.engine import ToContext, WorkChain, calcfunction
 from aiida.orm.nodes.data.base import to_aiida_type
 from aiida.plugins import DataFactory
@@ -12,9 +13,10 @@ from aiida.tools.data.array.kpoints import get_explicit_kpoints_path
 from aiida_castep.utils.dos import DOSProcessor
 from aiida_castep.workflows.base import CastepBaseWorkChain
 from aiida_castep_addons.utils.sumo_plotter import get_sumo_bands_plotter
-from pymatgen.electronic_structure.core import Spin
-from pymatgen.electronic_structure.dos import Dos
+from castepxbin.pdos import compute_pdos
+from pymatgen.electronic_structure.dos import CompleteDos, Dos, Spin
 from PyPDF2 import PdfFileReader, PdfFileWriter
+from sumo.electronic_structure.dos import get_pdos
 from sumo.plotting.dos_plotter import SDOSPlotter
 
 SinglefileData = DataFactory("singlefile")
@@ -44,25 +46,25 @@ def add_metadata(file, fname, formula, uuid, label, description):
             writer = PdfFileWriter()
             writer.appendPagesFromReader(reader)
             metadata = reader.getDocumentInfo()
-        writer.addMetadata(metadata)
-        writer.addMetadata(
-            {
-                "/Formula": formula.value,
-                "/WorkchainUUID": uuid.value,
-                "/WorkchainLabel": label.value,
-                "/WorkchainDescription": description.value,
-            }
-        )
-        with open(f"{temp}/{fname.value}", "ab") as fout:
-            writer.write(fout)
+            writer.addMetadata(metadata)
+            writer.addMetadata(
+                {
+                    "/Formula": formula.value,
+                    "/WorkchainUUID": uuid.value,
+                    "/WorkchainLabel": label.value,
+                    "/WorkchainDescription": description.value,
+                }
+            )
+            with open(f"{temp}/{fname.value}", "ab") as fout:
+                writer.write(fout)
         output_file = SinglefileData(f"{temp}/{fname.value}")
     return output_file
 
 
 @calcfunction
-def analysis(dos_data, band_data, band_kpoints, prefix):
+def analysis(dos_data, dos_folder, structure, band_data, band_kpoints, prefix):
     """Plot the density of states and band structure with sumo"""
-    # Plotting DOS from parsed BandsData
+    # Preparing total DOS using parsed BandsData
     dos_processor = DOSProcessor(
         dos_data.get_bands(), dos_data.get_array("weights"), smearing=0.2
     )
@@ -79,10 +81,49 @@ def analysis(dos_data, band_data, band_kpoints, prefix):
     else:
         dos_efermi = dos_data.get_attribute("efermi")
         pmg_dos = Dos(dos_efermi, dos_energies, {Spin.up: dos_densities[0]})
-    dos_plotter = SDOSPlotter(pmg_dos, {}).get_plot()
-    dos_plotter.plot()
 
+    # Preparing projected DOS from the pdos_bin file
     with TemporaryDirectory() as temp:
+        pdos_bin_data = dos_folder.get_object_content("aiida.pdos_bin", mode="rb")
+        with open(f"{temp}/aiida.pdos_bin", "ab") as pdos_bin:
+            pdos_bin.write(pdos_bin_data)
+        if dos_data.get_attribute("nspins") > 1:
+            eigenvalues = {
+                Spin.up: dos_data.get_bands()[0].T,
+                Spin.down: dos_data.get_bands()[1].T,
+            }
+        else:
+            eigenvalues = {Spin.up: dos_data.get_bands().T}
+        weights = dos_data.get_array("weights") * np.ones(
+            (eigenvalues[Spin.up].shape[0], 1)
+        )
+        pmg_pdos = compute_pdos(
+            f"{temp}/aiida.pdos_bin",
+            eigenvalues,
+            weights,
+            np.linspace(dos_energies.min(), dos_energies.max(), 2001),
+        )
+        sorted_structure = structure.get_pymatgen().get_sorted_structure(
+            key=lambda x: x.specie.Z
+        )
+        for i, site in enumerate(sorted_structure.sites):
+            pmg_pdos[site] = pmg_pdos.pop(i)
+        pmg_complete_dos = CompleteDos(sorted_structure, pmg_dos, pmg_pdos)
+        sumo_pdos = get_pdos(pmg_complete_dos)
+        pdos_total = np.zeros(2000)
+        for orbs in sumo_pdos.values():
+            for dos in orbs.values():
+                dos.densities = dos.get_smeared_densities(0.2)
+                pdos_total += dos.densities[Spin.up]
+        scaling_factor = (
+            pmg_dos.densities[Spin.up][pdos_total.argmax()] / pdos_total.max()
+        )
+        for spin in pmg_dos.densities:
+            pmg_dos.densities[spin] /= scaling_factor
+
+        # Plotting projected DOS
+        dos_plotter = SDOSPlotter(pmg_dos, sumo_pdos).get_plot()
+        dos_plotter.plot()
         dos_plotter.savefig(fname=f"{temp}/{prefix.value}_dos.pdf", bbox_inches="tight")
         dos_plot = SinglefileData(f"{temp}/{prefix.value}_dos.pdf")
 
@@ -198,6 +239,7 @@ class CastepBandPlotWorkChain(WorkChain):
                 "task": "spectral",
                 "spectral_task": "dos",
                 "spectral_perc_extra_bands": 50,
+                "pdos_calculate_weights": True,
             }
         )
         inputs.calc.parameters = dos_parameters
@@ -232,6 +274,8 @@ class CastepBandPlotWorkChain(WorkChain):
         """Analyse the two calculations to plot the density of states and band structure"""
         outputs = analysis(
             self.ctx.dos.outputs.output_bands,
+            self.ctx.dos.called[-1].outputs.retrieved,
+            self.ctx.inputs.calc.structure,
             self.ctx.bands.outputs.output_bands,
             self.ctx.band_kpoints,
             orm.Str(self.ctx.prefix),

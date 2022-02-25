@@ -50,7 +50,7 @@ jobs:
         AIIDA_TEST_BACKEND: ${{ matrix.backend }}
         # show timings of tests
         PYTEST_ADDOPTS: "--durations=0"
-        MOCK_CODE_BASE: ${{ github.workspace }}
+        MOCK_CODE_BASE: ${{ github.workspace }}/tests/registry
       working-directory: ./tests
       run: pytest || exit 0
 

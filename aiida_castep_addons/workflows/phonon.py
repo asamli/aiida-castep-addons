@@ -48,17 +48,17 @@ def add_metadata(file, fname, formula, uuid, label, description):
             writer = PdfFileWriter()
             writer.appendPagesFromReader(reader)
             metadata = reader.getDocumentInfo()
-        writer.addMetadata(metadata)
-        writer.addMetadata(
-            {
-                "/Formula": formula.value,
-                "/WorkchainUUID": uuid.value,
-                "/WorkchainLabel": label.value,
-                "/WorkchainDescription": description.value,
-            }
-        )
-        with open(f"{temp}/{fname.value}", "ab") as fout:
-            writer.write(fout)
+            writer.addMetadata(metadata)
+            writer.addMetadata(
+                {
+                    "/Formula": formula.value,
+                    "/WorkchainUUID": uuid.value,
+                    "/WorkchainLabel": label.value,
+                    "/WorkchainDescription": description.value,
+                }
+            )
+            with open(f"{temp}/{fname.value}", "ab") as fout:
+                writer.write(fout)
         output_file = SinglefileData(f"{temp}/{fname.value}")
     return output_file
 

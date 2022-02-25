@@ -239,11 +239,13 @@ class CastepConvergeWorkChain(WorkChain):
             self.ctx.final_pwcutoff + 1,
             self.inputs.pwcutoff_step.value,
         ):
+            key = f"pwcutoff_{pwcutoff}"
+            if key in self.ctx:
+                continue
             parameters = deepcopy(self.ctx.parameters)
             parameters["cut_off_energy"] = pwcutoff
             inputs.calc.parameters = parameters
             running = self.submit(CastepBaseWorkChain, **inputs)
-            key = f"pwcutoff_{pwcutoff}"
             self.to_context(**{key: running})
         self.report("Running plane-wave cutoff convergence calculations")
 
@@ -291,13 +293,15 @@ class CastepConvergeWorkChain(WorkChain):
         inputs.calc.parameters = parameters
         self.ctx.kspacings = np.arange(
             self.ctx.coarse_kspacing,
-            self.ctx.fine_kspacing,
+            self.ctx.fine_kspacing - 0.01,
             -self.inputs.kspacing_step.value,
         )
         for kspacing in self.ctx.kspacings:
+            key = f"kspacing_{kspacing}"
+            if key in self.ctx:
+                continue
             inputs.kpoints_spacing = kspacing
             running = self.submit(CastepBaseWorkChain, **inputs)
-            key = f"kspacing_{kspacing}"
             self.to_context(**{key: running})
         self.report("Running k-point grid spacing convergence calculations.")
 
@@ -308,6 +312,12 @@ class CastepConvergeWorkChain(WorkChain):
             key = f"kspacing_{kspacing}"
             keys.append(key)
             if len(keys) == 1:
+                continue
+            last_mesh = self.ctx[key].called[-1].inputs.kpoints.get_kpoints_mesh()
+            second_last_mesh = (
+                self.ctx[keys[-2]].called[-1].inputs.kpoints.get_kpoints_mesh()
+            )
+            if last_mesh == second_last_mesh:
                 continue
             last_energy = self.ctx[key].outputs.output_parameters["total_energy"]
             second_last_energy = self.ctx[keys[-2]].outputs.output_parameters[
@@ -325,17 +335,22 @@ class CastepConvergeWorkChain(WorkChain):
                 self.ctx.kspacing_converged = True
                 return
         self.ctx.coarse_kspacing = self.ctx.fine_kspacing
-        if self.ctx.coarse_kspacing <= 0.02:
-            self.report(
-                "K-point spacing too low to decrease further. Ending convergence test."
-            )
-            self.ctx.converged_kspacing = kspacing
-            self.ctx.kspacing_converged = True
-        else:
+        if self.ctx.fine_kspacing > 0.02:
             self.ctx.fine_kspacing -= 0.02
-        self.report(
-            "K-point spacing not converged. Decreasing lower limit by 0.02 A-1."
-        )
+            self.report(
+                "K-point spacing not converged. Decreasing lower limit by 0.02 A-1."
+            )
+        elif self.ctx.fine_kspacing > 0.01:
+            self.ctx.fine_kspacing -= 0.01
+            self.report(
+                "K-point spacing not converged but lower than 0.02 A-1. Decreasing lower limit by 0.01 A-1."
+            )
+        else:
+            self.ctx.converged_kspacing = self.ctx.fine_kspacing
+            self.ctx.kspacing_converged = True
+            self.report(
+                "K-point spacing not converged but too low to decrease further. Taking the lower limit as the converged value."
+            )
 
     def run_supercell_conv(self):
         """Run parallel supercell convergence calculations with the supercell length range and step provided"""
@@ -361,6 +376,9 @@ class CastepConvergeWorkChain(WorkChain):
             self.inputs.supercell_step.value,
         )
         for length in self.ctx.supercell_lengths:
+            key = f"supercell_{length}"
+            if key in self.ctx:
+                continue
             matrix_a = int(np.ceil(length / pmg_lattice.a))
             matrix_b = int(np.ceil(length / pmg_lattice.b))
             matrix_c = int(np.ceil(length / pmg_lattice.c))
@@ -371,7 +389,6 @@ class CastepConvergeWorkChain(WorkChain):
             parameters.update({"phonon_supercell_matrix": supercell_matrix})
             inputs.calc.parameters = parameters
             running = self.submit(CastepBaseWorkChain, **inputs)
-            key = f"supercell_{length}"
             self.to_context(**{key: running})
         self.report("Running supercell convergence calculations")
 

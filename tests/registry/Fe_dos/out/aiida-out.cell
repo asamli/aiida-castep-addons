@@ -1,4 +1,4 @@
-# CELL file written 14:00:13 (GMT+0.0) 15th February 2022 from run aiida
+# CELL file written 09:31:06 (GMT+0.0) 25th February 2022 from run aiida
 
 %BLOCK lattice_cart
    ANG
@@ -21,6 +21,10 @@ FIX_COM : true
 %BLOCK species_pot
    Fe      3|2.4|2.4|1.0|8|9|10|40:41:32U2U2(qc=5.5)
 %ENDBLOCK species_pot
+
+%BLOCK species_lcao_states
+   Fe      3
+%ENDBLOCK species_lcao_states
 
 SYMMETRY_TOL :     0.001000
 
@@ -267,15 +271,15 @@ SYMMETRY_TOL :     0.001000
           0.000000000000000       0.000000000000000       0.000000000000000
 %ENDBLOCK symmetry_ops
 
-kpoint_mp_grid :   22  22  22
+kpoint_mp_grid :   37  37  37
 
-bs_kpoint_mp_grid :    8   8   8
+bs_kpoint_mp_grid :   13  13  13
 
-optics_kpoint_mp_grid :    8   8   8
+optics_kpoint_mp_grid :   13  13  13
 
-elnes_kpoint_mp_grid :    8   8   8
+elnes_kpoint_mp_grid :   13  13  13
 
-magres_kpoint_mp_grid :    8   8   8
+magres_kpoint_mp_grid :   13  13  13
 
-phonon_kpoint_mp_grid :    8   8   8
+phonon_kpoint_mp_grid :   13  13  13
 

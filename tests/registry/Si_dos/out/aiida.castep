@@ -62,14 +62,14 @@
  FFT Lib : mkl
  Fundamental constants values: CODATA 2014
 
- Run started: Tue, 25 Jan 2022 13:54:44 +0000
+ Run started: Fri, 25 Feb 2022 10:29:14 +0000
 
  Atomic calculation performed for Si: 1s2 2s2 2p6 3s2 3p2
 
  Converged in 56 iterations to an ae energy of -7872.211 eV
 
    ============================================================                
-   | Pseudopotential Report - Date of generation 25-01-2022   |                
+   | Pseudopotential Report - Date of generation 25-02-2022   |                
    ------------------------------------------------------------                
    | Element: Si Ionic charge:  4.00 Level of theory: PBESOL  |                
    | Atomic Solver: Koelling-Harmon                           |                
@@ -99,9 +99,9 @@
 
  Pseudo atomic calculation performed for Si 3s2 3p2
 
- Converged in 15 iterations to a total energy of -163.1776 eV
+ Converged in 15 iterations to a total energy of -163.1829 eV
  Calculation parallelised over 4 processes.
- Data is distributed by G-vector(2-way) and k-point(2-way)
+ Data is distributed by k-point(4-way)
 
  ************************************ Title ************************************
  Si_pbesol_dos+bands
@@ -149,7 +149,7 @@
  output    efield chi2 unit                     : pm/V
   
  wavefunctions paging                           : none
- random number generator seed                   : randomised (135444280)
+ random number generator seed                   : randomised (102914957)
  data distribution                              : optimal for this architecture
  optimization strategy                          : balance speed and memory
 
@@ -167,9 +167,9 @@
 
  **************************** Basis Set Parameters *****************************
   
- plane wave basis set cut-off                   :   250.0000   eV
+ plane wave basis set cut-off                   :   350.0000   eV
  size of standard grid                          :     1.7500
- size of   fine   gmax                          :    14.1758   1/A
+ size of   fine   gmax                          :    16.7730   1/A
  finite basis set correction                    : none
 
  **************************** Electronic Parameters ****************************
@@ -201,12 +201,13 @@
  density-mixing scheme                          : Broyden
  max. length of mixing history                  :         20
  charge density mixing amplitude                : 0.8000    
- cut-off energy for mixing                      :  250.0       eV
+ cut-off energy for mixing                      :  350.0       eV
 
  *********************** Population Analysis Parameters ************************
   
  Population analysis with cutoff                :  3.000       A
  Population analysis output                     : summary and pdos components
+ Partial DOS weights calculated
 
  ********************* Electronic Spectroscopy Parameters **********************
   
@@ -272,9 +273,9 @@
                            -------------------------------
                               k-Points For BZ Sampling
                            -------------------------------
-                       MP grid size for SCF calculation is  4  4  4
+                       MP grid size for SCF calculation is  8  8  8
                             with an offset of   0.000  0.000  0.000
-                       Number of kpoints used =            10
+                       Number of kpoints used =            60
 
                            -------------------------------
                                Symmetry and Constraints
@@ -302,38 +303,38 @@
   
 +---------------- MEMORY AND SCRATCH DISK ESTIMATES PER PROCESS --------------+
 |                                                     Memory          Disk    |
-| Baseline code, static data and system overhead      348.0 MB         0.0 MB |
+| Baseline code, static data and system overhead      349.0 MB         0.0 MB |
 | BLAS internal memory storage                          0.0 MB         0.0 MB |
-| Model and support data                               81.0 MB         8.1 MB |
-| Electronic energy minimisation requirements           1.1 MB         0.0 MB |
-| Force calculation requirements                        0.5 MB         0.0 MB |
+| Model and support data                               85.8 MB        37.7 MB |
+| Electronic energy minimisation requirements           5.2 MB         0.0 MB |
+| Force calculation requirements                        2.0 MB         0.0 MB |
 |                                               ----------------------------- |
-| Approx. total storage required per process          430.0 MB         8.1 MB |
+| Approx. total storage required per process          440.0 MB        37.7 MB |
 |                                                                             |
 | Requirements will fluctuate during execution and may exceed these estimates |
 +-----------------------------------------------------------------------------+
-Calculating total energy with cut-off of  250.000 eV.
+Calculating total energy with cut-off of  350.000 eV.
 ------------------------------------------------------------------------ <-- SCF
 SCF loop      Energy           Fermi           Energy gain       Timer   <-- SCF
                                energy          per atom          (sec)   <-- SCF
 ------------------------------------------------------------------------ <-- SCF
-Initial  -1.42788783E+001  0.00000000E+000                         4.01  <-- SCF
-      1  -3.13890027E+002  7.21297257E+000   1.49805574E+002       4.06  <-- SCF
-      2  -3.37305913E+002  4.53726569E+000   1.17079427E+001       4.09  <-- SCF
-      3  -3.38078863E+002  4.31973504E+000   3.86474951E-001       4.13  <-- SCF
-      4  -3.37890052E+002  4.54369392E+000  -9.44054455E-002       4.16  <-- SCF
-      5  -3.37878352E+002  4.64550801E+000  -5.84995508E-003       4.19  <-- SCF
-      6  -3.37879005E+002  4.65379223E+000   3.26453954E-004       4.22  <-- SCF
-      7  -3.37879121E+002  4.65959339E+000   5.82042852E-005       4.25  <-- SCF
-      8  -3.37879122E+002  4.65970919E+000   4.00333997E-007       4.27  <-- SCF
-      9  -3.37879122E+002  4.65975205E+000   4.44738106E-008       4.29  <-- SCF
+Initial  -1.35890459E+001  0.00000000E+000                         4.67  <-- SCF
+      1  -3.16536507E+002  6.95884893E+000   1.51473731E+002       4.93  <-- SCF
+      2  -3.37280485E+002  4.80812981E+000   1.03719887E+001       5.16  <-- SCF
+      3  -3.38082618E+002  4.31952681E+000   4.01066895E-001       5.32  <-- SCF
+      4  -3.37895475E+002  4.54639255E+000  -9.35717590E-002       5.54  <-- SCF
+      5  -3.37883783E+002  4.64895947E+000  -5.84610929E-003       5.79  <-- SCF
+      6  -3.37884415E+002  4.65744197E+000   3.16251179E-004       6.03  <-- SCF
+      7  -3.37884525E+002  4.66341285E+000   5.48457496E-005       6.21  <-- SCF
+      8  -3.37884525E+002  4.66349524E+000   2.21453741E-007       6.37  <-- SCF
+      9  -3.37884525E+002  4.66355372E+000   2.87043289E-008       6.58  <-- SCF
 ------------------------------------------------------------------------ <-- SCF
  
-Final energy, E             =  -337.8791105520     eV
-Final free energy (E-TS)    =  -337.8791219904     eV
+Final energy, E             =  -337.8843921988     eV
+Final free energy (E-TS)    =  -337.8845253643     eV
 (energies not corrected for finite basis set)
  
-NB est. 0K energy (E-0.5TS)      =  -337.8791162712     eV
+NB est. 0K energy (E-0.5TS)      =  -337.8844587815     eV
  
 
 Writing analysis data to aiida.castep_bin
@@ -343,7 +344,7 @@ Writing model to aiida.check
 +---------------- MEMORY AND SCRATCH DISK ESTIMATES PER PROCESS --------------+
 |                                                     Memory          Disk    |
 |                                               ----------------------------- |
-| Approx. total storage required per process           93.3 MB        16.2 MB |
+| Approx. total storage required per process          122.4 MB        37.7 MB |
 |                                                                             |
 | Requirements will fluctuate during execution and may exceed these estimates |
 +-----------------------------------------------------------------------------+
@@ -357,24 +358,339 @@ Writing model to aiida.check
   + Data distributed by k-point(4-way)                                +
   +                                                                   +
   =====================================================================
-  Starting k-point:        1 of       14 on this process      |<-- SPEC
-  Starting k-point:        2 of       14 on this process      |<-- SPEC
-  Starting k-point:        3 of       14 on this process      |<-- SPEC
-  Starting k-point:        4 of       14 on this process      |<-- SPEC
-  Starting k-point:        5 of       14 on this process      |<-- SPEC
-  Starting k-point:        6 of       14 on this process      |<-- SPEC
-  Starting k-point:        7 of       14 on this process      |<-- SPEC
-  Starting k-point:        8 of       14 on this process      |<-- SPEC
-  Starting k-point:        9 of       14 on this process      |<-- SPEC
-  Starting k-point:       10 of       14 on this process      |<-- SPEC
-  Starting k-point:       11 of       14 on this process      |<-- SPEC
-  Starting k-point:       12 of       14 on this process      |<-- SPEC
-  Starting k-point:       13 of       14 on this process      |<-- SPEC
-  Starting k-point:       14 of       14 on this process      |<-- SPEC
-  Total time to compute matrix elements              0.61 sec |<-- SPEC
+
+ Pseudo atomic calculation performed for Si 3s2 3p2
+
+ Converged in 15 iterations to a total energy of -163.1829 eV
+  Starting k-point:        1 of      325 on this process      |<-- SPEC
+  Starting k-point:        2 of      325 on this process      |<-- SPEC
+  Starting k-point:        3 of      325 on this process      |<-- SPEC
+  Starting k-point:        4 of      325 on this process      |<-- SPEC
+  Starting k-point:        5 of      325 on this process      |<-- SPEC
+  Starting k-point:        6 of      325 on this process      |<-- SPEC
+  Starting k-point:        7 of      325 on this process      |<-- SPEC
+  Starting k-point:        8 of      325 on this process      |<-- SPEC
+  Starting k-point:        9 of      325 on this process      |<-- SPEC
+  Starting k-point:       10 of      325 on this process      |<-- SPEC
+  Starting k-point:       11 of      325 on this process      |<-- SPEC
+  Starting k-point:       12 of      325 on this process      |<-- SPEC
+  Starting k-point:       13 of      325 on this process      |<-- SPEC
+  Starting k-point:       14 of      325 on this process      |<-- SPEC
+  Starting k-point:       15 of      325 on this process      |<-- SPEC
+  Starting k-point:       16 of      325 on this process      |<-- SPEC
+  Starting k-point:       17 of      325 on this process      |<-- SPEC
+  Starting k-point:       18 of      325 on this process      |<-- SPEC
+  Starting k-point:       19 of      325 on this process      |<-- SPEC
+  Starting k-point:       20 of      325 on this process      |<-- SPEC
+  Starting k-point:       21 of      325 on this process      |<-- SPEC
+  Starting k-point:       22 of      325 on this process      |<-- SPEC
+  Starting k-point:       23 of      325 on this process      |<-- SPEC
+  Starting k-point:       24 of      325 on this process      |<-- SPEC
+  Starting k-point:       25 of      325 on this process      |<-- SPEC
+  Starting k-point:       26 of      325 on this process      |<-- SPEC
+  Starting k-point:       27 of      325 on this process      |<-- SPEC
+  Starting k-point:       28 of      325 on this process      |<-- SPEC
+  Starting k-point:       29 of      325 on this process      |<-- SPEC
+  Starting k-point:       30 of      325 on this process      |<-- SPEC
+  Starting k-point:       31 of      325 on this process      |<-- SPEC
+  Starting k-point:       32 of      325 on this process      |<-- SPEC
+  Starting k-point:       33 of      325 on this process      |<-- SPEC
+  Starting k-point:       34 of      325 on this process      |<-- SPEC
+  Starting k-point:       35 of      325 on this process      |<-- SPEC
+  Starting k-point:       36 of      325 on this process      |<-- SPEC
+  Starting k-point:       37 of      325 on this process      |<-- SPEC
+  Starting k-point:       38 of      325 on this process      |<-- SPEC
+  Starting k-point:       39 of      325 on this process      |<-- SPEC
+  Starting k-point:       40 of      325 on this process      |<-- SPEC
+  Starting k-point:       41 of      325 on this process      |<-- SPEC
+  Starting k-point:       42 of      325 on this process      |<-- SPEC
+  Starting k-point:       43 of      325 on this process      |<-- SPEC
+  Starting k-point:       44 of      325 on this process      |<-- SPEC
+  Starting k-point:       45 of      325 on this process      |<-- SPEC
+  Starting k-point:       46 of      325 on this process      |<-- SPEC
+  Starting k-point:       47 of      325 on this process      |<-- SPEC
+  Starting k-point:       48 of      325 on this process      |<-- SPEC
+  Starting k-point:       49 of      325 on this process      |<-- SPEC
+  Starting k-point:       50 of      325 on this process      |<-- SPEC
+  Starting k-point:       51 of      325 on this process      |<-- SPEC
+  Starting k-point:       52 of      325 on this process      |<-- SPEC
+  Starting k-point:       53 of      325 on this process      |<-- SPEC
+  Starting k-point:       54 of      325 on this process      |<-- SPEC
+  Starting k-point:       55 of      325 on this process      |<-- SPEC
+  Starting k-point:       56 of      325 on this process      |<-- SPEC
+  Starting k-point:       57 of      325 on this process      |<-- SPEC
+  Starting k-point:       58 of      325 on this process      |<-- SPEC
+  Starting k-point:       59 of      325 on this process      |<-- SPEC
+  Starting k-point:       60 of      325 on this process      |<-- SPEC
+  Starting k-point:       61 of      325 on this process      |<-- SPEC
+  Starting k-point:       62 of      325 on this process      |<-- SPEC
+  Starting k-point:       63 of      325 on this process      |<-- SPEC
+  Starting k-point:       64 of      325 on this process      |<-- SPEC
+  Starting k-point:       65 of      325 on this process      |<-- SPEC
+  Starting k-point:       66 of      325 on this process      |<-- SPEC
+  Starting k-point:       67 of      325 on this process      |<-- SPEC
+  Starting k-point:       68 of      325 on this process      |<-- SPEC
+  Starting k-point:       69 of      325 on this process      |<-- SPEC
+  Starting k-point:       70 of      325 on this process      |<-- SPEC
+  Starting k-point:       71 of      325 on this process      |<-- SPEC
+  Starting k-point:       72 of      325 on this process      |<-- SPEC
+  Starting k-point:       73 of      325 on this process      |<-- SPEC
+  Starting k-point:       74 of      325 on this process      |<-- SPEC
+  Starting k-point:       75 of      325 on this process      |<-- SPEC
+  Starting k-point:       76 of      325 on this process      |<-- SPEC
+  Starting k-point:       77 of      325 on this process      |<-- SPEC
+  Starting k-point:       78 of      325 on this process      |<-- SPEC
+  Starting k-point:       79 of      325 on this process      |<-- SPEC
+  Starting k-point:       80 of      325 on this process      |<-- SPEC
+  Starting k-point:       81 of      325 on this process      |<-- SPEC
+  Starting k-point:       82 of      325 on this process      |<-- SPEC
+  Starting k-point:       83 of      325 on this process      |<-- SPEC
+  Starting k-point:       84 of      325 on this process      |<-- SPEC
+  Starting k-point:       85 of      325 on this process      |<-- SPEC
+  Starting k-point:       86 of      325 on this process      |<-- SPEC
+  Starting k-point:       87 of      325 on this process      |<-- SPEC
+  Starting k-point:       88 of      325 on this process      |<-- SPEC
+  Starting k-point:       89 of      325 on this process      |<-- SPEC
+  Starting k-point:       90 of      325 on this process      |<-- SPEC
+  Starting k-point:       91 of      325 on this process      |<-- SPEC
+  Starting k-point:       92 of      325 on this process      |<-- SPEC
+  Starting k-point:       93 of      325 on this process      |<-- SPEC
+  Starting k-point:       94 of      325 on this process      |<-- SPEC
+  Starting k-point:       95 of      325 on this process      |<-- SPEC
+  Starting k-point:       96 of      325 on this process      |<-- SPEC
+  Starting k-point:       97 of      325 on this process      |<-- SPEC
+  Starting k-point:       98 of      325 on this process      |<-- SPEC
+  Starting k-point:       99 of      325 on this process      |<-- SPEC
+  Starting k-point:      100 of      325 on this process      |<-- SPEC
+  Starting k-point:      101 of      325 on this process      |<-- SPEC
+  Starting k-point:      102 of      325 on this process      |<-- SPEC
+  Starting k-point:      103 of      325 on this process      |<-- SPEC
+  Starting k-point:      104 of      325 on this process      |<-- SPEC
+  Starting k-point:      105 of      325 on this process      |<-- SPEC
+  Starting k-point:      106 of      325 on this process      |<-- SPEC
+  Starting k-point:      107 of      325 on this process      |<-- SPEC
+  Starting k-point:      108 of      325 on this process      |<-- SPEC
+  Starting k-point:      109 of      325 on this process      |<-- SPEC
+  Starting k-point:      110 of      325 on this process      |<-- SPEC
+  Starting k-point:      111 of      325 on this process      |<-- SPEC
+  Starting k-point:      112 of      325 on this process      |<-- SPEC
+  Starting k-point:      113 of      325 on this process      |<-- SPEC
+  Starting k-point:      114 of      325 on this process      |<-- SPEC
+  Starting k-point:      115 of      325 on this process      |<-- SPEC
+  Starting k-point:      116 of      325 on this process      |<-- SPEC
+  Starting k-point:      117 of      325 on this process      |<-- SPEC
+  Starting k-point:      118 of      325 on this process      |<-- SPEC
+  Starting k-point:      119 of      325 on this process      |<-- SPEC
+  Starting k-point:      120 of      325 on this process      |<-- SPEC
+  Starting k-point:      121 of      325 on this process      |<-- SPEC
+  Starting k-point:      122 of      325 on this process      |<-- SPEC
+  Starting k-point:      123 of      325 on this process      |<-- SPEC
+  Starting k-point:      124 of      325 on this process      |<-- SPEC
+  Starting k-point:      125 of      325 on this process      |<-- SPEC
+  Starting k-point:      126 of      325 on this process      |<-- SPEC
+  Starting k-point:      127 of      325 on this process      |<-- SPEC
+  Starting k-point:      128 of      325 on this process      |<-- SPEC
+  Starting k-point:      129 of      325 on this process      |<-- SPEC
+  Starting k-point:      130 of      325 on this process      |<-- SPEC
+  Starting k-point:      131 of      325 on this process      |<-- SPEC
+  Starting k-point:      132 of      325 on this process      |<-- SPEC
+  Starting k-point:      133 of      325 on this process      |<-- SPEC
+  Starting k-point:      134 of      325 on this process      |<-- SPEC
+  Starting k-point:      135 of      325 on this process      |<-- SPEC
+  Starting k-point:      136 of      325 on this process      |<-- SPEC
+  Starting k-point:      137 of      325 on this process      |<-- SPEC
+  Starting k-point:      138 of      325 on this process      |<-- SPEC
+  Starting k-point:      139 of      325 on this process      |<-- SPEC
+  Starting k-point:      140 of      325 on this process      |<-- SPEC
+  Starting k-point:      141 of      325 on this process      |<-- SPEC
+  Starting k-point:      142 of      325 on this process      |<-- SPEC
+  Starting k-point:      143 of      325 on this process      |<-- SPEC
+  Starting k-point:      144 of      325 on this process      |<-- SPEC
+  Starting k-point:      145 of      325 on this process      |<-- SPEC
+  Starting k-point:      146 of      325 on this process      |<-- SPEC
+  Starting k-point:      147 of      325 on this process      |<-- SPEC
+  Starting k-point:      148 of      325 on this process      |<-- SPEC
+  Starting k-point:      149 of      325 on this process      |<-- SPEC
+  Starting k-point:      150 of      325 on this process      |<-- SPEC
+  Starting k-point:      151 of      325 on this process      |<-- SPEC
+  Starting k-point:      152 of      325 on this process      |<-- SPEC
+  Starting k-point:      153 of      325 on this process      |<-- SPEC
+  Starting k-point:      154 of      325 on this process      |<-- SPEC
+  Starting k-point:      155 of      325 on this process      |<-- SPEC
+  Starting k-point:      156 of      325 on this process      |<-- SPEC
+  Starting k-point:      157 of      325 on this process      |<-- SPEC
+  Starting k-point:      158 of      325 on this process      |<-- SPEC
+  Starting k-point:      159 of      325 on this process      |<-- SPEC
+  Starting k-point:      160 of      325 on this process      |<-- SPEC
+  Starting k-point:      161 of      325 on this process      |<-- SPEC
+  Starting k-point:      162 of      325 on this process      |<-- SPEC
+  Starting k-point:      163 of      325 on this process      |<-- SPEC
+  Starting k-point:      164 of      325 on this process      |<-- SPEC
+  Starting k-point:      165 of      325 on this process      |<-- SPEC
+  Starting k-point:      166 of      325 on this process      |<-- SPEC
+  Starting k-point:      167 of      325 on this process      |<-- SPEC
+  Starting k-point:      168 of      325 on this process      |<-- SPEC
+  Starting k-point:      169 of      325 on this process      |<-- SPEC
+  Starting k-point:      170 of      325 on this process      |<-- SPEC
+  Starting k-point:      171 of      325 on this process      |<-- SPEC
+  Starting k-point:      172 of      325 on this process      |<-- SPEC
+  Starting k-point:      173 of      325 on this process      |<-- SPEC
+  Starting k-point:      174 of      325 on this process      |<-- SPEC
+  Starting k-point:      175 of      325 on this process      |<-- SPEC
+  Starting k-point:      176 of      325 on this process      |<-- SPEC
+  Starting k-point:      177 of      325 on this process      |<-- SPEC
+  Starting k-point:      178 of      325 on this process      |<-- SPEC
+  Starting k-point:      179 of      325 on this process      |<-- SPEC
+  Starting k-point:      180 of      325 on this process      |<-- SPEC
+  Starting k-point:      181 of      325 on this process      |<-- SPEC
+  Starting k-point:      182 of      325 on this process      |<-- SPEC
+  Starting k-point:      183 of      325 on this process      |<-- SPEC
+  Starting k-point:      184 of      325 on this process      |<-- SPEC
+  Starting k-point:      185 of      325 on this process      |<-- SPEC
+  Starting k-point:      186 of      325 on this process      |<-- SPEC
+  Starting k-point:      187 of      325 on this process      |<-- SPEC
+  Starting k-point:      188 of      325 on this process      |<-- SPEC
+  Starting k-point:      189 of      325 on this process      |<-- SPEC
+  Starting k-point:      190 of      325 on this process      |<-- SPEC
+  Starting k-point:      191 of      325 on this process      |<-- SPEC
+  Starting k-point:      192 of      325 on this process      |<-- SPEC
+  Starting k-point:      193 of      325 on this process      |<-- SPEC
+  Starting k-point:      194 of      325 on this process      |<-- SPEC
+  Starting k-point:      195 of      325 on this process      |<-- SPEC
+  Starting k-point:      196 of      325 on this process      |<-- SPEC
+  Starting k-point:      197 of      325 on this process      |<-- SPEC
+  Starting k-point:      198 of      325 on this process      |<-- SPEC
+  Starting k-point:      199 of      325 on this process      |<-- SPEC
+  Starting k-point:      200 of      325 on this process      |<-- SPEC
+  Starting k-point:      201 of      325 on this process      |<-- SPEC
+  Starting k-point:      202 of      325 on this process      |<-- SPEC
+  Starting k-point:      203 of      325 on this process      |<-- SPEC
+  Starting k-point:      204 of      325 on this process      |<-- SPEC
+  Starting k-point:      205 of      325 on this process      |<-- SPEC
+  Starting k-point:      206 of      325 on this process      |<-- SPEC
+  Starting k-point:      207 of      325 on this process      |<-- SPEC
+  Starting k-point:      208 of      325 on this process      |<-- SPEC
+  Starting k-point:      209 of      325 on this process      |<-- SPEC
+  Starting k-point:      210 of      325 on this process      |<-- SPEC
+  Starting k-point:      211 of      325 on this process      |<-- SPEC
+  Starting k-point:      212 of      325 on this process      |<-- SPEC
+  Starting k-point:      213 of      325 on this process      |<-- SPEC
+  Starting k-point:      214 of      325 on this process      |<-- SPEC
+  Starting k-point:      215 of      325 on this process      |<-- SPEC
+  Starting k-point:      216 of      325 on this process      |<-- SPEC
+  Starting k-point:      217 of      325 on this process      |<-- SPEC
+  Starting k-point:      218 of      325 on this process      |<-- SPEC
+  Starting k-point:      219 of      325 on this process      |<-- SPEC
+  Starting k-point:      220 of      325 on this process      |<-- SPEC
+  Starting k-point:      221 of      325 on this process      |<-- SPEC
+  Starting k-point:      222 of      325 on this process      |<-- SPEC
+  Starting k-point:      223 of      325 on this process      |<-- SPEC
+  Starting k-point:      224 of      325 on this process      |<-- SPEC
+  Starting k-point:      225 of      325 on this process      |<-- SPEC
+  Starting k-point:      226 of      325 on this process      |<-- SPEC
+  Starting k-point:      227 of      325 on this process      |<-- SPEC
+  Starting k-point:      228 of      325 on this process      |<-- SPEC
+  Starting k-point:      229 of      325 on this process      |<-- SPEC
+  Starting k-point:      230 of      325 on this process      |<-- SPEC
+  Starting k-point:      231 of      325 on this process      |<-- SPEC
+  Starting k-point:      232 of      325 on this process      |<-- SPEC
+  Starting k-point:      233 of      325 on this process      |<-- SPEC
+  Starting k-point:      234 of      325 on this process      |<-- SPEC
+  Starting k-point:      235 of      325 on this process      |<-- SPEC
+  Starting k-point:      236 of      325 on this process      |<-- SPEC
+  Starting k-point:      237 of      325 on this process      |<-- SPEC
+  Starting k-point:      238 of      325 on this process      |<-- SPEC
+  Starting k-point:      239 of      325 on this process      |<-- SPEC
+  Starting k-point:      240 of      325 on this process      |<-- SPEC
+  Starting k-point:      241 of      325 on this process      |<-- SPEC
+  Starting k-point:      242 of      325 on this process      |<-- SPEC
+  Starting k-point:      243 of      325 on this process      |<-- SPEC
+  Starting k-point:      244 of      325 on this process      |<-- SPEC
+  Starting k-point:      245 of      325 on this process      |<-- SPEC
+  Starting k-point:      246 of      325 on this process      |<-- SPEC
+  Starting k-point:      247 of      325 on this process      |<-- SPEC
+  Starting k-point:      248 of      325 on this process      |<-- SPEC
+  Starting k-point:      249 of      325 on this process      |<-- SPEC
+  Starting k-point:      250 of      325 on this process      |<-- SPEC
+  Starting k-point:      251 of      325 on this process      |<-- SPEC
+  Starting k-point:      252 of      325 on this process      |<-- SPEC
+  Starting k-point:      253 of      325 on this process      |<-- SPEC
+  Starting k-point:      254 of      325 on this process      |<-- SPEC
+  Starting k-point:      255 of      325 on this process      |<-- SPEC
+  Starting k-point:      256 of      325 on this process      |<-- SPEC
+  Starting k-point:      257 of      325 on this process      |<-- SPEC
+  Starting k-point:      258 of      325 on this process      |<-- SPEC
+  Starting k-point:      259 of      325 on this process      |<-- SPEC
+  Starting k-point:      260 of      325 on this process      |<-- SPEC
+  Starting k-point:      261 of      325 on this process      |<-- SPEC
+  Starting k-point:      262 of      325 on this process      |<-- SPEC
+  Starting k-point:      263 of      325 on this process      |<-- SPEC
+  Starting k-point:      264 of      325 on this process      |<-- SPEC
+  Starting k-point:      265 of      325 on this process      |<-- SPEC
+  Starting k-point:      266 of      325 on this process      |<-- SPEC
+  Starting k-point:      267 of      325 on this process      |<-- SPEC
+  Starting k-point:      268 of      325 on this process      |<-- SPEC
+  Starting k-point:      269 of      325 on this process      |<-- SPEC
+  Starting k-point:      270 of      325 on this process      |<-- SPEC
+  Starting k-point:      271 of      325 on this process      |<-- SPEC
+  Starting k-point:      272 of      325 on this process      |<-- SPEC
+  Starting k-point:      273 of      325 on this process      |<-- SPEC
+  Starting k-point:      274 of      325 on this process      |<-- SPEC
+  Starting k-point:      275 of      325 on this process      |<-- SPEC
+  Starting k-point:      276 of      325 on this process      |<-- SPEC
+  Starting k-point:      277 of      325 on this process      |<-- SPEC
+  Starting k-point:      278 of      325 on this process      |<-- SPEC
+  Starting k-point:      279 of      325 on this process      |<-- SPEC
+  Starting k-point:      280 of      325 on this process      |<-- SPEC
+  Starting k-point:      281 of      325 on this process      |<-- SPEC
+  Starting k-point:      282 of      325 on this process      |<-- SPEC
+  Starting k-point:      283 of      325 on this process      |<-- SPEC
+  Starting k-point:      284 of      325 on this process      |<-- SPEC
+  Starting k-point:      285 of      325 on this process      |<-- SPEC
+  Starting k-point:      286 of      325 on this process      |<-- SPEC
+  Starting k-point:      287 of      325 on this process      |<-- SPEC
+  Starting k-point:      288 of      325 on this process      |<-- SPEC
+  Starting k-point:      289 of      325 on this process      |<-- SPEC
+  Starting k-point:      290 of      325 on this process      |<-- SPEC
+  Starting k-point:      291 of      325 on this process      |<-- SPEC
+  Starting k-point:      292 of      325 on this process      |<-- SPEC
+  Starting k-point:      293 of      325 on this process      |<-- SPEC
+  Starting k-point:      294 of      325 on this process      |<-- SPEC
+  Starting k-point:      295 of      325 on this process      |<-- SPEC
+  Starting k-point:      296 of      325 on this process      |<-- SPEC
+  Starting k-point:      297 of      325 on this process      |<-- SPEC
+  Starting k-point:      298 of      325 on this process      |<-- SPEC
+  Starting k-point:      299 of      325 on this process      |<-- SPEC
+  Starting k-point:      300 of      325 on this process      |<-- SPEC
+  Starting k-point:      301 of      325 on this process      |<-- SPEC
+  Starting k-point:      302 of      325 on this process      |<-- SPEC
+  Starting k-point:      303 of      325 on this process      |<-- SPEC
+  Starting k-point:      304 of      325 on this process      |<-- SPEC
+  Starting k-point:      305 of      325 on this process      |<-- SPEC
+  Starting k-point:      306 of      325 on this process      |<-- SPEC
+  Starting k-point:      307 of      325 on this process      |<-- SPEC
+  Starting k-point:      308 of      325 on this process      |<-- SPEC
+  Starting k-point:      309 of      325 on this process      |<-- SPEC
+  Starting k-point:      310 of      325 on this process      |<-- SPEC
+  Starting k-point:      311 of      325 on this process      |<-- SPEC
+  Starting k-point:      312 of      325 on this process      |<-- SPEC
+  Starting k-point:      313 of      325 on this process      |<-- SPEC
+  Starting k-point:      314 of      325 on this process      |<-- SPEC
+  Starting k-point:      315 of      325 on this process      |<-- SPEC
+  Starting k-point:      316 of      325 on this process      |<-- SPEC
+  Starting k-point:      317 of      325 on this process      |<-- SPEC
+  Starting k-point:      318 of      325 on this process      |<-- SPEC
+  Starting k-point:      319 of      325 on this process      |<-- SPEC
+  Starting k-point:      320 of      325 on this process      |<-- SPEC
+  Starting k-point:      321 of      325 on this process      |<-- SPEC
+  Starting k-point:      322 of      325 on this process      |<-- SPEC
+  Starting k-point:      323 of      325 on this process      |<-- SPEC
+  Starting k-point:      324 of      325 on this process      |<-- SPEC
+  Starting k-point:      325 of      325 on this process      |<-- SPEC
+  Total time to compute matrix elements             28.21 sec |<-- SPEC
   
   + Calculation re-parallelised over 4 processes.                     +
-  + Data distributed by G-vector(2-way), k-point(2-way)               +
+  + Data distributed by k-point(4-way)                                +
 
  ******************** Symmetrised Forces ********************
  *                                                          *
@@ -382,27 +698,27 @@ Writing model to aiida.check
  * -------------------------------------------------------- *
  *                         x            y            z      *
  *                                                          *
- * Si              1     -0.00000      0.00000      0.00000 *
+ * Si              1      0.00000      0.00000      0.00000 *
  * Si              2      0.00000      0.00000      0.00000 *
  *                                                          *
  ************************************************************
 
  Pseudo atomic calculation performed for Si 3s2 3p2
 
- Converged in 15 iterations to a total energy of -163.1776 eV
-Charge spilling parameter for spin component 1 = 1.13%
+ Converged in 15 iterations to a total energy of -163.1829 eV
+Charge spilling parameter for spin component 1 = 0.96%
 
             Orbital Populations       
      Ion    Atom   Orbital             Charge
   -------------------------------------------
      Si     1      S                    1.369
-     Si     1      Px                   0.861
+     Si     1      Px                   0.851
      Si     1      Py                   0.900
-     Si     1      Pz                   0.870
+     Si     1      Pz                   0.880
      Si     2      S                    1.369
-     Si     2      Px                   0.861
+     Si     2      Px                   0.850
      Si     2      Py                   0.900
-     Si     2      Pz                   0.870
+     Si     2      Pz                   0.880
   -------------------------------------------
                            Total:       8.000
   -------------------------------------------
@@ -428,17 +744,16 @@ Writing model to aiida.check
  A BibTeX formatted list of references used in this run has been written to 
  aiida.bib
  
-Initialisation time =      3.62 s
-Calculation time    =      1.49 s
-Finalisation time   =      0.00 s
-Total time          =      5.11 s
-Peak Memory Use     = 751100 kB
+Initialisation time =      4.30 s
+Calculation time    =     31.31 s
+Finalisation time   =      0.02 s
+Total time          =     35.63 s
+Peak Memory Use     = 751172 kB
   
-Overall parallel efficiency rating: Poor (44%)                                  
+Overall parallel efficiency rating: Very good (88%)                             
   
 Data was distributed by:-
-G-vector (2-way); efficiency rating: Satisfactory (63%)                         
-k-point (2-way); efficiency rating: Satisfactory (63%)                          
+k-point (4-way); efficiency rating: Excellent (90%)                             
   
 Parallel notes:
-1) Calculation only took 5.1 s, so efficiency estimates may be inaccurate.      
+1) Calculation only took 35.6 s, so efficiency estimates may be inaccurate.     

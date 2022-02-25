@@ -62,14 +62,14 @@
  FFT Lib : mkl
  Fundamental constants values: CODATA 2014
 
- Run started: Tue, 15 Feb 2022 14:00:19 +0000
+ Run started: Fri, 25 Feb 2022 09:31:10 +0000
 
  Atomic calculation performed for Fe: 1s2 2s2 2p6 3s2 3p6 3d6 4s2
 
  Converged in 103 iterations to an ae energy of -34592.796 eV
 
    ============================================================                
-   | Pseudopotential Report - Date of generation 15-02-2022   |                
+   | Pseudopotential Report - Date of generation 25-02-2022   |                
    ------------------------------------------------------------                
    | Element: Fe Ionic charge:  8.00 Level of theory: PBESOL  |                
    | Atomic Solver: Koelling-Harmon                           |                
@@ -101,7 +101,7 @@
 
  Converged in 32 iterations to a total energy of -849.1691 eV
  Calculation parallelised over 4 processes.
- Data is distributed by G-vector(2-way) and k-point(2-way)
+ Data is distributed by k-point(4-way)
 
  ************************************ Title ************************************
  Fe_pbesol_dos+bands
@@ -149,7 +149,7 @@
  output    efield chi2 unit                     : pm/V
   
  wavefunctions paging                           : none
- random number generator seed                   : randomised (140019133)
+ random number generator seed                   : randomised (93110989)
  data distribution                              : optimal for this architecture
  optimization strategy                          : balance speed and memory
 
@@ -275,9 +275,9 @@
                            -------------------------------
                               k-Points For BZ Sampling
                            -------------------------------
-                       MP grid size for SCF calculation is  8  8  8
+                       MP grid size for SCF calculation is 13 13 13
                             with an offset of   0.000  0.000  0.000
-                       Number of kpoints used =            26
+                       Number of kpoints used =            84
 
                            -------------------------------
                                Symmetry and Constraints
@@ -307,11 +307,11 @@
 |                                                     Memory          Disk    |
 | Baseline code, static data and system overhead      373.0 MB         0.0 MB |
 | BLAS internal memory storage                          0.0 MB         0.0 MB |
-| Model and support data                               84.2 MB         5.8 MB |
-| Electronic energy minimisation requirements           2.0 MB         0.0 MB |
-| Force calculation requirements                        0.5 MB         0.0 MB |
+| Model and support data                               86.5 MB        11.4 MB |
+| Electronic energy minimisation requirements           4.8 MB         0.0 MB |
+| Force calculation requirements                        0.9 MB         0.0 MB |
 |                                               ----------------------------- |
-| Approx. total storage required per process          459.2 MB         5.8 MB |
+| Approx. total storage required per process          464.3 MB        11.4 MB |
 |                                                                             |
 | Requirements will fluctuate during execution and may exceed these estimates |
 +-----------------------------------------------------------------------------+
@@ -320,35 +320,35 @@ Calculating total energy with cut-off of  450.000 eV.
 SCF loop      Energy           Fermi           Energy gain       Timer   <-- SCF
                                energy          per atom          (sec)   <-- SCF
 ------------------------------------------------------------------------ <-- SCF
-Initial  -6.81173084E+002  0.00000000E+000                         5.18  <-- SCF
-      1  -8.48390962E+002  7.48737285E+000   1.67217879E+002       5.31  <-- SCF
-      2  -8.58459672E+002  5.53044192E+000   1.00687100E+001       5.42  <-- SCF
-      3  -8.58627336E+002  5.50029086E+000   1.67663629E-001       5.52  <-- SCF
-      4  -8.58826063E+002  3.86556269E+000   1.98727164E-001       5.65  <-- SCF
-      5  -8.58627857E+002  4.85737381E+000  -1.98206368E-001       5.75  <-- SCF
-      6  -8.58628122E+002  4.82795587E+000   2.64826518E-004       5.87  <-- SCF
-      7  -8.58628304E+002  4.82697610E+000   1.82556986E-004       5.98  <-- SCF
-      8  -8.58628490E+002  4.82579099E+000   1.85416113E-004       6.10  <-- SCF
-      9  -8.58628493E+002  4.82556897E+000   3.72247992E-006       6.18  <-- SCF
-     10  -8.58744467E+002  4.83079663E+000   1.15973892E-001       6.26  <-- SCF
-     11  -8.58909677E+002  4.88751405E+000   1.65209822E-001       6.38  <-- SCF
-     12  -8.58951553E+002  4.88770564E+000   4.18756159E-002       6.50  <-- SCF
-     13  -8.58962033E+002  4.80577899E+000   1.04807437E-002       6.64  <-- SCF
-     14  -8.58962031E+002  4.83759489E+000  -2.35090327E-006       6.78  <-- SCF
-     15  -8.58962299E+002  4.82972313E+000   2.67553375E-004       6.91  <-- SCF
-     16  -8.58962313E+002  4.82939584E+000   1.40182648E-005       7.00  <-- SCF
-     17  -8.58962314E+002  4.82962555E+000   1.61374723E-006       7.08  <-- SCF
-     18  -8.58962315E+002  4.82997605E+000   7.05751801E-007       7.17  <-- SCF
+Initial  -6.79748979E+002  0.00000000E+000                         5.20  <-- SCF
+      1  -8.47953671E+002  7.44069850E+000   1.68204691E+002       5.48  <-- SCF
+      2  -8.58454370E+002  5.52761636E+000   1.05006989E+001       5.69  <-- SCF
+      3  -8.58628279E+002  5.50478645E+000   1.73909191E-001       5.89  <-- SCF
+      4  -8.58836304E+002  3.86681161E+000   2.08024824E-001       6.15  <-- SCF
+      5  -8.58634524E+002  4.86246145E+000  -2.01779929E-001       6.41  <-- SCF
+      6  -8.58634834E+002  4.84157462E+000   3.10266583E-004       6.68  <-- SCF
+      7  -8.58635270E+002  4.84111229E+000   4.36077624E-004       6.95  <-- SCF
+      8  -8.58635459E+002  4.84009431E+000   1.88794516E-004       7.19  <-- SCF
+      9  -8.58635465E+002  4.83981574E+000   6.11291147E-006       7.38  <-- SCF
+     10  -8.58739535E+002  4.84787924E+000   1.04070616E-001       7.57  <-- SCF
+     11  -8.58900715E+002  4.83861720E+000   1.61179602E-001       7.85  <-- SCF
+     12  -8.58940345E+002  4.80223029E+000   3.96297858E-002       8.12  <-- SCF
+     13  -8.58948838E+002  4.81974704E+000   8.49359992E-003       8.37  <-- SCF
+     14  -8.58948986E+002  4.79609870E+000   1.47103112E-004       8.65  <-- SCF
+     15  -8.58949123E+002  4.81111966E+000   1.37712606E-004       8.88  <-- SCF
+     16  -8.58949136E+002  4.80935277E+000   1.31078496E-005       9.07  <-- SCF
+     17  -8.58949133E+002  4.80776277E+000  -3.00129205E-006       9.24  <-- SCF
+     18  -8.58949138E+002  4.80733759E+000   4.38971882E-006       9.40  <-- SCF
 ------------------------------------------------------------------------ <-- SCF
  
-Integrated Spin Density     =     2.17036     hbar/2                        
-Integrated |Spin Density|   =     2.28651     hbar/2                        
+Integrated Spin Density     =     2.21103     hbar/2                        
+Integrated |Spin Density|   =     2.31242     hbar/2                        
  
-Final energy, E             =  -858.9460513039     eV
-Final free energy (E-TS)    =  -858.9623148383     eV
+Final energy, E             =  -858.9259384057     eV
+Final free energy (E-TS)    =  -858.9491377871     eV
 (energies not corrected for finite basis set)
  
-NB est. 0K energy (E-0.5TS)      =  -858.9541830711     eV
+NB est. 0K energy (E-0.5TS)      =  -858.9375380964     eV
  
 
 Writing analysis data to aiida.castep_bin
@@ -358,7 +358,7 @@ Writing model to aiida.check
 +---------------- MEMORY AND SCRATCH DISK ESTIMATES PER PROCESS --------------+
 |                                                     Memory          Disk    |
 |                                               ----------------------------- |
-| Approx. total storage required per process           98.2 MB         5.8 MB |
+| Approx. total storage required per process           98.3 MB         5.8 MB |
 |                                                                             |
 | Requirements will fluctuate during execution and may exceed these estimates |
 +-----------------------------------------------------------------------------+
@@ -770,10 +770,10 @@ Writing model to aiida.check
   Starting k-point:      197 of      199 on this process      |<-- SPEC
   Starting k-point:      198 of      199 on this process      |<-- SPEC
   Starting k-point:      199 of      199 on this process      |<-- SPEC
-  Total time to compute matrix elements              9.23 sec |<-- SPEC
+  Total time to compute matrix elements              9.61 sec |<-- SPEC
   
   + Calculation re-parallelised over 4 processes.                     +
-  + Data distributed by G-vector(2-way), k-point(2-way)               +
+  + Data distributed by k-point(4-way)                                +
 
  ******************** Symmetrised Forces ********************
  *                                                          *
@@ -795,25 +795,25 @@ Charge spilling parameter for spin component 2 = 0.42%
   ---------------------------------------------------------------
      Ion    Atom   Orbital              Up        Down      Spin
   ---------------------------------------------------------------
-     Fe     1      Dzz                  0.939     0.322     0.617
-     Fe     1      Dzy                  0.861     0.482     0.379
-     Fe     1      Dzx                  0.886     0.527     0.359
-     Fe     1      Dxx-yy               0.944     0.315     0.629
-     Fe     1      Dxy                  0.859     0.504     0.354
-     Fe     1      S                    0.339     0.362    -0.023
-     Fe     1      Px                   0.065     0.111    -0.046
-     Fe     1      Py                   0.075     0.108    -0.033
-     Fe     1      Pz                   0.117     0.185    -0.067
+     Fe     1      Dzz                  0.946     0.316     0.631
+     Fe     1      Dzy                  0.865     0.486     0.380
+     Fe     1      Dzx                  0.859     0.508     0.351
+     Fe     1      Dxx-yy               0.945     0.319     0.626
+     Fe     1      Dxy                  0.883     0.506     0.377
+     Fe     1      S                    0.339     0.359    -0.020
+     Fe     1      Px                   0.049     0.091    -0.043
+     Fe     1      Py                   0.104     0.151    -0.047
+     Fe     1      Pz                   0.114     0.158    -0.044
   ---------------------------------------------------------------
-                           Total:       5.085     2.915     2.170
+                           Total:       5.106     2.894     2.211
   ---------------------------------------------------------------
 
      Atomic Populations (Mulliken)
      -----------------------------
 Species          Ion Spin      s      p      d      f     Total  Charge(e)   Spin(hbar/2)
 =========================================================================================
-  Fe              1   up:     0.34   0.26   4.49   0.00   5.09     0.00        2.17
-                  1   dn:     0.36   0.40   2.15   0.00   2.91
+  Fe              1   up:     0.34   0.27   4.50   0.00   5.11     0.00        2.21
+                  1   dn:     0.36   0.40   2.13   0.00   2.89
 =========================================================================================
 
                  Bond                   Population        Spin       Length (A)
@@ -828,17 +828,16 @@ Writing model to aiida.check
  A BibTeX formatted list of references used in this run has been written to 
  aiida.bib
  
-Initialisation time =      4.60 s
-Calculation time    =     12.37 s
-Finalisation time   =      0.01 s
-Total time          =     16.98 s
-Peak Memory Use     = 773352 kB
+Initialisation time =      4.62 s
+Calculation time    =     14.85 s
+Finalisation time   =      0.02 s
+Total time          =     19.48 s
+Peak Memory Use     = 773436 kB
   
-Overall parallel efficiency rating: Mediocre (50%)                              
+Overall parallel efficiency rating: Mediocre (58%)                              
   
 Data was distributed by:-
-G-vector (2-way); efficiency rating: Mediocre (58%)                             
-k-point (2-way); efficiency rating: Good (79%)                                  
+k-point (4-way); efficiency rating: Good (75%)                                  
   
 Parallel notes:
-1) Calculation only took 17.0 s, so efficiency estimates may be inaccurate.     
+1) Calculation only took 19.5 s, so efficiency estimates may be inaccurate.     

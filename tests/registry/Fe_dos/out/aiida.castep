@@ -62,14 +62,14 @@
  FFT Lib : mkl
  Fundamental constants values: CODATA 2014
 
- Run started: Tue, 15 Feb 2022 13:59:57 +0000
+ Run started: Fri, 25 Feb 2022 09:30:19 +0000
 
  Atomic calculation performed for Fe: 1s2 2s2 2p6 3s2 3p6 3d6 4s2
 
  Converged in 103 iterations to an ae energy of -34592.796 eV
 
    ============================================================                
-   | Pseudopotential Report - Date of generation 15-02-2022   |                
+   | Pseudopotential Report - Date of generation 25-02-2022   |                
    ------------------------------------------------------------                
    | Element: Fe Ionic charge:  8.00 Level of theory: PBESOL  |                
    | Atomic Solver: Koelling-Harmon                           |                
@@ -101,7 +101,7 @@
 
  Converged in 32 iterations to a total energy of -849.1691 eV
  Calculation parallelised over 4 processes.
- Data is distributed by G-vector(2-way) and k-point(2-way)
+ Data is distributed by k-point(4-way)
 
  ************************************ Title ************************************
  Fe_pbesol_dos+bands
@@ -149,7 +149,7 @@
  output    efield chi2 unit                     : pm/V
   
  wavefunctions paging                           : none
- random number generator seed                   : randomised (135958001)
+ random number generator seed                   : randomised (93020582)
  data distribution                              : optimal for this architecture
  optimization strategy                          : balance speed and memory
 
@@ -211,6 +211,7 @@
   
  Population analysis with cutoff                :  3.000       A
  Population analysis output                     : summary and pdos components
+ Partial DOS weights calculated
 
  ********************* Electronic Spectroscopy Parameters **********************
   
@@ -275,9 +276,9 @@
                            -------------------------------
                               k-Points For BZ Sampling
                            -------------------------------
-                       MP grid size for SCF calculation is  8  8  8
+                       MP grid size for SCF calculation is 13 13 13
                             with an offset of   0.000  0.000  0.000
-                       Number of kpoints used =            26
+                       Number of kpoints used =            84
 
                            -------------------------------
                                Symmetry and Constraints
@@ -305,13 +306,13 @@
   
 +---------------- MEMORY AND SCRATCH DISK ESTIMATES PER PROCESS --------------+
 |                                                     Memory          Disk    |
-| Baseline code, static data and system overhead      349.0 MB         0.0 MB |
+| Baseline code, static data and system overhead      354.0 MB         0.0 MB |
 | BLAS internal memory storage                          0.0 MB         0.0 MB |
-| Model and support data                               84.2 MB         5.8 MB |
-| Electronic energy minimisation requirements           2.0 MB         0.0 MB |
-| Force calculation requirements                        0.5 MB         0.0 MB |
+| Model and support data                               86.5 MB        11.4 MB |
+| Electronic energy minimisation requirements           4.8 MB         0.0 MB |
+| Force calculation requirements                        0.9 MB         0.0 MB |
 |                                               ----------------------------- |
-| Approx. total storage required per process          435.2 MB         5.8 MB |
+| Approx. total storage required per process          445.4 MB        11.4 MB |
 |                                                                             |
 | Requirements will fluctuate during execution and may exceed these estimates |
 +-----------------------------------------------------------------------------+
@@ -320,35 +321,35 @@ Calculating total energy with cut-off of  450.000 eV.
 SCF loop      Energy           Fermi           Energy gain       Timer   <-- SCF
                                energy          per atom          (sec)   <-- SCF
 ------------------------------------------------------------------------ <-- SCF
-Initial  -6.78465180E+002  0.00000000E+000                         6.04  <-- SCF
-      1  -8.48709100E+002  7.35619198E+000   1.70243920E+002       6.16  <-- SCF
-      2  -8.58454370E+002  5.52365725E+000   9.74527012E+000       6.26  <-- SCF
-      3  -8.58627329E+002  5.50029041E+000   1.72959597E-001       6.34  <-- SCF
-      4  -8.58826274E+002  3.86510594E+000   1.98944481E-001       6.44  <-- SCF
-      5  -8.58627854E+002  4.85727400E+000  -1.98419238E-001       6.56  <-- SCF
-      6  -8.58628121E+002  4.82795971E+000   2.66913142E-004       6.66  <-- SCF
-      7  -8.58628304E+002  4.82697869E+000   1.82881399E-004       6.76  <-- SCF
-      8  -8.58628489E+002  4.82579208E+000   1.85225843E-004       6.87  <-- SCF
-      9  -8.58628493E+002  4.82556893E+000   3.74039859E-006       6.96  <-- SCF
-     10  -8.58744467E+002  4.83079662E+000   1.15973888E-001       7.05  <-- SCF
-     11  -8.58909677E+002  4.88751401E+000   1.65209907E-001       7.17  <-- SCF
-     12  -8.58951553E+002  4.88770534E+000   4.18755708E-002       7.31  <-- SCF
-     13  -8.58962033E+002  4.80577900E+000   1.04807143E-002       7.42  <-- SCF
-     14  -8.58962031E+002  4.83759489E+000  -2.35326155E-006       7.52  <-- SCF
-     15  -8.58962299E+002  4.82972309E+000   2.67552513E-004       7.60  <-- SCF
-     16  -8.58962313E+002  4.82939580E+000   1.40182736E-005       7.67  <-- SCF
-     17  -8.58962314E+002  4.82962555E+000   1.61375216E-006       7.76  <-- SCF
-     18  -8.58962315E+002  4.82997607E+000   7.05806809E-007       7.85  <-- SCF
+Initial  -6.78324316E+002  0.00000000E+000                         6.53  <-- SCF
+      1  -8.48752808E+002  7.28055720E+000   1.70428492E+002       6.80  <-- SCF
+      2  -8.58452506E+002  5.53366664E+000   9.69969744E+000       7.01  <-- SCF
+      3  -8.58628283E+002  5.50478636E+000   1.75777280E-001       7.21  <-- SCF
+      4  -8.58836242E+002  3.86693797E+000   2.07958800E-001       7.44  <-- SCF
+      5  -8.58634524E+002  4.86248871E+000  -2.01718064E-001       7.72  <-- SCF
+      6  -8.58634834E+002  4.84157530E+000   3.09942324E-004       8.02  <-- SCF
+      7  -8.58635270E+002  4.84111290E+000   4.36003576E-004       8.26  <-- SCF
+      8  -8.58635459E+002  4.84009463E+000   1.89016011E-004       8.51  <-- SCF
+      9  -8.58635465E+002  4.83981570E+000   6.11239020E-006       8.69  <-- SCF
+     10  -8.58739535E+002  4.84787927E+000   1.04070612E-001       8.89  <-- SCF
+     11  -8.58900715E+002  4.83861717E+000   1.61179586E-001       9.13  <-- SCF
+     12  -8.58940345E+002  4.80223027E+000   3.96297806E-002       9.43  <-- SCF
+     13  -8.58948838E+002  4.81974696E+000   8.49362152E-003       9.72  <-- SCF
+     14  -8.58948986E+002  4.79609874E+000   1.47104601E-004       9.93  <-- SCF
+     15  -8.58949123E+002  4.81111969E+000   1.37713322E-004      10.12  <-- SCF
+     16  -8.58949136E+002  4.80935279E+000   1.31077511E-005      10.30  <-- SCF
+     17  -8.58949133E+002  4.80776281E+000  -3.00133545E-006      10.48  <-- SCF
+     18  -8.58949138E+002  4.80733760E+000   4.38975875E-006      10.69  <-- SCF
 ------------------------------------------------------------------------ <-- SCF
  
-Integrated Spin Density     =     2.17036     hbar/2                        
-Integrated |Spin Density|   =     2.28651     hbar/2                        
+Integrated Spin Density     =     2.21103     hbar/2                        
+Integrated |Spin Density|   =     2.31242     hbar/2                        
  
-Final energy, E             =  -858.9460513040     eV
-Final free energy (E-TS)    =  -858.9623148383     eV
+Final energy, E             =  -858.9259384057     eV
+Final free energy (E-TS)    =  -858.9491377870     eV
 (energies not corrected for finite basis set)
  
-NB est. 0K energy (E-0.5TS)      =  -858.9541830712     eV
+NB est. 0K energy (E-0.5TS)      =  -858.9375380964     eV
  
 
 Writing analysis data to aiida.castep_bin
@@ -358,7 +359,7 @@ Writing model to aiida.check
 +---------------- MEMORY AND SCRATCH DISK ESTIMATES PER PROCESS --------------+
 |                                                     Memory          Disk    |
 |                                               ----------------------------- |
-| Approx. total storage required per process           97.7 MB         5.8 MB |
+| Approx. total storage required per process          108.1 MB         5.8 MB |
 |                                                                             |
 | Requirements will fluctuate during execution and may exceed these estimates |
 +-----------------------------------------------------------------------------+
@@ -372,332 +373,1344 @@ Writing model to aiida.check
   + Data distributed by G-vector(2-way), k-point(2-way)               +
   +                                                                   +
   =====================================================================
-  Starting k-point:        1 of      161 on this process      |<-- SPEC
-  Starting k-point:        2 of      161 on this process      |<-- SPEC
-  Starting k-point:        3 of      161 on this process      |<-- SPEC
-  Starting k-point:        4 of      161 on this process      |<-- SPEC
-  Starting k-point:        5 of      161 on this process      |<-- SPEC
-  Starting k-point:        6 of      161 on this process      |<-- SPEC
-  Starting k-point:        7 of      161 on this process      |<-- SPEC
-  Starting k-point:        8 of      161 on this process      |<-- SPEC
-  Starting k-point:        9 of      161 on this process      |<-- SPEC
-  Starting k-point:       10 of      161 on this process      |<-- SPEC
-  Starting k-point:       11 of      161 on this process      |<-- SPEC
-  Starting k-point:       12 of      161 on this process      |<-- SPEC
-  Starting k-point:       13 of      161 on this process      |<-- SPEC
-  Starting k-point:       14 of      161 on this process      |<-- SPEC
-  Starting k-point:       15 of      161 on this process      |<-- SPEC
-  Starting k-point:       16 of      161 on this process      |<-- SPEC
-  Starting k-point:       17 of      161 on this process      |<-- SPEC
-  Starting k-point:       18 of      161 on this process      |<-- SPEC
-  Starting k-point:       19 of      161 on this process      |<-- SPEC
-  Starting k-point:       20 of      161 on this process      |<-- SPEC
-  Starting k-point:       21 of      161 on this process      |<-- SPEC
-  Starting k-point:       22 of      161 on this process      |<-- SPEC
-  Starting k-point:       23 of      161 on this process      |<-- SPEC
-  Starting k-point:       24 of      161 on this process      |<-- SPEC
-  Starting k-point:       25 of      161 on this process      |<-- SPEC
-  Starting k-point:       26 of      161 on this process      |<-- SPEC
-  Starting k-point:       27 of      161 on this process      |<-- SPEC
-  Starting k-point:       28 of      161 on this process      |<-- SPEC
-  Starting k-point:       29 of      161 on this process      |<-- SPEC
-  Starting k-point:       30 of      161 on this process      |<-- SPEC
-  Starting k-point:       31 of      161 on this process      |<-- SPEC
-  Starting k-point:       32 of      161 on this process      |<-- SPEC
-  Starting k-point:       33 of      161 on this process      |<-- SPEC
-  Starting k-point:       34 of      161 on this process      |<-- SPEC
-  Starting k-point:       35 of      161 on this process      |<-- SPEC
-  Starting k-point:       36 of      161 on this process      |<-- SPEC
-  Starting k-point:       37 of      161 on this process      |<-- SPEC
-  Starting k-point:       38 of      161 on this process      |<-- SPEC
-  Starting k-point:       39 of      161 on this process      |<-- SPEC
-  Starting k-point:       40 of      161 on this process      |<-- SPEC
-  Starting k-point:       41 of      161 on this process      |<-- SPEC
-  Starting k-point:       42 of      161 on this process      |<-- SPEC
-  Starting k-point:       43 of      161 on this process      |<-- SPEC
-  Starting k-point:       44 of      161 on this process      |<-- SPEC
-  Starting k-point:       45 of      161 on this process      |<-- SPEC
-  Starting k-point:       46 of      161 on this process      |<-- SPEC
-  Starting k-point:       47 of      161 on this process      |<-- SPEC
-  Starting k-point:       48 of      161 on this process      |<-- SPEC
-  Starting k-point:       49 of      161 on this process      |<-- SPEC
-  Starting k-point:       50 of      161 on this process      |<-- SPEC
-  Starting k-point:       51 of      161 on this process      |<-- SPEC
-  Starting k-point:       52 of      161 on this process      |<-- SPEC
-  Starting k-point:       53 of      161 on this process      |<-- SPEC
-  Starting k-point:       54 of      161 on this process      |<-- SPEC
-  Starting k-point:       55 of      161 on this process      |<-- SPEC
-  Starting k-point:       56 of      161 on this process      |<-- SPEC
-  Starting k-point:       57 of      161 on this process      |<-- SPEC
-  Starting k-point:       58 of      161 on this process      |<-- SPEC
-  Starting k-point:       59 of      161 on this process      |<-- SPEC
-  Starting k-point:       60 of      161 on this process      |<-- SPEC
-  Starting k-point:       61 of      161 on this process      |<-- SPEC
-  Starting k-point:       62 of      161 on this process      |<-- SPEC
-  Starting k-point:       63 of      161 on this process      |<-- SPEC
-  Starting k-point:       64 of      161 on this process      |<-- SPEC
-  Starting k-point:       65 of      161 on this process      |<-- SPEC
-  Starting k-point:       66 of      161 on this process      |<-- SPEC
-  Starting k-point:       67 of      161 on this process      |<-- SPEC
-  Starting k-point:       68 of      161 on this process      |<-- SPEC
-  Starting k-point:       69 of      161 on this process      |<-- SPEC
-  Starting k-point:       70 of      161 on this process      |<-- SPEC
-  Starting k-point:       71 of      161 on this process      |<-- SPEC
-  Starting k-point:       72 of      161 on this process      |<-- SPEC
-  Starting k-point:       73 of      161 on this process      |<-- SPEC
-  Starting k-point:       74 of      161 on this process      |<-- SPEC
-  Starting k-point:       75 of      161 on this process      |<-- SPEC
-  Starting k-point:       76 of      161 on this process      |<-- SPEC
-  Starting k-point:       77 of      161 on this process      |<-- SPEC
-  Starting k-point:       78 of      161 on this process      |<-- SPEC
-  Starting k-point:       79 of      161 on this process      |<-- SPEC
-  Starting k-point:       80 of      161 on this process      |<-- SPEC
-  Starting k-point:       81 of      161 on this process      |<-- SPEC
-  Starting k-point:       82 of      161 on this process      |<-- SPEC
-  Starting k-point:       83 of      161 on this process      |<-- SPEC
-  Starting k-point:       84 of      161 on this process      |<-- SPEC
-  Starting k-point:       85 of      161 on this process      |<-- SPEC
-  Starting k-point:       86 of      161 on this process      |<-- SPEC
-  Starting k-point:       87 of      161 on this process      |<-- SPEC
-  Starting k-point:       88 of      161 on this process      |<-- SPEC
-  Starting k-point:       89 of      161 on this process      |<-- SPEC
-  Starting k-point:       90 of      161 on this process      |<-- SPEC
-  Starting k-point:       91 of      161 on this process      |<-- SPEC
-  Starting k-point:       92 of      161 on this process      |<-- SPEC
-  Starting k-point:       93 of      161 on this process      |<-- SPEC
-  Starting k-point:       94 of      161 on this process      |<-- SPEC
-  Starting k-point:       95 of      161 on this process      |<-- SPEC
-  Starting k-point:       96 of      161 on this process      |<-- SPEC
-  Starting k-point:       97 of      161 on this process      |<-- SPEC
-  Starting k-point:       98 of      161 on this process      |<-- SPEC
-  Starting k-point:       99 of      161 on this process      |<-- SPEC
-  Starting k-point:      100 of      161 on this process      |<-- SPEC
-  Starting k-point:      101 of      161 on this process      |<-- SPEC
-  Starting k-point:      102 of      161 on this process      |<-- SPEC
-  Starting k-point:      103 of      161 on this process      |<-- SPEC
-  Starting k-point:      104 of      161 on this process      |<-- SPEC
-  Starting k-point:      105 of      161 on this process      |<-- SPEC
-  Starting k-point:      106 of      161 on this process      |<-- SPEC
-  Starting k-point:      107 of      161 on this process      |<-- SPEC
-  Starting k-point:      108 of      161 on this process      |<-- SPEC
-  Starting k-point:      109 of      161 on this process      |<-- SPEC
-  Starting k-point:      110 of      161 on this process      |<-- SPEC
-  Starting k-point:      111 of      161 on this process      |<-- SPEC
-  Starting k-point:      112 of      161 on this process      |<-- SPEC
-  Starting k-point:      113 of      161 on this process      |<-- SPEC
-  Starting k-point:      114 of      161 on this process      |<-- SPEC
-  Starting k-point:      115 of      161 on this process      |<-- SPEC
-  Starting k-point:      116 of      161 on this process      |<-- SPEC
-  Starting k-point:      117 of      161 on this process      |<-- SPEC
-  Starting k-point:      118 of      161 on this process      |<-- SPEC
-  Starting k-point:      119 of      161 on this process      |<-- SPEC
-  Starting k-point:      120 of      161 on this process      |<-- SPEC
-  Starting k-point:      121 of      161 on this process      |<-- SPEC
-  Starting k-point:      122 of      161 on this process      |<-- SPEC
-  Starting k-point:      123 of      161 on this process      |<-- SPEC
-  Starting k-point:      124 of      161 on this process      |<-- SPEC
-  Starting k-point:      125 of      161 on this process      |<-- SPEC
-  Starting k-point:      126 of      161 on this process      |<-- SPEC
-  Starting k-point:      127 of      161 on this process      |<-- SPEC
-  Starting k-point:      128 of      161 on this process      |<-- SPEC
-  Starting k-point:      129 of      161 on this process      |<-- SPEC
-  Starting k-point:      130 of      161 on this process      |<-- SPEC
-  Starting k-point:      131 of      161 on this process      |<-- SPEC
-  Starting k-point:      132 of      161 on this process      |<-- SPEC
-  Starting k-point:      133 of      161 on this process      |<-- SPEC
-  Starting k-point:      134 of      161 on this process      |<-- SPEC
-  Starting k-point:      135 of      161 on this process      |<-- SPEC
-  Starting k-point:      136 of      161 on this process      |<-- SPEC
-  Starting k-point:      137 of      161 on this process      |<-- SPEC
-  Starting k-point:      138 of      161 on this process      |<-- SPEC
-  Starting k-point:      139 of      161 on this process      |<-- SPEC
-  Starting k-point:      140 of      161 on this process      |<-- SPEC
-  Starting k-point:      141 of      161 on this process      |<-- SPEC
-  Starting k-point:      142 of      161 on this process      |<-- SPEC
-  Starting k-point:      143 of      161 on this process      |<-- SPEC
-  Starting k-point:      144 of      161 on this process      |<-- SPEC
-  Starting k-point:      145 of      161 on this process      |<-- SPEC
-  Starting k-point:      146 of      161 on this process      |<-- SPEC
-  Starting k-point:      147 of      161 on this process      |<-- SPEC
-  Starting k-point:      148 of      161 on this process      |<-- SPEC
-  Starting k-point:      149 of      161 on this process      |<-- SPEC
-  Starting k-point:      150 of      161 on this process      |<-- SPEC
-  Starting k-point:      151 of      161 on this process      |<-- SPEC
-  Starting k-point:      152 of      161 on this process      |<-- SPEC
-  Starting k-point:      153 of      161 on this process      |<-- SPEC
-  Starting k-point:      154 of      161 on this process      |<-- SPEC
-  Starting k-point:      155 of      161 on this process      |<-- SPEC
-  Starting k-point:      156 of      161 on this process      |<-- SPEC
-  Starting k-point:      157 of      161 on this process      |<-- SPEC
-  Starting k-point:      158 of      161 on this process      |<-- SPEC
-  Starting k-point:      159 of      161 on this process      |<-- SPEC
-  Starting k-point:      160 of      161 on this process      |<-- SPEC
-  Starting k-point:      161 of      161 on this process      |<-- SPEC
-  Starting k-point:        1 of      161 on this process      |<-- SPEC
-  Starting k-point:        2 of      161 on this process      |<-- SPEC
-  Starting k-point:        3 of      161 on this process      |<-- SPEC
-  Starting k-point:        4 of      161 on this process      |<-- SPEC
-  Starting k-point:        5 of      161 on this process      |<-- SPEC
-  Starting k-point:        6 of      161 on this process      |<-- SPEC
-  Starting k-point:        7 of      161 on this process      |<-- SPEC
-  Starting k-point:        8 of      161 on this process      |<-- SPEC
-  Starting k-point:        9 of      161 on this process      |<-- SPEC
-  Starting k-point:       10 of      161 on this process      |<-- SPEC
-  Starting k-point:       11 of      161 on this process      |<-- SPEC
-  Starting k-point:       12 of      161 on this process      |<-- SPEC
-  Starting k-point:       13 of      161 on this process      |<-- SPEC
-  Starting k-point:       14 of      161 on this process      |<-- SPEC
-  Starting k-point:       15 of      161 on this process      |<-- SPEC
-  Starting k-point:       16 of      161 on this process      |<-- SPEC
-  Starting k-point:       17 of      161 on this process      |<-- SPEC
-  Starting k-point:       18 of      161 on this process      |<-- SPEC
-  Starting k-point:       19 of      161 on this process      |<-- SPEC
-  Starting k-point:       20 of      161 on this process      |<-- SPEC
-  Starting k-point:       21 of      161 on this process      |<-- SPEC
-  Starting k-point:       22 of      161 on this process      |<-- SPEC
-  Starting k-point:       23 of      161 on this process      |<-- SPEC
-  Starting k-point:       24 of      161 on this process      |<-- SPEC
-  Starting k-point:       25 of      161 on this process      |<-- SPEC
-  Starting k-point:       26 of      161 on this process      |<-- SPEC
-  Starting k-point:       27 of      161 on this process      |<-- SPEC
-  Starting k-point:       28 of      161 on this process      |<-- SPEC
-  Starting k-point:       29 of      161 on this process      |<-- SPEC
-  Starting k-point:       30 of      161 on this process      |<-- SPEC
-  Starting k-point:       31 of      161 on this process      |<-- SPEC
-  Starting k-point:       32 of      161 on this process      |<-- SPEC
-  Starting k-point:       33 of      161 on this process      |<-- SPEC
-  Starting k-point:       34 of      161 on this process      |<-- SPEC
-  Starting k-point:       35 of      161 on this process      |<-- SPEC
-  Starting k-point:       36 of      161 on this process      |<-- SPEC
-  Starting k-point:       37 of      161 on this process      |<-- SPEC
-  Starting k-point:       38 of      161 on this process      |<-- SPEC
-  Starting k-point:       39 of      161 on this process      |<-- SPEC
-  Starting k-point:       40 of      161 on this process      |<-- SPEC
-  Starting k-point:       41 of      161 on this process      |<-- SPEC
-  Starting k-point:       42 of      161 on this process      |<-- SPEC
-  Starting k-point:       43 of      161 on this process      |<-- SPEC
-  Starting k-point:       44 of      161 on this process      |<-- SPEC
-  Starting k-point:       45 of      161 on this process      |<-- SPEC
-  Starting k-point:       46 of      161 on this process      |<-- SPEC
-  Starting k-point:       47 of      161 on this process      |<-- SPEC
-  Starting k-point:       48 of      161 on this process      |<-- SPEC
-  Starting k-point:       49 of      161 on this process      |<-- SPEC
-  Starting k-point:       50 of      161 on this process      |<-- SPEC
-  Starting k-point:       51 of      161 on this process      |<-- SPEC
-  Starting k-point:       52 of      161 on this process      |<-- SPEC
-  Starting k-point:       53 of      161 on this process      |<-- SPEC
-  Starting k-point:       54 of      161 on this process      |<-- SPEC
-  Starting k-point:       55 of      161 on this process      |<-- SPEC
-  Starting k-point:       56 of      161 on this process      |<-- SPEC
-  Starting k-point:       57 of      161 on this process      |<-- SPEC
-  Starting k-point:       58 of      161 on this process      |<-- SPEC
-  Starting k-point:       59 of      161 on this process      |<-- SPEC
-  Starting k-point:       60 of      161 on this process      |<-- SPEC
-  Starting k-point:       61 of      161 on this process      |<-- SPEC
-  Starting k-point:       62 of      161 on this process      |<-- SPEC
-  Starting k-point:       63 of      161 on this process      |<-- SPEC
-  Starting k-point:       64 of      161 on this process      |<-- SPEC
-  Starting k-point:       65 of      161 on this process      |<-- SPEC
-  Starting k-point:       66 of      161 on this process      |<-- SPEC
-  Starting k-point:       67 of      161 on this process      |<-- SPEC
-  Starting k-point:       68 of      161 on this process      |<-- SPEC
-  Starting k-point:       69 of      161 on this process      |<-- SPEC
-  Starting k-point:       70 of      161 on this process      |<-- SPEC
-  Starting k-point:       71 of      161 on this process      |<-- SPEC
-  Starting k-point:       72 of      161 on this process      |<-- SPEC
-  Starting k-point:       73 of      161 on this process      |<-- SPEC
-  Starting k-point:       74 of      161 on this process      |<-- SPEC
-  Starting k-point:       75 of      161 on this process      |<-- SPEC
-  Starting k-point:       76 of      161 on this process      |<-- SPEC
-  Starting k-point:       77 of      161 on this process      |<-- SPEC
-  Starting k-point:       78 of      161 on this process      |<-- SPEC
-  Starting k-point:       79 of      161 on this process      |<-- SPEC
-  Starting k-point:       80 of      161 on this process      |<-- SPEC
-  Starting k-point:       81 of      161 on this process      |<-- SPEC
-  Starting k-point:       82 of      161 on this process      |<-- SPEC
-  Starting k-point:       83 of      161 on this process      |<-- SPEC
-  Starting k-point:       84 of      161 on this process      |<-- SPEC
-  Starting k-point:       85 of      161 on this process      |<-- SPEC
-  Starting k-point:       86 of      161 on this process      |<-- SPEC
-  Starting k-point:       87 of      161 on this process      |<-- SPEC
-  Starting k-point:       88 of      161 on this process      |<-- SPEC
-  Starting k-point:       89 of      161 on this process      |<-- SPEC
-  Starting k-point:       90 of      161 on this process      |<-- SPEC
-  Starting k-point:       91 of      161 on this process      |<-- SPEC
-  Starting k-point:       92 of      161 on this process      |<-- SPEC
-  Starting k-point:       93 of      161 on this process      |<-- SPEC
-  Starting k-point:       94 of      161 on this process      |<-- SPEC
-  Starting k-point:       95 of      161 on this process      |<-- SPEC
-  Starting k-point:       96 of      161 on this process      |<-- SPEC
-  Starting k-point:       97 of      161 on this process      |<-- SPEC
-  Starting k-point:       98 of      161 on this process      |<-- SPEC
-  Starting k-point:       99 of      161 on this process      |<-- SPEC
-  Starting k-point:      100 of      161 on this process      |<-- SPEC
-  Starting k-point:      101 of      161 on this process      |<-- SPEC
-  Starting k-point:      102 of      161 on this process      |<-- SPEC
-  Starting k-point:      103 of      161 on this process      |<-- SPEC
-  Starting k-point:      104 of      161 on this process      |<-- SPEC
-  Starting k-point:      105 of      161 on this process      |<-- SPEC
-  Starting k-point:      106 of      161 on this process      |<-- SPEC
-  Starting k-point:      107 of      161 on this process      |<-- SPEC
-  Starting k-point:      108 of      161 on this process      |<-- SPEC
-  Starting k-point:      109 of      161 on this process      |<-- SPEC
-  Starting k-point:      110 of      161 on this process      |<-- SPEC
-  Starting k-point:      111 of      161 on this process      |<-- SPEC
-  Starting k-point:      112 of      161 on this process      |<-- SPEC
-  Starting k-point:      113 of      161 on this process      |<-- SPEC
-  Starting k-point:      114 of      161 on this process      |<-- SPEC
-  Starting k-point:      115 of      161 on this process      |<-- SPEC
-  Starting k-point:      116 of      161 on this process      |<-- SPEC
-  Starting k-point:      117 of      161 on this process      |<-- SPEC
-  Starting k-point:      118 of      161 on this process      |<-- SPEC
-  Starting k-point:      119 of      161 on this process      |<-- SPEC
-  Starting k-point:      120 of      161 on this process      |<-- SPEC
-  Starting k-point:      121 of      161 on this process      |<-- SPEC
-  Starting k-point:      122 of      161 on this process      |<-- SPEC
-  Starting k-point:      123 of      161 on this process      |<-- SPEC
-  Starting k-point:      124 of      161 on this process      |<-- SPEC
-  Starting k-point:      125 of      161 on this process      |<-- SPEC
-  Starting k-point:      126 of      161 on this process      |<-- SPEC
-  Starting k-point:      127 of      161 on this process      |<-- SPEC
-  Starting k-point:      128 of      161 on this process      |<-- SPEC
-  Starting k-point:      129 of      161 on this process      |<-- SPEC
-  Starting k-point:      130 of      161 on this process      |<-- SPEC
-  Starting k-point:      131 of      161 on this process      |<-- SPEC
-  Starting k-point:      132 of      161 on this process      |<-- SPEC
-  Starting k-point:      133 of      161 on this process      |<-- SPEC
-  Starting k-point:      134 of      161 on this process      |<-- SPEC
-  Starting k-point:      135 of      161 on this process      |<-- SPEC
-  Starting k-point:      136 of      161 on this process      |<-- SPEC
-  Starting k-point:      137 of      161 on this process      |<-- SPEC
-  Starting k-point:      138 of      161 on this process      |<-- SPEC
-  Starting k-point:      139 of      161 on this process      |<-- SPEC
-  Starting k-point:      140 of      161 on this process      |<-- SPEC
-  Starting k-point:      141 of      161 on this process      |<-- SPEC
-  Starting k-point:      142 of      161 on this process      |<-- SPEC
-  Starting k-point:      143 of      161 on this process      |<-- SPEC
-  Starting k-point:      144 of      161 on this process      |<-- SPEC
-  Starting k-point:      145 of      161 on this process      |<-- SPEC
-  Starting k-point:      146 of      161 on this process      |<-- SPEC
-  Starting k-point:      147 of      161 on this process      |<-- SPEC
-  Starting k-point:      148 of      161 on this process      |<-- SPEC
-  Starting k-point:      149 of      161 on this process      |<-- SPEC
-  Starting k-point:      150 of      161 on this process      |<-- SPEC
-  Starting k-point:      151 of      161 on this process      |<-- SPEC
-  Starting k-point:      152 of      161 on this process      |<-- SPEC
-  Starting k-point:      153 of      161 on this process      |<-- SPEC
-  Starting k-point:      154 of      161 on this process      |<-- SPEC
-  Starting k-point:      155 of      161 on this process      |<-- SPEC
-  Starting k-point:      156 of      161 on this process      |<-- SPEC
-  Starting k-point:      157 of      161 on this process      |<-- SPEC
-  Starting k-point:      158 of      161 on this process      |<-- SPEC
-  Starting k-point:      159 of      161 on this process      |<-- SPEC
-  Starting k-point:      160 of      161 on this process      |<-- SPEC
-  Starting k-point:      161 of      161 on this process      |<-- SPEC
-  Total time to compute matrix elements              7.88 sec |<-- SPEC
+
+ Pseudo atomic calculation performed for Fe 3d6 4s2
+
+ Converged in 32 iterations to a total energy of -849.1691 eV
+  Starting k-point:        1 of      665 on this process      |<-- SPEC
+  Starting k-point:        2 of      665 on this process      |<-- SPEC
+  Starting k-point:        3 of      665 on this process      |<-- SPEC
+  Starting k-point:        4 of      665 on this process      |<-- SPEC
+  Starting k-point:        5 of      665 on this process      |<-- SPEC
+  Starting k-point:        6 of      665 on this process      |<-- SPEC
+  Starting k-point:        7 of      665 on this process      |<-- SPEC
+  Starting k-point:        8 of      665 on this process      |<-- SPEC
+  Starting k-point:        9 of      665 on this process      |<-- SPEC
+  Starting k-point:       10 of      665 on this process      |<-- SPEC
+  Starting k-point:       11 of      665 on this process      |<-- SPEC
+  Starting k-point:       12 of      665 on this process      |<-- SPEC
+  Starting k-point:       13 of      665 on this process      |<-- SPEC
+  Starting k-point:       14 of      665 on this process      |<-- SPEC
+  Starting k-point:       15 of      665 on this process      |<-- SPEC
+  Starting k-point:       16 of      665 on this process      |<-- SPEC
+  Starting k-point:       17 of      665 on this process      |<-- SPEC
+  Starting k-point:       18 of      665 on this process      |<-- SPEC
+  Starting k-point:       19 of      665 on this process      |<-- SPEC
+  Starting k-point:       20 of      665 on this process      |<-- SPEC
+  Starting k-point:       21 of      665 on this process      |<-- SPEC
+  Starting k-point:       22 of      665 on this process      |<-- SPEC
+  Starting k-point:       23 of      665 on this process      |<-- SPEC
+  Starting k-point:       24 of      665 on this process      |<-- SPEC
+  Starting k-point:       25 of      665 on this process      |<-- SPEC
+  Starting k-point:       26 of      665 on this process      |<-- SPEC
+  Starting k-point:       27 of      665 on this process      |<-- SPEC
+  Starting k-point:       28 of      665 on this process      |<-- SPEC
+  Starting k-point:       29 of      665 on this process      |<-- SPEC
+  Starting k-point:       30 of      665 on this process      |<-- SPEC
+  Starting k-point:       31 of      665 on this process      |<-- SPEC
+  Starting k-point:       32 of      665 on this process      |<-- SPEC
+  Starting k-point:       33 of      665 on this process      |<-- SPEC
+  Starting k-point:       34 of      665 on this process      |<-- SPEC
+  Starting k-point:       35 of      665 on this process      |<-- SPEC
+  Starting k-point:       36 of      665 on this process      |<-- SPEC
+  Starting k-point:       37 of      665 on this process      |<-- SPEC
+  Starting k-point:       38 of      665 on this process      |<-- SPEC
+  Starting k-point:       39 of      665 on this process      |<-- SPEC
+  Starting k-point:       40 of      665 on this process      |<-- SPEC
+  Starting k-point:       41 of      665 on this process      |<-- SPEC
+  Starting k-point:       42 of      665 on this process      |<-- SPEC
+  Starting k-point:       43 of      665 on this process      |<-- SPEC
+  Starting k-point:       44 of      665 on this process      |<-- SPEC
+  Starting k-point:       45 of      665 on this process      |<-- SPEC
+  Starting k-point:       46 of      665 on this process      |<-- SPEC
+  Starting k-point:       47 of      665 on this process      |<-- SPEC
+  Starting k-point:       48 of      665 on this process      |<-- SPEC
+  Starting k-point:       49 of      665 on this process      |<-- SPEC
+  Starting k-point:       50 of      665 on this process      |<-- SPEC
+  Starting k-point:       51 of      665 on this process      |<-- SPEC
+  Starting k-point:       52 of      665 on this process      |<-- SPEC
+  Starting k-point:       53 of      665 on this process      |<-- SPEC
+  Starting k-point:       54 of      665 on this process      |<-- SPEC
+  Starting k-point:       55 of      665 on this process      |<-- SPEC
+  Starting k-point:       56 of      665 on this process      |<-- SPEC
+  Starting k-point:       57 of      665 on this process      |<-- SPEC
+  Starting k-point:       58 of      665 on this process      |<-- SPEC
+  Starting k-point:       59 of      665 on this process      |<-- SPEC
+  Starting k-point:       60 of      665 on this process      |<-- SPEC
+  Starting k-point:       61 of      665 on this process      |<-- SPEC
+  Starting k-point:       62 of      665 on this process      |<-- SPEC
+  Starting k-point:       63 of      665 on this process      |<-- SPEC
+  Starting k-point:       64 of      665 on this process      |<-- SPEC
+  Starting k-point:       65 of      665 on this process      |<-- SPEC
+  Starting k-point:       66 of      665 on this process      |<-- SPEC
+  Starting k-point:       67 of      665 on this process      |<-- SPEC
+  Starting k-point:       68 of      665 on this process      |<-- SPEC
+  Starting k-point:       69 of      665 on this process      |<-- SPEC
+  Starting k-point:       70 of      665 on this process      |<-- SPEC
+  Starting k-point:       71 of      665 on this process      |<-- SPEC
+  Starting k-point:       72 of      665 on this process      |<-- SPEC
+  Starting k-point:       73 of      665 on this process      |<-- SPEC
+  Starting k-point:       74 of      665 on this process      |<-- SPEC
+  Starting k-point:       75 of      665 on this process      |<-- SPEC
+  Starting k-point:       76 of      665 on this process      |<-- SPEC
+  Starting k-point:       77 of      665 on this process      |<-- SPEC
+  Starting k-point:       78 of      665 on this process      |<-- SPEC
+  Starting k-point:       79 of      665 on this process      |<-- SPEC
+  Starting k-point:       80 of      665 on this process      |<-- SPEC
+  Starting k-point:       81 of      665 on this process      |<-- SPEC
+  Starting k-point:       82 of      665 on this process      |<-- SPEC
+  Starting k-point:       83 of      665 on this process      |<-- SPEC
+  Starting k-point:       84 of      665 on this process      |<-- SPEC
+  Starting k-point:       85 of      665 on this process      |<-- SPEC
+  Starting k-point:       86 of      665 on this process      |<-- SPEC
+  Starting k-point:       87 of      665 on this process      |<-- SPEC
+  Starting k-point:       88 of      665 on this process      |<-- SPEC
+  Starting k-point:       89 of      665 on this process      |<-- SPEC
+  Starting k-point:       90 of      665 on this process      |<-- SPEC
+  Starting k-point:       91 of      665 on this process      |<-- SPEC
+  Starting k-point:       92 of      665 on this process      |<-- SPEC
+  Starting k-point:       93 of      665 on this process      |<-- SPEC
+  Starting k-point:       94 of      665 on this process      |<-- SPEC
+  Starting k-point:       95 of      665 on this process      |<-- SPEC
+  Starting k-point:       96 of      665 on this process      |<-- SPEC
+  Starting k-point:       97 of      665 on this process      |<-- SPEC
+  Starting k-point:       98 of      665 on this process      |<-- SPEC
+  Starting k-point:       99 of      665 on this process      |<-- SPEC
+  Starting k-point:      100 of      665 on this process      |<-- SPEC
+  Starting k-point:      101 of      665 on this process      |<-- SPEC
+  Starting k-point:      102 of      665 on this process      |<-- SPEC
+  Starting k-point:      103 of      665 on this process      |<-- SPEC
+  Starting k-point:      104 of      665 on this process      |<-- SPEC
+  Starting k-point:      105 of      665 on this process      |<-- SPEC
+  Starting k-point:      106 of      665 on this process      |<-- SPEC
+  Starting k-point:      107 of      665 on this process      |<-- SPEC
+  Starting k-point:      108 of      665 on this process      |<-- SPEC
+  Starting k-point:      109 of      665 on this process      |<-- SPEC
+  Starting k-point:      110 of      665 on this process      |<-- SPEC
+  Starting k-point:      111 of      665 on this process      |<-- SPEC
+  Starting k-point:      112 of      665 on this process      |<-- SPEC
+  Starting k-point:      113 of      665 on this process      |<-- SPEC
+  Starting k-point:      114 of      665 on this process      |<-- SPEC
+  Starting k-point:      115 of      665 on this process      |<-- SPEC
+  Starting k-point:      116 of      665 on this process      |<-- SPEC
+  Starting k-point:      117 of      665 on this process      |<-- SPEC
+  Starting k-point:      118 of      665 on this process      |<-- SPEC
+  Starting k-point:      119 of      665 on this process      |<-- SPEC
+  Starting k-point:      120 of      665 on this process      |<-- SPEC
+  Starting k-point:      121 of      665 on this process      |<-- SPEC
+  Starting k-point:      122 of      665 on this process      |<-- SPEC
+  Starting k-point:      123 of      665 on this process      |<-- SPEC
+  Starting k-point:      124 of      665 on this process      |<-- SPEC
+  Starting k-point:      125 of      665 on this process      |<-- SPEC
+  Starting k-point:      126 of      665 on this process      |<-- SPEC
+  Starting k-point:      127 of      665 on this process      |<-- SPEC
+  Starting k-point:      128 of      665 on this process      |<-- SPEC
+  Starting k-point:      129 of      665 on this process      |<-- SPEC
+  Starting k-point:      130 of      665 on this process      |<-- SPEC
+  Starting k-point:      131 of      665 on this process      |<-- SPEC
+  Starting k-point:      132 of      665 on this process      |<-- SPEC
+  Starting k-point:      133 of      665 on this process      |<-- SPEC
+  Starting k-point:      134 of      665 on this process      |<-- SPEC
+  Starting k-point:      135 of      665 on this process      |<-- SPEC
+  Starting k-point:      136 of      665 on this process      |<-- SPEC
+  Starting k-point:      137 of      665 on this process      |<-- SPEC
+  Starting k-point:      138 of      665 on this process      |<-- SPEC
+  Starting k-point:      139 of      665 on this process      |<-- SPEC
+  Starting k-point:      140 of      665 on this process      |<-- SPEC
+  Starting k-point:      141 of      665 on this process      |<-- SPEC
+  Starting k-point:      142 of      665 on this process      |<-- SPEC
+  Starting k-point:      143 of      665 on this process      |<-- SPEC
+  Starting k-point:      144 of      665 on this process      |<-- SPEC
+  Starting k-point:      145 of      665 on this process      |<-- SPEC
+  Starting k-point:      146 of      665 on this process      |<-- SPEC
+  Starting k-point:      147 of      665 on this process      |<-- SPEC
+  Starting k-point:      148 of      665 on this process      |<-- SPEC
+  Starting k-point:      149 of      665 on this process      |<-- SPEC
+  Starting k-point:      150 of      665 on this process      |<-- SPEC
+  Starting k-point:      151 of      665 on this process      |<-- SPEC
+  Starting k-point:      152 of      665 on this process      |<-- SPEC
+  Starting k-point:      153 of      665 on this process      |<-- SPEC
+  Starting k-point:      154 of      665 on this process      |<-- SPEC
+  Starting k-point:      155 of      665 on this process      |<-- SPEC
+  Starting k-point:      156 of      665 on this process      |<-- SPEC
+  Starting k-point:      157 of      665 on this process      |<-- SPEC
+  Starting k-point:      158 of      665 on this process      |<-- SPEC
+  Starting k-point:      159 of      665 on this process      |<-- SPEC
+  Starting k-point:      160 of      665 on this process      |<-- SPEC
+  Starting k-point:      161 of      665 on this process      |<-- SPEC
+  Starting k-point:      162 of      665 on this process      |<-- SPEC
+  Starting k-point:      163 of      665 on this process      |<-- SPEC
+  Starting k-point:      164 of      665 on this process      |<-- SPEC
+  Starting k-point:      165 of      665 on this process      |<-- SPEC
+  Starting k-point:      166 of      665 on this process      |<-- SPEC
+  Starting k-point:      167 of      665 on this process      |<-- SPEC
+  Starting k-point:      168 of      665 on this process      |<-- SPEC
+  Starting k-point:      169 of      665 on this process      |<-- SPEC
+  Starting k-point:      170 of      665 on this process      |<-- SPEC
+  Starting k-point:      171 of      665 on this process      |<-- SPEC
+  Starting k-point:      172 of      665 on this process      |<-- SPEC
+  Starting k-point:      173 of      665 on this process      |<-- SPEC
+  Starting k-point:      174 of      665 on this process      |<-- SPEC
+  Starting k-point:      175 of      665 on this process      |<-- SPEC
+  Starting k-point:      176 of      665 on this process      |<-- SPEC
+  Starting k-point:      177 of      665 on this process      |<-- SPEC
+  Starting k-point:      178 of      665 on this process      |<-- SPEC
+  Starting k-point:      179 of      665 on this process      |<-- SPEC
+  Starting k-point:      180 of      665 on this process      |<-- SPEC
+  Starting k-point:      181 of      665 on this process      |<-- SPEC
+  Starting k-point:      182 of      665 on this process      |<-- SPEC
+  Starting k-point:      183 of      665 on this process      |<-- SPEC
+  Starting k-point:      184 of      665 on this process      |<-- SPEC
+  Starting k-point:      185 of      665 on this process      |<-- SPEC
+  Starting k-point:      186 of      665 on this process      |<-- SPEC
+  Starting k-point:      187 of      665 on this process      |<-- SPEC
+  Starting k-point:      188 of      665 on this process      |<-- SPEC
+  Starting k-point:      189 of      665 on this process      |<-- SPEC
+  Starting k-point:      190 of      665 on this process      |<-- SPEC
+  Starting k-point:      191 of      665 on this process      |<-- SPEC
+  Starting k-point:      192 of      665 on this process      |<-- SPEC
+  Starting k-point:      193 of      665 on this process      |<-- SPEC
+  Starting k-point:      194 of      665 on this process      |<-- SPEC
+  Starting k-point:      195 of      665 on this process      |<-- SPEC
+  Starting k-point:      196 of      665 on this process      |<-- SPEC
+  Starting k-point:      197 of      665 on this process      |<-- SPEC
+  Starting k-point:      198 of      665 on this process      |<-- SPEC
+  Starting k-point:      199 of      665 on this process      |<-- SPEC
+  Starting k-point:      200 of      665 on this process      |<-- SPEC
+  Starting k-point:      201 of      665 on this process      |<-- SPEC
+  Starting k-point:      202 of      665 on this process      |<-- SPEC
+  Starting k-point:      203 of      665 on this process      |<-- SPEC
+  Starting k-point:      204 of      665 on this process      |<-- SPEC
+  Starting k-point:      205 of      665 on this process      |<-- SPEC
+  Starting k-point:      206 of      665 on this process      |<-- SPEC
+  Starting k-point:      207 of      665 on this process      |<-- SPEC
+  Starting k-point:      208 of      665 on this process      |<-- SPEC
+  Starting k-point:      209 of      665 on this process      |<-- SPEC
+  Starting k-point:      210 of      665 on this process      |<-- SPEC
+  Starting k-point:      211 of      665 on this process      |<-- SPEC
+  Starting k-point:      212 of      665 on this process      |<-- SPEC
+  Starting k-point:      213 of      665 on this process      |<-- SPEC
+  Starting k-point:      214 of      665 on this process      |<-- SPEC
+  Starting k-point:      215 of      665 on this process      |<-- SPEC
+  Starting k-point:      216 of      665 on this process      |<-- SPEC
+  Starting k-point:      217 of      665 on this process      |<-- SPEC
+  Starting k-point:      218 of      665 on this process      |<-- SPEC
+  Starting k-point:      219 of      665 on this process      |<-- SPEC
+  Starting k-point:      220 of      665 on this process      |<-- SPEC
+  Starting k-point:      221 of      665 on this process      |<-- SPEC
+  Starting k-point:      222 of      665 on this process      |<-- SPEC
+  Starting k-point:      223 of      665 on this process      |<-- SPEC
+  Starting k-point:      224 of      665 on this process      |<-- SPEC
+  Starting k-point:      225 of      665 on this process      |<-- SPEC
+  Starting k-point:      226 of      665 on this process      |<-- SPEC
+  Starting k-point:      227 of      665 on this process      |<-- SPEC
+  Starting k-point:      228 of      665 on this process      |<-- SPEC
+  Starting k-point:      229 of      665 on this process      |<-- SPEC
+  Starting k-point:      230 of      665 on this process      |<-- SPEC
+  Starting k-point:      231 of      665 on this process      |<-- SPEC
+  Starting k-point:      232 of      665 on this process      |<-- SPEC
+  Starting k-point:      233 of      665 on this process      |<-- SPEC
+  Starting k-point:      234 of      665 on this process      |<-- SPEC
+  Starting k-point:      235 of      665 on this process      |<-- SPEC
+  Starting k-point:      236 of      665 on this process      |<-- SPEC
+  Starting k-point:      237 of      665 on this process      |<-- SPEC
+  Starting k-point:      238 of      665 on this process      |<-- SPEC
+  Starting k-point:      239 of      665 on this process      |<-- SPEC
+  Starting k-point:      240 of      665 on this process      |<-- SPEC
+  Starting k-point:      241 of      665 on this process      |<-- SPEC
+  Starting k-point:      242 of      665 on this process      |<-- SPEC
+  Starting k-point:      243 of      665 on this process      |<-- SPEC
+  Starting k-point:      244 of      665 on this process      |<-- SPEC
+  Starting k-point:      245 of      665 on this process      |<-- SPEC
+  Starting k-point:      246 of      665 on this process      |<-- SPEC
+  Starting k-point:      247 of      665 on this process      |<-- SPEC
+  Starting k-point:      248 of      665 on this process      |<-- SPEC
+  Starting k-point:      249 of      665 on this process      |<-- SPEC
+  Starting k-point:      250 of      665 on this process      |<-- SPEC
+  Starting k-point:      251 of      665 on this process      |<-- SPEC
+  Starting k-point:      252 of      665 on this process      |<-- SPEC
+  Starting k-point:      253 of      665 on this process      |<-- SPEC
+  Starting k-point:      254 of      665 on this process      |<-- SPEC
+  Starting k-point:      255 of      665 on this process      |<-- SPEC
+  Starting k-point:      256 of      665 on this process      |<-- SPEC
+  Starting k-point:      257 of      665 on this process      |<-- SPEC
+  Starting k-point:      258 of      665 on this process      |<-- SPEC
+  Starting k-point:      259 of      665 on this process      |<-- SPEC
+  Starting k-point:      260 of      665 on this process      |<-- SPEC
+  Starting k-point:      261 of      665 on this process      |<-- SPEC
+  Starting k-point:      262 of      665 on this process      |<-- SPEC
+  Starting k-point:      263 of      665 on this process      |<-- SPEC
+  Starting k-point:      264 of      665 on this process      |<-- SPEC
+  Starting k-point:      265 of      665 on this process      |<-- SPEC
+  Starting k-point:      266 of      665 on this process      |<-- SPEC
+  Starting k-point:      267 of      665 on this process      |<-- SPEC
+  Starting k-point:      268 of      665 on this process      |<-- SPEC
+  Starting k-point:      269 of      665 on this process      |<-- SPEC
+  Starting k-point:      270 of      665 on this process      |<-- SPEC
+  Starting k-point:      271 of      665 on this process      |<-- SPEC
+  Starting k-point:      272 of      665 on this process      |<-- SPEC
+  Starting k-point:      273 of      665 on this process      |<-- SPEC
+  Starting k-point:      274 of      665 on this process      |<-- SPEC
+  Starting k-point:      275 of      665 on this process      |<-- SPEC
+  Starting k-point:      276 of      665 on this process      |<-- SPEC
+  Starting k-point:      277 of      665 on this process      |<-- SPEC
+  Starting k-point:      278 of      665 on this process      |<-- SPEC
+  Starting k-point:      279 of      665 on this process      |<-- SPEC
+  Starting k-point:      280 of      665 on this process      |<-- SPEC
+  Starting k-point:      281 of      665 on this process      |<-- SPEC
+  Starting k-point:      282 of      665 on this process      |<-- SPEC
+  Starting k-point:      283 of      665 on this process      |<-- SPEC
+  Starting k-point:      284 of      665 on this process      |<-- SPEC
+  Starting k-point:      285 of      665 on this process      |<-- SPEC
+  Starting k-point:      286 of      665 on this process      |<-- SPEC
+  Starting k-point:      287 of      665 on this process      |<-- SPEC
+  Starting k-point:      288 of      665 on this process      |<-- SPEC
+  Starting k-point:      289 of      665 on this process      |<-- SPEC
+  Starting k-point:      290 of      665 on this process      |<-- SPEC
+  Starting k-point:      291 of      665 on this process      |<-- SPEC
+  Starting k-point:      292 of      665 on this process      |<-- SPEC
+  Starting k-point:      293 of      665 on this process      |<-- SPEC
+  Starting k-point:      294 of      665 on this process      |<-- SPEC
+  Starting k-point:      295 of      665 on this process      |<-- SPEC
+  Starting k-point:      296 of      665 on this process      |<-- SPEC
+  Starting k-point:      297 of      665 on this process      |<-- SPEC
+  Starting k-point:      298 of      665 on this process      |<-- SPEC
+  Starting k-point:      299 of      665 on this process      |<-- SPEC
+  Starting k-point:      300 of      665 on this process      |<-- SPEC
+  Starting k-point:      301 of      665 on this process      |<-- SPEC
+  Starting k-point:      302 of      665 on this process      |<-- SPEC
+  Starting k-point:      303 of      665 on this process      |<-- SPEC
+  Starting k-point:      304 of      665 on this process      |<-- SPEC
+  Starting k-point:      305 of      665 on this process      |<-- SPEC
+  Starting k-point:      306 of      665 on this process      |<-- SPEC
+  Starting k-point:      307 of      665 on this process      |<-- SPEC
+  Starting k-point:      308 of      665 on this process      |<-- SPEC
+  Starting k-point:      309 of      665 on this process      |<-- SPEC
+  Starting k-point:      310 of      665 on this process      |<-- SPEC
+  Starting k-point:      311 of      665 on this process      |<-- SPEC
+  Starting k-point:      312 of      665 on this process      |<-- SPEC
+  Starting k-point:      313 of      665 on this process      |<-- SPEC
+  Starting k-point:      314 of      665 on this process      |<-- SPEC
+  Starting k-point:      315 of      665 on this process      |<-- SPEC
+  Starting k-point:      316 of      665 on this process      |<-- SPEC
+  Starting k-point:      317 of      665 on this process      |<-- SPEC
+  Starting k-point:      318 of      665 on this process      |<-- SPEC
+  Starting k-point:      319 of      665 on this process      |<-- SPEC
+  Starting k-point:      320 of      665 on this process      |<-- SPEC
+  Starting k-point:      321 of      665 on this process      |<-- SPEC
+  Starting k-point:      322 of      665 on this process      |<-- SPEC
+  Starting k-point:      323 of      665 on this process      |<-- SPEC
+  Starting k-point:      324 of      665 on this process      |<-- SPEC
+  Starting k-point:      325 of      665 on this process      |<-- SPEC
+  Starting k-point:      326 of      665 on this process      |<-- SPEC
+  Starting k-point:      327 of      665 on this process      |<-- SPEC
+  Starting k-point:      328 of      665 on this process      |<-- SPEC
+  Starting k-point:      329 of      665 on this process      |<-- SPEC
+  Starting k-point:      330 of      665 on this process      |<-- SPEC
+  Starting k-point:      331 of      665 on this process      |<-- SPEC
+  Starting k-point:      332 of      665 on this process      |<-- SPEC
+  Starting k-point:      333 of      665 on this process      |<-- SPEC
+  Starting k-point:      334 of      665 on this process      |<-- SPEC
+  Starting k-point:      335 of      665 on this process      |<-- SPEC
+  Starting k-point:      336 of      665 on this process      |<-- SPEC
+  Starting k-point:      337 of      665 on this process      |<-- SPEC
+  Starting k-point:      338 of      665 on this process      |<-- SPEC
+  Starting k-point:      339 of      665 on this process      |<-- SPEC
+  Starting k-point:      340 of      665 on this process      |<-- SPEC
+  Starting k-point:      341 of      665 on this process      |<-- SPEC
+  Starting k-point:      342 of      665 on this process      |<-- SPEC
+  Starting k-point:      343 of      665 on this process      |<-- SPEC
+  Starting k-point:      344 of      665 on this process      |<-- SPEC
+  Starting k-point:      345 of      665 on this process      |<-- SPEC
+  Starting k-point:      346 of      665 on this process      |<-- SPEC
+  Starting k-point:      347 of      665 on this process      |<-- SPEC
+  Starting k-point:      348 of      665 on this process      |<-- SPEC
+  Starting k-point:      349 of      665 on this process      |<-- SPEC
+  Starting k-point:      350 of      665 on this process      |<-- SPEC
+  Starting k-point:      351 of      665 on this process      |<-- SPEC
+  Starting k-point:      352 of      665 on this process      |<-- SPEC
+  Starting k-point:      353 of      665 on this process      |<-- SPEC
+  Starting k-point:      354 of      665 on this process      |<-- SPEC
+  Starting k-point:      355 of      665 on this process      |<-- SPEC
+  Starting k-point:      356 of      665 on this process      |<-- SPEC
+  Starting k-point:      357 of      665 on this process      |<-- SPEC
+  Starting k-point:      358 of      665 on this process      |<-- SPEC
+  Starting k-point:      359 of      665 on this process      |<-- SPEC
+  Starting k-point:      360 of      665 on this process      |<-- SPEC
+  Starting k-point:      361 of      665 on this process      |<-- SPEC
+  Starting k-point:      362 of      665 on this process      |<-- SPEC
+  Starting k-point:      363 of      665 on this process      |<-- SPEC
+  Starting k-point:      364 of      665 on this process      |<-- SPEC
+  Starting k-point:      365 of      665 on this process      |<-- SPEC
+  Starting k-point:      366 of      665 on this process      |<-- SPEC
+  Starting k-point:      367 of      665 on this process      |<-- SPEC
+  Starting k-point:      368 of      665 on this process      |<-- SPEC
+  Starting k-point:      369 of      665 on this process      |<-- SPEC
+  Starting k-point:      370 of      665 on this process      |<-- SPEC
+  Starting k-point:      371 of      665 on this process      |<-- SPEC
+  Starting k-point:      372 of      665 on this process      |<-- SPEC
+  Starting k-point:      373 of      665 on this process      |<-- SPEC
+  Starting k-point:      374 of      665 on this process      |<-- SPEC
+  Starting k-point:      375 of      665 on this process      |<-- SPEC
+  Starting k-point:      376 of      665 on this process      |<-- SPEC
+  Starting k-point:      377 of      665 on this process      |<-- SPEC
+  Starting k-point:      378 of      665 on this process      |<-- SPEC
+  Starting k-point:      379 of      665 on this process      |<-- SPEC
+  Starting k-point:      380 of      665 on this process      |<-- SPEC
+  Starting k-point:      381 of      665 on this process      |<-- SPEC
+  Starting k-point:      382 of      665 on this process      |<-- SPEC
+  Starting k-point:      383 of      665 on this process      |<-- SPEC
+  Starting k-point:      384 of      665 on this process      |<-- SPEC
+  Starting k-point:      385 of      665 on this process      |<-- SPEC
+  Starting k-point:      386 of      665 on this process      |<-- SPEC
+  Starting k-point:      387 of      665 on this process      |<-- SPEC
+  Starting k-point:      388 of      665 on this process      |<-- SPEC
+  Starting k-point:      389 of      665 on this process      |<-- SPEC
+  Starting k-point:      390 of      665 on this process      |<-- SPEC
+  Starting k-point:      391 of      665 on this process      |<-- SPEC
+  Starting k-point:      392 of      665 on this process      |<-- SPEC
+  Starting k-point:      393 of      665 on this process      |<-- SPEC
+  Starting k-point:      394 of      665 on this process      |<-- SPEC
+  Starting k-point:      395 of      665 on this process      |<-- SPEC
+  Starting k-point:      396 of      665 on this process      |<-- SPEC
+  Starting k-point:      397 of      665 on this process      |<-- SPEC
+  Starting k-point:      398 of      665 on this process      |<-- SPEC
+  Starting k-point:      399 of      665 on this process      |<-- SPEC
+  Starting k-point:      400 of      665 on this process      |<-- SPEC
+  Starting k-point:      401 of      665 on this process      |<-- SPEC
+  Starting k-point:      402 of      665 on this process      |<-- SPEC
+  Starting k-point:      403 of      665 on this process      |<-- SPEC
+  Starting k-point:      404 of      665 on this process      |<-- SPEC
+  Starting k-point:      405 of      665 on this process      |<-- SPEC
+  Starting k-point:      406 of      665 on this process      |<-- SPEC
+  Starting k-point:      407 of      665 on this process      |<-- SPEC
+  Starting k-point:      408 of      665 on this process      |<-- SPEC
+  Starting k-point:      409 of      665 on this process      |<-- SPEC
+  Starting k-point:      410 of      665 on this process      |<-- SPEC
+  Starting k-point:      411 of      665 on this process      |<-- SPEC
+  Starting k-point:      412 of      665 on this process      |<-- SPEC
+  Starting k-point:      413 of      665 on this process      |<-- SPEC
+  Starting k-point:      414 of      665 on this process      |<-- SPEC
+  Starting k-point:      415 of      665 on this process      |<-- SPEC
+  Starting k-point:      416 of      665 on this process      |<-- SPEC
+  Starting k-point:      417 of      665 on this process      |<-- SPEC
+  Starting k-point:      418 of      665 on this process      |<-- SPEC
+  Starting k-point:      419 of      665 on this process      |<-- SPEC
+  Starting k-point:      420 of      665 on this process      |<-- SPEC
+  Starting k-point:      421 of      665 on this process      |<-- SPEC
+  Starting k-point:      422 of      665 on this process      |<-- SPEC
+  Starting k-point:      423 of      665 on this process      |<-- SPEC
+  Starting k-point:      424 of      665 on this process      |<-- SPEC
+  Starting k-point:      425 of      665 on this process      |<-- SPEC
+  Starting k-point:      426 of      665 on this process      |<-- SPEC
+  Starting k-point:      427 of      665 on this process      |<-- SPEC
+  Starting k-point:      428 of      665 on this process      |<-- SPEC
+  Starting k-point:      429 of      665 on this process      |<-- SPEC
+  Starting k-point:      430 of      665 on this process      |<-- SPEC
+  Starting k-point:      431 of      665 on this process      |<-- SPEC
+  Starting k-point:      432 of      665 on this process      |<-- SPEC
+  Starting k-point:      433 of      665 on this process      |<-- SPEC
+  Starting k-point:      434 of      665 on this process      |<-- SPEC
+  Starting k-point:      435 of      665 on this process      |<-- SPEC
+  Starting k-point:      436 of      665 on this process      |<-- SPEC
+  Starting k-point:      437 of      665 on this process      |<-- SPEC
+  Starting k-point:      438 of      665 on this process      |<-- SPEC
+  Starting k-point:      439 of      665 on this process      |<-- SPEC
+  Starting k-point:      440 of      665 on this process      |<-- SPEC
+  Starting k-point:      441 of      665 on this process      |<-- SPEC
+  Starting k-point:      442 of      665 on this process      |<-- SPEC
+  Starting k-point:      443 of      665 on this process      |<-- SPEC
+  Starting k-point:      444 of      665 on this process      |<-- SPEC
+  Starting k-point:      445 of      665 on this process      |<-- SPEC
+  Starting k-point:      446 of      665 on this process      |<-- SPEC
+  Starting k-point:      447 of      665 on this process      |<-- SPEC
+  Starting k-point:      448 of      665 on this process      |<-- SPEC
+  Starting k-point:      449 of      665 on this process      |<-- SPEC
+  Starting k-point:      450 of      665 on this process      |<-- SPEC
+  Starting k-point:      451 of      665 on this process      |<-- SPEC
+  Starting k-point:      452 of      665 on this process      |<-- SPEC
+  Starting k-point:      453 of      665 on this process      |<-- SPEC
+  Starting k-point:      454 of      665 on this process      |<-- SPEC
+  Starting k-point:      455 of      665 on this process      |<-- SPEC
+  Starting k-point:      456 of      665 on this process      |<-- SPEC
+  Starting k-point:      457 of      665 on this process      |<-- SPEC
+  Starting k-point:      458 of      665 on this process      |<-- SPEC
+  Starting k-point:      459 of      665 on this process      |<-- SPEC
+  Starting k-point:      460 of      665 on this process      |<-- SPEC
+  Starting k-point:      461 of      665 on this process      |<-- SPEC
+  Starting k-point:      462 of      665 on this process      |<-- SPEC
+  Starting k-point:      463 of      665 on this process      |<-- SPEC
+  Starting k-point:      464 of      665 on this process      |<-- SPEC
+  Starting k-point:      465 of      665 on this process      |<-- SPEC
+  Starting k-point:      466 of      665 on this process      |<-- SPEC
+  Starting k-point:      467 of      665 on this process      |<-- SPEC
+  Starting k-point:      468 of      665 on this process      |<-- SPEC
+  Starting k-point:      469 of      665 on this process      |<-- SPEC
+  Starting k-point:      470 of      665 on this process      |<-- SPEC
+  Starting k-point:      471 of      665 on this process      |<-- SPEC
+  Starting k-point:      472 of      665 on this process      |<-- SPEC
+  Starting k-point:      473 of      665 on this process      |<-- SPEC
+  Starting k-point:      474 of      665 on this process      |<-- SPEC
+  Starting k-point:      475 of      665 on this process      |<-- SPEC
+  Starting k-point:      476 of      665 on this process      |<-- SPEC
+  Starting k-point:      477 of      665 on this process      |<-- SPEC
+  Starting k-point:      478 of      665 on this process      |<-- SPEC
+  Starting k-point:      479 of      665 on this process      |<-- SPEC
+  Starting k-point:      480 of      665 on this process      |<-- SPEC
+  Starting k-point:      481 of      665 on this process      |<-- SPEC
+  Starting k-point:      482 of      665 on this process      |<-- SPEC
+  Starting k-point:      483 of      665 on this process      |<-- SPEC
+  Starting k-point:      484 of      665 on this process      |<-- SPEC
+  Starting k-point:      485 of      665 on this process      |<-- SPEC
+  Starting k-point:      486 of      665 on this process      |<-- SPEC
+  Starting k-point:      487 of      665 on this process      |<-- SPEC
+  Starting k-point:      488 of      665 on this process      |<-- SPEC
+  Starting k-point:      489 of      665 on this process      |<-- SPEC
+  Starting k-point:      490 of      665 on this process      |<-- SPEC
+  Starting k-point:      491 of      665 on this process      |<-- SPEC
+  Starting k-point:      492 of      665 on this process      |<-- SPEC
+  Starting k-point:      493 of      665 on this process      |<-- SPEC
+  Starting k-point:      494 of      665 on this process      |<-- SPEC
+  Starting k-point:      495 of      665 on this process      |<-- SPEC
+  Starting k-point:      496 of      665 on this process      |<-- SPEC
+  Starting k-point:      497 of      665 on this process      |<-- SPEC
+  Starting k-point:      498 of      665 on this process      |<-- SPEC
+  Starting k-point:      499 of      665 on this process      |<-- SPEC
+  Starting k-point:      500 of      665 on this process      |<-- SPEC
+  Starting k-point:      501 of      665 on this process      |<-- SPEC
+  Starting k-point:      502 of      665 on this process      |<-- SPEC
+  Starting k-point:      503 of      665 on this process      |<-- SPEC
+  Starting k-point:      504 of      665 on this process      |<-- SPEC
+  Starting k-point:      505 of      665 on this process      |<-- SPEC
+  Starting k-point:      506 of      665 on this process      |<-- SPEC
+  Starting k-point:      507 of      665 on this process      |<-- SPEC
+  Starting k-point:      508 of      665 on this process      |<-- SPEC
+  Starting k-point:      509 of      665 on this process      |<-- SPEC
+  Starting k-point:      510 of      665 on this process      |<-- SPEC
+  Starting k-point:      511 of      665 on this process      |<-- SPEC
+  Starting k-point:      512 of      665 on this process      |<-- SPEC
+  Starting k-point:      513 of      665 on this process      |<-- SPEC
+  Starting k-point:      514 of      665 on this process      |<-- SPEC
+  Starting k-point:      515 of      665 on this process      |<-- SPEC
+  Starting k-point:      516 of      665 on this process      |<-- SPEC
+  Starting k-point:      517 of      665 on this process      |<-- SPEC
+  Starting k-point:      518 of      665 on this process      |<-- SPEC
+  Starting k-point:      519 of      665 on this process      |<-- SPEC
+  Starting k-point:      520 of      665 on this process      |<-- SPEC
+  Starting k-point:      521 of      665 on this process      |<-- SPEC
+  Starting k-point:      522 of      665 on this process      |<-- SPEC
+  Starting k-point:      523 of      665 on this process      |<-- SPEC
+  Starting k-point:      524 of      665 on this process      |<-- SPEC
+  Starting k-point:      525 of      665 on this process      |<-- SPEC
+  Starting k-point:      526 of      665 on this process      |<-- SPEC
+  Starting k-point:      527 of      665 on this process      |<-- SPEC
+  Starting k-point:      528 of      665 on this process      |<-- SPEC
+  Starting k-point:      529 of      665 on this process      |<-- SPEC
+  Starting k-point:      530 of      665 on this process      |<-- SPEC
+  Starting k-point:      531 of      665 on this process      |<-- SPEC
+  Starting k-point:      532 of      665 on this process      |<-- SPEC
+  Starting k-point:      533 of      665 on this process      |<-- SPEC
+  Starting k-point:      534 of      665 on this process      |<-- SPEC
+  Starting k-point:      535 of      665 on this process      |<-- SPEC
+  Starting k-point:      536 of      665 on this process      |<-- SPEC
+  Starting k-point:      537 of      665 on this process      |<-- SPEC
+  Starting k-point:      538 of      665 on this process      |<-- SPEC
+  Starting k-point:      539 of      665 on this process      |<-- SPEC
+  Starting k-point:      540 of      665 on this process      |<-- SPEC
+  Starting k-point:      541 of      665 on this process      |<-- SPEC
+  Starting k-point:      542 of      665 on this process      |<-- SPEC
+  Starting k-point:      543 of      665 on this process      |<-- SPEC
+  Starting k-point:      544 of      665 on this process      |<-- SPEC
+  Starting k-point:      545 of      665 on this process      |<-- SPEC
+  Starting k-point:      546 of      665 on this process      |<-- SPEC
+  Starting k-point:      547 of      665 on this process      |<-- SPEC
+  Starting k-point:      548 of      665 on this process      |<-- SPEC
+  Starting k-point:      549 of      665 on this process      |<-- SPEC
+  Starting k-point:      550 of      665 on this process      |<-- SPEC
+  Starting k-point:      551 of      665 on this process      |<-- SPEC
+  Starting k-point:      552 of      665 on this process      |<-- SPEC
+  Starting k-point:      553 of      665 on this process      |<-- SPEC
+  Starting k-point:      554 of      665 on this process      |<-- SPEC
+  Starting k-point:      555 of      665 on this process      |<-- SPEC
+  Starting k-point:      556 of      665 on this process      |<-- SPEC
+  Starting k-point:      557 of      665 on this process      |<-- SPEC
+  Starting k-point:      558 of      665 on this process      |<-- SPEC
+  Starting k-point:      559 of      665 on this process      |<-- SPEC
+  Starting k-point:      560 of      665 on this process      |<-- SPEC
+  Starting k-point:      561 of      665 on this process      |<-- SPEC
+  Starting k-point:      562 of      665 on this process      |<-- SPEC
+  Starting k-point:      563 of      665 on this process      |<-- SPEC
+  Starting k-point:      564 of      665 on this process      |<-- SPEC
+  Starting k-point:      565 of      665 on this process      |<-- SPEC
+  Starting k-point:      566 of      665 on this process      |<-- SPEC
+  Starting k-point:      567 of      665 on this process      |<-- SPEC
+  Starting k-point:      568 of      665 on this process      |<-- SPEC
+  Starting k-point:      569 of      665 on this process      |<-- SPEC
+  Starting k-point:      570 of      665 on this process      |<-- SPEC
+  Starting k-point:      571 of      665 on this process      |<-- SPEC
+  Starting k-point:      572 of      665 on this process      |<-- SPEC
+  Starting k-point:      573 of      665 on this process      |<-- SPEC
+  Starting k-point:      574 of      665 on this process      |<-- SPEC
+  Starting k-point:      575 of      665 on this process      |<-- SPEC
+  Starting k-point:      576 of      665 on this process      |<-- SPEC
+  Starting k-point:      577 of      665 on this process      |<-- SPEC
+  Starting k-point:      578 of      665 on this process      |<-- SPEC
+  Starting k-point:      579 of      665 on this process      |<-- SPEC
+  Starting k-point:      580 of      665 on this process      |<-- SPEC
+  Starting k-point:      581 of      665 on this process      |<-- SPEC
+  Starting k-point:      582 of      665 on this process      |<-- SPEC
+  Starting k-point:      583 of      665 on this process      |<-- SPEC
+  Starting k-point:      584 of      665 on this process      |<-- SPEC
+  Starting k-point:      585 of      665 on this process      |<-- SPEC
+  Starting k-point:      586 of      665 on this process      |<-- SPEC
+  Starting k-point:      587 of      665 on this process      |<-- SPEC
+  Starting k-point:      588 of      665 on this process      |<-- SPEC
+  Starting k-point:      589 of      665 on this process      |<-- SPEC
+  Starting k-point:      590 of      665 on this process      |<-- SPEC
+  Starting k-point:      591 of      665 on this process      |<-- SPEC
+  Starting k-point:      592 of      665 on this process      |<-- SPEC
+  Starting k-point:      593 of      665 on this process      |<-- SPEC
+  Starting k-point:      594 of      665 on this process      |<-- SPEC
+  Starting k-point:      595 of      665 on this process      |<-- SPEC
+  Starting k-point:      596 of      665 on this process      |<-- SPEC
+  Starting k-point:      597 of      665 on this process      |<-- SPEC
+  Starting k-point:      598 of      665 on this process      |<-- SPEC
+  Starting k-point:      599 of      665 on this process      |<-- SPEC
+  Starting k-point:      600 of      665 on this process      |<-- SPEC
+  Starting k-point:      601 of      665 on this process      |<-- SPEC
+  Starting k-point:      602 of      665 on this process      |<-- SPEC
+  Starting k-point:      603 of      665 on this process      |<-- SPEC
+  Starting k-point:      604 of      665 on this process      |<-- SPEC
+  Starting k-point:      605 of      665 on this process      |<-- SPEC
+  Starting k-point:      606 of      665 on this process      |<-- SPEC
+  Starting k-point:      607 of      665 on this process      |<-- SPEC
+  Starting k-point:      608 of      665 on this process      |<-- SPEC
+  Starting k-point:      609 of      665 on this process      |<-- SPEC
+  Starting k-point:      610 of      665 on this process      |<-- SPEC
+  Starting k-point:      611 of      665 on this process      |<-- SPEC
+  Starting k-point:      612 of      665 on this process      |<-- SPEC
+  Starting k-point:      613 of      665 on this process      |<-- SPEC
+  Starting k-point:      614 of      665 on this process      |<-- SPEC
+  Starting k-point:      615 of      665 on this process      |<-- SPEC
+  Starting k-point:      616 of      665 on this process      |<-- SPEC
+  Starting k-point:      617 of      665 on this process      |<-- SPEC
+  Starting k-point:      618 of      665 on this process      |<-- SPEC
+  Starting k-point:      619 of      665 on this process      |<-- SPEC
+  Starting k-point:      620 of      665 on this process      |<-- SPEC
+  Starting k-point:      621 of      665 on this process      |<-- SPEC
+  Starting k-point:      622 of      665 on this process      |<-- SPEC
+  Starting k-point:      623 of      665 on this process      |<-- SPEC
+  Starting k-point:      624 of      665 on this process      |<-- SPEC
+  Starting k-point:      625 of      665 on this process      |<-- SPEC
+  Starting k-point:      626 of      665 on this process      |<-- SPEC
+  Starting k-point:      627 of      665 on this process      |<-- SPEC
+  Starting k-point:      628 of      665 on this process      |<-- SPEC
+  Starting k-point:      629 of      665 on this process      |<-- SPEC
+  Starting k-point:      630 of      665 on this process      |<-- SPEC
+  Starting k-point:      631 of      665 on this process      |<-- SPEC
+  Starting k-point:      632 of      665 on this process      |<-- SPEC
+  Starting k-point:      633 of      665 on this process      |<-- SPEC
+  Starting k-point:      634 of      665 on this process      |<-- SPEC
+  Starting k-point:      635 of      665 on this process      |<-- SPEC
+  Starting k-point:      636 of      665 on this process      |<-- SPEC
+  Starting k-point:      637 of      665 on this process      |<-- SPEC
+  Starting k-point:      638 of      665 on this process      |<-- SPEC
+  Starting k-point:      639 of      665 on this process      |<-- SPEC
+  Starting k-point:      640 of      665 on this process      |<-- SPEC
+  Starting k-point:      641 of      665 on this process      |<-- SPEC
+  Starting k-point:      642 of      665 on this process      |<-- SPEC
+  Starting k-point:      643 of      665 on this process      |<-- SPEC
+  Starting k-point:      644 of      665 on this process      |<-- SPEC
+  Starting k-point:      645 of      665 on this process      |<-- SPEC
+  Starting k-point:      646 of      665 on this process      |<-- SPEC
+  Starting k-point:      647 of      665 on this process      |<-- SPEC
+  Starting k-point:      648 of      665 on this process      |<-- SPEC
+  Starting k-point:      649 of      665 on this process      |<-- SPEC
+  Starting k-point:      650 of      665 on this process      |<-- SPEC
+  Starting k-point:      651 of      665 on this process      |<-- SPEC
+  Starting k-point:      652 of      665 on this process      |<-- SPEC
+  Starting k-point:      653 of      665 on this process      |<-- SPEC
+  Starting k-point:      654 of      665 on this process      |<-- SPEC
+  Starting k-point:      655 of      665 on this process      |<-- SPEC
+  Starting k-point:      656 of      665 on this process      |<-- SPEC
+  Starting k-point:      657 of      665 on this process      |<-- SPEC
+  Starting k-point:      658 of      665 on this process      |<-- SPEC
+  Starting k-point:      659 of      665 on this process      |<-- SPEC
+  Starting k-point:      660 of      665 on this process      |<-- SPEC
+  Starting k-point:      661 of      665 on this process      |<-- SPEC
+  Starting k-point:      662 of      665 on this process      |<-- SPEC
+  Starting k-point:      663 of      665 on this process      |<-- SPEC
+  Starting k-point:      664 of      665 on this process      |<-- SPEC
+  Starting k-point:      665 of      665 on this process      |<-- SPEC
+  Starting k-point:        1 of      665 on this process      |<-- SPEC
+  Starting k-point:        2 of      665 on this process      |<-- SPEC
+  Starting k-point:        3 of      665 on this process      |<-- SPEC
+  Starting k-point:        4 of      665 on this process      |<-- SPEC
+  Starting k-point:        5 of      665 on this process      |<-- SPEC
+  Starting k-point:        6 of      665 on this process      |<-- SPEC
+  Starting k-point:        7 of      665 on this process      |<-- SPEC
+  Starting k-point:        8 of      665 on this process      |<-- SPEC
+  Starting k-point:        9 of      665 on this process      |<-- SPEC
+  Starting k-point:       10 of      665 on this process      |<-- SPEC
+  Starting k-point:       11 of      665 on this process      |<-- SPEC
+  Starting k-point:       12 of      665 on this process      |<-- SPEC
+  Starting k-point:       13 of      665 on this process      |<-- SPEC
+  Starting k-point:       14 of      665 on this process      |<-- SPEC
+  Starting k-point:       15 of      665 on this process      |<-- SPEC
+  Starting k-point:       16 of      665 on this process      |<-- SPEC
+  Starting k-point:       17 of      665 on this process      |<-- SPEC
+  Starting k-point:       18 of      665 on this process      |<-- SPEC
+  Starting k-point:       19 of      665 on this process      |<-- SPEC
+  Starting k-point:       20 of      665 on this process      |<-- SPEC
+  Starting k-point:       21 of      665 on this process      |<-- SPEC
+  Starting k-point:       22 of      665 on this process      |<-- SPEC
+  Starting k-point:       23 of      665 on this process      |<-- SPEC
+  Starting k-point:       24 of      665 on this process      |<-- SPEC
+  Starting k-point:       25 of      665 on this process      |<-- SPEC
+  Starting k-point:       26 of      665 on this process      |<-- SPEC
+  Starting k-point:       27 of      665 on this process      |<-- SPEC
+  Starting k-point:       28 of      665 on this process      |<-- SPEC
+  Starting k-point:       29 of      665 on this process      |<-- SPEC
+  Starting k-point:       30 of      665 on this process      |<-- SPEC
+  Starting k-point:       31 of      665 on this process      |<-- SPEC
+  Starting k-point:       32 of      665 on this process      |<-- SPEC
+  Starting k-point:       33 of      665 on this process      |<-- SPEC
+  Starting k-point:       34 of      665 on this process      |<-- SPEC
+  Starting k-point:       35 of      665 on this process      |<-- SPEC
+  Starting k-point:       36 of      665 on this process      |<-- SPEC
+  Starting k-point:       37 of      665 on this process      |<-- SPEC
+  Starting k-point:       38 of      665 on this process      |<-- SPEC
+  Starting k-point:       39 of      665 on this process      |<-- SPEC
+  Starting k-point:       40 of      665 on this process      |<-- SPEC
+  Starting k-point:       41 of      665 on this process      |<-- SPEC
+  Starting k-point:       42 of      665 on this process      |<-- SPEC
+  Starting k-point:       43 of      665 on this process      |<-- SPEC
+  Starting k-point:       44 of      665 on this process      |<-- SPEC
+  Starting k-point:       45 of      665 on this process      |<-- SPEC
+  Starting k-point:       46 of      665 on this process      |<-- SPEC
+  Starting k-point:       47 of      665 on this process      |<-- SPEC
+  Starting k-point:       48 of      665 on this process      |<-- SPEC
+  Starting k-point:       49 of      665 on this process      |<-- SPEC
+  Starting k-point:       50 of      665 on this process      |<-- SPEC
+  Starting k-point:       51 of      665 on this process      |<-- SPEC
+  Starting k-point:       52 of      665 on this process      |<-- SPEC
+  Starting k-point:       53 of      665 on this process      |<-- SPEC
+  Starting k-point:       54 of      665 on this process      |<-- SPEC
+  Starting k-point:       55 of      665 on this process      |<-- SPEC
+  Starting k-point:       56 of      665 on this process      |<-- SPEC
+  Starting k-point:       57 of      665 on this process      |<-- SPEC
+  Starting k-point:       58 of      665 on this process      |<-- SPEC
+  Starting k-point:       59 of      665 on this process      |<-- SPEC
+  Starting k-point:       60 of      665 on this process      |<-- SPEC
+  Starting k-point:       61 of      665 on this process      |<-- SPEC
+  Starting k-point:       62 of      665 on this process      |<-- SPEC
+  Starting k-point:       63 of      665 on this process      |<-- SPEC
+  Starting k-point:       64 of      665 on this process      |<-- SPEC
+  Starting k-point:       65 of      665 on this process      |<-- SPEC
+  Starting k-point:       66 of      665 on this process      |<-- SPEC
+  Starting k-point:       67 of      665 on this process      |<-- SPEC
+  Starting k-point:       68 of      665 on this process      |<-- SPEC
+  Starting k-point:       69 of      665 on this process      |<-- SPEC
+  Starting k-point:       70 of      665 on this process      |<-- SPEC
+  Starting k-point:       71 of      665 on this process      |<-- SPEC
+  Starting k-point:       72 of      665 on this process      |<-- SPEC
+  Starting k-point:       73 of      665 on this process      |<-- SPEC
+  Starting k-point:       74 of      665 on this process      |<-- SPEC
+  Starting k-point:       75 of      665 on this process      |<-- SPEC
+  Starting k-point:       76 of      665 on this process      |<-- SPEC
+  Starting k-point:       77 of      665 on this process      |<-- SPEC
+  Starting k-point:       78 of      665 on this process      |<-- SPEC
+  Starting k-point:       79 of      665 on this process      |<-- SPEC
+  Starting k-point:       80 of      665 on this process      |<-- SPEC
+  Starting k-point:       81 of      665 on this process      |<-- SPEC
+  Starting k-point:       82 of      665 on this process      |<-- SPEC
+  Starting k-point:       83 of      665 on this process      |<-- SPEC
+  Starting k-point:       84 of      665 on this process      |<-- SPEC
+  Starting k-point:       85 of      665 on this process      |<-- SPEC
+  Starting k-point:       86 of      665 on this process      |<-- SPEC
+  Starting k-point:       87 of      665 on this process      |<-- SPEC
+  Starting k-point:       88 of      665 on this process      |<-- SPEC
+  Starting k-point:       89 of      665 on this process      |<-- SPEC
+  Starting k-point:       90 of      665 on this process      |<-- SPEC
+  Starting k-point:       91 of      665 on this process      |<-- SPEC
+  Starting k-point:       92 of      665 on this process      |<-- SPEC
+  Starting k-point:       93 of      665 on this process      |<-- SPEC
+  Starting k-point:       94 of      665 on this process      |<-- SPEC
+  Starting k-point:       95 of      665 on this process      |<-- SPEC
+  Starting k-point:       96 of      665 on this process      |<-- SPEC
+  Starting k-point:       97 of      665 on this process      |<-- SPEC
+  Starting k-point:       98 of      665 on this process      |<-- SPEC
+  Starting k-point:       99 of      665 on this process      |<-- SPEC
+  Starting k-point:      100 of      665 on this process      |<-- SPEC
+  Starting k-point:      101 of      665 on this process      |<-- SPEC
+  Starting k-point:      102 of      665 on this process      |<-- SPEC
+  Starting k-point:      103 of      665 on this process      |<-- SPEC
+  Starting k-point:      104 of      665 on this process      |<-- SPEC
+  Starting k-point:      105 of      665 on this process      |<-- SPEC
+  Starting k-point:      106 of      665 on this process      |<-- SPEC
+  Starting k-point:      107 of      665 on this process      |<-- SPEC
+  Starting k-point:      108 of      665 on this process      |<-- SPEC
+  Starting k-point:      109 of      665 on this process      |<-- SPEC
+  Starting k-point:      110 of      665 on this process      |<-- SPEC
+  Starting k-point:      111 of      665 on this process      |<-- SPEC
+  Starting k-point:      112 of      665 on this process      |<-- SPEC
+  Starting k-point:      113 of      665 on this process      |<-- SPEC
+  Starting k-point:      114 of      665 on this process      |<-- SPEC
+  Starting k-point:      115 of      665 on this process      |<-- SPEC
+  Starting k-point:      116 of      665 on this process      |<-- SPEC
+  Starting k-point:      117 of      665 on this process      |<-- SPEC
+  Starting k-point:      118 of      665 on this process      |<-- SPEC
+  Starting k-point:      119 of      665 on this process      |<-- SPEC
+  Starting k-point:      120 of      665 on this process      |<-- SPEC
+  Starting k-point:      121 of      665 on this process      |<-- SPEC
+  Starting k-point:      122 of      665 on this process      |<-- SPEC
+  Starting k-point:      123 of      665 on this process      |<-- SPEC
+  Starting k-point:      124 of      665 on this process      |<-- SPEC
+  Starting k-point:      125 of      665 on this process      |<-- SPEC
+  Starting k-point:      126 of      665 on this process      |<-- SPEC
+  Starting k-point:      127 of      665 on this process      |<-- SPEC
+  Starting k-point:      128 of      665 on this process      |<-- SPEC
+  Starting k-point:      129 of      665 on this process      |<-- SPEC
+  Starting k-point:      130 of      665 on this process      |<-- SPEC
+  Starting k-point:      131 of      665 on this process      |<-- SPEC
+  Starting k-point:      132 of      665 on this process      |<-- SPEC
+  Starting k-point:      133 of      665 on this process      |<-- SPEC
+  Starting k-point:      134 of      665 on this process      |<-- SPEC
+  Starting k-point:      135 of      665 on this process      |<-- SPEC
+  Starting k-point:      136 of      665 on this process      |<-- SPEC
+  Starting k-point:      137 of      665 on this process      |<-- SPEC
+  Starting k-point:      138 of      665 on this process      |<-- SPEC
+  Starting k-point:      139 of      665 on this process      |<-- SPEC
+  Starting k-point:      140 of      665 on this process      |<-- SPEC
+  Starting k-point:      141 of      665 on this process      |<-- SPEC
+  Starting k-point:      142 of      665 on this process      |<-- SPEC
+  Starting k-point:      143 of      665 on this process      |<-- SPEC
+  Starting k-point:      144 of      665 on this process      |<-- SPEC
+  Starting k-point:      145 of      665 on this process      |<-- SPEC
+  Starting k-point:      146 of      665 on this process      |<-- SPEC
+  Starting k-point:      147 of      665 on this process      |<-- SPEC
+  Starting k-point:      148 of      665 on this process      |<-- SPEC
+  Starting k-point:      149 of      665 on this process      |<-- SPEC
+  Starting k-point:      150 of      665 on this process      |<-- SPEC
+  Starting k-point:      151 of      665 on this process      |<-- SPEC
+  Starting k-point:      152 of      665 on this process      |<-- SPEC
+  Starting k-point:      153 of      665 on this process      |<-- SPEC
+  Starting k-point:      154 of      665 on this process      |<-- SPEC
+  Starting k-point:      155 of      665 on this process      |<-- SPEC
+  Starting k-point:      156 of      665 on this process      |<-- SPEC
+  Starting k-point:      157 of      665 on this process      |<-- SPEC
+  Starting k-point:      158 of      665 on this process      |<-- SPEC
+  Starting k-point:      159 of      665 on this process      |<-- SPEC
+  Starting k-point:      160 of      665 on this process      |<-- SPEC
+  Starting k-point:      161 of      665 on this process      |<-- SPEC
+  Starting k-point:      162 of      665 on this process      |<-- SPEC
+  Starting k-point:      163 of      665 on this process      |<-- SPEC
+  Starting k-point:      164 of      665 on this process      |<-- SPEC
+  Starting k-point:      165 of      665 on this process      |<-- SPEC
+  Starting k-point:      166 of      665 on this process      |<-- SPEC
+  Starting k-point:      167 of      665 on this process      |<-- SPEC
+  Starting k-point:      168 of      665 on this process      |<-- SPEC
+  Starting k-point:      169 of      665 on this process      |<-- SPEC
+  Starting k-point:      170 of      665 on this process      |<-- SPEC
+  Starting k-point:      171 of      665 on this process      |<-- SPEC
+  Starting k-point:      172 of      665 on this process      |<-- SPEC
+  Starting k-point:      173 of      665 on this process      |<-- SPEC
+  Starting k-point:      174 of      665 on this process      |<-- SPEC
+  Starting k-point:      175 of      665 on this process      |<-- SPEC
+  Starting k-point:      176 of      665 on this process      |<-- SPEC
+  Starting k-point:      177 of      665 on this process      |<-- SPEC
+  Starting k-point:      178 of      665 on this process      |<-- SPEC
+  Starting k-point:      179 of      665 on this process      |<-- SPEC
+  Starting k-point:      180 of      665 on this process      |<-- SPEC
+  Starting k-point:      181 of      665 on this process      |<-- SPEC
+  Starting k-point:      182 of      665 on this process      |<-- SPEC
+  Starting k-point:      183 of      665 on this process      |<-- SPEC
+  Starting k-point:      184 of      665 on this process      |<-- SPEC
+  Starting k-point:      185 of      665 on this process      |<-- SPEC
+  Starting k-point:      186 of      665 on this process      |<-- SPEC
+  Starting k-point:      187 of      665 on this process      |<-- SPEC
+  Starting k-point:      188 of      665 on this process      |<-- SPEC
+  Starting k-point:      189 of      665 on this process      |<-- SPEC
+  Starting k-point:      190 of      665 on this process      |<-- SPEC
+  Starting k-point:      191 of      665 on this process      |<-- SPEC
+  Starting k-point:      192 of      665 on this process      |<-- SPEC
+  Starting k-point:      193 of      665 on this process      |<-- SPEC
+  Starting k-point:      194 of      665 on this process      |<-- SPEC
+  Starting k-point:      195 of      665 on this process      |<-- SPEC
+  Starting k-point:      196 of      665 on this process      |<-- SPEC
+  Starting k-point:      197 of      665 on this process      |<-- SPEC
+  Starting k-point:      198 of      665 on this process      |<-- SPEC
+  Starting k-point:      199 of      665 on this process      |<-- SPEC
+  Starting k-point:      200 of      665 on this process      |<-- SPEC
+  Starting k-point:      201 of      665 on this process      |<-- SPEC
+  Starting k-point:      202 of      665 on this process      |<-- SPEC
+  Starting k-point:      203 of      665 on this process      |<-- SPEC
+  Starting k-point:      204 of      665 on this process      |<-- SPEC
+  Starting k-point:      205 of      665 on this process      |<-- SPEC
+  Starting k-point:      206 of      665 on this process      |<-- SPEC
+  Starting k-point:      207 of      665 on this process      |<-- SPEC
+  Starting k-point:      208 of      665 on this process      |<-- SPEC
+  Starting k-point:      209 of      665 on this process      |<-- SPEC
+  Starting k-point:      210 of      665 on this process      |<-- SPEC
+  Starting k-point:      211 of      665 on this process      |<-- SPEC
+  Starting k-point:      212 of      665 on this process      |<-- SPEC
+  Starting k-point:      213 of      665 on this process      |<-- SPEC
+  Starting k-point:      214 of      665 on this process      |<-- SPEC
+  Starting k-point:      215 of      665 on this process      |<-- SPEC
+  Starting k-point:      216 of      665 on this process      |<-- SPEC
+  Starting k-point:      217 of      665 on this process      |<-- SPEC
+  Starting k-point:      218 of      665 on this process      |<-- SPEC
+  Starting k-point:      219 of      665 on this process      |<-- SPEC
+  Starting k-point:      220 of      665 on this process      |<-- SPEC
+  Starting k-point:      221 of      665 on this process      |<-- SPEC
+  Starting k-point:      222 of      665 on this process      |<-- SPEC
+  Starting k-point:      223 of      665 on this process      |<-- SPEC
+  Starting k-point:      224 of      665 on this process      |<-- SPEC
+  Starting k-point:      225 of      665 on this process      |<-- SPEC
+  Starting k-point:      226 of      665 on this process      |<-- SPEC
+  Starting k-point:      227 of      665 on this process      |<-- SPEC
+  Starting k-point:      228 of      665 on this process      |<-- SPEC
+  Starting k-point:      229 of      665 on this process      |<-- SPEC
+  Starting k-point:      230 of      665 on this process      |<-- SPEC
+  Starting k-point:      231 of      665 on this process      |<-- SPEC
+  Starting k-point:      232 of      665 on this process      |<-- SPEC
+  Starting k-point:      233 of      665 on this process      |<-- SPEC
+  Starting k-point:      234 of      665 on this process      |<-- SPEC
+  Starting k-point:      235 of      665 on this process      |<-- SPEC
+  Starting k-point:      236 of      665 on this process      |<-- SPEC
+  Starting k-point:      237 of      665 on this process      |<-- SPEC
+  Starting k-point:      238 of      665 on this process      |<-- SPEC
+  Starting k-point:      239 of      665 on this process      |<-- SPEC
+  Starting k-point:      240 of      665 on this process      |<-- SPEC
+  Starting k-point:      241 of      665 on this process      |<-- SPEC
+  Starting k-point:      242 of      665 on this process      |<-- SPEC
+  Starting k-point:      243 of      665 on this process      |<-- SPEC
+  Starting k-point:      244 of      665 on this process      |<-- SPEC
+  Starting k-point:      245 of      665 on this process      |<-- SPEC
+  Starting k-point:      246 of      665 on this process      |<-- SPEC
+  Starting k-point:      247 of      665 on this process      |<-- SPEC
+  Starting k-point:      248 of      665 on this process      |<-- SPEC
+  Starting k-point:      249 of      665 on this process      |<-- SPEC
+  Starting k-point:      250 of      665 on this process      |<-- SPEC
+  Starting k-point:      251 of      665 on this process      |<-- SPEC
+  Starting k-point:      252 of      665 on this process      |<-- SPEC
+  Starting k-point:      253 of      665 on this process      |<-- SPEC
+  Starting k-point:      254 of      665 on this process      |<-- SPEC
+  Starting k-point:      255 of      665 on this process      |<-- SPEC
+  Starting k-point:      256 of      665 on this process      |<-- SPEC
+  Starting k-point:      257 of      665 on this process      |<-- SPEC
+  Starting k-point:      258 of      665 on this process      |<-- SPEC
+  Starting k-point:      259 of      665 on this process      |<-- SPEC
+  Starting k-point:      260 of      665 on this process      |<-- SPEC
+  Starting k-point:      261 of      665 on this process      |<-- SPEC
+  Starting k-point:      262 of      665 on this process      |<-- SPEC
+  Starting k-point:      263 of      665 on this process      |<-- SPEC
+  Starting k-point:      264 of      665 on this process      |<-- SPEC
+  Starting k-point:      265 of      665 on this process      |<-- SPEC
+  Starting k-point:      266 of      665 on this process      |<-- SPEC
+  Starting k-point:      267 of      665 on this process      |<-- SPEC
+  Starting k-point:      268 of      665 on this process      |<-- SPEC
+  Starting k-point:      269 of      665 on this process      |<-- SPEC
+  Starting k-point:      270 of      665 on this process      |<-- SPEC
+  Starting k-point:      271 of      665 on this process      |<-- SPEC
+  Starting k-point:      272 of      665 on this process      |<-- SPEC
+  Starting k-point:      273 of      665 on this process      |<-- SPEC
+  Starting k-point:      274 of      665 on this process      |<-- SPEC
+  Starting k-point:      275 of      665 on this process      |<-- SPEC
+  Starting k-point:      276 of      665 on this process      |<-- SPEC
+  Starting k-point:      277 of      665 on this process      |<-- SPEC
+  Starting k-point:      278 of      665 on this process      |<-- SPEC
+  Starting k-point:      279 of      665 on this process      |<-- SPEC
+  Starting k-point:      280 of      665 on this process      |<-- SPEC
+  Starting k-point:      281 of      665 on this process      |<-- SPEC
+  Starting k-point:      282 of      665 on this process      |<-- SPEC
+  Starting k-point:      283 of      665 on this process      |<-- SPEC
+  Starting k-point:      284 of      665 on this process      |<-- SPEC
+  Starting k-point:      285 of      665 on this process      |<-- SPEC
+  Starting k-point:      286 of      665 on this process      |<-- SPEC
+  Starting k-point:      287 of      665 on this process      |<-- SPEC
+  Starting k-point:      288 of      665 on this process      |<-- SPEC
+  Starting k-point:      289 of      665 on this process      |<-- SPEC
+  Starting k-point:      290 of      665 on this process      |<-- SPEC
+  Starting k-point:      291 of      665 on this process      |<-- SPEC
+  Starting k-point:      292 of      665 on this process      |<-- SPEC
+  Starting k-point:      293 of      665 on this process      |<-- SPEC
+  Starting k-point:      294 of      665 on this process      |<-- SPEC
+  Starting k-point:      295 of      665 on this process      |<-- SPEC
+  Starting k-point:      296 of      665 on this process      |<-- SPEC
+  Starting k-point:      297 of      665 on this process      |<-- SPEC
+  Starting k-point:      298 of      665 on this process      |<-- SPEC
+  Starting k-point:      299 of      665 on this process      |<-- SPEC
+  Starting k-point:      300 of      665 on this process      |<-- SPEC
+  Starting k-point:      301 of      665 on this process      |<-- SPEC
+  Starting k-point:      302 of      665 on this process      |<-- SPEC
+  Starting k-point:      303 of      665 on this process      |<-- SPEC
+  Starting k-point:      304 of      665 on this process      |<-- SPEC
+  Starting k-point:      305 of      665 on this process      |<-- SPEC
+  Starting k-point:      306 of      665 on this process      |<-- SPEC
+  Starting k-point:      307 of      665 on this process      |<-- SPEC
+  Starting k-point:      308 of      665 on this process      |<-- SPEC
+  Starting k-point:      309 of      665 on this process      |<-- SPEC
+  Starting k-point:      310 of      665 on this process      |<-- SPEC
+  Starting k-point:      311 of      665 on this process      |<-- SPEC
+  Starting k-point:      312 of      665 on this process      |<-- SPEC
+  Starting k-point:      313 of      665 on this process      |<-- SPEC
+  Starting k-point:      314 of      665 on this process      |<-- SPEC
+  Starting k-point:      315 of      665 on this process      |<-- SPEC
+  Starting k-point:      316 of      665 on this process      |<-- SPEC
+  Starting k-point:      317 of      665 on this process      |<-- SPEC
+  Starting k-point:      318 of      665 on this process      |<-- SPEC
+  Starting k-point:      319 of      665 on this process      |<-- SPEC
+  Starting k-point:      320 of      665 on this process      |<-- SPEC
+  Starting k-point:      321 of      665 on this process      |<-- SPEC
+  Starting k-point:      322 of      665 on this process      |<-- SPEC
+  Starting k-point:      323 of      665 on this process      |<-- SPEC
+  Starting k-point:      324 of      665 on this process      |<-- SPEC
+  Starting k-point:      325 of      665 on this process      |<-- SPEC
+  Starting k-point:      326 of      665 on this process      |<-- SPEC
+  Starting k-point:      327 of      665 on this process      |<-- SPEC
+  Starting k-point:      328 of      665 on this process      |<-- SPEC
+  Starting k-point:      329 of      665 on this process      |<-- SPEC
+  Starting k-point:      330 of      665 on this process      |<-- SPEC
+  Starting k-point:      331 of      665 on this process      |<-- SPEC
+  Starting k-point:      332 of      665 on this process      |<-- SPEC
+  Starting k-point:      333 of      665 on this process      |<-- SPEC
+  Starting k-point:      334 of      665 on this process      |<-- SPEC
+  Starting k-point:      335 of      665 on this process      |<-- SPEC
+  Starting k-point:      336 of      665 on this process      |<-- SPEC
+  Starting k-point:      337 of      665 on this process      |<-- SPEC
+  Starting k-point:      338 of      665 on this process      |<-- SPEC
+  Starting k-point:      339 of      665 on this process      |<-- SPEC
+  Starting k-point:      340 of      665 on this process      |<-- SPEC
+  Starting k-point:      341 of      665 on this process      |<-- SPEC
+  Starting k-point:      342 of      665 on this process      |<-- SPEC
+  Starting k-point:      343 of      665 on this process      |<-- SPEC
+  Starting k-point:      344 of      665 on this process      |<-- SPEC
+  Starting k-point:      345 of      665 on this process      |<-- SPEC
+  Starting k-point:      346 of      665 on this process      |<-- SPEC
+  Starting k-point:      347 of      665 on this process      |<-- SPEC
+  Starting k-point:      348 of      665 on this process      |<-- SPEC
+  Starting k-point:      349 of      665 on this process      |<-- SPEC
+  Starting k-point:      350 of      665 on this process      |<-- SPEC
+  Starting k-point:      351 of      665 on this process      |<-- SPEC
+  Starting k-point:      352 of      665 on this process      |<-- SPEC
+  Starting k-point:      353 of      665 on this process      |<-- SPEC
+  Starting k-point:      354 of      665 on this process      |<-- SPEC
+  Starting k-point:      355 of      665 on this process      |<-- SPEC
+  Starting k-point:      356 of      665 on this process      |<-- SPEC
+  Starting k-point:      357 of      665 on this process      |<-- SPEC
+  Starting k-point:      358 of      665 on this process      |<-- SPEC
+  Starting k-point:      359 of      665 on this process      |<-- SPEC
+  Starting k-point:      360 of      665 on this process      |<-- SPEC
+  Starting k-point:      361 of      665 on this process      |<-- SPEC
+  Starting k-point:      362 of      665 on this process      |<-- SPEC
+  Starting k-point:      363 of      665 on this process      |<-- SPEC
+  Starting k-point:      364 of      665 on this process      |<-- SPEC
+  Starting k-point:      365 of      665 on this process      |<-- SPEC
+  Starting k-point:      366 of      665 on this process      |<-- SPEC
+  Starting k-point:      367 of      665 on this process      |<-- SPEC
+  Starting k-point:      368 of      665 on this process      |<-- SPEC
+  Starting k-point:      369 of      665 on this process      |<-- SPEC
+  Starting k-point:      370 of      665 on this process      |<-- SPEC
+  Starting k-point:      371 of      665 on this process      |<-- SPEC
+  Starting k-point:      372 of      665 on this process      |<-- SPEC
+  Starting k-point:      373 of      665 on this process      |<-- SPEC
+  Starting k-point:      374 of      665 on this process      |<-- SPEC
+  Starting k-point:      375 of      665 on this process      |<-- SPEC
+  Starting k-point:      376 of      665 on this process      |<-- SPEC
+  Starting k-point:      377 of      665 on this process      |<-- SPEC
+  Starting k-point:      378 of      665 on this process      |<-- SPEC
+  Starting k-point:      379 of      665 on this process      |<-- SPEC
+  Starting k-point:      380 of      665 on this process      |<-- SPEC
+  Starting k-point:      381 of      665 on this process      |<-- SPEC
+  Starting k-point:      382 of      665 on this process      |<-- SPEC
+  Starting k-point:      383 of      665 on this process      |<-- SPEC
+  Starting k-point:      384 of      665 on this process      |<-- SPEC
+  Starting k-point:      385 of      665 on this process      |<-- SPEC
+  Starting k-point:      386 of      665 on this process      |<-- SPEC
+  Starting k-point:      387 of      665 on this process      |<-- SPEC
+  Starting k-point:      388 of      665 on this process      |<-- SPEC
+  Starting k-point:      389 of      665 on this process      |<-- SPEC
+  Starting k-point:      390 of      665 on this process      |<-- SPEC
+  Starting k-point:      391 of      665 on this process      |<-- SPEC
+  Starting k-point:      392 of      665 on this process      |<-- SPEC
+  Starting k-point:      393 of      665 on this process      |<-- SPEC
+  Starting k-point:      394 of      665 on this process      |<-- SPEC
+  Starting k-point:      395 of      665 on this process      |<-- SPEC
+  Starting k-point:      396 of      665 on this process      |<-- SPEC
+  Starting k-point:      397 of      665 on this process      |<-- SPEC
+  Starting k-point:      398 of      665 on this process      |<-- SPEC
+  Starting k-point:      399 of      665 on this process      |<-- SPEC
+  Starting k-point:      400 of      665 on this process      |<-- SPEC
+  Starting k-point:      401 of      665 on this process      |<-- SPEC
+  Starting k-point:      402 of      665 on this process      |<-- SPEC
+  Starting k-point:      403 of      665 on this process      |<-- SPEC
+  Starting k-point:      404 of      665 on this process      |<-- SPEC
+  Starting k-point:      405 of      665 on this process      |<-- SPEC
+  Starting k-point:      406 of      665 on this process      |<-- SPEC
+  Starting k-point:      407 of      665 on this process      |<-- SPEC
+  Starting k-point:      408 of      665 on this process      |<-- SPEC
+  Starting k-point:      409 of      665 on this process      |<-- SPEC
+  Starting k-point:      410 of      665 on this process      |<-- SPEC
+  Starting k-point:      411 of      665 on this process      |<-- SPEC
+  Starting k-point:      412 of      665 on this process      |<-- SPEC
+  Starting k-point:      413 of      665 on this process      |<-- SPEC
+  Starting k-point:      414 of      665 on this process      |<-- SPEC
+  Starting k-point:      415 of      665 on this process      |<-- SPEC
+  Starting k-point:      416 of      665 on this process      |<-- SPEC
+  Starting k-point:      417 of      665 on this process      |<-- SPEC
+  Starting k-point:      418 of      665 on this process      |<-- SPEC
+  Starting k-point:      419 of      665 on this process      |<-- SPEC
+  Starting k-point:      420 of      665 on this process      |<-- SPEC
+  Starting k-point:      421 of      665 on this process      |<-- SPEC
+  Starting k-point:      422 of      665 on this process      |<-- SPEC
+  Starting k-point:      423 of      665 on this process      |<-- SPEC
+  Starting k-point:      424 of      665 on this process      |<-- SPEC
+  Starting k-point:      425 of      665 on this process      |<-- SPEC
+  Starting k-point:      426 of      665 on this process      |<-- SPEC
+  Starting k-point:      427 of      665 on this process      |<-- SPEC
+  Starting k-point:      428 of      665 on this process      |<-- SPEC
+  Starting k-point:      429 of      665 on this process      |<-- SPEC
+  Starting k-point:      430 of      665 on this process      |<-- SPEC
+  Starting k-point:      431 of      665 on this process      |<-- SPEC
+  Starting k-point:      432 of      665 on this process      |<-- SPEC
+  Starting k-point:      433 of      665 on this process      |<-- SPEC
+  Starting k-point:      434 of      665 on this process      |<-- SPEC
+  Starting k-point:      435 of      665 on this process      |<-- SPEC
+  Starting k-point:      436 of      665 on this process      |<-- SPEC
+  Starting k-point:      437 of      665 on this process      |<-- SPEC
+  Starting k-point:      438 of      665 on this process      |<-- SPEC
+  Starting k-point:      439 of      665 on this process      |<-- SPEC
+  Starting k-point:      440 of      665 on this process      |<-- SPEC
+  Starting k-point:      441 of      665 on this process      |<-- SPEC
+  Starting k-point:      442 of      665 on this process      |<-- SPEC
+  Starting k-point:      443 of      665 on this process      |<-- SPEC
+  Starting k-point:      444 of      665 on this process      |<-- SPEC
+  Starting k-point:      445 of      665 on this process      |<-- SPEC
+  Starting k-point:      446 of      665 on this process      |<-- SPEC
+  Starting k-point:      447 of      665 on this process      |<-- SPEC
+  Starting k-point:      448 of      665 on this process      |<-- SPEC
+  Starting k-point:      449 of      665 on this process      |<-- SPEC
+  Starting k-point:      450 of      665 on this process      |<-- SPEC
+  Starting k-point:      451 of      665 on this process      |<-- SPEC
+  Starting k-point:      452 of      665 on this process      |<-- SPEC
+  Starting k-point:      453 of      665 on this process      |<-- SPEC
+  Starting k-point:      454 of      665 on this process      |<-- SPEC
+  Starting k-point:      455 of      665 on this process      |<-- SPEC
+  Starting k-point:      456 of      665 on this process      |<-- SPEC
+  Starting k-point:      457 of      665 on this process      |<-- SPEC
+  Starting k-point:      458 of      665 on this process      |<-- SPEC
+  Starting k-point:      459 of      665 on this process      |<-- SPEC
+  Starting k-point:      460 of      665 on this process      |<-- SPEC
+  Starting k-point:      461 of      665 on this process      |<-- SPEC
+  Starting k-point:      462 of      665 on this process      |<-- SPEC
+  Starting k-point:      463 of      665 on this process      |<-- SPEC
+  Starting k-point:      464 of      665 on this process      |<-- SPEC
+  Starting k-point:      465 of      665 on this process      |<-- SPEC
+  Starting k-point:      466 of      665 on this process      |<-- SPEC
+  Starting k-point:      467 of      665 on this process      |<-- SPEC
+  Starting k-point:      468 of      665 on this process      |<-- SPEC
+  Starting k-point:      469 of      665 on this process      |<-- SPEC
+  Starting k-point:      470 of      665 on this process      |<-- SPEC
+  Starting k-point:      471 of      665 on this process      |<-- SPEC
+  Starting k-point:      472 of      665 on this process      |<-- SPEC
+  Starting k-point:      473 of      665 on this process      |<-- SPEC
+  Starting k-point:      474 of      665 on this process      |<-- SPEC
+  Starting k-point:      475 of      665 on this process      |<-- SPEC
+  Starting k-point:      476 of      665 on this process      |<-- SPEC
+  Starting k-point:      477 of      665 on this process      |<-- SPEC
+  Starting k-point:      478 of      665 on this process      |<-- SPEC
+  Starting k-point:      479 of      665 on this process      |<-- SPEC
+  Starting k-point:      480 of      665 on this process      |<-- SPEC
+  Starting k-point:      481 of      665 on this process      |<-- SPEC
+  Starting k-point:      482 of      665 on this process      |<-- SPEC
+  Starting k-point:      483 of      665 on this process      |<-- SPEC
+  Starting k-point:      484 of      665 on this process      |<-- SPEC
+  Starting k-point:      485 of      665 on this process      |<-- SPEC
+  Starting k-point:      486 of      665 on this process      |<-- SPEC
+  Starting k-point:      487 of      665 on this process      |<-- SPEC
+  Starting k-point:      488 of      665 on this process      |<-- SPEC
+  Starting k-point:      489 of      665 on this process      |<-- SPEC
+  Starting k-point:      490 of      665 on this process      |<-- SPEC
+  Starting k-point:      491 of      665 on this process      |<-- SPEC
+  Starting k-point:      492 of      665 on this process      |<-- SPEC
+  Starting k-point:      493 of      665 on this process      |<-- SPEC
+  Starting k-point:      494 of      665 on this process      |<-- SPEC
+  Starting k-point:      495 of      665 on this process      |<-- SPEC
+  Starting k-point:      496 of      665 on this process      |<-- SPEC
+  Starting k-point:      497 of      665 on this process      |<-- SPEC
+  Starting k-point:      498 of      665 on this process      |<-- SPEC
+  Starting k-point:      499 of      665 on this process      |<-- SPEC
+  Starting k-point:      500 of      665 on this process      |<-- SPEC
+  Starting k-point:      501 of      665 on this process      |<-- SPEC
+  Starting k-point:      502 of      665 on this process      |<-- SPEC
+  Starting k-point:      503 of      665 on this process      |<-- SPEC
+  Starting k-point:      504 of      665 on this process      |<-- SPEC
+  Starting k-point:      505 of      665 on this process      |<-- SPEC
+  Starting k-point:      506 of      665 on this process      |<-- SPEC
+  Starting k-point:      507 of      665 on this process      |<-- SPEC
+  Starting k-point:      508 of      665 on this process      |<-- SPEC
+  Starting k-point:      509 of      665 on this process      |<-- SPEC
+  Starting k-point:      510 of      665 on this process      |<-- SPEC
+  Starting k-point:      511 of      665 on this process      |<-- SPEC
+  Starting k-point:      512 of      665 on this process      |<-- SPEC
+  Starting k-point:      513 of      665 on this process      |<-- SPEC
+  Starting k-point:      514 of      665 on this process      |<-- SPEC
+  Starting k-point:      515 of      665 on this process      |<-- SPEC
+  Starting k-point:      516 of      665 on this process      |<-- SPEC
+  Starting k-point:      517 of      665 on this process      |<-- SPEC
+  Starting k-point:      518 of      665 on this process      |<-- SPEC
+  Starting k-point:      519 of      665 on this process      |<-- SPEC
+  Starting k-point:      520 of      665 on this process      |<-- SPEC
+  Starting k-point:      521 of      665 on this process      |<-- SPEC
+  Starting k-point:      522 of      665 on this process      |<-- SPEC
+  Starting k-point:      523 of      665 on this process      |<-- SPEC
+  Starting k-point:      524 of      665 on this process      |<-- SPEC
+  Starting k-point:      525 of      665 on this process      |<-- SPEC
+  Starting k-point:      526 of      665 on this process      |<-- SPEC
+  Starting k-point:      527 of      665 on this process      |<-- SPEC
+  Starting k-point:      528 of      665 on this process      |<-- SPEC
+  Starting k-point:      529 of      665 on this process      |<-- SPEC
+  Starting k-point:      530 of      665 on this process      |<-- SPEC
+  Starting k-point:      531 of      665 on this process      |<-- SPEC
+  Starting k-point:      532 of      665 on this process      |<-- SPEC
+  Starting k-point:      533 of      665 on this process      |<-- SPEC
+  Starting k-point:      534 of      665 on this process      |<-- SPEC
+  Starting k-point:      535 of      665 on this process      |<-- SPEC
+  Starting k-point:      536 of      665 on this process      |<-- SPEC
+  Starting k-point:      537 of      665 on this process      |<-- SPEC
+  Starting k-point:      538 of      665 on this process      |<-- SPEC
+  Starting k-point:      539 of      665 on this process      |<-- SPEC
+  Starting k-point:      540 of      665 on this process      |<-- SPEC
+  Starting k-point:      541 of      665 on this process      |<-- SPEC
+  Starting k-point:      542 of      665 on this process      |<-- SPEC
+  Starting k-point:      543 of      665 on this process      |<-- SPEC
+  Starting k-point:      544 of      665 on this process      |<-- SPEC
+  Starting k-point:      545 of      665 on this process      |<-- SPEC
+  Starting k-point:      546 of      665 on this process      |<-- SPEC
+  Starting k-point:      547 of      665 on this process      |<-- SPEC
+  Starting k-point:      548 of      665 on this process      |<-- SPEC
+  Starting k-point:      549 of      665 on this process      |<-- SPEC
+  Starting k-point:      550 of      665 on this process      |<-- SPEC
+  Starting k-point:      551 of      665 on this process      |<-- SPEC
+  Starting k-point:      552 of      665 on this process      |<-- SPEC
+  Starting k-point:      553 of      665 on this process      |<-- SPEC
+  Starting k-point:      554 of      665 on this process      |<-- SPEC
+  Starting k-point:      555 of      665 on this process      |<-- SPEC
+  Starting k-point:      556 of      665 on this process      |<-- SPEC
+  Starting k-point:      557 of      665 on this process      |<-- SPEC
+  Starting k-point:      558 of      665 on this process      |<-- SPEC
+  Starting k-point:      559 of      665 on this process      |<-- SPEC
+  Starting k-point:      560 of      665 on this process      |<-- SPEC
+  Starting k-point:      561 of      665 on this process      |<-- SPEC
+  Starting k-point:      562 of      665 on this process      |<-- SPEC
+  Starting k-point:      563 of      665 on this process      |<-- SPEC
+  Starting k-point:      564 of      665 on this process      |<-- SPEC
+  Starting k-point:      565 of      665 on this process      |<-- SPEC
+  Starting k-point:      566 of      665 on this process      |<-- SPEC
+  Starting k-point:      567 of      665 on this process      |<-- SPEC
+  Starting k-point:      568 of      665 on this process      |<-- SPEC
+  Starting k-point:      569 of      665 on this process      |<-- SPEC
+  Starting k-point:      570 of      665 on this process      |<-- SPEC
+  Starting k-point:      571 of      665 on this process      |<-- SPEC
+  Starting k-point:      572 of      665 on this process      |<-- SPEC
+  Starting k-point:      573 of      665 on this process      |<-- SPEC
+  Starting k-point:      574 of      665 on this process      |<-- SPEC
+  Starting k-point:      575 of      665 on this process      |<-- SPEC
+  Starting k-point:      576 of      665 on this process      |<-- SPEC
+  Starting k-point:      577 of      665 on this process      |<-- SPEC
+  Starting k-point:      578 of      665 on this process      |<-- SPEC
+  Starting k-point:      579 of      665 on this process      |<-- SPEC
+  Starting k-point:      580 of      665 on this process      |<-- SPEC
+  Starting k-point:      581 of      665 on this process      |<-- SPEC
+  Starting k-point:      582 of      665 on this process      |<-- SPEC
+  Starting k-point:      583 of      665 on this process      |<-- SPEC
+  Starting k-point:      584 of      665 on this process      |<-- SPEC
+  Starting k-point:      585 of      665 on this process      |<-- SPEC
+  Starting k-point:      586 of      665 on this process      |<-- SPEC
+  Starting k-point:      587 of      665 on this process      |<-- SPEC
+  Starting k-point:      588 of      665 on this process      |<-- SPEC
+  Starting k-point:      589 of      665 on this process      |<-- SPEC
+  Starting k-point:      590 of      665 on this process      |<-- SPEC
+  Starting k-point:      591 of      665 on this process      |<-- SPEC
+  Starting k-point:      592 of      665 on this process      |<-- SPEC
+  Starting k-point:      593 of      665 on this process      |<-- SPEC
+  Starting k-point:      594 of      665 on this process      |<-- SPEC
+  Starting k-point:      595 of      665 on this process      |<-- SPEC
+  Starting k-point:      596 of      665 on this process      |<-- SPEC
+  Starting k-point:      597 of      665 on this process      |<-- SPEC
+  Starting k-point:      598 of      665 on this process      |<-- SPEC
+  Starting k-point:      599 of      665 on this process      |<-- SPEC
+  Starting k-point:      600 of      665 on this process      |<-- SPEC
+  Starting k-point:      601 of      665 on this process      |<-- SPEC
+  Starting k-point:      602 of      665 on this process      |<-- SPEC
+  Starting k-point:      603 of      665 on this process      |<-- SPEC
+  Starting k-point:      604 of      665 on this process      |<-- SPEC
+  Starting k-point:      605 of      665 on this process      |<-- SPEC
+  Starting k-point:      606 of      665 on this process      |<-- SPEC
+  Starting k-point:      607 of      665 on this process      |<-- SPEC
+  Starting k-point:      608 of      665 on this process      |<-- SPEC
+  Starting k-point:      609 of      665 on this process      |<-- SPEC
+  Starting k-point:      610 of      665 on this process      |<-- SPEC
+  Starting k-point:      611 of      665 on this process      |<-- SPEC
+  Starting k-point:      612 of      665 on this process      |<-- SPEC
+  Starting k-point:      613 of      665 on this process      |<-- SPEC
+  Starting k-point:      614 of      665 on this process      |<-- SPEC
+  Starting k-point:      615 of      665 on this process      |<-- SPEC
+  Starting k-point:      616 of      665 on this process      |<-- SPEC
+  Starting k-point:      617 of      665 on this process      |<-- SPEC
+  Starting k-point:      618 of      665 on this process      |<-- SPEC
+  Starting k-point:      619 of      665 on this process      |<-- SPEC
+  Starting k-point:      620 of      665 on this process      |<-- SPEC
+  Starting k-point:      621 of      665 on this process      |<-- SPEC
+  Starting k-point:      622 of      665 on this process      |<-- SPEC
+  Starting k-point:      623 of      665 on this process      |<-- SPEC
+  Starting k-point:      624 of      665 on this process      |<-- SPEC
+  Starting k-point:      625 of      665 on this process      |<-- SPEC
+  Starting k-point:      626 of      665 on this process      |<-- SPEC
+  Starting k-point:      627 of      665 on this process      |<-- SPEC
+  Starting k-point:      628 of      665 on this process      |<-- SPEC
+  Starting k-point:      629 of      665 on this process      |<-- SPEC
+  Starting k-point:      630 of      665 on this process      |<-- SPEC
+  Starting k-point:      631 of      665 on this process      |<-- SPEC
+  Starting k-point:      632 of      665 on this process      |<-- SPEC
+  Starting k-point:      633 of      665 on this process      |<-- SPEC
+  Starting k-point:      634 of      665 on this process      |<-- SPEC
+  Starting k-point:      635 of      665 on this process      |<-- SPEC
+  Starting k-point:      636 of      665 on this process      |<-- SPEC
+  Starting k-point:      637 of      665 on this process      |<-- SPEC
+  Starting k-point:      638 of      665 on this process      |<-- SPEC
+  Starting k-point:      639 of      665 on this process      |<-- SPEC
+  Starting k-point:      640 of      665 on this process      |<-- SPEC
+  Starting k-point:      641 of      665 on this process      |<-- SPEC
+  Starting k-point:      642 of      665 on this process      |<-- SPEC
+  Starting k-point:      643 of      665 on this process      |<-- SPEC
+  Starting k-point:      644 of      665 on this process      |<-- SPEC
+  Starting k-point:      645 of      665 on this process      |<-- SPEC
+  Starting k-point:      646 of      665 on this process      |<-- SPEC
+  Starting k-point:      647 of      665 on this process      |<-- SPEC
+  Starting k-point:      648 of      665 on this process      |<-- SPEC
+  Starting k-point:      649 of      665 on this process      |<-- SPEC
+  Starting k-point:      650 of      665 on this process      |<-- SPEC
+  Starting k-point:      651 of      665 on this process      |<-- SPEC
+  Starting k-point:      652 of      665 on this process      |<-- SPEC
+  Starting k-point:      653 of      665 on this process      |<-- SPEC
+  Starting k-point:      654 of      665 on this process      |<-- SPEC
+  Starting k-point:      655 of      665 on this process      |<-- SPEC
+  Starting k-point:      656 of      665 on this process      |<-- SPEC
+  Starting k-point:      657 of      665 on this process      |<-- SPEC
+  Starting k-point:      658 of      665 on this process      |<-- SPEC
+  Starting k-point:      659 of      665 on this process      |<-- SPEC
+  Starting k-point:      660 of      665 on this process      |<-- SPEC
+  Starting k-point:      661 of      665 on this process      |<-- SPEC
+  Starting k-point:      662 of      665 on this process      |<-- SPEC
+  Starting k-point:      663 of      665 on this process      |<-- SPEC
+  Starting k-point:      664 of      665 on this process      |<-- SPEC
+  Starting k-point:      665 of      665 on this process      |<-- SPEC
+  Total time to compute matrix elements             35.15 sec |<-- SPEC
   
   + Calculation re-parallelised over 4 processes.                     +
-  + Data distributed by G-vector(2-way), k-point(2-way)               +
+  + Data distributed by k-point(4-way)                                +
 
  ******************** Symmetrised Forces ********************
  *                                                          *
@@ -719,25 +1732,25 @@ Charge spilling parameter for spin component 2 = 0.42%
   ---------------------------------------------------------------
      Ion    Atom   Orbital              Up        Down      Spin
   ---------------------------------------------------------------
-     Fe     1      Dzz                  0.939     0.322     0.617
-     Fe     1      Dzy                  0.861     0.482     0.379
-     Fe     1      Dzx                  0.886     0.527     0.359
-     Fe     1      Dxx-yy               0.944     0.315     0.629
-     Fe     1      Dxy                  0.859     0.504     0.354
-     Fe     1      S                    0.339     0.362    -0.023
-     Fe     1      Px                   0.065     0.111    -0.046
-     Fe     1      Py                   0.075     0.108    -0.033
-     Fe     1      Pz                   0.117     0.185    -0.067
+     Fe     1      Dzz                  0.946     0.316     0.631
+     Fe     1      Dzy                  0.865     0.486     0.380
+     Fe     1      Dzx                  0.859     0.508     0.351
+     Fe     1      Dxx-yy               0.945     0.319     0.626
+     Fe     1      Dxy                  0.883     0.506     0.377
+     Fe     1      S                    0.339     0.359    -0.020
+     Fe     1      Px                   0.049     0.091    -0.043
+     Fe     1      Py                   0.104     0.151    -0.047
+     Fe     1      Pz                   0.114     0.158    -0.044
   ---------------------------------------------------------------
-                           Total:       5.085     2.915     2.170
+                           Total:       5.106     2.894     2.211
   ---------------------------------------------------------------
 
      Atomic Populations (Mulliken)
      -----------------------------
 Species          Ion Spin      s      p      d      f     Total  Charge(e)   Spin(hbar/2)
 =========================================================================================
-  Fe              1   up:     0.34   0.26   4.49   0.00   5.09     0.00        2.17
-                  1   dn:     0.36   0.40   2.15   0.00   2.91
+  Fe              1   up:     0.34   0.27   4.50   0.00   5.11     0.00        2.21
+                  1   dn:     0.36   0.40   2.13   0.00   2.89
 =========================================================================================
 
                  Bond                   Population        Spin       Length (A)
@@ -752,17 +1765,16 @@ Writing model to aiida.check
  A BibTeX formatted list of references used in this run has been written to 
  aiida.bib
  
-Initialisation time =      4.99 s
-Calculation time    =     11.18 s
-Finalisation time   =      0.01 s
-Total time          =     16.18 s
-Peak Memory Use     = 773352 kB
+Initialisation time =      5.92 s
+Calculation time    =     42.10 s
+Finalisation time   =      0.02 s
+Total time          =     48.03 s
+Peak Memory Use     = 773468 kB
   
-Overall parallel efficiency rating: Poor (47%)                                  
+Overall parallel efficiency rating: Mediocre (58%)                              
   
 Data was distributed by:-
-G-vector (2-way); efficiency rating: Mediocre (57%)                             
-k-point (2-way); efficiency rating: Good (74%)                                  
+k-point (4-way); efficiency rating: Very good (82%)                             
   
 Parallel notes:
-1) Calculation only took 16.2 s, so efficiency estimates may be inaccurate.     
+1) Calculation only took 48.0 s, so efficiency estimates may be inaccurate.     
