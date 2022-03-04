@@ -62,14 +62,14 @@
  FFT Lib : mkl
  Fundamental constants values: CODATA 2014
 
- Run started: Wed, 23 Feb 2022 16:03:52 +0000
+ Run started: Mon, 28 Feb 2022 16:11:39 +0000
 
  Atomic calculation performed for Si: 1s2 2s2 2p6 3s2 3p2
 
  Converged in 55 iterations to an ae energy of -7859.183 eV
 
    ============================================================                
-   | Pseudopotential Report - Date of generation 23-02-2022   |                
+   | Pseudopotential Report - Date of generation 28-02-2022   |                
    ------------------------------------------------------------                
    | Element: Si Ionic charge:  4.00 Level of theory: LDA     |                
    | Atomic Solver: Koelling-Harmon                           |                
@@ -99,7 +99,7 @@
 
  Pseudo atomic calculation performed for Si 3s2 3p2
 
- Converged in 16 iterations to a total energy of -163.0365 eV
+ Converged in 8 iterations to a total energy of -163.0624 eV
  Calculation parallelised over 4 processes.
  Data is distributed by k-point(4-way)
 
@@ -149,7 +149,7 @@
  output    efield chi2 unit                     : pm/V
   
  wavefunctions paging                           : none
- random number generator seed                   : randomised (160353026)
+ random number generator seed                   : randomised (161139764)
  data distribution                              : optimal for this architecture
  optimization strategy                          : balance speed and memory
 
@@ -167,9 +167,9 @@
 
  **************************** Basis Set Parameters *****************************
   
- plane wave basis set cut-off                   :   200.0000   eV
+ plane wave basis set cut-off                   :   500.0000   eV
  size of standard grid                          :     1.7500
- size of   fine   gmax                          :    12.6792   1/A
+ size of   fine   gmax                          :    20.0476   1/A
  finite basis set correction                    : none
 
  **************************** Electronic Parameters ****************************
@@ -201,7 +201,7 @@
  density-mixing scheme                          : Broyden
  max. length of mixing history                  :         20
  charge density mixing amplitude                : 0.8000    
- cut-off energy for mixing                      :  200.0       eV
+ cut-off energy for mixing                      :  500.0       eV
 
  *********************** Population Analysis Parameters ************************
   
@@ -294,36 +294,36 @@
 |                                                     Memory          Disk    |
 | Baseline code, static data and system overhead      347.0 MB         0.0 MB |
 | BLAS internal memory storage                          0.0 MB         0.0 MB |
-| Model and support data                               82.1 MB        11.4 MB |
-| Electronic energy minimisation requirements           2.3 MB         0.0 MB |
-| Force calculation requirements                        0.6 MB         0.0 MB |
+| Model and support data                               88.0 MB        40.8 MB |
+| Electronic energy minimisation requirements           7.9 MB         0.0 MB |
+| Force calculation requirements                        2.3 MB         0.0 MB |
 |                                               ----------------------------- |
-| Approx. total storage required per process          431.4 MB        11.4 MB |
+| Approx. total storage required per process          443.0 MB        40.8 MB |
 |                                                                             |
 | Requirements will fluctuate during execution and may exceed these estimates |
 +-----------------------------------------------------------------------------+
-Calculating total energy with cut-off of  200.000 eV.
+Calculating total energy with cut-off of  500.000 eV.
 ------------------------------------------------------------------------ <-- SCF
 SCF loop      Energy           Fermi           Energy gain       Timer   <-- SCF
                                energy          per atom          (sec)   <-- SCF
 ------------------------------------------------------------------------ <-- SCF
-Initial  -1.59235612E+001  0.00000000E+000                         5.75  <-- SCF
-      1  -3.15725334E+002  6.67247709E+000   1.49900886E+002       5.97  <-- SCF
-      2  -3.37440876E+002  4.56791342E+000   1.08577710E+001       6.12  <-- SCF
-      3  -3.38249177E+002  4.29074798E+000   4.04150559E-001       6.25  <-- SCF
-      4  -3.38031688E+002  4.52512393E+000  -1.08744181E-001       6.45  <-- SCF
-      5  -3.38016867E+002  4.62346196E+000  -7.41067096E-003       6.59  <-- SCF
-      6  -3.38017216E+002  4.62863177E+000   1.74550555E-004       6.75  <-- SCF
-      7  -3.38017261E+002  4.63254645E+000   2.24205039E-005       6.86  <-- SCF
-      8  -3.38017262E+002  4.63254075E+000   6.51708496E-007       6.96  <-- SCF
-      9  -3.38017262E+002  4.63256050E+000   1.83745389E-008       7.06  <-- SCF
+Initial  -1.53928283E+001  0.00000000E+000                         6.28  <-- SCF
+      1  -3.15129513E+002  6.61256295E+000   1.49868342E+002       6.81  <-- SCF
+      2  -3.37458530E+002  4.53589092E+000   1.11645083E+001       7.27  <-- SCF
+      3  -3.38276607E+002  4.28699549E+000   4.09038590E-001       7.70  <-- SCF
+      4  -3.38064177E+002  4.51997485E+000  -1.06214739E-001       8.26  <-- SCF
+      5  -3.38049486E+002  4.61710232E+000  -7.34583013E-003       8.73  <-- SCF
+      6  -3.38049812E+002  4.62289605E+000   1.63318858E-004       9.20  <-- SCF
+      7  -3.38049850E+002  4.62707267E+000   1.87841424E-005       9.48  <-- SCF
+      8  -3.38049850E+002  4.62695830E+000   1.08858677E-007       9.78  <-- SCF
+      9  -3.38049850E+002  4.62699086E+000   2.53320889E-008      10.11  <-- SCF
 ------------------------------------------------------------------------ <-- SCF
  
-Final energy, E             =  -338.0171460137     eV
-Final free energy (E-TS)    =  -338.0172622680     eV
+Final energy, E             =  -338.0497247101     eV
+Final free energy (E-TS)    =  -338.0498502435     eV
 (energies not corrected for finite basis set)
  
-NB est. 0K energy (E-0.5TS)      =  -338.0172041408     eV
+NB est. 0K energy (E-0.5TS)      =  -338.0497874768     eV
  
 
 Writing analysis data to aiida.castep_bin
@@ -343,18 +343,18 @@ Writing model to aiida.check
 
  Pseudo atomic calculation performed for Si 3s2 3p2
 
- Converged in 16 iterations to a total energy of -163.0365 eV
-Charge spilling parameter for spin component 1 = 0.96%
+ Converged in 8 iterations to a total energy of -163.0624 eV
+Charge spilling parameter for spin component 1 = 0.97%
 
             Orbital Populations       
      Ion    Atom   Orbital             Charge
   -------------------------------------------
-     Si     1      S                    1.371
-     Si     1      Px                   0.849
+     Si     1      S                    1.372
+     Si     1      Px                   0.848
      Si     1      Py                   0.900
      Si     1      Pz                   0.880
-     Si     2      S                    1.371
-     Si     2      Px                   0.849
+     Si     2      S                    1.372
+     Si     2      Px                   0.848
      Si     2      Py                   0.900
      Si     2      Pz                   0.880
   -------------------------------------------
@@ -382,16 +382,16 @@ Writing model to aiida.check
  A BibTeX formatted list of references used in this run has been written to 
  aiida.bib
  
-Initialisation time =      5.42 s
-Calculation time    =      1.99 s
-Finalisation time   =      0.01 s
-Total time          =      7.42 s
+Initialisation time =      5.76 s
+Calculation time    =      4.78 s
+Finalisation time   =      0.02 s
+Total time          =     10.55 s
 Peak Memory Use     = 751132 kB
   
-Overall parallel efficiency rating: Poor (43%)                                  
+Overall parallel efficiency rating: Mediocre (56%)                              
   
 Data was distributed by:-
-k-point (4-way); efficiency rating: Poor (43%)                                  
+k-point (4-way); efficiency rating: Mediocre (56%)                              
   
 Parallel notes:
-1) Calculation only took 7.4 s, so efficiency estimates may be inaccurate.      
+1) Calculation only took 10.5 s, so efficiency estimates may be inaccurate.     

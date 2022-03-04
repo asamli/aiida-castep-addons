@@ -5,6 +5,9 @@ from copy import deepcopy
 from tempfile import TemporaryDirectory
 
 import aiida.orm as orm
+import galore
+import galore.plot
+import matplotlib.pyplot as plt
 import numpy as np
 from aiida.engine import ToContext, WorkChain, calcfunction
 from aiida.orm.nodes.data.base import to_aiida_type
@@ -14,6 +17,7 @@ from aiida_castep.utils.dos import DOSProcessor
 from aiida_castep.workflows.base import CastepBaseWorkChain
 from aiida_castep_addons.utils.sumo_plotter import get_sumo_bands_plotter
 from castepxbin.pdos import compute_pdos
+from matplotlib.cm import viridis as cmap
 from pymatgen.electronic_structure.dos import CompleteDos, Dos, Spin
 from PyPDF2 import PdfFileReader, PdfFileWriter
 from sumo.electronic_structure.dos import get_pdos
@@ -63,7 +67,7 @@ def add_metadata(file, fname, formula, uuid, label, description):
 
 @calcfunction
 def analysis(dos_data, dos_folder, structure, band_data, band_kpoints, prefix):
-    """Plot the density of states and band structure with sumo"""
+    """Plot the density of states and band structure with Sumo as well as the UPS, XPS and HAXPES spectra with Galore"""
     # Preparing total DOS using parsed BandsData
     dos_processor = DOSProcessor(
         dos_data.get_bands(), dos_data.get_array("weights"), smearing=0.2
@@ -123,9 +127,80 @@ def analysis(dos_data, dos_folder, structure, band_data, band_kpoints, prefix):
 
         # Plotting projected DOS
         dos_plotter = SDOSPlotter(pmg_dos, sumo_pdos).get_plot()
-        dos_plotter.plot()
         dos_plotter.savefig(fname=f"{temp}/{prefix.value}_dos.pdf", bbox_inches="tight")
         dos_plot = SinglefileData(f"{temp}/{prefix.value}_dos.pdf")
+
+        # Plotting UPS spectrum
+        plt.style.use("default")
+        ups_data = galore.process_pdos(
+            input=pmg_complete_dos,
+            gaussian=0.3,
+            lorentzian=0.2,
+            weighting="he2",
+        )
+        ups_plot = galore.plot.plot_pdos(
+            ups_data, show_orbitals=False, units="eV", flipx=True
+        )
+        ups_plot.savefig(fname=f"{temp}/{prefix.value}_ups.pdf", bbox_inches="tight")
+        ups_spectrum = SinglefileData(f"{temp}/{prefix.value}_ups.pdf")
+
+        # Plotting XPS spectrum
+        xps_data = galore.process_pdos(
+            input=pmg_complete_dos,
+            gaussian=0.3,
+            lorentzian=0.2,
+            weighting="alka",
+        )
+        xps_plot = galore.plot.plot_pdos(
+            xps_data, show_orbitals=False, units="eV", flipx=True
+        )
+        xps_plot.savefig(fname=f"{temp}/{prefix.value}_xps.pdf", bbox_inches="tight")
+        xps_spectrum = SinglefileData(f"{temp}/{prefix.value}_xps.pdf")
+
+        # Plotting HAXPES spectrum
+        haxpes_data = galore.process_pdos(
+            input=pmg_complete_dos,
+            gaussian=0.3,
+            lorentzian=0.2,
+            weighting="yeh_haxpes",
+        )
+        haxpes_plot = galore.plot.plot_pdos(
+            haxpes_data, show_orbitals=False, units="eV", flipx=True
+        )
+        haxpes_plot.savefig(
+            fname=f"{temp}/{prefix.value}_haxpes.pdf", bbox_inches="tight"
+        )
+        haxpes_spectrum = SinglefileData(f"{temp}/{prefix.value}_haxpes.pdf")
+
+        # Plotting overlaid photoelectron spectra
+        fig = plt.figure()
+        ax = fig.add_subplot(1, 1, 1)
+        weightings = ("He2", "Alka", "Yeh_HAXPES")
+        for i, weighting in enumerate(weightings):
+            plotting_data = galore.process_pdos(
+                input=pmg_complete_dos,
+                gaussian=0.3,
+                lorentzian=0.2,
+                weighting=weighting,
+            )
+            galore.plot.plot_pdos(
+                plotting_data,
+                ax=ax,
+                show_orbitals=False,
+                units="eV",
+                flipx=True,
+            )
+            line = ax.lines[-1]
+            line.set_label(weighting)
+            line.set_color(cmap(i / len(weightings)))
+            ymax = max(line.get_ydata())
+            line.set_data(line.get_xdata(), line.get_ydata() / ymax)
+        ax.set_ylim((0, 1.2))
+        legend = ax.legend(loc="best")
+        legend.set_title("Weighting")
+        plt.plot()
+        plt.savefig(fname=f"{temp}/{prefix.value}_pe_spectra.pdf", bbox_inches="tight")
+        pe_spectra = SinglefileData(f"{temp}/{prefix.value}_pe_spectra.pdf")
 
         # Plotting band structure
         labelled_bands = deepcopy(band_data)
@@ -135,7 +210,6 @@ def analysis(dos_data, dos_folder, structure, band_data, band_kpoints, prefix):
         else:
             bands_efermi = labelled_bands.get_attribute("efermi")
         band_plotter = get_sumo_bands_plotter(labelled_bands, bands_efermi).get_plot()
-        band_plotter.plot()
         band_plotter.savefig(
             fname=f"{temp}/{prefix.value}_bands.pdf", bbox_inches="tight"
         )
@@ -145,13 +219,17 @@ def analysis(dos_data, dos_folder, structure, band_data, band_kpoints, prefix):
         "dos_plot": dos_plot,
         "labelled_bands": labelled_bands,
         "band_plot": band_plot,
+        "ups_spectrum": ups_spectrum,
+        "xps_spectrum": xps_spectrum,
+        "haxpes_spectrum": haxpes_spectrum,
+        "pe_spectra": pe_spectra,
     }
 
 
 class CastepBandPlotWorkChain(WorkChain):
     """
     WorkChain to calculate and plot the density of states and band structure
-    of a material
+    of a material. Galore is also used to plot UPS, XPS and HAXPES spectra.
     """
 
     @classmethod
@@ -199,6 +277,30 @@ class CastepBandPlotWorkChain(WorkChain):
             "band_plot",
             valid_type=orm.SinglefileData,
             help="A plot of the band structure as a PDF file",
+            required=True,
+        )
+        spec.output(
+            "ups_spectrum",
+            valid_type=orm.SinglefileData,
+            help="A plot of the UPS spectrum as a PDF file",
+            required=True,
+        )
+        spec.output(
+            "xps_spectrum",
+            valid_type=orm.SinglefileData,
+            help="A plot of the XPS spectrum as a PDF file",
+            required=True,
+        )
+        spec.output(
+            "haxpes_spectrum",
+            valid_type=orm.SinglefileData,
+            help="A plot of the HAXPES spectrum as a PDF file",
+            required=True,
+        )
+        spec.output(
+            "pe_spectra",
+            valid_type=orm.SinglefileData,
+            help="The overlaid photoelectron spectra as a PDF file",
             required=True,
         )
 
@@ -271,7 +373,7 @@ class CastepBandPlotWorkChain(WorkChain):
         return ToContext(bands=running)
 
     def analyse_calculations(self):
-        """Analyse the two calculations to plot the density of states and band structure"""
+        """Analyse the two calculations to plot the density of states, band structure and photoelectron spectra"""
         outputs = analysis(
             self.ctx.dos.outputs.output_bands,
             self.ctx.dos.called[-1].outputs.retrieved,
@@ -297,11 +399,49 @@ class CastepBandPlotWorkChain(WorkChain):
             orm.Str(self.inputs.metadata.label),
             orm.Str(self.inputs.metadata.description),
         )
-        self.report("Density of states and band structure plotted")
+        self.ctx.ups_spectrum = add_metadata(
+            outputs["ups_spectrum"],
+            orm.Str(f"{self.ctx.prefix}_ups.pdf"),
+            orm.Str(self.ctx.inputs.calc.structure.get_formula()),
+            orm.Str(self.uuid),
+            orm.Str(self.inputs.metadata.label),
+            orm.Str(self.inputs.metadata.description),
+        )
+        self.ctx.xps_spectrum = add_metadata(
+            outputs["xps_spectrum"],
+            orm.Str(f"{self.ctx.prefix}_xps.pdf"),
+            orm.Str(self.ctx.inputs.calc.structure.get_formula()),
+            orm.Str(self.uuid),
+            orm.Str(self.inputs.metadata.label),
+            orm.Str(self.inputs.metadata.description),
+        )
+        self.ctx.haxpes_spectrum = add_metadata(
+            outputs["haxpes_spectrum"],
+            orm.Str(f"{self.ctx.prefix}_haxpes.pdf"),
+            orm.Str(self.ctx.inputs.calc.structure.get_formula()),
+            orm.Str(self.uuid),
+            orm.Str(self.inputs.metadata.label),
+            orm.Str(self.inputs.metadata.description),
+        )
+        self.ctx.pe_spectra = add_metadata(
+            outputs["pe_spectra"],
+            orm.Str(f"{self.ctx.prefix}_pe_spectra.pdf"),
+            orm.Str(self.ctx.inputs.calc.structure.get_formula()),
+            orm.Str(self.uuid),
+            orm.Str(self.inputs.metadata.label),
+            orm.Str(self.inputs.metadata.description),
+        )
+        self.report(
+            "Density of states, band structure and photoelectron spectra plotted"
+        )
 
     def results(self):
-        """Add the density of states and band structure plots to WorkChain outputs along with their raw data"""
+        """Add the plots to WorkChain outputs along with their raw data"""
         self.out("dos_data", self.ctx.dos.outputs.output_bands)
         self.out("dos_plot", self.ctx.dos_plot)
         self.out("labelled_band_data", self.ctx.labelled_bands)
         self.out("band_plot", self.ctx.band_plot)
+        self.out("ups_spectrum", self.ctx.ups_spectrum)
+        self.out("xps_spectrum", self.ctx.xps_spectrum)
+        self.out("haxpes_spectrum", self.ctx.haxpes_spectrum)
+        self.out("pe_spectra", self.ctx.pe_spectra)

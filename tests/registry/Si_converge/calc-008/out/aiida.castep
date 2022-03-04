@@ -62,14 +62,14 @@
  FFT Lib : mkl
  Fundamental constants values: CODATA 2014
 
- Run started: Thu, 03 Feb 2022 10:59:20 +0000
+ Run started: Mon, 28 Feb 2022 16:11:12 +0000
 
  Atomic calculation performed for Si: 1s2 2s2 2p6 3s2 3p2
 
  Converged in 55 iterations to an ae energy of -7859.183 eV
 
    ============================================================                
-   | Pseudopotential Report - Date of generation  3-02-2022   |                
+   | Pseudopotential Report - Date of generation 28-02-2022   |                
    ------------------------------------------------------------                
    | Element: Si Ionic charge:  4.00 Level of theory: LDA     |                
    | Atomic Solver: Koelling-Harmon                           |                
@@ -149,7 +149,7 @@
  output    efield chi2 unit                     : pm/V
   
  wavefunctions paging                           : none
- random number generator seed                   : randomised (105920930)
+ random number generator seed                   : randomised (161112413)
  data distribution                              : optimal for this architecture
  optimization strategy                          : balance speed and memory
 
@@ -307,23 +307,23 @@ Calculating total energy with cut-off of  500.000 eV.
 SCF loop      Energy           Fermi           Energy gain       Timer   <-- SCF
                                energy          per atom          (sec)   <-- SCF
 ------------------------------------------------------------------------ <-- SCF
-Initial  -1.85844284E+001  0.00000000E+000                         8.13  <-- SCF
-      1  -3.17464840E+002  6.43036539E+000   1.49440206E+002       8.42  <-- SCF
-      2  -3.37612545E+002  4.43176359E+000   1.00738526E+001       8.59  <-- SCF
-      3  -3.38275634E+002  4.28655456E+000   3.31544464E-001       8.96  <-- SCF
-      4  -3.38061493E+002  4.51637783E+000  -1.07070675E-001       9.29  <-- SCF
-      5  -3.38046470E+002  4.61284769E+000  -7.51132886E-003       9.61  <-- SCF
-      6  -3.38046797E+002  4.61837502E+000   1.63628465E-004      10.03  <-- SCF
-      7  -3.38046836E+002  4.62254328E+000   1.92366616E-005      10.12  <-- SCF
-      8  -3.38046836E+002  4.62244769E+000   1.05259832E-007      10.31  <-- SCF
-      9  -3.38046836E+002  4.62247560E+000   2.13556831E-008      10.51  <-- SCF
+Initial  -1.51283853E+001  0.00000000E+000                        12.11  <-- SCF
+      1  -3.13086319E+002  6.94725000E+000   1.48978967E+002      12.60  <-- SCF
+      2  -3.37097241E+002  4.71015643E+000   1.20054608E+001      13.15  <-- SCF
+      3  -3.38274234E+002  4.28695247E+000   5.88496599E-001      13.69  <-- SCF
+      4  -3.38061099E+002  4.51702846E+000  -1.06567230E-001      14.37  <-- SCF
+      5  -3.38046474E+002  4.61237197E+000  -7.31262288E-003      14.72  <-- SCF
+      6  -3.38046798E+002  4.61845058E+000   1.62040042E-004      15.04  <-- SCF
+      7  -3.38046836E+002  4.62253605E+000   1.88640602E-005      15.54  <-- SCF
+      8  -3.38046836E+002  4.62243907E+000   9.16864756E-008      16.05  <-- SCF
+      9  -3.38046836E+002  4.62247683E+000   1.92371150E-008      16.47  <-- SCF
 ------------------------------------------------------------------------ <-- SCF
  
-Final energy, E             =  -338.0468251352     eV
-Final free energy (E-TS)    =  -338.0468361150     eV
+Final energy, E             =  -338.0468251410     eV
+Final free energy (E-TS)    =  -338.0468361209     eV
 (energies not corrected for finite basis set)
  
-NB est. 0K energy (E-0.5TS)      =  -338.0468306251     eV
+NB est. 0K energy (E-0.5TS)      =  -338.0468306310     eV
  
 
 Writing analysis data to aiida.castep_bin
@@ -336,8 +336,8 @@ Writing model to aiida.check
  * -------------------------------------------------------- *
  *                         x            y            z      *
  *                                                          *
- * Si              1     -0.00000      0.00000      0.00000 *
- * Si              2      0.00000     -0.00000      0.00000 *
+ * Si              1      0.00000      0.00000      0.00000 *
+ * Si              2     -0.00000      0.00000      0.00000 *
  *                                                          *
  ************************************************************
 
@@ -350,12 +350,12 @@ Charge spilling parameter for spin component 1 = 1.14%
      Ion    Atom   Orbital             Charge
   -------------------------------------------
      Si     1      S                    1.371
-     Si     1      Px                   0.859
+     Si     1      Px                   0.858
      Si     1      Py                   0.902
      Si     1      Pz                   0.869
      Si     2      S                    1.371
-     Si     2      Px                   0.859
-     Si     2      Py                   0.901
+     Si     2      Px                   0.858
+     Si     2      Py                   0.902
      Si     2      Pz                   0.869
   -------------------------------------------
                            Total:       8.000
@@ -382,17 +382,17 @@ Writing model to aiida.check
  A BibTeX formatted list of references used in this run has been written to 
  aiida.bib
  
-Initialisation time =      7.43 s
-Calculation time    =      3.63 s
-Finalisation time   =      0.39 s
-Total time          =     11.45 s
+Initialisation time =     10.94 s
+Calculation time    =      6.52 s
+Finalisation time   =      0.01 s
+Total time          =     17.47 s
 Peak Memory Use     = 751100 kB
   
-Overall parallel efficiency rating: Terrible (32%)                              
+Overall parallel efficiency rating: Terrible (29%)                              
   
 Data was distributed by:-
-G-vector (2-way); efficiency rating: Mediocre (52%)                             
-k-point (2-way); efficiency rating: Mediocre (56%)                              
+G-vector (2-way); efficiency rating: Mediocre (50%)                             
+k-point (2-way); efficiency rating: Mediocre (50%)                              
   
 Parallel notes:
-1) Calculation only took 11.1 s, so efficiency estimates may be inaccurate.     
+1) Calculation only took 17.5 s, so efficiency estimates may be inaccurate.     

@@ -34,6 +34,7 @@
         "psycopg2-binary<2.9",
         "voluptuous",
 	    "sumo",
+        "galore",
         "PyPDF2",
 	    "aiida-castep@git+https://github.com/zhubonan/aiida-castep"
     ],

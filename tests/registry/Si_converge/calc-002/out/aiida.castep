@@ -62,14 +62,14 @@
  FFT Lib : mkl
  Fundamental constants values: CODATA 2014
 
- Run started: Thu, 03 Feb 2022 10:58:52 +0000
+ Run started: Mon, 28 Feb 2022 16:10:42 +0000
 
  Atomic calculation performed for Si: 1s2 2s2 2p6 3s2 3p2
 
  Converged in 55 iterations to an ae energy of -7859.183 eV
 
    ============================================================                
-   | Pseudopotential Report - Date of generation  3-02-2022   |                
+   | Pseudopotential Report - Date of generation 28-02-2022   |                
    ------------------------------------------------------------                
    | Element: Si Ionic charge:  4.00 Level of theory: LDA     |                
    | Atomic Solver: Koelling-Harmon                           |                
@@ -149,7 +149,7 @@
  output    efield chi2 unit                     : pm/V
   
  wavefunctions paging                           : none
- random number generator seed                   : randomised (105852970)
+ random number generator seed                   : randomised (161042913)
  data distribution                              : optimal for this architecture
  optimization strategy                          : balance speed and memory
 
@@ -307,23 +307,23 @@ Calculating total energy with cut-off of  300.000 eV.
 SCF loop      Energy           Fermi           Energy gain       Timer   <-- SCF
                                energy          per atom          (sec)   <-- SCF
 ------------------------------------------------------------------------ <-- SCF
-Initial  -1.58094470E+001  0.00000000E+000                        13.11  <-- SCF
-      1  -3.14230395E+002  7.20518776E+000   1.49210474E+002      13.45  <-- SCF
-      2  -3.37313505E+002  4.61753132E+000   1.15415549E+001      13.56  <-- SCF
-      3  -3.38275636E+002  4.28719843E+000   4.81065508E-001      13.91  <-- SCF
-      4  -3.38060495E+002  4.51754528E+000  -1.07570485E-001      14.19  <-- SCF
-      5  -3.38045736E+002  4.61303558E+000  -7.37943562E-003      14.46  <-- SCF
-      6  -3.38046046E+002  4.61871501E+000   1.55058034E-004      14.79  <-- SCF
-      7  -3.38046086E+002  4.62271339E+000   1.97908077E-005      16.94  <-- SCF
-      8  -3.38046086E+002  4.62266437E+000   1.09243754E-007      17.10  <-- SCF
-      9  -3.38046086E+002  4.62269628E+000   2.02103590E-008      17.19  <-- SCF
+Initial  -1.80764489E+001  0.00000000E+000                        12.25  <-- SCF
+      1  -3.17071374E+002  6.97071312E+000   1.49497463E+002      12.43  <-- SCF
+      2  -3.37532550E+002  4.49823331E+000   1.02305879E+001      12.80  <-- SCF
+      3  -3.38274755E+002  4.28696650E+000   3.71102187E-001      12.93  <-- SCF
+      4  -3.38060548E+002  4.51698502E+000  -1.07103303E-001      13.39  <-- SCF
+      5  -3.38045729E+002  4.61301039E+000  -7.40940512E-003      13.83  <-- SCF
+      6  -3.38046048E+002  4.61870815E+000   1.59181087E-004      14.29  <-- SCF
+      7  -3.38046086E+002  4.62272521E+000   1.91377656E-005      14.62  <-- SCF
+      8  -3.38046086E+002  4.62266392E+000   8.45390573E-008      14.95  <-- SCF
+      9  -3.38046086E+002  4.62269283E+000   1.36916859E-008      15.30  <-- SCF
 ------------------------------------------------------------------------ <-- SCF
  
-Final energy, E             =  -338.0460750202     eV
-Final free energy (E-TS)    =  -338.0460859798     eV
+Final energy, E             =  -338.0460750283     eV
+Final free energy (E-TS)    =  -338.0460859873     eV
 (energies not corrected for finite basis set)
  
-NB est. 0K energy (E-0.5TS)      =  -338.0460805000     eV
+NB est. 0K energy (E-0.5TS)      =  -338.0460805078     eV
  
 
 Writing analysis data to aiida.castep_bin
@@ -336,8 +336,8 @@ Writing model to aiida.check
  * -------------------------------------------------------- *
  *                         x            y            z      *
  *                                                          *
- * Si              1      0.00000      0.00000      0.00000 *
- * Si              2     -0.00000      0.00000      0.00000 *
+ * Si              1     -0.00000      0.00000      0.00000 *
+ * Si              2      0.00000      0.00000      0.00000 *
  *                                                          *
  ************************************************************
 
@@ -349,13 +349,13 @@ Charge spilling parameter for spin component 1 = 1.14%
             Orbital Populations       
      Ion    Atom   Orbital             Charge
   -------------------------------------------
-     Si     1      S                    1.370
-     Si     1      Px                   0.858
+     Si     1      S                    1.371
+     Si     1      Px                   0.859
      Si     1      Py                   0.902
      Si     1      Pz                   0.869
      Si     2      S                    1.371
-     Si     2      Px                   0.859
-     Si     2      Py                   0.901
+     Si     2      Px                   0.858
+     Si     2      Py                   0.902
      Si     2      Pz                   0.869
   -------------------------------------------
                            Total:       8.000
@@ -371,7 +371,7 @@ Species          Ion     s      p      d      f     Total  Charge (e)
 
                  Bond                   Population      Length (A)
 ======================================================================
-              Si 1 -- Si 2                   2.96        2.35126
+              Si 1 -- Si 2                   2.95        2.35126
 ======================================================================
 
 
@@ -382,17 +382,17 @@ Writing model to aiida.check
  A BibTeX formatted list of references used in this run has been written to 
  aiida.bib
  
-Initialisation time =     11.90 s
-Calculation time    =      5.65 s
-Finalisation time   =      0.01 s
-Total time          =     17.56 s
+Initialisation time =     10.93 s
+Calculation time    =      5.38 s
+Finalisation time   =      0.12 s
+Total time          =     16.43 s
 Peak Memory Use     = 751100 kB
   
-Overall parallel efficiency rating: Terrible (22%)                              
+Overall parallel efficiency rating: Terrible (28%)                              
   
 Data was distributed by:-
-G-vector (2-way); efficiency rating: Poor (49%)                                 
-k-point (2-way); efficiency rating: Poor (38%)                                  
+G-vector (2-way); efficiency rating: Mediocre (53%)                             
+k-point (2-way); efficiency rating: Poor (48%)                                  
   
 Parallel notes:
-1) Calculation only took 17.6 s, so efficiency estimates may be inaccurate.     
+1) Calculation only took 16.3 s, so efficiency estimates may be inaccurate.     

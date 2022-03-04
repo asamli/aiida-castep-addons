@@ -62,14 +62,14 @@
  FFT Lib : mkl
  Fundamental constants values: CODATA 2014
 
- Run started: Thu, 03 Feb 2022 10:59:20 +0000
+ Run started: Mon, 28 Feb 2022 16:11:12 +0000
 
  Atomic calculation performed for Si: 1s2 2s2 2p6 3s2 3p2
 
  Converged in 55 iterations to an ae energy of -7859.183 eV
 
    ============================================================                
-   | Pseudopotential Report - Date of generation  3-02-2022   |                
+   | Pseudopotential Report - Date of generation 28-02-2022   |                
    ------------------------------------------------------------                
    | Element: Si Ionic charge:  4.00 Level of theory: LDA     |                
    | Atomic Solver: Koelling-Harmon                           |                
@@ -149,7 +149,7 @@
  output    efield chi2 unit                     : pm/V
   
  wavefunctions paging                           : none
- random number generator seed                   : randomised (105921397)
+ random number generator seed                   : randomised (161112730)
  data distribution                              : optimal for this architecture
  optimization strategy                          : balance speed and memory
 
@@ -307,23 +307,23 @@ Calculating total energy with cut-off of  500.000 eV.
 SCF loop      Energy           Fermi           Energy gain       Timer   <-- SCF
                                energy          per atom          (sec)   <-- SCF
 ------------------------------------------------------------------------ <-- SCF
-Initial  -1.37444831E+001  0.00000000E+000                         9.61  <-- SCF
-      1  -3.15157245E+002  6.80652946E+000   1.50706381E+002       9.99  <-- SCF
-      2  -3.37383112E+002  4.61208196E+000   1.11129333E+001      10.24  <-- SCF
-      3  -3.38275839E+002  4.29397441E+000   4.46363416E-001      10.51  <-- SCF
-      4  -3.38063946E+002  4.52426888E+000  -1.05946518E-001      11.07  <-- SCF
-      5  -3.38049377E+002  4.62024344E+000  -7.28432606E-003      11.44  <-- SCF
-      6  -3.38049703E+002  4.62617344E+000   1.63156765E-004      11.77  <-- SCF
-      7  -3.38049741E+002  4.63030441E+000   1.88191175E-005      12.01  <-- SCF
-      8  -3.38049741E+002  4.63020475E+000   1.02849308E-007      12.15  <-- SCF
-      9  -3.38049741E+002  4.63023603E+000   2.17933034E-008      12.28  <-- SCF
+Initial  -1.42712140E+001  0.00000000E+000                        11.43  <-- SCF
+      1  -3.17290395E+002  6.74679437E+000   1.51509591E+002      12.03  <-- SCF
+      2  -3.37361929E+002  4.47935309E+000   1.00357669E+001      13.31  <-- SCF
+      3  -3.38276241E+002  4.29306897E+000   4.57156009E-001      14.53  <-- SCF
+      4  -3.38063984E+002  4.52435271E+000  -1.06128324E-001      15.28  <-- SCF
+      5  -3.38049379E+002  4.62021590E+000  -7.30256212E-003      15.93  <-- SCF
+      6  -3.38049704E+002  4.62613328E+000   1.62454194E-004      16.59  <-- SCF
+      7  -3.38049741E+002  4.63031622E+000   1.83077569E-005      17.13  <-- SCF
+      8  -3.38049741E+002  4.63020469E+000   9.01776320E-008      17.45  <-- SCF
+      9  -3.38049741E+002  4.63023681E+000   1.95837647E-008      17.63  <-- SCF
 ------------------------------------------------------------------------ <-- SCF
  
-Final energy, E             =  -338.0496603217     eV
-Final free energy (E-TS)    =  -338.0497410875     eV
+Final energy, E             =  -338.0496603244     eV
+Final free energy (E-TS)    =  -338.0497410910     eV
 (energies not corrected for finite basis set)
  
-NB est. 0K energy (E-0.5TS)      =  -338.0497007046     eV
+NB est. 0K energy (E-0.5TS)      =  -338.0497007077     eV
  
 
 Writing analysis data to aiida.castep_bin
@@ -382,16 +382,16 @@ Writing model to aiida.check
  A BibTeX formatted list of references used in this run has been written to 
  aiida.bib
  
-Initialisation time =      8.76 s
-Calculation time    =      4.08 s
+Initialisation time =     10.05 s
+Calculation time    =      8.17 s
 Finalisation time   =      0.01 s
-Total time          =     12.85 s
+Total time          =     18.23 s
 Peak Memory Use     = 751112 kB
   
-Overall parallel efficiency rating: Poor (38%)                                  
+Overall parallel efficiency rating: Poor (45%)                                  
   
 Data was distributed by:-
-k-point (4-way); efficiency rating: Poor (38%)                                  
+k-point (4-way); efficiency rating: Poor (45%)                                  
   
 Parallel notes:
-1) Calculation only took 12.8 s, so efficiency estimates may be inaccurate.     
+1) Calculation only took 18.2 s, so efficiency estimates may be inaccurate.     

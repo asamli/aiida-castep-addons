@@ -276,6 +276,7 @@ class CastepConvergeWorkChain(WorkChain):
                 self.ctx.converged_pwcutoff = orm.Int(
                     pwcutoff - self.inputs.pwcutoff_step.value
                 )
+                self.ctx.final_pwcutoff = self.ctx.converged_pwcutoff
                 self.ctx.pwcutoff_converged = True
                 return
         self.ctx.initial_pwcutoff = self.ctx.final_pwcutoff
@@ -289,7 +290,7 @@ class CastepConvergeWorkChain(WorkChain):
         inputs = self.ctx.inputs
         inputs.kpoints_spacing = self.ctx.coarse_kspacing
         parameters = deepcopy(self.ctx.parameters)
-        parameters["cut_off_energy"] = self.inputs.initial_pwcutoff.value
+        parameters["cut_off_energy"] = self.inputs.final_pwcutoff.value
         inputs.calc.parameters = parameters
         self.ctx.kspacings = np.arange(
             self.ctx.coarse_kspacing,
@@ -335,15 +336,15 @@ class CastepConvergeWorkChain(WorkChain):
                 self.ctx.kspacing_converged = True
                 return
         self.ctx.coarse_kspacing = self.ctx.fine_kspacing
-        if self.ctx.fine_kspacing > 0.02:
+        if self.ctx.fine_kspacing >= 0.03:
             self.ctx.fine_kspacing -= 0.02
             self.report(
                 "K-point spacing not converged. Decreasing lower limit by 0.02 A-1."
             )
-        elif self.ctx.fine_kspacing > 0.01:
+        elif self.ctx.fine_kspacing >= 0.015:
             self.ctx.fine_kspacing -= 0.01
             self.report(
-                "K-point spacing not converged but lower than 0.02 A-1. Decreasing lower limit by 0.01 A-1."
+                "K-point spacing not converged but very low. Decreasing lower limit by 0.01 A-1."
             )
         else:
             self.ctx.converged_kspacing = self.ctx.fine_kspacing
