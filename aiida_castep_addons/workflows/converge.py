@@ -14,7 +14,7 @@ from aiida.plugins import DataFactory
 from aiida.tools.data.array.kpoints import get_explicit_kpoints_path
 from aiida_castep.workflows.base import CastepBaseWorkChain
 from aiida_castep_addons.parsers.phonon import PhononParser
-from matplotlib.cm import viridis as cmap
+from matplotlib.lines import Line2D
 from pymatgen.core.lattice import Lattice
 from pymatgen.phonon.bandstructure import PhononBandStructureSymmLine
 from PyPDF2 import PdfFileReader, PdfFileWriter
@@ -64,13 +64,16 @@ def add_metadata(file, fname, formula, uuid, label, description):
 
 @calcfunction
 def plot_phonons(files, kpoints, matrices, prefix):
-    supercell_labels = []
+    supercell_labels = [
+        f"{matrices[i][0][0]}x{matrices[i][1][2]}x{matrices[i][2][4]}"
+        for i in range(len(matrices))
+    ]
     with TemporaryDirectory() as temp:
         for i, file in enumerate(files.get_list()):
             with open(f"{temp}/{i}.phonon", "x") as phonon_file:
                 phonon_file.write(file)
 
-            # Parsing the .phonon files from the two calculations
+            # Parsing the .phonon files from the calculations
             phonon_data = PhononParser(open(f"{temp}/{i}.phonon"))
 
             # Plotting the phonon band structure with sumo and pymatgen
@@ -98,12 +101,14 @@ def plot_phonons(files, kpoints, matrices, prefix):
             SPhononBSPlotter(pmg_bands).get_plot(
                 ymin=-2,
                 plt=plt,
-                color=cmap(i / len(files.get_list())),
+                color=f"C{i}",
             )
-            supercell_labels.append(
-                f"{matrices[i][0][0]}x{matrices[i][1][2]}x{matrices[i][2][4]}"
-            )
-        plt.legend(supercell_labels, bbox_to_anchor=(1.05, 1), loc="upper left")
+        plt.legend(
+            [Line2D([0], [0], color=f"C{i}") for i in range(len(supercell_labels))],
+            supercell_labels,
+            bbox_to_anchor=(1.05, 1),
+            loc="upper left",
+        )
         plt.savefig(
             fname=f"{temp}/{prefix.value}_supercell_convergence.pdf",
             bbox_inches="tight",
