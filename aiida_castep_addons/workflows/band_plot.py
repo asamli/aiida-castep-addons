@@ -139,7 +139,7 @@ def analysis(dos_data, dos_folder, structure, band_data, band_kpoints, prefix):
             weighting="he2",
         )
         ups_plot = galore.plot.plot_pdos(
-            ups_data, show_orbitals=False, units="eV", flipx=True
+            ups_data, show_orbitals=True, units="eV", flipx=True
         )
         ups_plot.savefig(fname=f"{temp}/{prefix.value}_ups.pdf", bbox_inches="tight")
         ups_spectrum = SinglefileData(f"{temp}/{prefix.value}_ups.pdf")
@@ -152,7 +152,7 @@ def analysis(dos_data, dos_folder, structure, band_data, band_kpoints, prefix):
             weighting="alka",
         )
         xps_plot = galore.plot.plot_pdos(
-            xps_data, show_orbitals=False, units="eV", flipx=True
+            xps_data, show_orbitals=True, units="eV", flipx=True
         )
         xps_plot.savefig(fname=f"{temp}/{prefix.value}_xps.pdf", bbox_inches="tight")
         xps_spectrum = SinglefileData(f"{temp}/{prefix.value}_xps.pdf")
@@ -165,7 +165,7 @@ def analysis(dos_data, dos_folder, structure, band_data, band_kpoints, prefix):
             weighting="yeh_haxpes",
         )
         haxpes_plot = galore.plot.plot_pdos(
-            haxpes_data, show_orbitals=False, units="eV", flipx=True
+            haxpes_data, show_orbitals=True, units="eV", flipx=True
         )
         haxpes_plot.savefig(
             fname=f"{temp}/{prefix.value}_haxpes.pdf", bbox_inches="tight"
@@ -229,7 +229,7 @@ def analysis(dos_data, dos_folder, structure, band_data, band_kpoints, prefix):
 class CastepBandPlotWorkChain(WorkChain):
     """
     WorkChain to calculate and plot the density of states and band structure
-    of a material. Galore is also used to plot UPS, XPS and HAXPES spectra.
+    of a material. Galore is also used to plot the UPS, XPS and HAXPES spectra.
     """
 
     @classmethod
@@ -259,6 +259,12 @@ class CastepBandPlotWorkChain(WorkChain):
             "dos_data",
             valid_type=orm.BandsData,
             help="The parsed BandsData for the density of states calculation",
+            required=True,
+        )
+        spec.output(
+            "dos_folder",
+            valid_type=orm.FolderData,
+            help="The retrieved folder of DOS output files",
             required=True,
         )
         spec.output(
@@ -387,8 +393,8 @@ class CastepBandPlotWorkChain(WorkChain):
             orm.Str(f"{self.ctx.prefix}_dos.pdf"),
             orm.Str(self.ctx.inputs.calc.structure.get_formula()),
             orm.Str(self.uuid),
-            orm.Str(self.inputs.metadata.label),
-            orm.Str(self.inputs.metadata.description),
+            orm.Str(self.inputs.metadata.get("label", "")),
+            orm.Str(self.inputs.metadata.get("description", "")),
         )
         self.ctx.labelled_bands = outputs["labelled_bands"]
         self.ctx.band_plot = add_metadata(
@@ -396,40 +402,40 @@ class CastepBandPlotWorkChain(WorkChain):
             orm.Str(f"{self.ctx.prefix}_bands.pdf"),
             orm.Str(self.ctx.inputs.calc.structure.get_formula()),
             orm.Str(self.uuid),
-            orm.Str(self.inputs.metadata.label),
-            orm.Str(self.inputs.metadata.description),
+            orm.Str(self.inputs.metadata.get("label", "")),
+            orm.Str(self.inputs.metadata.get("description", "")),
         )
         self.ctx.ups_spectrum = add_metadata(
             outputs["ups_spectrum"],
             orm.Str(f"{self.ctx.prefix}_ups.pdf"),
             orm.Str(self.ctx.inputs.calc.structure.get_formula()),
             orm.Str(self.uuid),
-            orm.Str(self.inputs.metadata.label),
-            orm.Str(self.inputs.metadata.description),
+            orm.Str(self.inputs.metadata.get("label", "")),
+            orm.Str(self.inputs.metadata.get("description", "")),
         )
         self.ctx.xps_spectrum = add_metadata(
             outputs["xps_spectrum"],
             orm.Str(f"{self.ctx.prefix}_xps.pdf"),
             orm.Str(self.ctx.inputs.calc.structure.get_formula()),
             orm.Str(self.uuid),
-            orm.Str(self.inputs.metadata.label),
-            orm.Str(self.inputs.metadata.description),
+            orm.Str(self.inputs.metadata.get("label", "")),
+            orm.Str(self.inputs.metadata.get("description", "")),
         )
         self.ctx.haxpes_spectrum = add_metadata(
             outputs["haxpes_spectrum"],
             orm.Str(f"{self.ctx.prefix}_haxpes.pdf"),
             orm.Str(self.ctx.inputs.calc.structure.get_formula()),
             orm.Str(self.uuid),
-            orm.Str(self.inputs.metadata.label),
-            orm.Str(self.inputs.metadata.description),
+            orm.Str(self.inputs.metadata.get("label", "")),
+            orm.Str(self.inputs.metadata.get("description", "")),
         )
         self.ctx.pe_spectra = add_metadata(
             outputs["pe_spectra"],
             orm.Str(f"{self.ctx.prefix}_pe_spectra.pdf"),
             orm.Str(self.ctx.inputs.calc.structure.get_formula()),
             orm.Str(self.uuid),
-            orm.Str(self.inputs.metadata.label),
-            orm.Str(self.inputs.metadata.description),
+            orm.Str(self.inputs.metadata.get("label", "")),
+            orm.Str(self.inputs.metadata.get("description", "")),
         )
         self.report(
             "Density of states, band structure and photoelectron spectra plotted"
@@ -438,6 +444,7 @@ class CastepBandPlotWorkChain(WorkChain):
     def results(self):
         """Add the plots to WorkChain outputs along with their raw data"""
         self.out("dos_data", self.ctx.dos.outputs.output_bands)
+        self.out("dos_folder", self.ctx.dos.called[-1].outputs.retrieved)
         self.out("dos_plot", self.ctx.dos_plot)
         self.out("labelled_band_data", self.ctx.labelled_bands)
         self.out("band_plot", self.ctx.band_plot)

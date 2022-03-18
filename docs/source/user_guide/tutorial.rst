@@ -83,3 +83,4 @@ and exit the interactive shell with ``exit`` if you used ``verdi shell``.
 
 To monitor the status of the workflow you can use ``verdi process list`` for all active jobs or ``verdi process list -a`` for all jobs including completed and failed ones.
 You can see the log for the workflow using ``verdi process report NODE`` and all information including input and output nodes using ``verdi node show NODE``.
+Using ``verdi node graph generate NODE`` on a workflow node will generate a provenance graph of the workflow.

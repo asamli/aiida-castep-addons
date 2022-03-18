@@ -296,8 +296,8 @@ class CastepPhononWorkChain(WorkChain):
             orm.Str(f"{self.ctx.prefix}_phonon_bands.pdf"),
             orm.Str(self.ctx.inputs.calc.structure.get_formula()),
             orm.Str(self.uuid),
-            orm.Str(self.inputs.metadata.label),
-            orm.Str(self.inputs.metadata.description),
+            orm.Str(self.inputs.metadata.get("label", "")),
+            orm.Str(self.inputs.metadata.get("description", "")),
         )
         self.ctx.ir_data = outputs["ir_data"]
         self.ctx.ir_spectrum = add_metadata(
@@ -305,17 +305,17 @@ class CastepPhononWorkChain(WorkChain):
             orm.Str(f"{self.ctx.prefix}_ir.pdf"),
             orm.Str(self.ctx.inputs.calc.structure.get_formula()),
             orm.Str(self.uuid),
-            orm.Str(self.inputs.metadata.label),
-            orm.Str(self.inputs.metadata.description),
+            orm.Str(self.inputs.metadata.get("label", "")),
+            orm.Str(self.inputs.metadata.get("description", "")),
         )
         self.ctx.raman_data = outputs["raman_data"]
         self.ctx.raman_spectrum = add_metadata(
-            outputs["ir_spectrum"],
-            orm.Str(f"{self.ctx.prefix}_ir.pdf"),
+            outputs["raman_spectrum"],
+            orm.Str(f"{self.ctx.prefix}_raman.pdf"),
             orm.Str(self.ctx.inputs.calc.structure.get_formula()),
             orm.Str(self.uuid),
-            orm.Str(self.inputs.metadata.label),
-            orm.Str(self.inputs.metadata.description),
+            orm.Str(self.inputs.metadata.get("label", "")),
+            orm.Str(self.inputs.metadata.get("description", "")),
         )
         self.report("Phonon analysis complete")
 

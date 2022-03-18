@@ -23,9 +23,9 @@ The workflows can be accessed using `WorkflowFactory('entry point')` (see featur
 Features
 --------
 Workflows:
-* `castep_addons.converge`: Workflow to converge the plane-wave energy cutoff, k-point mesh density and/or the phonon supercell size
-* `castep_addons.band_plot`: Workflow to calculate the density of states and band structures which are then plotted using `sumo`
-* `castep_addons.phonon`: Workflow to calculate the phonon band structure (plotted using `sumo`) and IR and Raman spectra (plotted using `matplotlib.pyplot`)
+* `castep_addons.converge`: Workflow to converge the plane-wave energy cutoff, k-point mesh density and/or the phonon supercell size.
+* `castep_addons.band_plot`: Workflow to calculate the density of states and band structures which are then plotted using `Sumo`. `Galore` is also integrated to plot UPS, XPS and HAXPES spectra.
+* `castep_addons.phonon`: Workflow to calculate the phonon band structure (plotted using `Sumo`) and IR and Raman spectra (plotted using `matplotlib.pyplot`).
 
 Parsers:
-* `castep_addons.phonon`: Parser for CASTEP .phonon output files to extract the structure, vibrational spectrum data, q-points, phonon frequencies and eigenvectors
+* `castep_addons.phonon`: Parser for CASTEP .phonon output files to extract the structure, vibrational spectrum data, q-points, phonon frequencies and eigenvectors.

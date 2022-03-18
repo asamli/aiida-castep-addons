@@ -6,14 +6,23 @@ from copy import deepcopy
 from tempfile import TemporaryDirectory
 
 import aiida.orm as orm
+import matplotlib.pyplot as plt
 import numpy as np
 from aiida.engine import WorkChain, calcfunction, while_
 from aiida.orm.nodes.data.base import to_aiida_type
+from aiida.plugins import DataFactory
 from aiida.tools.data.array.kpoints import get_explicit_kpoints_path
 from aiida_castep.workflows.base import CastepBaseWorkChain
 from aiida_castep_addons.parsers.phonon import PhononParser
+from matplotlib.cm import viridis as cmap
+from pymatgen.core.lattice import Lattice
+from pymatgen.phonon.bandstructure import PhononBandStructureSymmLine
+from PyPDF2 import PdfFileReader, PdfFileWriter
+from sumo.plotting.phonon_bs_plotter import SPhononBSPlotter
 
 __version__ = "0.0.1"
+
+SinglefileData = DataFactory("singlefile")
 
 
 @calcfunction
@@ -27,6 +36,79 @@ def seekpath_analysis(structure):
         "kpoints": seekpath["explicit_kpoints"],
         "prim_cell": seekpath["primitive_structure"],
     }
+
+
+@calcfunction
+def add_metadata(file, fname, formula, uuid, label, description):
+    """Add workflow metadata to a PDF file with PyPDF2"""
+    with TemporaryDirectory() as temp:
+        with file.open(mode="rb") as fin:
+            reader = PdfFileReader(fin)
+            writer = PdfFileWriter()
+            writer.appendPagesFromReader(reader)
+            metadata = reader.getDocumentInfo()
+            writer.addMetadata(metadata)
+            writer.addMetadata(
+                {
+                    "/Formula": formula.value,
+                    "/WorkchainUUID": uuid.value,
+                    "/WorkchainLabel": label.value,
+                    "/WorkchainDescription": description.value,
+                }
+            )
+            with open(f"{temp}/{fname.value}", "ab") as fout:
+                writer.write(fout)
+        output_file = SinglefileData(f"{temp}/{fname.value}")
+    return output_file
+
+
+@calcfunction
+def plot_phonons(files, kpoints, matrices, prefix):
+    supercell_labels = []
+    with TemporaryDirectory() as temp:
+        for i, file in enumerate(files.get_list()):
+            with open(f"{temp}/{i}.phonon", "x") as phonon_file:
+                phonon_file.write(file)
+
+            # Parsing the .phonon files from the two calculations
+            phonon_data = PhononParser(open(f"{temp}/{i}.phonon"))
+
+            # Plotting the phonon band structure with sumo and pymatgen
+            qpoints = np.array(phonon_data.qpoints)
+            frequencies = np.array(phonon_data.frequencies) / 33.36
+            bands = np.transpose(frequencies)
+            lattice = Lattice(phonon_data.cell)
+            rec_lattice = lattice.reciprocal_lattice
+            pmg_structure = phonon_data.structure
+            labels = kpoints.labels
+            label_dict = {}
+            for index, label in labels:
+                qpoint = qpoints[index]
+                if label == "GAMMA":
+                    label_dict[r"\Gamma"] = qpoint
+                else:
+                    label_dict[label] = qpoint
+            pmg_bands = PhononBandStructureSymmLine(
+                qpoints,
+                bands,
+                rec_lattice,
+                labels_dict=label_dict,
+                structure=pmg_structure,
+            )
+            SPhononBSPlotter(pmg_bands).get_plot(
+                ymin=-2,
+                plt=plt,
+                color=cmap(i / len(files.get_list())),
+            )
+            supercell_labels.append(
+                f"{matrices[i][0][0]}x{matrices[i][1][2]}x{matrices[i][2][4]}"
+            )
+        plt.legend(supercell_labels, bbox_to_anchor=(1.05, 1), loc="upper left")
+        plt.savefig(
+            fname=f"{temp}/{prefix.value}_supercell_convergence.pdf",
+            bbox_inches="tight",
+        )
+        return SinglefileData(f"{temp}/{prefix.value}_supercell_convergence.pdf")
 
 
 class CastepConvergeWorkChain(WorkChain):
@@ -79,7 +161,8 @@ class CastepConvergeWorkChain(WorkChain):
             "final_pwcutoff",
             valid_type=orm.Int,
             serializer=to_aiida_type,
-            help="Final plane-wave cutoff value in electron volts (eV)",
+            help="""Final plane-wave cutoff value in electron volts (eV). 
+                    It is considered the converged value if cutoff convergence is disabled.""",
             required=False,
             default=lambda: orm.Int(500),
         )
@@ -103,7 +186,8 @@ class CastepConvergeWorkChain(WorkChain):
             "fine_kspacing",
             valid_type=orm.Float,
             serializer=to_aiida_type,
-            help="The Monkhorst-Pack k-point spacing for the finest grid in inverse Angstroms",
+            help="""The Monkhorst-Pack k-point spacing for the finest grid in inverse Angstroms. 
+                    It is considered the converged value if k-spacing convergence is disabled.""",
             required=False,
             default=lambda: orm.Float(0.05),
         )
@@ -120,7 +204,7 @@ class CastepConvergeWorkChain(WorkChain):
             valid_type=orm.Float,
             serializer=to_aiida_type,
             help="""The acceptable error for the ground state energy in electron volts (eV). When the energy difference per atom between two
-                   convergence calculations goes below this value, the former is considered converged.""",
+                    convergence calculations goes below this value, the former is considered converged.""",
             required=False,
             default=lambda: orm.Float(0.001),
         )
@@ -157,6 +241,13 @@ class CastepConvergeWorkChain(WorkChain):
             required=False,
             default=lambda: orm.Float(5.0),
         )
+        spec.input(
+            "file_prefix",
+            valid_type=orm.Str,
+            serializer=to_aiida_type,
+            help="The prefix for the name of the supercell convergence plot",
+            required=False,
+        )
 
         # The outputs
         spec.output(
@@ -175,6 +266,12 @@ class CastepConvergeWorkChain(WorkChain):
             "converged_supercell",
             valid_type=orm.ArrayData,
             help="The transformation matrix for the converged supercell",
+            required=False,
+        )
+        spec.output(
+            "supercell_plot",
+            valid_type=orm.SinglefileData,
+            help="A plot of the phonon band structures from supercell convergence as a PDF file",
             required=False,
         )
 
@@ -197,15 +294,15 @@ class CastepConvergeWorkChain(WorkChain):
         """Initialise internal variables"""
         self.ctx.inputs = self.exposed_inputs(CastepBaseWorkChain)
         self.ctx.parameters = self.ctx.inputs.calc.parameters.get_dict()
+        self.ctx.initial_pwcutoff = self.inputs.initial_pwcutoff.value
+        self.ctx.final_pwcutoff = self.inputs.final_pwcutoff.value
+        self.ctx.coarse_kspacing = self.inputs.coarse_kspacing.value
+        self.ctx.fine_kspacing = self.inputs.fine_kspacing.value
         if self.inputs.converge_pwcutoff:
-            self.ctx.initial_pwcutoff = self.inputs.initial_pwcutoff.value
-            self.ctx.final_pwcutoff = self.inputs.final_pwcutoff.value
             self.ctx.pwcutoff_converged = False
         else:
             self.ctx.pwcutoff_converged = True
         if self.inputs.converge_kspacing:
-            self.ctx.coarse_kspacing = self.inputs.coarse_kspacing.value
-            self.ctx.fine_kspacing = self.inputs.fine_kspacing.value
             self.ctx.kspacing_converged = False
         else:
             self.ctx.kspacing_converged = True
@@ -215,6 +312,11 @@ class CastepConvergeWorkChain(WorkChain):
             )
             self.ctx.final_supercell_length = self.inputs.final_supercell_length.value
             self.ctx.supercell_converged = False
+            prefix = self.inputs.get("file_prefix", None)
+            if prefix is None:
+                self.ctx.prefix = f'{self.ctx.inputs.calc.structure.get_formula()}_{self.ctx.parameters["xc_functional"]}'
+            else:
+                self.ctx.prefix = prefix
         else:
             self.ctx.supercell_converged = True
 
@@ -233,7 +335,7 @@ class CastepConvergeWorkChain(WorkChain):
     def run_pwcutoff_conv(self):
         """Run parallel plane-wave energy cutoff convergence calculations with the energy cutoff range and increment provided"""
         inputs = self.ctx.inputs
-        inputs.kpoints_spacing = self.inputs.coarse_kspacing.value
+        inputs.kpoints_spacing = self.ctx.coarse_kspacing
         for pwcutoff in range(
             self.ctx.initial_pwcutoff,
             self.ctx.final_pwcutoff + 1,
@@ -290,7 +392,7 @@ class CastepConvergeWorkChain(WorkChain):
         inputs = self.ctx.inputs
         inputs.kpoints_spacing = self.ctx.coarse_kspacing
         parameters = deepcopy(self.ctx.parameters)
-        parameters["cut_off_energy"] = self.inputs.final_pwcutoff.value
+        parameters["cut_off_energy"] = self.ctx.final_pwcutoff
         inputs.calc.parameters = parameters
         self.ctx.kspacings = np.arange(
             self.ctx.coarse_kspacing,
@@ -333,6 +435,7 @@ class CastepConvergeWorkChain(WorkChain):
                     f"K-point spacing converged at {self.ctx.kspacings[i - 1]} A-1"
                 )
                 self.ctx.converged_kspacing = orm.Float(self.ctx.kspacings[i - 1])
+                self.ctx.fine_kspacing = self.ctx.converged_kspacing
                 self.ctx.kspacing_converged = True
                 return
         self.ctx.coarse_kspacing = self.ctx.fine_kspacing
@@ -361,15 +464,16 @@ class CastepConvergeWorkChain(WorkChain):
             {
                 "task": "phonon",
                 "phonon_fine_method": "supercell",
-                "cut_off_energy": self.inputs.initial_pwcutoff.value,
+                "cut_off_energy": self.ctx.final_pwcutoff,
             }
         )
         inputs.calc.parameters = parameters
         current_structure = inputs.calc.structure
         seekpath_data = seekpath_analysis(current_structure)
-        inputs.calc.phonon_fine_kpoints = seekpath_data["kpoints"]
+        self.ctx.kpoints = seekpath_data["kpoints"]
+        inputs.calc.phonon_fine_kpoints = self.ctx.kpoints
         inputs.calc.structure = seekpath_data["prim_cell"]
-        inputs.kpoints_spacing = self.inputs.coarse_kspacing.value
+        inputs.kpoints_spacing = self.ctx.fine_kspacing
         pmg_lattice = inputs.calc.structure.get_pymatgen().lattice
         self.ctx.supercell_lengths = np.arange(
             self.ctx.initial_supercell_length,
@@ -396,14 +500,26 @@ class CastepConvergeWorkChain(WorkChain):
     def analyse_supercell_conv(self):
         """Analyse previous supercell convergence calculations"""
         keys = []
+        files = []
+        matrices = []
         for i, length in enumerate(self.ctx.supercell_lengths):
             key = f"supercell_{length}"
             if key in self.ctx:
                 keys.append(key)
-                if len(keys) == 1:
-                    continue
                 last_phonon_file = (
                     self.ctx[key]
+                    .called[-1]
+                    .outputs.retrieved.get_object_content("aiida.phonon")
+                )
+                last_matrix = self.ctx[key].inputs.calc.parameters[
+                    "phonon_supercell_matrix"
+                ]
+                files.append(last_phonon_file)
+                matrices.append(last_matrix)
+                if len(keys) == 1:
+                    continue
+                second_last_phonon_file = (
+                    self.ctx[keys[-2]]
                     .called[-1]
                     .outputs.retrieved.get_object_content("aiida.phonon")
                 )
@@ -413,7 +529,7 @@ class CastepConvergeWorkChain(WorkChain):
                     last_phonon_data = PhononParser(open(f"{temp}/last.phonon"))
                     last_freqs = np.array(last_phonon_data.frequencies)
                     with open(f"{temp}/second_last.phonon", "x") as file:
-                        file.write(last_phonon_file)
+                        file.write(second_last_phonon_file)
                     second_last_phonon_data = PhononParser(
                         open(f"{temp}/second_last.phonon")
                     )
@@ -422,25 +538,47 @@ class CastepConvergeWorkChain(WorkChain):
                     np.absolute((second_last_freqs - last_freqs)) / last_freqs
                 )
                 mean_percentage_error = np.mean(percentage_errors)
-                if mean_percentage_error < (self.inputs.frequency_error / 100):
+                if (
+                    mean_percentage_error < (self.inputs.frequency_error / 100)
+                    and not self.ctx.supercell_converged
+                ):
                     self.report(
-                        f"Supercell converged at {self.ctx.supercell_lengths[i - 1]} Angstroms"
+                        f"Supercell converged at {self.ctx.supercell_lengths[i-1]} Angstroms"
                     )
                     self.ctx.supercell_converged = True
                     self.ctx.converged_supercell = orm.ArrayData()
                     self.ctx.converged_supercell.set_array(
                         "matrix",
                         np.array(
-                            self.ctx[keys[-2]].inputs.calc.parameters[
+                            self.ctx[keys[-1]].inputs.calc.parameters[
                                 "phonon_supercell_matrix"
                             ]
                         ),
                     )
-                    return
-        self.ctx.initial_supercell_length = self.ctx.final_supercell
-        self.ctx.final_supercell_length += 5
-        self.report(
-            "Supercell not converged. Increasing upper length limit by 5 Angstroms"
+        if not self.ctx.converged_supercell:
+            self.ctx.supercell_converged = True
+            self.ctx.converged_supercell.set_array(
+                "matrix",
+                np.array(
+                    self.ctx[keys[-1]].inputs.calc.parameters["phonon_supercell_matrix"]
+                ),
+            )
+            self.report(
+                f"Supercell not converged but very large. Taking {self.ctx.supercell_lengths[-1]} Angstroms as converged supercell."
+            )
+        supercell_plot = plot_phonons(
+            orm.List(list=files),
+            self.ctx.kpoints,
+            orm.List(list=matrices),
+            orm.Str(self.ctx.prefix),
+        )
+        self.ctx.supercell_plot = add_metadata(
+            supercell_plot,
+            orm.Str(f"{self.ctx.prefix}_supercell_convergence.pdf"),
+            orm.Str(self.ctx.inputs.calc.structure.get_formula()),
+            orm.Str(self.uuid),
+            orm.Str(self.inputs.metadata.get("label", "")),
+            orm.Str(self.inputs.metadata.get("description", "")),
         )
 
     def results(self):
@@ -451,3 +589,4 @@ class CastepConvergeWorkChain(WorkChain):
             self.out("converged_kspacing", self.ctx.converged_kspacing)
         if self.inputs.converge_supercell:
             self.out("converged_supercell", self.ctx.converged_supercell)
+            self.out("supercell_plot", self.ctx.supercell_plot)
