@@ -11,7 +11,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 from aiida.engine import ToContext, WorkChain, calcfunction
 from aiida.orm.nodes.data.base import to_aiida_type
-from aiida.plugins import DataFactory
 from aiida.tools.data.array.kpoints import get_explicit_kpoints_path
 from aiida_castep.utils.dos import DOSProcessor
 from aiida_castep.workflows.base import CastepBaseWorkChain
@@ -22,8 +21,6 @@ from pymatgen.electronic_structure.dos import CompleteDos, Dos, Spin
 from PyPDF2 import PdfFileReader, PdfFileWriter
 from sumo.electronic_structure.dos import get_pdos
 from sumo.plotting.dos_plotter import SDOSPlotter
-
-SinglefileData = DataFactory("singlefile")
 
 __version__ = "0.0.1"
 
@@ -61,7 +58,7 @@ def add_metadata(file, fname, formula, uuid, label, description):
             )
             with open(f"{temp}/{fname.value}", "ab") as fout:
                 writer.write(fout)
-        output_file = SinglefileData(f"{temp}/{fname.value}")
+        output_file = orm.SinglefileData(f"{temp}/{fname.value}")
     return output_file
 
 
@@ -128,7 +125,8 @@ def analysis(dos_data, dos_folder, structure, band_data, band_kpoints, prefix):
         # Plotting projected DOS
         dos_plotter = SDOSPlotter(pmg_dos, sumo_pdos).get_plot()
         dos_plotter.savefig(fname=f"{temp}/{prefix.value}_dos.pdf", bbox_inches="tight")
-        dos_plot = SinglefileData(f"{temp}/{prefix.value}_dos.pdf")
+        dos_plotter.close()
+        dos_plot = orm.SinglefileData(f"{temp}/{prefix.value}_dos.pdf")
 
         # Plotting UPS spectrum
         plt.style.use("default")
@@ -136,41 +134,65 @@ def analysis(dos_data, dos_folder, structure, band_data, band_kpoints, prefix):
             input=pmg_complete_dos,
             gaussian=0.3,
             lorentzian=0.2,
+            xmin=-4,
+            xmax=10,
             weighting="he2",
         )
         ups_plot = galore.plot.plot_pdos(
-            ups_data, show_orbitals=True, units="eV", flipx=True
+            ups_data,
+            show_orbitals=True,
+            units="eV",
+            xmin=-4,
+            xmax=10,
         )
+        plt.xlabel("Binding energy / eV")
         ups_plot.savefig(fname=f"{temp}/{prefix.value}_ups.pdf", bbox_inches="tight")
-        ups_spectrum = SinglefileData(f"{temp}/{prefix.value}_ups.pdf")
+        ups_plot.close()
+        ups_spectrum = orm.SinglefileData(f"{temp}/{prefix.value}_ups.pdf")
 
         # Plotting XPS spectrum
         xps_data = galore.process_pdos(
             input=pmg_complete_dos,
             gaussian=0.3,
             lorentzian=0.2,
+            xmin=-4,
+            xmax=10,
             weighting="alka",
         )
         xps_plot = galore.plot.plot_pdos(
-            xps_data, show_orbitals=True, units="eV", flipx=True
+            xps_data,
+            show_orbitals=True,
+            units="eV",
+            xmin=-4,
+            xmax=10,
         )
+        plt.xlabel("Binding energy / eV")
         xps_plot.savefig(fname=f"{temp}/{prefix.value}_xps.pdf", bbox_inches="tight")
-        xps_spectrum = SinglefileData(f"{temp}/{prefix.value}_xps.pdf")
+        xps_plot.close()
+        xps_spectrum = orm.SinglefileData(f"{temp}/{prefix.value}_xps.pdf")
 
         # Plotting HAXPES spectrum
         haxpes_data = galore.process_pdos(
             input=pmg_complete_dos,
             gaussian=0.3,
             lorentzian=0.2,
+            xmin=-4,
+            xmax=10,
             weighting="yeh_haxpes",
         )
         haxpes_plot = galore.plot.plot_pdos(
-            haxpes_data, show_orbitals=True, units="eV", flipx=True
+            haxpes_data,
+            show_orbitals=True,
+            units="eV",
+            xmin=-4,
+            xmax=10,
         )
+        plt.xlabel("Binding energy / eV")
         haxpes_plot.savefig(
             fname=f"{temp}/{prefix.value}_haxpes.pdf", bbox_inches="tight"
         )
-        haxpes_spectrum = SinglefileData(f"{temp}/{prefix.value}_haxpes.pdf")
+        haxpes_plot.close()
+        haxpes_spectrum = orm.SinglefileData(f"{temp}/{prefix.value}_haxpes.pdf")
 
         # Plotting overlaid photoelectron spectra
         fig = plt.figure()
@@ -181,6 +203,8 @@ def analysis(dos_data, dos_folder, structure, band_data, band_kpoints, prefix):
                 input=pmg_complete_dos,
                 gaussian=0.3,
                 lorentzian=0.2,
+                xmin=-4,
+                xmax=10,
                 weighting=weighting,
             )
             galore.plot.plot_pdos(
@@ -188,7 +212,8 @@ def analysis(dos_data, dos_folder, structure, band_data, band_kpoints, prefix):
                 ax=ax,
                 show_orbitals=False,
                 units="eV",
-                flipx=True,
+                xmin=-4,
+                xmax=10,
             )
             line = ax.lines[-1]
             line.set_label(weighting)
@@ -198,9 +223,10 @@ def analysis(dos_data, dos_folder, structure, band_data, band_kpoints, prefix):
         ax.set_ylim((0, 1.2))
         legend = ax.legend(loc="best")
         legend.set_title("Weighting")
-        plt.plot()
+        plt.xlabel("Binding energy / eV")
         plt.savefig(fname=f"{temp}/{prefix.value}_pe_spectra.pdf", bbox_inches="tight")
-        pe_spectra = SinglefileData(f"{temp}/{prefix.value}_pe_spectra.pdf")
+        plt.close()
+        pe_spectra = orm.SinglefileData(f"{temp}/{prefix.value}_pe_spectra.pdf")
 
         # Plotting band structure
         labelled_bands = deepcopy(band_data)
@@ -213,7 +239,7 @@ def analysis(dos_data, dos_folder, structure, band_data, band_kpoints, prefix):
         band_plotter.savefig(
             fname=f"{temp}/{prefix.value}_bands.pdf", bbox_inches="tight"
         )
-        band_plot = SinglefileData(f"{temp}/{prefix.value}_bands.pdf")
+        band_plot = orm.SinglefileData(f"{temp}/{prefix.value}_bands.pdf")
 
     return {
         "dos_plot": dos_plot,

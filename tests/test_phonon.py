@@ -2,7 +2,7 @@ from pathlib import Path
 
 import aiida.orm as orm
 from aiida.engine import run_get_node
-from aiida.plugins import DataFactory, WorkflowFactory
+from aiida.plugins import WorkflowFactory
 from aiida_castep.data.otfg import upload_otfg_family
 from aiida_castep_addons.workflows.phonon import (
     add_metadata,
@@ -11,13 +11,9 @@ from aiida_castep_addons.workflows.phonon import (
 )
 from ase.build import bulk
 
-StructureData = DataFactory("structure")
-SinglefileData = DataFactory("singlefile")
-Folderdata = DataFactory("folder")
-
 
 def test_seekpath_analysis():
-    silicon = StructureData(ase=bulk("Si", "diamond", 5.43))
+    silicon = orm.StructureData(ase=bulk("Si", "diamond", 5.43))
     seekpath = seekpath_analysis(silicon, orm.Dict(dict={}))
 
     assert "kpoints" in seekpath
@@ -25,7 +21,7 @@ def test_seekpath_analysis():
 
 
 def test_add_metadata():
-    file = SinglefileData(Path("registry/test.pdf").resolve())
+    file = orm.SinglefileData(Path("registry/test.pdf").resolve())
     new_file = add_metadata(
         file,
         orm.Str("changed_test.pdf"),
@@ -39,11 +35,11 @@ def test_add_metadata():
 
 
 def test_phonon_analysis():
-    silicon = StructureData(ase=bulk("Si", "diamond", 5.43))
+    silicon = orm.StructureData(ase=bulk("Si", "diamond", 5.43))
     seekpath = seekpath_analysis(silicon, orm.Dict(dict={}))
     kpoints = seekpath["kpoints"]
-    ir_folder = Folderdata(tree=Path("registry/Si_phonon/dfpt/out").resolve())
-    raman_folder = Folderdata(tree=Path("registry/Si_phonon/raman/out").resolve())
+    ir_folder = orm.Folderdata(tree=Path("registry/Si_phonon/dfpt/out").resolve())
+    raman_folder = orm.Folderdata(tree=Path("registry/Si_phonon/raman/out").resolve())
     results = phonon_analysis(
         orm.Str("test_prefix"), ir_folder, kpoints, raman_folder, silicon
     )
@@ -70,12 +66,10 @@ def test_phonon_wc(mock_castep_code):
         "symmetry_generate": True,
     }
     bld.kpoints_spacing = 0.09
-    KpointsData = DataFactory("array.kpoints")
-    phonon_kpoints = KpointsData()
+    phonon_kpoints = orm.KpointsData()
     phonon_kpoints.set_kpoints_mesh((3, 3, 3))
     bld.calc.phonon_kpoints = phonon_kpoints
-    StructureData = DataFactory("structure")
-    silicon = StructureData(ase=bulk("Si", "diamond", 5.43))
+    silicon = orm.StructureData(ase=bulk("Si", "diamond", 5.43))
     bld.calc.structure = silicon
     bld.calc_options = {
         "max_wallclock_seconds": 3600,

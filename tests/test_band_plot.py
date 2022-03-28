@@ -4,7 +4,7 @@ from pathlib import Path
 import aiida.orm as orm
 import numpy as np
 from aiida.engine import run_get_node
-from aiida.plugins import DataFactory, WorkflowFactory
+from aiida.plugins import WorkflowFactory
 from aiida_castep.data.otfg import upload_otfg_family
 from aiida_castep_addons.workflows.band_plot import (
     add_metadata,
@@ -13,14 +13,9 @@ from aiida_castep_addons.workflows.band_plot import (
 )
 from ase.build import bulk
 
-StructureData = DataFactory("structure")
-BandsData = DataFactory("array.bands")
-SinglefileData = DataFactory("singlefile")
-FolderData = DataFactory("folder")
-
 
 def test_seekpath_analysis():
-    silicon = StructureData(ase=bulk("Si", "diamond", 5.43))
+    silicon = orm.StructureData(ase=bulk("Si", "diamond", 5.43))
     seekpath = seekpath_analysis(silicon, orm.Dict(dict={}))
 
     assert "kpoints" in seekpath
@@ -28,7 +23,7 @@ def test_seekpath_analysis():
 
 
 def test_add_metadata():
-    file = SinglefileData(Path("registry/test.pdf").resolve())
+    file = orm.SinglefileData(Path("registry/test.pdf").resolve())
     new_file = add_metadata(
         file,
         orm.Str("changed_test.pdf"),
@@ -42,10 +37,10 @@ def test_add_metadata():
 
 
 def test_analysis():
-    silicon = StructureData(ase=bulk("Si", "diamond", 5.43))
+    silicon = orm.StructureData(ase=bulk("Si", "diamond", 5.43))
     seekpath = seekpath_analysis(silicon, orm.Dict(dict={}))
     kpoints = seekpath["kpoints"]
-    dos_data = BandsData()
+    dos_data = orm.BandsData()
     dos_data.set_cell_from_structure(silicon)
     dos_data.set_attribute("nspins", 1)
     dos_data.set_attribute("efermi", 4.6635415926391)
@@ -14694,7 +14689,7 @@ def test_analysis():
     )
     results = analysis(
         dos_data,
-        FolderData(tree=Path("registry/Si_dos/out").resolve()),
+        orm.FolderData(tree=Path("registry/Si_dos/out").resolve()),
         silicon,
         band_data,
         kpoints,
@@ -14704,6 +14699,10 @@ def test_analysis():
     assert "dos_plot" in results
     assert "labelled_bands" in results
     assert "band_plot" in results
+    assert "ups_spectrum" in results
+    assert "xps_spectrum" in results
+    assert "haxpes_spectrum" in results
+    assert "pe_spectra" in results
 
 
 def test_band_plot_wc(mock_castep_code):
@@ -14718,7 +14717,7 @@ def test_band_plot_wc(mock_castep_code):
         "symmetry_generate": True,
     }
     bld.kpoints_spacing = 0.04
-    silicon = StructureData(ase=bulk("Si", "diamond", 5.43))
+    silicon = orm.StructureData(ase=bulk("Si", "diamond", 5.43))
     bld.calc.structure = silicon
     bld.calc_options = {
         "max_wallclock_seconds": 3600,
@@ -14739,7 +14738,7 @@ def test_band_plot_wc(mock_castep_code):
         "symmetry_generate": True,
     }
     bld.kpoints_spacing = 0.04
-    iron = StructureData(ase=bulk("Fe", "bcc", 2.87))
+    iron = orm.StructureData(ase=bulk("Fe", "bcc", 2.87))
     bld.calc.structure = iron
     bld.metadata.label = "Fe_pbesol_dos+bands"
     bld.metadata.description = (

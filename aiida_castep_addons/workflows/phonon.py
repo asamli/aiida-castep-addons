@@ -1,27 +1,22 @@
 """Module for Phonon WorkChain"""
 
 from __future__ import absolute_import
-from aiida.engine import WorkChain, ToContext, calcfunction
-import aiida.orm as orm
-from aiida.orm.nodes.data.base import to_aiida_type
-from aiida.tools.data.array.kpoints import get_explicit_kpoints_path
-from aiida_castep.workflows.base import CastepBaseWorkChain
-from aiida.plugins import DataFactory
-from aiida_castep_addons.parsers.phonon import PhononParser
 
 from copy import deepcopy
 from tempfile import TemporaryDirectory
-from PyPDF2 import PdfFileReader, PdfFileWriter
-import numpy as np
+
+import aiida.orm as orm
 import matplotlib.pyplot as plt
+import numpy as np
+from aiida.engine import ToContext, WorkChain, calcfunction
+from aiida.orm.nodes.data.base import to_aiida_type
+from aiida.tools.data.array.kpoints import get_explicit_kpoints_path
+from aiida_castep.workflows.base import CastepBaseWorkChain
+from aiida_castep_addons.parsers.phonon import PhononParser
 from pymatgen.core.lattice import Lattice
 from pymatgen.phonon.bandstructure import PhononBandStructureSymmLine
+from PyPDF2 import PdfFileReader, PdfFileWriter
 from sumo.plotting.phonon_bs_plotter import SPhononBSPlotter
-
-SinglefileData = DataFactory("singlefile")
-KpointsData = DataFactory("array.kpoints")
-XyData = DataFactory("array.xy")
-BandsData = DataFactory("array.bands")
 
 __version__ = "0.0.1"
 
@@ -59,7 +54,7 @@ def add_metadata(file, fname, formula, uuid, label, description):
             )
             with open(f"{temp}/{fname.value}", "ab") as fout:
                 writer.write(fout)
-        output_file = SinglefileData(f"{temp}/{fname.value}")
+        output_file = orm.SinglefileData(f"{temp}/{fname.value}")
     return output_file
 
 
@@ -102,10 +97,10 @@ def phonon_analysis(prefix, ir_folder, kpoints, raman_folder, structure):
             fname=f"{temp}/{prefix.value}_phonon_bands.pdf", bbox_inches="tight"
         )
         phonon_plotter.close()
-        band_plot = SinglefileData(f"{temp}/{prefix.value}_phonon_bands.pdf")
+        band_plot = orm.SinglefileData(f"{temp}/{prefix.value}_phonon_bands.pdf")
 
         # Create BandsData for the phonon band structure
-        band_data = BandsData()
+        band_data = orm.BandsData()
         band_data.set_cell_from_structure(structure)
         band_data.set_kpoints(qpoints)
         band_data.set_bands(frequencies, units="THz")
@@ -116,7 +111,7 @@ def phonon_analysis(prefix, ir_folder, kpoints, raman_folder, structure):
         ir_intensities = ir_phonon_data.ir_intensities
         ir_frequency_unit = ir_phonon_data.frequency_unit
         ir_intensity_unit = ir_phonon_data.ir_unit
-        ir_data = XyData()
+        ir_data = orm.XyData()
         ir_data.set_x(np.array(ir_frequencies), "Wavenumber", ir_frequency_unit)
         ir_data.set_y(np.array(ir_intensities), "Intensity", ir_intensity_unit)
         plt.style.use("default")
@@ -125,14 +120,14 @@ def phonon_analysis(prefix, ir_folder, kpoints, raman_folder, structure):
         plt.ylabel(f"Intensity ({ir_intensity_unit})")
         plt.savefig(fname=f"{temp}/{prefix.value}_ir.pdf", bbox_inches="tight")
         plt.close()
-        ir_spectrum = SinglefileData(f"{temp}/{prefix.value}_ir.pdf")
+        ir_spectrum = orm.SinglefileData(f"{temp}/{prefix.value}_ir.pdf")
 
         # Plotting Raman spectrum with matplotlib and saving Raman data as XyData
         raman_frequencies = raman_phonon_data.vib_frequencies
         raman_activities = raman_phonon_data.raman_activities
         raman_frequency_unit = raman_phonon_data.frequency_unit
         raman_activity_unit = raman_phonon_data.raman_unit
-        raman_data = XyData()
+        raman_data = orm.XyData()
         raman_data.set_x(
             np.array(raman_frequencies), "Raman shift", raman_frequency_unit
         )
@@ -142,7 +137,7 @@ def phonon_analysis(prefix, ir_folder, kpoints, raman_folder, structure):
         plt.ylabel(f"Intensity ({raman_activity_unit})")
         plt.savefig(fname=f"{temp}/{prefix.value}_raman.pdf", bbox_inches="tight")
         plt.close()
-        raman_spectrum = SinglefileData(f"{temp}/{prefix.value}_raman.pdf")
+        raman_spectrum = orm.SinglefileData(f"{temp}/{prefix.value}_raman.pdf")
 
     return {
         "band_data": band_data,
@@ -271,7 +266,7 @@ class CastepPhononWorkChain(WorkChain):
         """Run the gamma-only Raman spectrum calculation"""
         inputs = self.ctx.inputs
         raman_parameters = deepcopy(self.ctx.parameters)
-        phonon_kpoints = KpointsData()
+        phonon_kpoints = orm.KpointsData()
         phonon_kpoints.set_kpoints_mesh((1, 1, 1))
         inputs.calc.phonon_kpoints = phonon_kpoints
         raman_parameters.update({"task": "phonon", "calculate_raman": True})

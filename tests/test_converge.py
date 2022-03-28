@@ -2,21 +2,18 @@ from pathlib import Path
 
 import aiida.orm as orm
 from aiida.engine import run_get_node
-from aiida.plugins import DataFactory, WorkflowFactory
+from aiida.plugins import WorkflowFactory
 from aiida_castep.data.otfg import upload_otfg_family
 from aiida_castep_addons.workflows.converge import (
     add_metadata,
-    seekpath_analysis,
     plot_phonons,
+    seekpath_analysis,
 )
 from ase.build import bulk
 
-StructureData = DataFactory("structure")
-SinglefileData = DataFactory("singlefile")
-
 
 def test_seekpath_analysis():
-    silicon = StructureData(ase=bulk("Si", "diamond", 5.43))
+    silicon = orm.StructureData(ase=bulk("Si", "diamond", 5.43))
     seekpath = seekpath_analysis(silicon)
 
     assert "kpoints" in seekpath
@@ -24,7 +21,7 @@ def test_seekpath_analysis():
 
 
 def test_add_metadata():
-    file = SinglefileData(Path("registry/test.pdf").resolve())
+    file = orm.SinglefileData(Path("registry/test.pdf").resolve())
     new_file = add_metadata(
         file,
         orm.Str("changed_test.pdf"),
@@ -38,7 +35,7 @@ def test_add_metadata():
 
 
 def test_plot_phonons():
-    silicon = StructureData(ase=bulk("Si", "diamond", 5.43))
+    silicon = orm.StructureData(ase=bulk("Si", "diamond", 5.43))
     seekpath = seekpath_analysis(silicon)
     kpoints = seekpath["kpoints"]
     files = []
@@ -52,7 +49,9 @@ def test_plot_phonons():
         with open(f"registry/Si_converge/{folder}/out/aiida.phonon") as dot_phonon:
             phonon_data = " ".join(dot_phonon.readlines())
             files.append(phonon_data)
-    supercell_convergence_plot = plot_phonons(orm.List(list=files),kpoints,orm.List(list=matrices),orm.Str("Si2_pbesol"))
+    supercell_convergence_plot = plot_phonons(
+        orm.List(list=files), kpoints, orm.List(list=matrices), orm.Str("Si2_pbesol")
+    )
 
 
 def test_converge_wc(mock_castep_code):
@@ -67,7 +66,7 @@ def test_converge_wc(mock_castep_code):
         "symmetry_generate": True,
     }
     bld.kpoints_spacing = 0.1
-    silicon = StructureData(ase=bulk("Si", "diamond", 5.43))
+    silicon = orm.StructureData(ase=bulk("Si", "diamond", 5.43))
     bld.calc.structure = silicon
     bld.calc_options = {
         "max_wallclock_seconds": 3600,

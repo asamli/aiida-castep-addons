@@ -10,7 +10,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 from aiida.engine import WorkChain, calcfunction, while_
 from aiida.orm.nodes.data.base import to_aiida_type
-from aiida.plugins import DataFactory
 from aiida.tools.data.array.kpoints import get_explicit_kpoints_path
 from aiida_castep.workflows.base import CastepBaseWorkChain
 from aiida_castep_addons.parsers.phonon import PhononParser
@@ -21,8 +20,6 @@ from PyPDF2 import PdfFileReader, PdfFileWriter
 from sumo.plotting.phonon_bs_plotter import SPhononBSPlotter
 
 __version__ = "0.0.1"
-
-SinglefileData = DataFactory("singlefile")
 
 
 @calcfunction
@@ -58,7 +55,7 @@ def add_metadata(file, fname, formula, uuid, label, description):
             )
             with open(f"{temp}/{fname.value}", "ab") as fout:
                 writer.write(fout)
-        output_file = SinglefileData(f"{temp}/{fname.value}")
+        output_file = orm.SinglefileData(f"{temp}/{fname.value}")
     return output_file
 
 
@@ -69,7 +66,7 @@ def plot_phonons(files, kpoints, matrices, prefix):
         for i in range(len(matrices))
     ]
     with TemporaryDirectory() as temp:
-        for i, file in enumerate(files.get_list()):
+        for i, file in enumerate(files):
             with open(f"{temp}/{i}.phonon", "x") as phonon_file:
                 phonon_file.write(file)
 
@@ -113,7 +110,7 @@ def plot_phonons(files, kpoints, matrices, prefix):
             fname=f"{temp}/{prefix.value}_supercell_convergence.pdf",
             bbox_inches="tight",
         )
-        return SinglefileData(f"{temp}/{prefix.value}_supercell_convergence.pdf")
+        return orm.SinglefileData(f"{temp}/{prefix.value}_supercell_convergence.pdf")
 
 
 class CastepConvergeWorkChain(WorkChain):
@@ -555,7 +552,7 @@ class CastepConvergeWorkChain(WorkChain):
                     self.ctx.converged_supercell.set_array(
                         "matrix",
                         np.array(
-                            self.ctx[keys[-1]].inputs.calc.parameters[
+                            self.ctx[keys[-2]].inputs.calc.parameters[
                                 "phonon_supercell_matrix"
                             ]
                         ),
