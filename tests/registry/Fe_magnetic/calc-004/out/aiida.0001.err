@@ -1,0 +1,5 @@
+Error calculate_finite_basis : Convergence failed when doing finite basis set correction.
+Current trace stack:
+ calculate_finite_basis_corr
+ check_elec_ground_state
+ castep

@@ -21,7 +21,8 @@
 	"aiida.workflows": [
 	    "castep_addons.converge = aiida_castep_addons.workflows.converge:CastepConvergeWorkChain",
 	    "castep_addons.band_plot = aiida_castep_addons.workflows.band_plot:CastepBandPlotWorkChain",
-	    "castep_addons.phonon = aiida_castep_addons.workflows.phonon:CastepPhononWorkChain"
+	    "castep_addons.phonon = aiida_castep_addons.workflows.phonon:CastepPhononWorkChain",
+        "castep_addons.magnetic = aiida_castep_addons.workflows.magnetic:CastepMagneticWorkChain"
 	]
     },
     "include_package_data": true,

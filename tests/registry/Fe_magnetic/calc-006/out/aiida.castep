@@ -1,0 +1,3019 @@
+ +-------------------------------------------------+
+ |                                                 |
+ |      CCC   AA    SSS  TTTTT  EEEEE  PPPP        |
+ |     C     A  A  S       T    E      P   P       |
+ |     C     AAAA   SS     T    EEE    PPPP        |
+ |     C     A  A     S    T    E      P           |
+ |      CCC  A  A  SSS     T    EEEEE  P           |
+ |                                                 |
+ +-------------------------------------------------+
+ |                                                 |
+ | Welcome to Academic Release CASTEP version 20.11|          
+ | Ab Initio Total Energy Program                  |
+ |                                                 |
+ | Authors:                                        |
+ | M. Segall, M. Probert, C. Pickard, P. Hasnip,   |
+ | S. Clark, K. Refson, J. R. Yates, M. Payne      |
+ |                                                 |
+ | Contributors:                                   |
+ | P. Lindan, P. Haynes, J. White, V. Milman,      |
+ | N. Govind, M. Gibson, P. Tulip, V. Cocula,      |
+ | B. Montanari, D. Quigley, M. Glover,            |
+ | L. Bernasconi, A. Perlov, M. Plummer,           |
+ | E. McNellis, J. Meyer, J. Gale, D. Jochym       |
+ | J. Aarons, B. Walker, R. Gillen, D. Jones       |
+ | T. Green, I. J. Bush, C. J. Armstrong,          |
+ | E. J. Higgins, E. L. Brown, M. S. McFly,        |
+ | J. Wilkins, B-C. Shih, P. J. P. Byrne,          |
+ | R. J. Maurer, J. C. Womack, J. Dziedzic,        |
+ | J. R. Kermode, A. Bartok-Partay                 |
+ |                                                 |
+ | Copyright (c) 2000 - 2020                       |
+ |                                                 |
+ |     Distributed under license from Cambridge    |
+ |     Enterprise for academic use only.           |
+ |                                                 |
+ | Please cite                                     |
+ |                                                 |
+ |     "First principles methods using CASTEP"     |
+ |                                                 |
+ |         Zeitschrift fuer Kristallographie       |
+ |           220(5-6) pp. 567-570 (2005)           |
+ |                                                 |
+ | S. J. Clark, M. D. Segall, C. J. Pickard,       |
+ | P. J. Hasnip, M. J. Probert, K. Refson,         |
+ | M. C. Payne                                     |
+ |                                                 |
+ |       in all publications arising from          |
+ |              your use of CASTEP                 |
+ |                                                 |
+ +-------------------------------------------------+
+ |                                                 |
+ |              http://www.castep.org              |
+ |                                                 |
+ +-------------------------------------------------+
+
+
+
+ Compiled for linux_x86_64_gfortran10 on Fri, 26 Nov 2021 11:30:39 +0000
+ from code version 328d1dd6+  Castep201_branch  Wed Mar 10 09:27:36 2021 +0000
+ Compiler: GNU Fortran 10.3.0; Optimisation: fast
+ MATHLIBS: Intel MKL(2020.0.0) (LAPACK version 3.7.0)
+ FFT Lib : mkl
+ Fundamental constants values: CODATA 2014
+
+ Run started: Tue, 22 Mar 2022 16:43:55 +0000
+
+ Atomic calculation performed for Fe: 1s2 2s2 2p6 3s2 3p6 3d6 4s2
+
+ Converged in 103 iterations to an ae energy of -34592.796 eV
+
+   ============================================================                
+   | Pseudopotential Report - Date of generation 22-03-2022   |                
+   ------------------------------------------------------------                
+   | Element: Fe Ionic charge:  8.00 Level of theory: PBESOL  |                
+   | Atomic Solver: Koelling-Harmon                           |                
+   |                                                          |                
+   |               Reference Electronic Structure             |                
+   |         Orbital         Occupation         Energy        |                
+   |            3d              6.000           -0.277        |                
+   |            4s              2.000           -0.195        |                
+   |                                                          |                
+   |                 Pseudopotential Definition               |                
+   |        Beta     l      e      Rc     scheme   norm       |                
+   |          1      0   -0.195   2.399     qc      0         |                
+   |          2      0    0.250   2.399     qc      0         |                
+   |          3      1    0.000   2.399     qc      0         |                
+   |          4      1    0.250   2.399     qc      0         |                
+   |          5      2   -0.277   1.997     qc      0         |                
+   |          6      2    0.250   1.997     qc      0         |                
+   |         loc     3    0.000   2.399     pn      0         |                
+   |                                                          |                
+   | Augmentation charge Rinner = 1.000                       |                
+   | Partial core correction Rc = 1.000                       |                
+   ------------------------------------------------------------                
+   | "3|2.4|2.4|1.0|8|9|10|40:41:32U2U2(qc=5.5)"              |                
+   ------------------------------------------------------------                
+   |      Author: Chris J. Pickard, Cambridge University      |                
+   ============================================================                
+
+ Pseudo atomic calculation performed for Fe 3d6 4s2
+
+ Converged in 32 iterations to a total energy of -849.1691 eV
+ Calculation parallelised over 4 processes.
+ Data is distributed by k-point(4-way)
+
+ ************************************ Title ************************************
+ 
+
+ ***************************** General Parameters ******************************
+  
+ output verbosity                               : normal  (1)
+ write checkpoint data to                       : aiida.check
+ type of calculation                            : geometry optimization
+ stress calculation                             : off
+ density difference calculation                 : off
+ electron localisation func (ELF) calculation   : off
+ Hirshfeld analysis                             : off
+ molecular orbital projected DOS                : off
+ deltaSCF calculation                           : off
+ calculation limited to maximum                 :       3420   seconds
+ timing information                             : on
+ memory usage estimate                          : on
+ write extra output files                       : on
+ write final potential to formatted file        : off
+ write final density to formatted file          : off
+ write BibTeX reference list                    : on
+ write OTFG pseudopotential files               : on
+ write electrostatic potential file             : on
+ write bands file                               : on
+ checkpoint writing                             : both castep_bin and check files
+  
+ output         length unit                     : A
+ output           mass unit                     : amu
+ output           time unit                     : ps
+ output         charge unit                     : e
+ output           spin unit                     : hbar/2
+ output         energy unit                     : eV
+ output          force unit                     : eV/A
+ output       velocity unit                     : A/ps
+ output       pressure unit                     : GPa
+ output     inv_length unit                     : 1/A
+ output      frequency unit                     : cm-1
+ output force constant unit                     : eV/A**2
+ output         volume unit                     : A**3
+ output   IR intensity unit                     : (D/A)**2/amu
+ output         dipole unit                     : D
+ output         efield unit                     : eV/A/e
+ output        entropy unit                     : J/mol/K
+ output    efield chi2 unit                     : pm/V
+  
+ wavefunctions paging                           : none
+ random number generator seed                   : randomised (164356790)
+ data distribution                              : optimal for this architecture
+ optimization strategy                          : balance speed and memory
+
+ *********************** Exchange-Correlation Parameters ***********************
+  
+ using functional                               : PBE for solids (2008)
+ relativistic treatment                         : Koelling-Harmon
+ DFT+D: Semi-empirical dispersion correction    : off
+
+ ************************* Pseudopotential Parameters **************************
+  
+ pseudopotential representation                 : reciprocal space
+ <beta|phi> representation                      : reciprocal space
+ spin-orbit coupling                            : off
+
+ **************************** Basis Set Parameters *****************************
+  
+ plane wave basis set cut-off                   :   450.0000   eV
+ size of standard grid                          :     1.7500
+ size of   fine   gmax                          :    19.0188   1/A
+ finite basis set correction                    : automatic
+ number of sample energies                      :          3
+           sample  spacing                      :     5.0000   eV
+
+ **************************** Electronic Parameters ****************************
+  
+ number of  electrons                           :  16.00    
+ net charge of system                           :  0.000    
+ net spin   of system                           :  0.000    
+ number of  up  spins                           :  8.000    
+ number of down spins                           :  8.000    
+ treating system as spin-polarized
+ number of bands                                :         12
+
+ ********************* Electronic Minimization Parameters **********************
+  
+ Method: Treating system as metallic with density mixing treatment of electrons,
+         and number of  SD  steps               :          1
+         and number of  CG  steps               :          4
+  
+ total energy / atom convergence tol.           : 0.1000E-04   eV
+ eigen-energy convergence tolerance             : 0.1000E-05   eV
+ max force / atom convergence tol.              : ignored
+ convergence tolerance window                   :          3   cycles
+ max. number of SCF cycles                      :         30
+ number of fixed-spin iterations                :         10
+ smearing scheme                                : Gaussian
+ smearing width                                 : 0.2000       eV
+ Fermi energy convergence tolerance             : 0.2721E-13   eV
+ periodic dipole correction                     : NONE
+
+ ************************** Density Mixing Parameters **************************
+  
+ density-mixing scheme                          : Broyden
+ max. length of mixing history                  :         20
+ charge density mixing amplitude                : 0.8000    
+   spin density mixing amplitude                :  2.000    
+ cut-off energy for mixing                      :  450.0       eV
+
+ *********************** Population Analysis Parameters ************************
+  
+ Population analysis with cutoff                :  3.000       A
+ Population analysis output                     : summary and pdos components
+
+ ********************** Geometry Optimization Parameters ***********************
+  
+ optimization method                            : LBFGS
+ max. no. of LBFGS updates                      : unbounded
+ variable cell method                           : fixed basis quality
+ max. number of steps                           :         30
+ estimated bulk modulus                         :  500.0       GPa
+ estimated <frequency>                          :  1668.       cm-1
+ geom line minimiser                            : on
+ with line minimiser tolerance                  :     0.4000
+  with spin fully able to relax for all steps
+ total energy convergence tolerance             : 0.2000E-04   eV/atom
+        max ionic |force| tolerance             : 0.5000E-01   eV/A
+ max ionic |displacement| tolerance             : 0.1000E-02   A
+   max |stress component| tolerance             : 0.1000       GPa
+ convergence tolerance window                   :          2   steps
+ backup results every                           :          5   steps
+ write geom trajectory file                     : on
+
+ *******************************************************************************
+  
+
+                           -------------------------------
+                                      Unit Cell
+                           -------------------------------
+        Real Lattice(A)                      Reciprocal Lattice(1/A)
+    -1.4300000     1.4300000     1.4300000       -1.098458970   1.098458970   2.196917940
+     1.4300000    -1.4300000     1.4300000        1.098458970  -1.098458970   2.196917940
+     2.8600000     2.8600000     0.0000000        1.098458970   1.098458970  -0.000000000
+
+                       Lattice parameters(A)       Cell Angles
+                    a =      2.476833          alpha =   90.000000
+                    b =      2.476833          beta  =   90.000000
+                    c =      4.044651          gamma =  109.471221
+
+                       Current cell volume =            23.393656       A**3
+                                   density =             4.774371   AMU/A**3
+                                           =             7.928030     g/cm^3
+
+                           -------------------------------
+                                     Cell Contents
+                           -------------------------------
+                         Total number of ions in cell =    2
+                      Total number of species in cell =    1
+                        Max number of any one species =    2
+
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            x  Element    Atom        Fractional coordinates of atoms  x
+            x            Number           u          v          w      x
+            x----------------------------------------------------------x
+            x  Fe           1         0.000000   0.000000   0.000000   x 
+            x  Fe           2         0.500000   0.500000   0.500000   x 
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+
+                         No user defined ionic velocities
+
+                           -------------------------------
+                                   Details of Species
+                           -------------------------------
+
+                               Mass of species in AMU
+                                    Fe   55.8450000
+
+                          Electric Quadrupole Moment (Barn)
+                                    Fe    0.1600000 Isotope 57
+         xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+         |  Element    Atom         Initial            Initial magnetic       |
+         |            Number    spin polarization        moment (uB)     Fix? |
+         |--------------------------------------------------------------------|
+         | Fe             1         0.625000              5.000       F       |
+         | Fe             2        -0.625000             -5.000       F       |
+         xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+
+                          Files used for pseudopotentials:
+                                    Fe 3|2.4|2.4|1.0|8|9|10|40:41:32U2U2(qc=5.5)
+
+                           -------------------------------
+                              k-Points For BZ Sampling
+                           -------------------------------
+                       MP grid size for SCF calculation is 15 15  9
+                            with an offset of   0.000  0.000  0.000
+                       Number of kpoints used =           320
+
+                           -------------------------------
+                               Symmetry and Constraints
+                           -------------------------------
+
+                      Cell is a supercell containing 2 primitive cells
+                      Maximum deviation from symmetry = 0.714429E-15     ANG
+
+                      Number of symmetry operations   =           8
+                      Number of ionic constraints     =           3
+                      Point group of crystal =     8: D2h, mmm, 2/m 2/m 2/m
+                      Space group of crystal =   229: Im-3m, -I 4 2 3
+
+             Set iprint > 1 for details on symmetry rotations/translations
+
+                         Centre of mass is constrained
+             Set iprint > 1 for details of linear ionic constraints
+
+                         Number of cell constraints= 3
+                         Cell constraints are:  1 1 3 0 0 6
+
+                         External pressure/stress (GPa)
+                          0.00000   0.00000   0.00000
+                                    0.00000   0.00000
+                                              0.00000
+  
++---------------- MEMORY AND SCRATCH DISK ESTIMATES PER PROCESS --------------+
+|                                                     Memory          Disk    |
+| Baseline code, static data and system overhead      348.0 MB         0.0 MB |
+| BLAS internal memory storage                          0.0 MB         0.0 MB |
+| Model and support data                              108.1 MB        14.7 MB |
+| Electronic energy minimisation requirements          35.6 MB         0.0 MB |
+| Force calculation requirements                        1.2 MB         0.0 MB |
+|                                               ----------------------------- |
+| Approx. total storage required per process          491.6 MB        14.7 MB |
+|                                                                             |
+| Requirements will fluctuate during execution and may exceed these estimates |
++-----------------------------------------------------------------------------+
+Calculating finite basis set correction with  3 cut-off energies.
+Calculating total energy with cut-off of  440.000 eV.
+------------------------------------------------------------------------ <-- SCF
+SCF loop      Energy           Fermi           Energy gain       Timer   <-- SCF
+                               energy          per atom          (sec)   <-- SCF
+------------------------------------------------------------------------ <-- SCF
+Initial  -1.36382150E+003  0.00000000E+000                        20.75  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      1  -1.68544519E+003  7.64483969E+000   1.60811847E+002      28.65  <-- SCF
+      2  -1.71497855E+003  5.91795418E+000   1.47666795E+001      37.05  <-- SCF
+      3  -1.71649658E+003  6.15557008E+000   7.59014954E-001      47.28  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      4  -1.71737992E+003  4.80267777E+000   4.41667741E-001      55.22  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      5  -1.71751432E+003  5.56620913E+000   6.72006718E-002      62.53  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      6  -1.71751264E+003  5.25682684E+000  -8.36133709E-004      69.52  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      7  -1.71756686E+003  5.25586906E+000   2.71103141E-002      77.76  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      8  -1.71752019E+003  5.24641622E+000  -2.33380241E-002      84.63  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      9  -1.71752312E+003  5.17965984E+000   1.46696155E-003      92.72  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     10  -1.71752317E+003  5.17920565E+000   2.26739102E-005      98.08  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     11  -1.71772576E+003  5.21763788E+000   1.01293880E-001     106.87  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     12  -1.71751433E+003  5.20546464E+000  -1.05713802E-001     116.45  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     13  -1.71752190E+003  5.16134541E+000   3.78425038E-003     125.61  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     14  -1.71752162E+003  5.19451820E+000  -1.39091341E-004     134.17  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     15  -1.71752164E+003  5.17918097E+000   1.06621473E-005     145.21  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     16  -1.71752160E+003  5.18805170E+000  -1.75653943E-005     150.96  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     17  -1.71752160E+003  5.18756507E+000   1.01944944E-007     156.21  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     18  -1.71752161E+003  5.18752378E+000   3.05091407E-008     160.87  <-- SCF
+------------------------------------------------------------------------ <-- SCF
+ 
+Integrated Spin Density     =   -0.107853E-01 hbar/2                        
+Integrated |Spin Density|   =     4.13340     hbar/2                        
+ 
+Final energy, E             =  -1717.455172603     eV
+Final free energy (E-TS)    =  -1717.521605034     eV
+(energies not corrected for finite basis set)
+ 
+NB est. 0K energy (E-0.5TS)      =  -1717.488388818     eV
+ 
+Calculating total energy with cut-off of  445.000 eV.
+------------------------------------------------------------------------ <-- SCF
+SCF loop      Energy           Fermi           Energy gain       Timer   <-- SCF
+                               energy          per atom          (sec)   <-- SCF
+------------------------------------------------------------------------ <-- SCF
+Initial  -1.71745517E+003  0.00000000E+000                       162.32  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      1  -1.71752162E+003  5.18817603E+000   3.32248623E-002     167.56  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      2  -1.71752162E+003  5.18817603E+000   2.26143337E-008     172.63  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      3  -1.71752221E+003  5.18694489E+000   2.94979234E-004     179.79  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      4  -1.71752945E+003  5.18814757E+000   3.61984015E-003     187.24  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      5  -1.71752126E+003  5.18889120E+000  -4.09360984E-003     194.56  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      6  -1.71752225E+003  5.18598488E+000   4.92739956E-004     201.30  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      7  -1.71752195E+003  5.18660980E+000  -1.49080275E-004     206.25  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      8  -1.71752160E+003  5.18617091E+000  -1.76999898E-004     213.06  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      9  -1.71752162E+003  5.19016961E+000   1.01063591E-005     218.20  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     10  -1.71752162E+003  5.18747543E+000  -9.35215029E-007     222.70  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     11  -1.71752162E+003  5.18767974E+000   2.37179671E-008     228.03  <-- SCF
+------------------------------------------------------------------------ <-- SCF
+ 
+Integrated Spin Density     =   -0.117986E-01 hbar/2                        
+Integrated |Spin Density|   =     4.13347     hbar/2                        
+ 
+Final energy, E             =  -1717.455186863     eV
+Final free energy (E-TS)    =  -1717.521616156     eV
+(energies not corrected for finite basis set)
+ 
+NB est. 0K energy (E-0.5TS)      =  -1717.488401510     eV
+ 
+Calculating total energy with cut-off of  450.000 eV.
+------------------------------------------------------------------------ <-- SCF
+SCF loop      Energy           Fermi           Energy gain       Timer   <-- SCF
+                               energy          per atom          (sec)   <-- SCF
+------------------------------------------------------------------------ <-- SCF
+Initial  -1.71745519E+003  0.00000000E+000                       230.07  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      1  -1.71752162E+003  5.18767413E+000   3.32186239E-002     235.86  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      2  -1.71752162E+003  5.18767412E+000   1.32436974E-008     240.86  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      3  -1.71752187E+003  5.18775629E+000   1.23322236E-004     246.09  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      4  -1.71752969E+003  5.18778956E+000   3.91001639E-003     253.29  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      5  -1.71752128E+003  5.18789350E+000  -4.20593457E-003     260.83  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      6  -1.71752233E+003  5.18739307E+000   5.27794588E-004     267.90  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      7  -1.71752195E+003  5.18744734E+000  -1.91825773E-004     272.10  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      8  -1.71752160E+003  5.18785447E+000  -1.74409193E-004     277.87  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      9  -1.71752162E+003  5.18751372E+000   9.23694908E-006     282.25  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     10  -1.71752162E+003  5.18787304E+000   5.72456844E-007     286.68  <-- SCF
+------------------------------------------------------------------------ <-- SCF
+ 
+Integrated Spin Density     =   -0.110454E-01 hbar/2                        
+Integrated |Spin Density|   =     4.13348     hbar/2                        
+ 
+Final energy, E             =  -1717.455194857     eV
+Final free energy (E-TS)    =  -1717.521621576     eV
+(energies not corrected for finite basis set)
+ 
+NB est. 0K energy (E-0.5TS)      =  -1717.488408217     eV
+ 
+ For future reference: finite basis dEtot/dlog(Ecut) =      -0.000743eV
+ Total energy corrected for finite basis set =   -1717.521622 eV
+ 
++---------------- MEMORY AND SCRATCH DISK ESTIMATES PER PROCESS --------------+
+|                                                     Memory          Disk    |
+| Model and support data                              120.8 MB        14.7 MB |
+| Electronic energy minimisation requirements          35.6 MB         0.0 MB |
+| Geometry minimisation requirements                   52.5 MB         0.0 MB |
+|                                               ----------------------------- |
+| Approx. total storage required per process          208.9 MB        14.7 MB |
+|                                                                             |
+| Requirements will fluctuate during execution and may exceed these estimates |
++-----------------------------------------------------------------------------+
+ 
+
+ *********** Symmetrised Stress Tensor ***********
+ *                                               *
+ *          Cartesian components (GPa)           *
+ * --------------------------------------------- *
+ *             x             y             z     *
+ *                                               *
+ *  x     18.466554     -6.159826      0.000000  *
+ *  y     -6.159826     18.466554      0.000000  *
+ *  z      0.000000      0.000000     10.367171  *
+ *                                               *
+ *  Pressure:  -15.7668                          *
+ *                                               *
+ *************************************************
+ LBFGS: finished iteration     0 with enthalpy= -1.71752162E+003 eV
+  
+ +-----------+-----------------+-----------------+------------+-----+ <-- LBFGS
+ | Parameter |      value      |    tolerance    |    units   | OK? | <-- LBFGS
+ +-----------+-----------------+-----------------+------------+-----+ <-- LBFGS
+ |  dE/ion   |   0.000000E+000 |   2.000000E-005 |         eV | No  | <-- LBFGS
+ |   Smax    |   1.846655E+001 |   1.000000E-001 |        GPa | No  | <-- LBFGS
+ +-----------+-----------------+-----------------+------------+-----+ <-- LBFGS
+  
+
+================================================================================
+ Starting LBFGS iteration          1 ...
+================================================================================
+  
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+ |    Step    |   lambda    |   F.delta'  |    enthalpy     | <-- min LBFGS
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+ |  previous  |    0.000000 |    0.157850 |    -1717.521622 | <-- min LBFGS
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+  
+
+--------------------------------------------------------------------------------
+ LBFGS: starting iteration         1 with trial guess (lambda=  1.000000)
+--------------------------------------------------------------------------------
+
+                           -------------------------------
+                                      Unit Cell
+                           -------------------------------
+        Real Lattice(A)              Reciprocal Lattice(1/A)
+    -1.4065229     1.4065229     1.4201166       -1.116794032   1.116794032   2.212207495
+     1.4065229    -1.4065229     1.4201166        1.116794032  -1.116794032   2.212207495
+     2.8365352     2.8365352     0.0000000        1.107545813   1.107545813   0.000000000
+
+                       Lattice parameters(A)       Cell Angles
+                    a =      2.444043          alpha =   90.000000
+                    b =      2.444043          beta  =   90.000000
+                    c =      4.011467          gamma =  108.950817
+
+                Current cell volume =            22.663082 A**3
+                            density =             4.928279 amu/A**3
+                                    =             8.183600 g/cm^3
+
+------------------------------------------------------------------------ <-- SCF
+SCF loop      Energy           Fermi           Energy gain       Timer   <-- SCF
+                               energy          per atom          (sec)   <-- SCF
+------------------------------------------------------------------------ <-- SCF
+Initial  -1.71725445E+003  0.00000000E+000                       291.11  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      1  -1.71811478E+003  6.47106767E+000   4.30166662E-001     298.10  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      2  -1.71811596E+003  6.47101638E+000   5.89985259E-004     306.02  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      3  -1.71863961E+003  4.04547481E+000   2.61821971E-001     312.92  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      4  -1.71760118E+003  5.49056238E+000  -5.19212495E-001     320.29  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      5  -1.71835126E+003  5.51455054E+000   3.75039346E-001     326.18  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      6  -1.71757795E+003  5.47411750E+000  -3.86656513E-001     331.01  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      7  -1.71759559E+003  5.45793945E+000   8.82045630E-003     337.12  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      8  -1.71759542E+003  5.46468029E+000  -8.17404239E-005     343.36  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      9  -1.71759575E+003  5.46012670E+000   1.65361493E-004     349.02  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     10  -1.71759575E+003  5.46045597E+000   2.96034382E-007     352.92  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     11  -1.71759576E+003  5.46067823E+000   2.48037428E-006     356.51  <-- SCF
+------------------------------------------------------------------------ <-- SCF
+ 
+Integrated Spin Density     =   -0.816060E-02 hbar/2                        
+Integrated |Spin Density|   =     3.92067     hbar/2                        
+ 
+Final energy, E             =  -1717.532115684     eV
+Final free energy (E-TS)    =  -1717.595759446     eV
+(energies not corrected for finite basis set)
+ 
+NB est. 0K energy (E-0.5TS)      =  -1717.563937565     eV
+ 
+
+ *********** Symmetrised Stress Tensor ***********
+ *                                               *
+ *          Cartesian components (GPa)           *
+ * --------------------------------------------- *
+ *             x             y             z     *
+ *                                               *
+ *  x     14.801885     -5.039107      0.000000  *
+ *  y     -5.039107     14.801885      0.000000  *
+ *  z      0.000000      0.000000      5.297363  *
+ *                                               *
+ *  Pressure:  -11.6337                          *
+ *                                               *
+ *************************************************
+  
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+ |    Step    |   lambda    |   F.delta'  |    enthalpy     | <-- min LBFGS
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+ |  previous  |    0.000000 |    0.157850 |    -1717.521622 | <-- min LBFGS
+ | trial step |    1.000000 |    0.118960 |    -1717.595759 | <-- min LBFGS
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+  
+
+--------------------------------------------------------------------------------
+ LBFGS: improving iteration         1 with line minimization (lambda=  4.058944)
+--------------------------------------------------------------------------------
+
+                           -------------------------------
+                                      Unit Cell
+                           -------------------------------
+        Real Lattice(A)              Reciprocal Lattice(1/A)
+    -1.3347076     1.3347076     1.3898840       -1.176884266   1.176884266   2.260327307
+     1.3347076    -1.3347076     1.3898840        1.176884266  -1.176884266   2.260327307
+     2.7647576     2.7647576     0.0000000        1.136299504   1.136299504   0.000000000
+
+                       Lattice parameters(A)       Cell Angles
+                    a =      2.344070          alpha =   90.000000
+                    b =      2.344070          beta  =   90.000000
+                    c =      3.909958          gamma =  107.268718
+
+                Current cell volume =            20.515481 A**3
+                            density =             5.444181 amu/A**3
+                                    =             9.040276 g/cm^3
+
+------------------------------------------------------------------------ <-- SCF
+SCF loop      Energy           Fermi           Energy gain       Timer   <-- SCF
+                               energy          per atom          (sec)   <-- SCF
+------------------------------------------------------------------------ <-- SCF
+Initial  -1.71499682E+003  0.00000000E+000                       360.39  <-- SCF
+      1  -1.72187628E+003  9.34052163E+000   3.43973353E+000     365.62  <-- SCF
+      2  -1.72189014E+003  9.34061839E+000   6.92722197E-003     370.95  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      3  -1.72371930E+003  2.75384971E+000   9.14580272E-001     376.83  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      4  -1.71768472E+003  6.51953234E+000  -3.01728770E+000     383.22  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      5  -1.71769184E+003  6.52049386E+000   3.55927378E-003     388.13  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      6  -1.72090287E+003  6.56305845E+000   1.60551493E+000     393.56  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      7  -1.71750695E+003  6.42919992E+000  -1.69795949E+000     399.60  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      8  -1.71765839E+003  6.38288406E+000   7.57175578E-002     405.14  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      9  -1.71765365E+003  6.39148631E+000  -2.36907280E-003     410.52  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     10  -1.71766014E+003  6.37828611E+000   3.24413462E-003     415.97  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     11  -1.71766043E+003  6.38557123E+000   1.44698181E-004     421.41  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     12  -1.71766048E+003  6.38767260E+000   2.66296419E-005     425.35  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     13  -1.71766047E+003  6.38816149E+000  -2.47776060E-006     428.73  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     14  -1.71766050E+003  6.38882691E+000   1.12596761E-005     432.99  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     15  -1.71766050E+003  6.38890366E+000   1.58571565E-006     436.70  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     16  -1.71766050E+003  6.38891002E+000   2.01176242E-008     440.88  <-- SCF
+------------------------------------------------------------------------ <-- SCF
+ 
+Integrated Spin Density     =    0.686346E-03 hbar/2                        
+Integrated |Spin Density|   =     3.33728     hbar/2                        
+ 
+Final energy, E             =  -1717.605468248     eV
+Final free energy (E-TS)    =  -1717.660500377     eV
+(energies not corrected for finite basis set)
+ 
+NB est. 0K energy (E-0.5TS)      =  -1717.632984312     eV
+ 
+
+ *********** Symmetrised Stress Tensor ***********
+ *                                               *
+ *          Cartesian components (GPa)           *
+ * --------------------------------------------- *
+ *             x             y             z     *
+ *                                               *
+ *  x     -3.463117      1.252476      0.000000  *
+ *  y      1.252476     -3.463117      0.000000  *
+ *  z      0.000000      0.000000    -17.980603  *
+ *                                               *
+ *  Pressure:    8.3023                          *
+ *                                               *
+ *************************************************
+  
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+ |    Step    |   lambda    |   F.delta'  |    enthalpy     | <-- min LBFGS
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+ |  previous  |    0.000000 |    0.157850 |    -1717.521622 | <-- min LBFGS
+ | trial step |    1.000000 |    0.118960 |    -1717.595759 | <-- min LBFGS
+ |  line step |    4.058944 |   -0.055083 |    -1717.660500 | <-- min LBFGS
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+  
+ LBFGS: finished iteration     1 with enthalpy= -1.71766050E+003 eV
+  
+ +-----------+-----------------+-----------------+------------+-----+ <-- LBFGS
+ | Parameter |      value      |    tolerance    |    units   | OK? | <-- LBFGS
+ +-----------+-----------------+-----------------+------------+-----+ <-- LBFGS
+ |  dE/ion   |   6.943941E-002 |   2.000000E-005 |         eV | No  | <-- LBFGS
+ |   Smax    |   1.798060E+001 |   1.000000E-001 |        GPa | No  | <-- LBFGS
+ +-----------+-----------------+-----------------+------------+-----+ <-- LBFGS
+  
+
+================================================================================
+ Starting LBFGS iteration          2 ...
+================================================================================
+  
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+ |    Step    |   lambda    |   F.delta'  |    enthalpy     | <-- min LBFGS
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+ |  previous  |    0.000000 |    0.076449 |    -1717.660500 | <-- min LBFGS
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+  
+
+--------------------------------------------------------------------------------
+ LBFGS: starting iteration         2 with trial guess (lambda=  1.000000)
+--------------------------------------------------------------------------------
+
+                           -------------------------------
+                                      Unit Cell
+                           -------------------------------
+        Real Lattice(A)              Reciprocal Lattice(1/A)
+    -1.3537109     1.3537109     1.4080312       -1.160363242   1.160363242   2.231195298
+     1.3537109    -1.3537109     1.4080312        1.160363242  -1.160363242   2.231195298
+     2.7834559     2.7834559     0.0000000        1.128666232   1.128666232   0.000000000
+
+                       Lattice parameters(A)       Cell Angles
+                    a =      2.376472          alpha =   90.000000
+                    b =      2.376472          beta  =   90.000000
+                    c =      3.936401          gamma =  107.332460
+
+                Current cell volume =            21.221815 A**3
+                            density =             5.262980 amu/A**3
+                                    =             8.739385 g/cm^3
+
+------------------------------------------------------------------------ <-- SCF
+SCF loop      Energy           Fermi           Energy gain       Timer   <-- SCF
+                               energy          per atom          (sec)   <-- SCF
+------------------------------------------------------------------------ <-- SCF
+Initial  -1.71731795E+003  0.00000000E+000                       444.02  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      1  -1.71828407E+003  4.96139993E+000   4.83057761E-001     449.52  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      2  -1.71828533E+003  4.96136111E+000   6.33572363E-004     455.64  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      3  -1.71884498E+003  7.59070389E+000   2.79825426E-001     461.29  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      4  -1.71768041E+003  6.09714998E+000  -5.82286531E-001     467.88  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      5  -1.71768635E+003  6.04209641E+000   2.96918112E-003     474.40  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      6  -1.71768270E+003  6.04446219E+000  -1.82689831E-003     481.00  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      7  -1.71768144E+003  6.05768178E+000  -6.27353244E-004     487.05  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      8  -1.71768142E+003  6.05357215E+000  -1.00327654E-005     492.90  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      9  -1.71768144E+003  6.05454209E+000   8.55505891E-006     496.44  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     10  -1.71768144E+003  6.05428355E+000   2.10847796E-006     501.03  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     11  -1.71768144E+003  6.05429693E+000   5.23978374E-008     505.37  <-- SCF
+------------------------------------------------------------------------ <-- SCF
+ 
+Integrated Spin Density     =    0.341557E-03 hbar/2                        
+Integrated |Spin Density|   =     3.52310     hbar/2                        
+ 
+Final energy, E             =  -1717.625616955     eV
+Final free energy (E-TS)    =  -1717.681442866     eV
+(energies not corrected for finite basis set)
+ 
+NB est. 0K energy (E-0.5TS)      =  -1717.653529911     eV
+ 
+
+ *********** Symmetrised Stress Tensor ***********
+ *                                               *
+ *          Cartesian components (GPa)           *
+ * --------------------------------------------- *
+ *             x             y             z     *
+ *                                               *
+ *  x      4.295864     -0.994496      0.000000  *
+ *  y     -0.994496      4.295864      0.000000  *
+ *  z      0.000000      0.000000     -8.794681  *
+ *                                               *
+ *  Pressure:    0.0677                          *
+ *                                               *
+ *************************************************
+  
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+ |    Step    |   lambda    |   F.delta'  |    enthalpy     | <-- min LBFGS
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+ |  previous  |    0.000000 |    0.076449 |    -1717.660500 | <-- min LBFGS
+ | trial step |    1.000000 |    0.004219 |    -1717.681443 | <-- min LBFGS
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+  
+ LBFGS: finished iteration     2 with enthalpy= -1.71768144E+003 eV
+  
+ +-----------+-----------------+-----------------+------------+-----+ <-- LBFGS
+ | Parameter |      value      |    tolerance    |    units   | OK? | <-- LBFGS
+ +-----------+-----------------+-----------------+------------+-----+ <-- LBFGS
+ |  dE/ion   |   1.047123E-002 |   2.000000E-005 |         eV | No  | <-- LBFGS
+ |   Smax    |   8.794681E+000 |   1.000000E-001 |        GPa | No  | <-- LBFGS
+ +-----------+-----------------+-----------------+------------+-----+ <-- LBFGS
+  
+
+================================================================================
+ Starting LBFGS iteration          3 ...
+================================================================================
+  
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+ |    Step    |   lambda    |   F.delta'  |    enthalpy     | <-- min LBFGS
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+ |  previous  |    0.000000 |    0.053612 |    -1717.681443 | <-- min LBFGS
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+  
+
+--------------------------------------------------------------------------------
+ LBFGS: starting iteration         3 with trial guess (lambda=  1.000000)
+--------------------------------------------------------------------------------
+
+                           -------------------------------
+                                      Unit Cell
+                           -------------------------------
+        Real Lattice(A)              Reciprocal Lattice(1/A)
+    -1.3474966     1.3474966     1.4203305       -1.165714478   1.165714478   2.211874439
+     1.3474966    -1.3474966     1.4203305        1.165714478  -1.165714478   2.211874439
+     2.7760143     2.7760143     0.0000000        1.131691814   1.131691814   0.000000000
+
+                       Lattice parameters(A)       Cell Angles
+                    a =      2.376727          alpha =   90.000000
+                    b =      2.376727          beta  =   90.000000
+                    c =      3.925877          gamma =  106.603703
+
+                Current cell volume =            21.251950 A**3
+                            density =             5.255518 amu/A**3
+                                    =             8.726992 g/cm^3
+
+------------------------------------------------------------------------ <-- SCF
+SCF loop      Energy           Fermi           Energy gain       Timer   <-- SCF
+                               energy          per atom          (sec)   <-- SCF
+------------------------------------------------------------------------ <-- SCF
+Initial  -1.71759618E+003  0.00000000E+000                       508.66  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      1  -1.71769740E+003  5.98821454E+000   5.06078877E-002     514.30  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      2  -1.71769745E+003  5.98820890E+000   2.41823861E-005     520.31  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      3  -1.71769805E+003  6.09447326E+000   3.02167068E-004     526.42  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      4  -1.71769663E+003  6.02948587E+000  -7.09497314E-004     531.91  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      5  -1.71770437E+003  6.02235970E+000   3.86824706E-003     537.65  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      6  -1.71769606E+003  6.03163136E+000  -4.15726810E-003     543.64  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      7  -1.71769613E+003  6.03175523E+000   3.67065924E-005     547.89  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      8  -1.71769612E+003  6.03174974E+000  -2.34667706E-006     551.73  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      9  -1.71769613E+003  6.03177571E+000   1.28091465E-006     555.83  <-- SCF
+------------------------------------------------------------------------ <-- SCF
+ 
+Integrated Spin Density     =    0.110385E-03 hbar/2                        
+Integrated |Spin Density|   =     3.52270     hbar/2                        
+ 
+Final energy, E             =  -1717.642637266     eV
+Final free energy (E-TS)    =  -1717.696126840     eV
+(energies not corrected for finite basis set)
+ 
+NB est. 0K energy (E-0.5TS)      =  -1717.669382053     eV
+ 
+
+ *********** Symmetrised Stress Tensor ***********
+ *                                               *
+ *          Cartesian components (GPa)           *
+ * --------------------------------------------- *
+ *             x             y             z     *
+ *                                               *
+ *  x      5.020885     -0.615051      0.000000  *
+ *  y     -0.615051      5.020885      0.000000  *
+ *  z      0.000000      0.000000     -8.512781  *
+ *                                               *
+ *  Pressure:   -0.5097                          *
+ *                                               *
+ *************************************************
+  
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+ |    Step    |   lambda    |   F.delta'  |    enthalpy     | <-- min LBFGS
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+ |  previous  |    0.000000 |    0.053612 |    -1717.681443 | <-- min LBFGS
+ | trial step |    1.000000 |    0.054461 |    -1717.696127 | <-- min LBFGS
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+  
+
+--------------------------------------------------------------------------------
+ LBFGS: improving iteration         3 with line minimization (lambda=-17.503443)
+--------------------------------------------------------------------------------
+
+                           -------------------------------
+                                      Unit Cell
+                           -------------------------------
+        Real Lattice(A)              Reciprocal Lattice(1/A)
+    -1.4624814     1.4624814     1.1927522       -1.074062420   1.074062420   2.633902236
+     1.4624814    -1.4624814     1.1927522        1.074062420  -1.074062420   2.633902236
+     2.9137091     2.9137091     0.0000000        1.078210812   1.078210812  -0.000000000
+
+                       Lattice parameters(A)       Cell Angles
+                    a =      2.387543          alpha =   90.000000
+                    b =      2.387543          beta  =   90.000000
+                    c =      4.120607          gamma =  120.056483
+
+                Current cell volume =            20.330439 A**3
+                            density =             5.493733 amu/A**3
+                                    =             9.122558 g/cm^3
+
+------------------------------------------------------------------------ <-- SCF
+SCF loop      Energy           Fermi           Energy gain       Timer   <-- SCF
+                               energy          per atom          (sec)   <-- SCF
+------------------------------------------------------------------------ <-- SCF
+Initial  -1.69979602E+003  0.00000000E+000                       560.60  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      1  -1.71750261E+003  7.06649491E+000   8.85329460E+000     566.45  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      2  -1.71781439E+003  7.10600320E+000   1.55890240E-001     571.97  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      3  -1.71768815E+003  5.69421553E+000  -6.31203277E-002     577.18  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      4  -1.71752926E+003  6.67499399E+000  -7.94456473E-002     583.59  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      5  -1.71780264E+003  6.50643740E+000   1.36688857E-001     589.11  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      6  -1.71755128E+003  6.49606381E+000  -1.25678182E-001     595.15  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      7  -1.71751024E+003  6.47984802E+000  -2.05229056E-002     601.06  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      8  -1.71750964E+003  6.44421412E+000  -2.99252274E-004     606.67  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      9  -1.71750670E+003  6.44820647E+000  -1.47036215E-003     612.59  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     10  -1.71750964E+003  6.44535980E+000   1.47261484E-003     618.32  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     11  -1.71750978E+003  6.44718555E+000   7.03141621E-005     622.50  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     12  -1.71750982E+003  6.44621576E+000   2.01264376E-005     626.63  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     13  -1.71750982E+003  6.44647711E+000   4.54393013E-007     630.40  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     14  -1.71750983E+003  6.44634522E+000   1.60517057E-006     634.16  <-- SCF
+------------------------------------------------------------------------ <-- SCF
+ 
+Integrated Spin Density     =    0.370146E-01 hbar/2                        
+Integrated |Spin Density|   =     2.53351     hbar/2                        
+ 
+Final energy, E             =  -1717.439346928     eV
+Final free energy (E-TS)    =  -1717.509826081     eV
+(energies not corrected for finite basis set)
+ 
+NB est. 0K energy (E-0.5TS)      =  -1717.474586505     eV
+ 
+
+ *********** Symmetrised Stress Tensor ***********
+ *                                               *
+ *          Cartesian components (GPa)           *
+ * --------------------------------------------- *
+ *             x             y             z     *
+ *                                               *
+ *  x     -3.385837     -4.243102      0.000000  *
+ *  y     -4.243102     -3.385837      0.000000  *
+ *  z      0.000000      0.000000    -19.252387  *
+ *                                               *
+ *  Pressure:    8.6747                          *
+ *                                               *
+ *************************************************
+  
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+ |    Step    |   lambda    |   F.delta'  |    enthalpy     | <-- min LBFGS
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+ |  previous  |    0.000000 |    0.053612 |    -1717.681443 | <-- min LBFGS
+ | trial step |    1.000000 |    0.054461 |    -1717.696127 | <-- min LBFGS
+ |  line step |  -17.503443 |    0.085347 |    -1717.509826 | <-- min LBFGS
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+  
+
+--------------------------------------------------------------------------------
+ LBFGS: improving iteration         3 with quad minimization (lambda= 17.503443)
+--------------------------------------------------------------------------------
+
+                           -------------------------------
+                                      Unit Cell
+                           -------------------------------
+        Real Lattice(A)              Reciprocal Lattice(1/A)
+    -1.2449403     1.2449403     1.6233103       -1.261744286   1.261744286   1.935300181
+     1.2449403    -1.2449403     1.6233103        1.261744286  -1.261744286   1.935300181
+     2.6532026     2.6532026     0.0000000        1.184075652   1.184075652  -0.000000000
+
+                       Lattice parameters(A)       Cell Angles
+                    a =      2.394763          alpha =   90.000000
+                    b =      2.394763          beta  =   90.000000
+                    c =      3.752195          gamma =   94.646956
+
+                Current cell volume =            21.447688 A**3
+                            density =             5.207554 amu/A**3
+                                    =             8.647347 g/cm^3
+
+------------------------------------------------------------------------ <-- SCF
+SCF loop      Energy           Fermi           Energy gain       Timer   <-- SCF
+                               energy          per atom          (sec)   <-- SCF
+------------------------------------------------------------------------ <-- SCF
+Initial  -1.66150456E+003  0.00000000E+000                       637.01  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      1  -1.72355525E+003  1.73208617E+000   3.10253450E+001     642.58  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      2  -1.72610476E+003  1.86468682E+000   1.27475618E+000     647.75  <-- SCF
+      3  -1.73202401E+003  1.11644471E+001   2.95962389E+000     653.74  <-- SCF
+      4  -1.73212338E+003  1.11734577E+001   4.96851943E-002     658.90  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      5  -1.71860249E+003  6.07374763E+000  -6.76044419E+000     664.76  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      6  -1.71865724E+003  6.08095112E+000   2.73730000E-002     669.79  <-- SCF
+      7  -1.75744511E+003  8.26051660E+000   1.93939366E+001     675.62  <-- SCF
+      8  -1.75753424E+003  8.26734010E+000   4.45618658E-002     680.25  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      9  -1.71887633E+003  5.92591532E+000  -1.93289541E+001     685.52  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     10  -1.71894582E+003  5.93279814E+000   3.47466733E-002     690.41  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     11  -1.72218380E+003  5.98896355E+000   1.61899175E+000     696.35  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     12  -1.71778470E+003  5.90100419E+000  -2.19955161E+000     701.84  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     13  -1.71825890E+003  5.60941810E+000   2.37100516E-001     707.15  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     14  -1.71776574E+003  5.69883585E+000  -2.46581908E-001     712.92  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     15  -1.71778694E+003  5.68319288E+000   1.05993268E-002     718.45  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     16  -1.71786961E+003  5.76467700E+000   4.13346397E-002     723.94  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     17  -1.71786362E+003  5.76118076E+000  -2.99229554E-003     729.79  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     18  -1.71788301E+003  5.79500925E+000   9.69178202E-003     734.21  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     19  -1.71789767E+003  5.89389535E+000   7.33311075E-003     739.53  <-- SCF
+     20  -1.71790040E+003  5.94507697E+000   1.36511254E-003     745.94  <-- SCF
+     21  -1.71790379E+003  5.92593834E+000   1.69448699E-003     751.43  <-- SCF
+     22  -1.71790725E+003  5.90298969E+000   1.72930031E-003     756.84  <-- SCF
+     23  -1.71790735E+003  5.89035650E+000   5.01887938E-005     761.37  <-- SCF
+     24  -1.71790748E+003  5.89199535E+000   6.42365974E-005     765.33  <-- SCF
+     25  -1.71790752E+003  5.89226880E+000   2.27228390E-005     768.84  <-- SCF
+     26  -1.71790753E+003  5.89211186E+000   4.43849534E-006     771.94  <-- SCF
+     27  -1.71790753E+003  5.89214297E+000   1.03694555E-007     775.20  <-- SCF
+------------------------------------------------------------------------ <-- SCF
+ 
+Integrated Spin Density     =   -0.188977E-02 hbar/2                        
+Integrated |Spin Density|   =     3.16405     hbar/2                        
+ 
+Final energy, E             =  -1717.862605556     eV
+Final free energy (E-TS)    =  -1717.907533260     eV
+(energies not corrected for finite basis set)
+ 
+NB est. 0K energy (E-0.5TS)      =  -1717.885069408     eV
+ 
+
+ *********** Symmetrised Stress Tensor ***********
+ *                                               *
+ *          Cartesian components (GPa)           *
+ * --------------------------------------------- *
+ *             x             y             z     *
+ *                                               *
+ *  x     11.580068      2.942541      0.000000  *
+ *  y      2.942541     11.580068      0.000000  *
+ *  z      0.000000      0.000000      2.308442  *
+ *                                               *
+ *  Pressure:   -8.4895                          *
+ *                                               *
+ *************************************************
+  
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+ |    Step    |   lambda    |   F.delta'  |    enthalpy     | <-- min LBFGS
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+ |  previous  |    0.000000 |    0.053612 |    -1717.681443 | <-- min LBFGS
+ | trial step |    1.000000 |    0.054461 |    -1717.696127 | <-- min LBFGS
+ |  line step |  -17.503443 |    0.085347 |    -1717.509826 | <-- min LBFGS
+ |  quad step |   17.503443 |    0.032705 |    -1717.907533 | <-- min LBFGS
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+  
+ LBFGS: finished iteration     3 with enthalpy= -1.71790753E+003 eV
+  
+ +-----------+-----------------+-----------------+------------+-----+ <-- LBFGS
+ | Parameter |      value      |    tolerance    |    units   | OK? | <-- LBFGS
+ +-----------+-----------------+-----------------+------------+-----+ <-- LBFGS
+ |  dE/ion   |   1.130451E-001 |   2.000000E-005 |         eV | No  | <-- LBFGS
+ |   Smax    |   1.158007E+001 |   1.000000E-001 |        GPa | No  | <-- LBFGS
+ +-----------+-----------------+-----------------+------------+-----+ <-- LBFGS
+  
+
+================================================================================
+ Starting LBFGS iteration          4 ...
+================================================================================
+  
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+ |    Step    |   lambda    |   F.delta'  |    enthalpy     | <-- min LBFGS
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+ |  previous  |    0.000000 |    0.041319 |    -1717.907533 | <-- min LBFGS
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+  
+
+--------------------------------------------------------------------------------
+ LBFGS: starting iteration         4 with trial guess (lambda=  0.380362)
+--------------------------------------------------------------------------------
+
+                           -------------------------------
+                                      Unit Cell
+                           -------------------------------
+        Real Lattice(A)              Reciprocal Lattice(1/A)
+    -1.1217546     1.1217546     1.8224526       -1.400303029   1.400303029   1.723826792
+     1.1217546    -1.1217546     1.8224526        1.400303029  -1.400303029   1.723826792
+     2.4918460     2.4918460     0.0000000        1.260749126   1.260749126  -0.000000000
+
+                       Lattice parameters(A)       Cell Angles
+                    a =      2.416195          alpha =   90.000000
+                    b =      2.416195          beta  =   90.000000
+                    c =      3.524002          gamma =   82.077551
+
+                Current cell volume =            20.376767 A**3
+                            density =             5.481242 amu/A**3
+                                    =             9.101817 g/cm^3
+
+------------------------------------------------------------------------ <-- SCF
+SCF loop      Energy           Fermi           Energy gain       Timer   <-- SCF
+                               energy          per atom          (sec)   <-- SCF
+------------------------------------------------------------------------ <-- SCF
+Initial  -1.70628934E+003  0.00000000E+000                       778.17  <-- SCF
+      1  -1.71844500E+003  7.60754119E+000   6.07783024E+000     782.26  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      2  -1.71854534E+003  7.61102273E+000   5.01731713E-002     785.88  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      3  -1.71891119E+003  4.91024372E+000   1.82924027E-001     790.81  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      4  -1.71789332E+003  6.48253346E+000  -5.08934710E-001     795.75  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      5  -1.71790714E+003  6.40688451E+000   6.91110055E-003     801.09  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      6  -1.71789845E+003  6.40525346E+000  -4.34661142E-003     806.73  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      7  -1.71789414E+003  6.38963660E+000  -2.15326652E-003     813.81  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      8  -1.71789419E+003  6.38013146E+000   2.13214084E-005     819.64  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      9  -1.71789397E+003  6.37624937E+000  -1.06998446E-004     823.92  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     10  -1.71789459E+003  6.37658883E+000   3.07146527E-004     828.11  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     11  -1.71789460E+003  6.37576338E+000   7.44520192E-006     830.93  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     12  -1.71789460E+003  6.37535946E+000   7.33455358E-007     833.78  <-- SCF
+------------------------------------------------------------------------ <-- SCF
+ 
+Integrated Spin Density     =   -0.191414E-02 hbar/2                        
+Integrated |Spin Density|   =     2.44920     hbar/2                        
+ 
+Final energy, E             =  -1717.842977874     eV
+Final free energy (E-TS)    =  -1717.894603671     eV
+(energies not corrected for finite basis set)
+ 
+NB est. 0K energy (E-0.5TS)      =  -1717.868790773     eV
+ 
+
+ *********** Symmetrised Stress Tensor ***********
+ *                                               *
+ *          Cartesian components (GPa)           *
+ * --------------------------------------------- *
+ *             x             y             z     *
+ *                                               *
+ *  x     -7.172108      2.143705      0.000000  *
+ *  y      2.143705     -7.172108      0.000000  *
+ *  z      0.000000      0.000000     13.210235  *
+ *                                               *
+ *  Pressure:    0.3780                          *
+ *                                               *
+ *************************************************
+  
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+ |    Step    |   lambda    |   F.delta'  |    enthalpy     | <-- min LBFGS
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+ |  previous  |    0.000000 |    0.041319 |    -1717.907533 | <-- min LBFGS
+ | trial step |    0.380362 |   -0.075348 |    -1717.894604 | <-- min LBFGS
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+  
+
+--------------------------------------------------------------------------------
+ LBFGS: improving iteration         4 with line minimization (lambda=  0.134710)
+--------------------------------------------------------------------------------
+
+                           -------------------------------
+                                      Unit Cell
+                           -------------------------------
+        Real Lattice(A)              Reciprocal Lattice(1/A)
+    -1.2013125     1.2013125     1.6938390       -1.307566734   1.307566734   1.854717380
+     1.2013125    -1.2013125     1.6938390        1.307566734  -1.307566734   1.854717380
+     2.5960562     2.5960562     0.0000000        1.210140474   1.210140474   0.000000000
+
+                       Lattice parameters(A)       Cell Angles
+                    a =      2.399040          alpha =   90.000000
+                    b =      2.399040          beta  =   90.000000
+                    c =      3.671378          gamma =   90.171359
+
+                Current cell volume =            21.130133 A**3
+                            density =             5.285816 amu/A**3
+                                    =             8.777304 g/cm^3
+
+------------------------------------------------------------------------ <-- SCF
+SCF loop      Energy           Fermi           Energy gain       Timer   <-- SCF
+                               energy          per atom          (sec)   <-- SCF
+------------------------------------------------------------------------ <-- SCF
+Initial  -1.71273374E+003  0.00000000E+000                       835.91  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      1  -1.71890606E+003  4.57365614E+000   3.08616017E+000     840.52  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      2  -1.71893555E+003  4.57401004E+000   1.47448540E-002     844.99  <-- SCF
+      3  -1.71983676E+003  7.94282813E+000   4.50608383E-001     849.59  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      4  -1.71798177E+003  6.01765234E+000  -9.27495222E-001     854.16  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      5  -1.72124398E+003  6.13442144E+000   1.63110542E+000     859.42  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      6  -1.71785348E+003  5.98938263E+000  -1.69524897E+000     864.25  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      7  -1.71795795E+003  5.99044925E+000   5.22327663E-002     868.08  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      8  -1.71796000E+003  5.99852499E+000   1.02470987E-003     872.69  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      9  -1.71796041E+003  6.00242214E+000   2.06659356E-004     876.20  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     10  -1.71796045E+003  6.00545852E+000   2.02067874E-005     879.01  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     11  -1.71796066E+003  6.01217949E+000   1.01190537E-004     883.63  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     12  -1.71796068E+003  6.01288163E+000   1.21463375E-005     886.79  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     13  -1.71796069E+003  6.01361716E+000   2.62932370E-006     889.61  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     14  -1.71796069E+003  6.01391012E+000   2.16711699E-007     892.77  <-- SCF
+------------------------------------------------------------------------ <-- SCF
+ 
+Integrated Spin Density     =   -0.174233E-02 hbar/2                        
+Integrated |Spin Density|   =     2.87755     hbar/2                        
+ 
+Final energy, E             =  -1717.910417528     eV
+Final free energy (E-TS)    =  -1717.960685550     eV
+(energies not corrected for finite basis set)
+ 
+NB est. 0K energy (E-0.5TS)      =  -1717.935551539     eV
+ 
+
+ *********** Symmetrised Stress Tensor ***********
+ *                                               *
+ *          Cartesian components (GPa)           *
+ * --------------------------------------------- *
+ *             x             y             z     *
+ *                                               *
+ *  x      8.675407      3.283069      0.000000  *
+ *  y      3.283069      8.675407      0.000000  *
+ *  z      0.000000      0.000000      5.077406  *
+ *                                               *
+ *  Pressure:   -7.4761                          *
+ *                                               *
+ *************************************************
+  
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+ |    Step    |   lambda    |   F.delta'  |    enthalpy     | <-- min LBFGS
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+ |  previous  |    0.000000 |    0.041319 |    -1717.907533 | <-- min LBFGS
+ | trial step |    0.380362 |   -0.075348 |    -1717.894604 | <-- min LBFGS
+ |  line step |    0.134710 |    0.019568 |    -1717.960686 | <-- min LBFGS
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+  
+
+--------------------------------------------------------------------------------
+ LBFGS: improving iteration         4 with quad minimization (lambda=  0.206146)
+--------------------------------------------------------------------------------
+
+                           -------------------------------
+                                      Unit Cell
+                           -------------------------------
+        Real Lattice(A)              Reciprocal Lattice(1/A)
+    -1.1781769     1.1781769     1.7312402       -1.333243232   1.333243232   1.814648609
+     1.1781769    -1.1781769     1.7312402        1.333243232  -1.333243232   1.814648609
+     2.5657516     2.5657516     0.0000000        1.224433693   1.224433693   0.000000000
+
+                       Lattice parameters(A)       Cell Angles
+                    a =      2.402789          alpha =   90.000000
+                    b =      2.402789          beta  =   90.000000
+                    c =      3.628521          gamma =   87.806323
+
+                Current cell volume =            20.933527 A**3
+                            density =             5.335460 amu/A**3
+                                    =             8.859740 g/cm^3
+
+------------------------------------------------------------------------ <-- SCF
+SCF loop      Energy           Fermi           Energy gain       Timer   <-- SCF
+                               energy          per atom          (sec)   <-- SCF
+------------------------------------------------------------------------ <-- SCF
+Initial  -1.71750317E+003  0.00000000E+000                       895.19  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      1  -1.71800969E+003  6.40014020E+000   2.53256737E-001     899.68  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      2  -1.71801022E+003  6.40011011E+000   2.64901902E-004     904.77  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      3  -1.71804243E+003  5.71216299E+000   1.61069734E-002     909.10  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      4  -1.71797897E+003  6.10681055E+000  -3.17317628E-002     913.28  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      5  -1.71836428E+003  6.13210364E+000   1.92658549E-001     918.11  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      6  -1.71795811E+003  6.10048188E+000  -2.03087707E-001     922.14  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      7  -1.71796977E+003  6.09148223E+000   5.83144287E-003     927.50  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      8  -1.71796929E+003  6.09478883E+000  -2.41946638E-004     931.36  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      9  -1.71796976E+003  6.09282594E+000   2.36041219E-004     935.64  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     10  -1.71796974E+003  6.09433294E+000  -9.50382110E-006     938.27  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     11  -1.71796977E+003  6.09422020E+000   1.37090808E-005     940.56  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     12  -1.71796977E+003  6.09450536E+000   1.38118607E-006     942.80  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     13  -1.71796977E+003  6.09487211E+000  -3.67269490E-007     944.80  <-- SCF
+------------------------------------------------------------------------ <-- SCF
+ 
+Integrated Spin Density     =   -0.175744E-02 hbar/2                        
+Integrated |Spin Density|   =     2.73044     hbar/2                        
+ 
+Final energy, E             =  -1717.918464444     eV
+Final free energy (E-TS)    =  -1717.969770469     eV
+(energies not corrected for finite basis set)
+ 
+NB est. 0K energy (E-0.5TS)      =  -1717.944117457     eV
+ 
+
+ *********** Symmetrised Stress Tensor ***********
+ *                                               *
+ *          Cartesian components (GPa)           *
+ * --------------------------------------------- *
+ *             x             y             z     *
+ *                                               *
+ *  x      5.694360      3.215434      0.000000  *
+ *  y      3.215434      5.694360      0.000000  *
+ *  z      0.000000      0.000000      7.163066  *
+ *                                               *
+ *  Pressure:   -6.1839                          *
+ *                                               *
+ *************************************************
+  
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+ |    Step    |   lambda    |   F.delta'  |    enthalpy     | <-- min LBFGS
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+ |  previous  |    0.000000 |    0.041319 |    -1717.907533 | <-- min LBFGS
+ | trial step |    0.380362 |   -0.075348 |    -1717.894604 | <-- min LBFGS
+ |  line step |    0.134710 |    0.019568 |    -1717.960686 | <-- min LBFGS
+ |  quad step |    0.206146 |   -0.000123 |    -1717.969770 | <-- min LBFGS
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+  
+ LBFGS: finished iteration     4 with enthalpy= -1.71796977E+003 eV
+  
+ +-----------+-----------------+-----------------+------------+-----+ <-- LBFGS
+ | Parameter |      value      |    tolerance    |    units   | OK? | <-- LBFGS
+ +-----------+-----------------+-----------------+------------+-----+ <-- LBFGS
+ |  dE/ion   |   3.111860E-002 |   2.000000E-005 |         eV | No  | <-- LBFGS
+ |   Smax    |   7.163066E+000 |   1.000000E-001 |        GPa | No  | <-- LBFGS
+ +-----------+-----------------+-----------------+------------+-----+ <-- LBFGS
+  
+
+================================================================================
+ Starting LBFGS iteration          5 ...
+================================================================================
+
+Writing analysis data to aiida.castep_bin
+
+Writing model to aiida.check
+  
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+ |    Step    |   lambda    |   F.delta'  |    enthalpy     | <-- min LBFGS
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+ |  previous  |    0.000000 |    0.045936 |    -1717.969770 | <-- min LBFGS
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+  
+
+--------------------------------------------------------------------------------
+ LBFGS: starting iteration         5 with trial guess (lambda=  1.000000)
+--------------------------------------------------------------------------------
+
+                           -------------------------------
+                                      Unit Cell
+                           -------------------------------
+        Real Lattice(A)              Reciprocal Lattice(1/A)
+    -1.1759272     1.1759272     1.7166139       -1.335793830   1.335793830   1.830110206
+     1.1759272    -1.1759272     1.7166139        1.335793830  -1.335793830   1.830110206
+     2.5537924     2.5537924     0.0000000        1.230167607   1.230167607  -0.000000000
+
+                       Lattice parameters(A)       Cell Angles
+                    a =      2.390057          alpha =   90.000000
+                    b =      2.390057          beta  =   90.000000
+                    c =      3.611608          gamma =   88.182702
+
+                Current cell volume =            20.620474 A**3
+                            density =             5.416461 amu/A**3
+                                    =             8.994245 g/cm^3
+
+------------------------------------------------------------------------ <-- SCF
+SCF loop      Energy           Fermi           Energy gain       Timer   <-- SCF
+                               energy          per atom          (sec)   <-- SCF
+------------------------------------------------------------------------ <-- SCF
+Initial  -1.71786254E+003  0.00000000E+000                       946.64  <-- SCF
+      1  -1.71809228E+003  6.72506640E+000   1.14870622E-001     949.97  <-- SCF
+      2  -1.71809248E+003  6.72505724E+000   1.01979974E-004     953.42  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      3  -1.71817970E+003  5.59488078E+000   4.36069543E-002     956.95  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      4  -1.71798351E+003  6.24249070E+000  -9.80930843E-002     960.62  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      5  -1.71839688E+003  6.25401423E+000   2.06683036E-001     964.21  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      6  -1.71796771E+003  6.23656865E+000  -2.14582894E-001     967.77  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      7  -1.71798033E+003  6.23055565E+000   6.31029942E-003     971.37  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      8  -1.71798044E+003  6.23166606E+000   5.64421076E-005     974.26  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      9  -1.71798045E+003  6.23134804E+000   3.99959747E-006     976.42  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     10  -1.71798046E+003  6.23176505E+000   4.17044564E-006     978.42  <-- SCF
+------------------------------------------------------------------------ <-- SCF
+ 
+Integrated Spin Density     =   -0.166613E-02 hbar/2                        
+Integrated |Spin Density|   =     2.60105     hbar/2                        
+ 
+Final energy, E             =  -1717.928903001     eV
+Final free energy (E-TS)    =  -1717.980460194     eV
+(energies not corrected for finite basis set)
+ 
+NB est. 0K energy (E-0.5TS)      =  -1717.954681597     eV
+ 
+
+ *********** Symmetrised Stress Tensor ***********
+ *                                               *
+ *          Cartesian components (GPa)           *
+ * --------------------------------------------- *
+ *             x             y             z     *
+ *                                               *
+ *  x      2.954996      3.915049      0.000000  *
+ *  y      3.915049      2.954996      0.000000  *
+ *  z      0.000000      0.000000      3.185799  *
+ *                                               *
+ *  Pressure:   -3.0319                          *
+ *                                               *
+ *************************************************
+  
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+ |    Step    |   lambda    |   F.delta'  |    enthalpy     | <-- min LBFGS
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+ |  previous  |    0.000000 |    0.045936 |    -1717.969770 | <-- min LBFGS
+ | trial step |    1.000000 |    0.024358 |    -1717.980460 | <-- min LBFGS
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+  
+
+--------------------------------------------------------------------------------
+ LBFGS: improving iteration         5 with line minimization (lambda=  2.128799)
+--------------------------------------------------------------------------------
+
+                           -------------------------------
+                                      Unit Cell
+                           -------------------------------
+        Real Lattice(A)              Reciprocal Lattice(1/A)
+    -1.1733878     1.1733878     1.7001038       -1.338684694   1.338684694   1.847882884
+     1.1733878    -1.1733878     1.7001038        1.338684694  -1.338684694   1.847882884
+     2.5402929     2.5402929     0.0000000        1.236704909   1.236704909  -0.000000000
+
+                       Lattice parameters(A)       Cell Angles
+                    a =      2.375717          alpha =   90.000000
+                    b =      2.375717          beta  =   90.000000
+                    c =      3.592517          gamma =   88.612400
+
+                Current cell volume =            20.270329 A**3
+                            density =             5.510024 amu/A**3
+                                    =             9.149610 g/cm^3
+
+------------------------------------------------------------------------ <-- SCF
+SCF loop      Energy           Fermi           Energy gain       Timer   <-- SCF
+                               energy          per atom          (sec)   <-- SCF
+------------------------------------------------------------------------ <-- SCF
+Initial  -1.71784671E+003  0.00000000E+000                       980.14  <-- SCF
+      1  -1.71812633E+003  6.94757589E+000   1.39811253E-001     983.74  <-- SCF
+      2  -1.71812658E+003  6.94756379E+000   1.26432450E-004     987.44  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      3  -1.71823376E+003  5.68370091E+000   5.35888930E-002     991.09  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      4  -1.71809239E+003  6.37577753E+000  -7.06841881E-002     994.78  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      5  -1.71931917E+003  6.55383327E+000   6.13388372E-001     998.25  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      6  -1.71794404E+003  6.39853481E+000  -6.87565140E-001    1001.86  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      7  -1.71798129E+003  6.35495333E+000   1.86264648E-002    1005.42  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      8  -1.71798408E+003  6.35735914E+000   1.39506913E-003    1008.81  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      9  -1.71798150E+003  6.37352883E+000  -1.29034684E-003    1011.90  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     10  -1.71798321E+003  6.38349988E+000   8.56925410E-004    1015.35  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     11  -1.71798395E+003  6.38362954E+000   3.67377078E-004    1017.62  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     12  -1.71798263E+003  6.38470055E+000  -6.57824385E-004    1020.95  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     13  -1.71798392E+003  6.38842580E+000   6.46321370E-004    1024.50  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     14  -1.71798428E+003  6.38940074E+000   1.78052908E-004    1026.56  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     15  -1.71798429E+003  6.39043720E+000   4.68894529E-006    1028.70  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     16  -1.71798429E+003  6.39100095E+000   1.84788253E-006    1030.87  <-- SCF
+------------------------------------------------------------------------ <-- SCF
+ 
+Integrated Spin Density     =   -0.123682E-02 hbar/2                        
+Integrated |Spin Density|   =     2.45341     hbar/2                        
+ 
+Final energy, E             =  -1717.932474084     eV
+Final free energy (E-TS)    =  -1717.984294084     eV
+(energies not corrected for finite basis set)
+ 
+NB est. 0K energy (E-0.5TS)      =  -1717.958384084     eV
+ 
+
+ *********** Symmetrised Stress Tensor ***********
+ *                                               *
+ *          Cartesian components (GPa)           *
+ * --------------------------------------------- *
+ *             x             y             z     *
+ *                                               *
+ *  x     -0.461537      4.710827      0.000000  *
+ *  y      4.710827     -0.461537      0.000000  *
+ *  z      0.000000      0.000000     -1.753892  *
+ *                                               *
+ *  Pressure:    0.8923                          *
+ *                                               *
+ *************************************************
+  
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+ |    Step    |   lambda    |   F.delta'  |    enthalpy     | <-- min LBFGS
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+ |  previous  |    0.000000 |    0.045936 |    -1717.969770 | <-- min LBFGS
+ | trial step |    1.000000 |    0.024358 |    -1717.980460 | <-- min LBFGS
+ |  line step |    2.128799 |   -0.002083 |    -1717.984294 | <-- min LBFGS
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+  
+ LBFGS: finished iteration     5 with enthalpy= -1.71798429E+003 eV
+  
+ +-----------+-----------------+-----------------+------------+-----+ <-- LBFGS
+ | Parameter |      value      |    tolerance    |    units   | OK? | <-- LBFGS
+ +-----------+-----------------+-----------------+------------+-----+ <-- LBFGS
+ |  dE/ion   |   7.261796E-003 |   2.000000E-005 |         eV | No  | <-- LBFGS
+ |   Smax    |   4.710827E+000 |   1.000000E-001 |        GPa | No  | <-- LBFGS
+ +-----------+-----------------+-----------------+------------+-----+ <-- LBFGS
+  
+
+================================================================================
+ Starting LBFGS iteration          6 ...
+================================================================================
+  
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+ |    Step    |   lambda    |   F.delta'  |    enthalpy     | <-- min LBFGS
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+ |  previous  |    0.000000 |    0.028575 |    -1717.984294 | <-- min LBFGS
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+  
+
+--------------------------------------------------------------------------------
+ LBFGS: starting iteration         6 with trial guess (lambda=  1.000000)
+--------------------------------------------------------------------------------
+
+                           -------------------------------
+                                      Unit Cell
+                           -------------------------------
+        Real Lattice(A)              Reciprocal Lattice(1/A)
+    -1.1812274     1.1812274     1.6953081       -1.329800087   1.329800087   1.853110157
+     1.1812274    -1.1812274     1.6953081        1.329800087  -1.329800087   1.853110157
+     2.5321885     2.5321885     0.0000000        1.240663036   1.240663036  -0.000000000
+
+                       Lattice parameters(A)       Cell Angles
+                    a =      2.380056          alpha =   90.000000
+                    b =      2.380056          beta  =   90.000000
+                    c =      3.581055          gamma =   89.155673
+
+                Current cell volume =            20.283280 A**3
+                            density =             5.506506 amu/A**3
+                                    =             9.143768 g/cm^3
+
+------------------------------------------------------------------------ <-- SCF
+SCF loop      Energy           Fermi           Energy gain       Timer   <-- SCF
+                               energy          per atom          (sec)   <-- SCF
+------------------------------------------------------------------------ <-- SCF
+Initial  -1.71791158E+003  0.00000000E+000                      1032.68  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      1  -1.71798931E+003  6.36534277E+000   3.88672753E-002    1035.80  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      2  -1.71798933E+003  6.36534018E+000   1.12094856E-005    1039.01  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      3  -1.71799303E+003  6.40893636E+000   1.84690614E-003    1042.80  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      4  -1.71798938E+003  6.40355320E+000  -1.82371279E-003    1046.00  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      5  -1.71798963E+003  6.35425246E+000   1.24315180E-004    1049.42  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      6  -1.71798912E+003  6.38603588E+000  -2.55854077E-004    1053.10  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      7  -1.71798911E+003  6.38232053E+000  -4.41669810E-006    1055.22  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      8  -1.71798911E+003  6.38060074E+000   1.28518476E-007    1057.38  <-- SCF
+------------------------------------------------------------------------ <-- SCF
+ 
+Integrated Spin Density     =   -0.821103E-03 hbar/2                        
+Integrated |Spin Density|   =     2.41993     hbar/2                        
+ 
+Final energy, E             =  -1717.936475342     eV
+Final free energy (E-TS)    =  -1717.989108961     eV
+(energies not corrected for finite basis set)
+ 
+NB est. 0K energy (E-0.5TS)      =  -1717.962792151     eV
+ 
+
+ *********** Symmetrised Stress Tensor ***********
+ *                                               *
+ *          Cartesian components (GPa)           *
+ * --------------------------------------------- *
+ *             x             y             z     *
+ *                                               *
+ *  x      0.117226      3.805959      0.000000  *
+ *  y      3.805959      0.117226      0.000000  *
+ *  z      0.000000      0.000000     -1.544220  *
+ *                                               *
+ *  Pressure:    0.4366                          *
+ *                                               *
+ *************************************************
+  
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+ |    Step    |   lambda    |   F.delta'  |    enthalpy     | <-- min LBFGS
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+ |  previous  |    0.000000 |    0.028575 |    -1717.984294 | <-- min LBFGS
+ | trial step |    1.000000 |    0.021640 |    -1717.989109 | <-- min LBFGS
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+  
+
+--------------------------------------------------------------------------------
+ LBFGS: improving iteration         6 with line minimization (lambda=  4.120421)
+--------------------------------------------------------------------------------
+
+                           -------------------------------
+                                      Unit Cell
+                           -------------------------------
+        Real Lattice(A)              Reciprocal Lattice(1/A)
+    -1.2056902     1.2056902     1.6803436       -1.302819140   1.302819140   1.869613262
+     1.2056902    -1.2056902     1.6803436        1.302819140  -1.302819140   1.869613262
+     2.5068994     2.5068994     0.0000000        1.253178582   1.253178582  -0.000000000
+
+                       Lattice parameters(A)       Cell Angles
+                    a =      2.393937          alpha =   90.000000
+                    b =      2.393937          beta  =   90.000000
+                    c =      3.545291          gamma =   90.838065
+
+                Current cell volume =            20.315651 A**3
+                            density =             5.497732 amu/A**3
+                                    =             9.129198 g/cm^3
+
+------------------------------------------------------------------------ <-- SCF
+SCF loop      Energy           Fermi           Energy gain       Timer   <-- SCF
+                               energy          per atom          (sec)   <-- SCF
+------------------------------------------------------------------------ <-- SCF
+Initial  -1.71769618E+003  0.00000000E+000                      1059.24  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      1  -1.71799684E+003  6.31091366E+000   1.50330266E-001    1062.89  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      2  -1.71799713E+003  6.31089312E+000   1.44711080E-004    1066.58  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      3  -1.71799731E+003  6.43635746E+000   9.01838801E-005    1069.91  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      4  -1.71799594E+003  6.34415772E+000  -6.85532031E-004    1073.29  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      5  -1.71801061E+003  6.34211432E+000   7.33560502E-003    1076.87  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      6  -1.71799564E+003  6.35579348E+000  -7.48617082E-003    1080.38  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      7  -1.71799524E+003  6.35438467E+000  -2.02050629E-004    1083.98  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      8  -1.71799524E+003  6.35291225E+000   3.21183303E-006    1086.26  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      9  -1.71799525E+003  6.35255627E+000   3.53771568E-006    1088.31  <-- SCF
+------------------------------------------------------------------------ <-- SCF
+ 
+Integrated Spin Density     =   -0.435870E-03 hbar/2                        
+Integrated |Spin Density|   =     2.31084     hbar/2                        
+ 
+Final energy, E             =  -1717.940322459     eV
+Final free energy (E-TS)    =  -1717.995250915     eV
+(energies not corrected for finite basis set)
+ 
+NB est. 0K energy (E-0.5TS)      =  -1717.967786687     eV
+ 
+
+ *********** Symmetrised Stress Tensor ***********
+ *                                               *
+ *          Cartesian components (GPa)           *
+ * --------------------------------------------- *
+ *             x             y             z     *
+ *                                               *
+ *  x      1.921631      0.744430      0.000000  *
+ *  y      0.744430      1.921631      0.000000  *
+ *  z      0.000000      0.000000     -1.178466  *
+ *                                               *
+ *  Pressure:   -0.8883                          *
+ *                                               *
+ *************************************************
+  
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+ |    Step    |   lambda    |   F.delta'  |    enthalpy     | <-- min LBFGS
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+ |  previous  |    0.000000 |    0.028575 |    -1717.984294 | <-- min LBFGS
+ | trial step |    1.000000 |    0.021640 |    -1717.989109 | <-- min LBFGS
+ |  line step |    4.120421 |   -0.001591 |    -1717.995251 | <-- min LBFGS
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+  
+ LBFGS: finished iteration     6 with enthalpy= -1.71799525E+003 eV
+  
+ +-----------+-----------------+-----------------+------------+-----+ <-- LBFGS
+ | Parameter |      value      |    tolerance    |    units   | OK? | <-- LBFGS
+ +-----------+-----------------+-----------------+------------+-----+ <-- LBFGS
+ |  dE/ion   |   5.478450E-003 |   2.000000E-005 |         eV | No  | <-- LBFGS
+ |   Smax    |   1.921631E+000 |   1.000000E-001 |        GPa | No  | <-- LBFGS
+ +-----------+-----------------+-----------------+------------+-----+ <-- LBFGS
+  
+
+================================================================================
+ Starting LBFGS iteration          7 ...
+================================================================================
+  
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+ |    Step    |   lambda    |   F.delta'  |    enthalpy     | <-- min LBFGS
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+ |  previous  |    0.000000 |    0.013671 |    -1717.995251 | <-- min LBFGS
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+  
+
+--------------------------------------------------------------------------------
+ LBFGS: starting iteration         7 with trial guess (lambda=  1.000000)
+--------------------------------------------------------------------------------
+
+                           -------------------------------
+                                      Unit Cell
+                           -------------------------------
+        Real Lattice(A)              Reciprocal Lattice(1/A)
+    -1.1985124     1.1985124     1.7026574       -1.310621631   1.310621631   1.845111410
+     1.1985124    -1.1985124     1.7026574        1.310621631  -1.310621631   1.845111410
+     2.4716005     2.4716005     0.0000000        1.271076242   1.271076242   0.000000000
+
+                       Lattice parameters(A)       Cell Angles
+                    a =      2.402479          alpha =   90.000000
+                    b =      2.402479          beta  =   90.000000
+                    c =      3.495371          gamma =   89.740137
+
+                Current cell volume =            20.174746 A**3
+                            density =             5.536129 amu/A**3
+                                    =             9.192958 g/cm^3
+
+------------------------------------------------------------------------ <-- SCF
+SCF loop      Energy           Fermi           Energy gain       Timer   <-- SCF
+                               energy          per atom          (sec)   <-- SCF
+------------------------------------------------------------------------ <-- SCF
+Initial  -1.71776767E+003  0.00000000E+000                      1090.05  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      1  -1.71802084E+003  6.64716652E+000   1.26584940E-001    1093.50  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      2  -1.71802103E+003  6.64714933E+000   9.76227801E-005    1097.21  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      3  -1.71804195E+003  6.12736818E+000   1.04584352E-002    1100.66  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      4  -1.71808066E+003  6.36915907E+000   1.93530696E-002    1103.88  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      5  -1.71822737E+003  6.52009539E+000   7.33555164E-002    1107.24  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      6  -1.71799166E+003  6.40892884E+000  -1.17853095E-001    1110.57  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      7  -1.71799862E+003  6.38683916E+000   3.47912058E-003    1114.19  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      8  -1.71799892E+003  6.38379367E+000   1.48379667E-004    1117.25  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      9  -1.71799842E+003  6.39386964E+000  -2.49807405E-004    1120.73  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     10  -1.71799850E+003  6.39665153E+000   3.93857152E-005    1123.06  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     11  -1.71799852E+003  6.39644645E+000   1.18200193E-005    1125.38  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     12  -1.71799852E+003  6.39718235E+000  -2.10966222E-006    1127.55  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+     13  -1.71799852E+003  6.39746712E+000   3.43514042E-006    1129.68  <-- SCF
+------------------------------------------------------------------------ <-- SCF
+ 
+Integrated Spin Density     =   -0.732789E-03 hbar/2                        
+Integrated |Spin Density|   =     2.07719     hbar/2                        
+ 
+Final energy, E             =  -1717.940462393     eV
+Final free energy (E-TS)    =  -1717.998522208     eV
+(energies not corrected for finite basis set)
+ 
+NB est. 0K energy (E-0.5TS)      =  -1717.969492300     eV
+ 
+
+ *********** Symmetrised Stress Tensor ***********
+ *                                               *
+ *          Cartesian components (GPa)           *
+ * --------------------------------------------- *
+ *             x             y             z     *
+ *                                               *
+ *  x      0.093488     -0.014634      0.000000  *
+ *  y     -0.014634      0.093488      0.000000  *
+ *  z      0.000000      0.000000      0.948653  *
+ *                                               *
+ *  Pressure:   -0.3785                          *
+ *                                               *
+ *************************************************
+  
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+ |    Step    |   lambda    |   F.delta'  |    enthalpy     | <-- min LBFGS
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+ |  previous  |    0.000000 |    0.013671 |    -1717.995251 | <-- min LBFGS
+ | trial step |    1.000000 |   -0.002404 |    -1717.998522 | <-- min LBFGS
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+  
+ LBFGS: finished iteration     7 with enthalpy= -1.71799852E+003 eV
+  
+ +-----------+-----------------+-----------------+------------+-----+ <-- LBFGS
+ | Parameter |      value      |    tolerance    |    units   | OK? | <-- LBFGS
+ +-----------+-----------------+-----------------+------------+-----+ <-- LBFGS
+ |  dE/ion   |   1.635601E-003 |   2.000000E-005 |         eV | No  | <-- LBFGS
+ |   Smax    |   9.486535E-001 |   1.000000E-001 |        GPa | No  | <-- LBFGS
+ +-----------+-----------------+-----------------+------------+-----+ <-- LBFGS
+  
+
+================================================================================
+ Starting LBFGS iteration          8 ...
+================================================================================
+  
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+ |    Step    |   lambda    |   F.delta'  |    enthalpy     | <-- min LBFGS
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+ |  previous  |    0.000000 |    0.003272 |    -1717.998522 | <-- min LBFGS
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+  
+
+--------------------------------------------------------------------------------
+ LBFGS: starting iteration         8 with trial guess (lambda=  1.000000)
+--------------------------------------------------------------------------------
+
+                           -------------------------------
+                                      Unit Cell
+                           -------------------------------
+        Real Lattice(A)              Reciprocal Lattice(1/A)
+    -1.2004199     1.2004199     1.6966487       -1.308539086   1.308539086   1.851645947
+     1.2004199    -1.2004199     1.6966487        1.308539086  -1.308539086   1.851645947
+     2.4729133     2.4729133     0.0000000        1.270401460   1.270401460   0.000000000
+
+                       Lattice parameters(A)       Cell Angles
+                    a =      2.400132          alpha =   90.000000
+                    b =      2.400132          beta  =   90.000000
+                    c =      3.497228          gamma =   90.033807
+
+                Current cell volume =            20.146239 A**3
+                            density =             5.543963 amu/A**3
+                                    =             9.205967 g/cm^3
+
+------------------------------------------------------------------------ <-- SCF
+SCF loop      Energy           Fermi           Energy gain       Timer   <-- SCF
+                               energy          per atom          (sec)   <-- SCF
+------------------------------------------------------------------------ <-- SCF
+Initial  -1.71793412E+003  0.00000000E+000                      1131.45  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      1  -1.71799979E+003  6.45619178E+000   3.28359030E-002    1134.77  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      2  -1.71799980E+003  6.45619103E+000   3.30239960E-006    1137.18  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      3  -1.71802556E+003  6.35335891E+000   1.28803825E-002    1140.73  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      4  -1.71799954E+003  6.36356304E+000  -1.30118378E-002    1144.41  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      5  -1.71800155E+003  6.47621592E+000   1.00667127E-003    1147.91  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      6  -1.71799867E+003  6.41163279E+000  -1.44303798E-003    1151.46  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      7  -1.71799870E+003  6.41197011E+000   1.48637941E-005    1153.71  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      8  -1.71799870E+003  6.41193877E+000   5.57685693E-007    1155.69  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      9  -1.71799870E+003  6.41193041E+000   6.89094149E-008    1157.63  <-- SCF
+------------------------------------------------------------------------ <-- SCF
+ 
+Integrated Spin Density     =    0.996560E-03 hbar/2                        
+Integrated |Spin Density|   =     2.07394     hbar/2                        
+ 
+Final energy, E             =  -1717.940896397     eV
+Final free energy (E-TS)    =  -1717.998696389     eV
+(energies not corrected for finite basis set)
+ 
+NB est. 0K energy (E-0.5TS)      =  -1717.969796393     eV
+ 
+
+ *********** Symmetrised Stress Tensor ***********
+ *                                               *
+ *          Cartesian components (GPa)           *
+ * --------------------------------------------- *
+ *             x             y             z     *
+ *                                               *
+ *  x     -0.036325     -0.038209      0.000000  *
+ *  y     -0.038209     -0.036325      0.000000  *
+ *  z      0.000000      0.000000     -0.111692  *
+ *                                               *
+ *  Pressure:    0.0614                          *
+ *                                               *
+ *************************************************
+  
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+ |    Step    |   lambda    |   F.delta'  |    enthalpy     | <-- min LBFGS
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+ |  previous  |    0.000000 |    0.003272 |    -1717.998522 | <-- min LBFGS
+ | trial step |    1.000000 |   -0.000374 |    -1717.998696 | <-- min LBFGS
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+  
+ LBFGS: finished iteration     8 with enthalpy= -1.71799870E+003 eV
+  
+ +-----------+-----------------+-----------------+------------+-----+ <-- LBFGS
+ | Parameter |      value      |    tolerance    |    units   | OK? | <-- LBFGS
+ +-----------+-----------------+-----------------+------------+-----+ <-- LBFGS
+ |  dE/ion   |   8.710470E-005 |   2.000000E-005 |         eV | No  | <-- LBFGS
+ |   Smax    |   1.116920E-001 |   1.000000E-001 |        GPa | No  | <-- LBFGS
+ +-----------+-----------------+-----------------+------------+-----+ <-- LBFGS
+  
+
+================================================================================
+ Starting LBFGS iteration          9 ...
+================================================================================
+  
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+ |    Step    |   lambda    |   F.delta'  |    enthalpy     | <-- min LBFGS
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+ |  previous  |    0.000000 |    0.000521 |    -1717.998696 | <-- min LBFGS
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+  
+
+--------------------------------------------------------------------------------
+ LBFGS: starting iteration         9 with trial guess (lambda=  1.000000)
+--------------------------------------------------------------------------------
+
+                           -------------------------------
+                                      Unit Cell
+                           -------------------------------
+        Real Lattice(A)              Reciprocal Lattice(1/A)
+    -1.2000959     1.2000959     1.6972045       -1.308892325   1.308892325   1.851039576
+     1.2000959    -1.2000959     1.6972045        1.308892325  -1.308892325   1.851039576
+     2.4735745     2.4735745     0.0000000        1.270061886   1.270061886   0.000000000
+
+                       Lattice parameters(A)       Cell Angles
+                    a =      2.400201          alpha =   90.000000
+                    b =      2.400201          beta  =   90.000000
+                    c =      3.498163          gamma =   89.999576
+
+                Current cell volume =            20.152787 A**3
+                            density =             5.542162 amu/A**3
+                                    =             9.202976 g/cm^3
+
+------------------------------------------------------------------------ <-- SCF
+SCF loop      Energy           Fermi           Energy gain       Timer   <-- SCF
+                               energy          per atom          (sec)   <-- SCF
+------------------------------------------------------------------------ <-- SCF
+Initial  -1.71794078E+003  0.00000000E+000                      1159.43  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      1  -1.71799876E+003  6.39852422E+000   2.89901754E-002    1162.86  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      2  -1.71799876E+003  6.39852421E+000   8.52110159E-008    1164.95  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      3  -1.71800152E+003  6.42262648E+000   1.37806713E-003    1168.45  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      4  -1.71799869E+003  6.42027405E+000  -1.41662988E-003    1171.88  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      5  -1.71799883E+003  6.39417258E+000   7.15154466E-005    1175.05  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      6  -1.71799870E+003  6.40887136E+000  -6.52674668E-005    1178.33  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      7  -1.71799870E+003  6.40922173E+000   5.18379098E-007    1180.51  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 11.                               
+      8  -1.71799870E+003  6.40948370E+000   8.26447009E-008    1182.58  <-- SCF
+------------------------------------------------------------------------ <-- SCF
+ 
+Integrated Spin Density     =   -0.725077E-03 hbar/2                        
+Integrated |Spin Density|   =     2.08065     hbar/2                        
+ 
+Final energy, E             =  -1717.940947453     eV
+Final free energy (E-TS)    =  -1717.998701089     eV
+(energies not corrected for finite basis set)
+ 
+NB est. 0K energy (E-0.5TS)      =  -1717.969824271     eV
+ 
+
+ *********** Symmetrised Stress Tensor ***********
+ *                                               *
+ *          Cartesian components (GPa)           *
+ * --------------------------------------------- *
+ *             x             y             z     *
+ *                                               *
+ *  x     -0.015876      0.001026      0.000000  *
+ *  y      0.001026     -0.015876      0.000000  *
+ *  z      0.000000      0.000000     -0.014551  *
+ *                                               *
+ *  Pressure:    0.0154                          *
+ *                                               *
+ *************************************************
+  
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+ |    Step    |   lambda    |   F.delta'  |    enthalpy     | <-- min LBFGS
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+ |  previous  |    0.000000 |    0.000521 |    -1717.998696 | <-- min LBFGS
+ | trial step |    1.000000 |    0.000038 |    -1717.998701 | <-- min LBFGS
+ +------------+-------------+-------------+-----------------+ <-- min LBFGS
+  
+ LBFGS: finished iteration     9 with enthalpy= -1.71799870E+003 eV
+  
+ +-----------+-----------------+-----------------+------------+-----+ <-- LBFGS
+ | Parameter |      value      |    tolerance    |    units   | OK? | <-- LBFGS
+ +-----------+-----------------+-----------------+------------+-----+ <-- LBFGS
+ |  dE/ion   |   2.349821E-006 |   2.000000E-005 |         eV | Yes | <-- LBFGS
+ |   Smax    |   1.587607E-002 |   1.000000E-001 |        GPa | Yes | <-- LBFGS
+ +-----------+-----------------+-----------------+------------+-----+ <-- LBFGS
+  
+ LBFGS: Geometry optimization completed successfully.
+
+================================================================================
+ LBFGS: Final Configuration:
+================================================================================
+
+                           -------------------------------
+                                      Unit Cell
+                           -------------------------------
+        Real Lattice(A)              Reciprocal Lattice(1/A)
+    -1.2000959     1.2000959     1.6972045       -1.308892325   1.308892325   1.851039576
+     1.2000959    -1.2000959     1.6972045        1.308892325  -1.308892325   1.851039576
+     2.4735745     2.4735745     0.0000000        1.270061886   1.270061886   0.000000000
+
+                       Lattice parameters(A)       Cell Angles
+                    a =      2.400201          alpha =   90.000000
+                    b =      2.400201          beta  =   90.000000
+                    c =      3.498163          gamma =   89.999576
+
+                Current cell volume =            20.152787 A**3
+                            density =             5.542162 amu/A**3
+                                    =             9.202976 g/cm^3
+
+ LBFGS: Final Enthalpy     = -1.71799870E+003 eV
+ LBFGS: Final bulk modulus =     196.23447 GPa
+
+ ******************************** Symmetrised Forces ********************************
+ *                                                                                  *
+ *                           Cartesian components (eV/A)                            *
+ * -------------------------------------------------------------------------------- *
+ *                         x                    y                    z              *
+ *                                                                                  *
+ * Fe              1      0.00000              0.00000              0.00000         *
+ * Fe              2      0.00000              0.00000              0.00000         *
+ *                                                                                  *
+ ************************************************************************************
+
+ *********** Symmetrised Stress Tensor ***********
+ *                                               *
+ *          Cartesian components (GPa)           *
+ * --------------------------------------------- *
+ *             x             y             z     *
+ *                                               *
+ *  x     -0.015876      0.001026      0.000000  *
+ *  y      0.001026     -0.015876      0.000000  *
+ *  z      0.000000      0.000000     -0.014551  *
+ *                                               *
+ *  Pressure:    0.0154                          *
+ *                                               *
+ *************************************************
+
+ Pseudo atomic calculation performed for Fe 3d6 4s2
+
+ Converged in 32 iterations to a total energy of -849.1691 eV
+Charge spilling parameter for spin component 1 = 0.20%
+Charge spilling parameter for spin component 2 = 0.20%
+
+                   Orbital Populations                  
+  ---------------------------------------------------------------
+     Ion    Atom   Orbital              Up        Down      Spin
+  ---------------------------------------------------------------
+     Fe     1      Dzz                  0.830     0.502     0.329
+     Fe     1      Dzy                  0.735     0.598     0.137
+     Fe     1      Dzx                  0.740     0.604     0.136
+     Fe     1      Dxx-yy               0.770     0.551     0.219
+     Fe     1      Dxy                  0.786     0.566     0.219
+     Fe     1      S                    0.493     0.436     0.057
+     Fe     1      Px                   0.068     0.038     0.030
+     Fe     1      Py                   0.099     0.065     0.034
+     Fe     1      Pz                   0.068     0.051     0.017
+     Fe     2      Dzz                  0.502     0.830    -0.328
+     Fe     2      Dzy                  0.598     0.735    -0.137
+     Fe     2      Dzx                  0.604     0.741    -0.137
+     Fe     2      Dxx-yy               0.551     0.770    -0.219
+     Fe     2      Dxy                  0.566     0.786    -0.220
+     Fe     2      S                    0.436     0.493    -0.057
+     Fe     2      Px                   0.038     0.068    -0.030
+     Fe     2      Py                   0.065     0.099    -0.034
+     Fe     2      Pz                   0.051     0.068    -0.017
+  ---------------------------------------------------------------
+                           Total:       8.000     8.000    -0.001
+  ---------------------------------------------------------------
+
+     Atomic Populations (Mulliken)
+     -----------------------------
+Species          Ion Spin      s      p      d      f     Total  Charge(e)   Spin(hbar/2)
+=========================================================================================
+  Fe              1   up:     0.49   0.23   3.86   0.00   4.59     0.00        1.18
+                  1   dn:     0.44   0.15   2.82   0.00   3.41
+  Fe              2   up:     0.44   0.15   2.82   0.00   3.41    -0.00       -1.18
+                  2   dn:     0.49   0.23   3.86   0.00   4.59
+=========================================================================================
+
+                 Bond                   Population        Spin       Length (A)
+================================================================================
+================================================================================
+
+
+Writing analysis data to aiida.castep_bin
+
+Writing model to aiida.check
+ 
+ A BibTeX formatted list of references used in this run has been written to 
+ aiida.bib
+ 
+Initialisation time =     17.42 s
+Calculation time    =   1168.04 s
+Finalisation time   =      0.19 s
+Total time          =   1185.65 s
+Peak Memory Use     = 773480 kB
+  
+Overall parallel efficiency rating: Very good (85%)                             
+  
+Data was distributed by:-
+k-point (4-way); efficiency rating: Very good (87%)                             

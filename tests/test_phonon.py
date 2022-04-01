@@ -38,8 +38,8 @@ def test_phonon_analysis():
     silicon = orm.StructureData(ase=bulk("Si", "diamond", 5.43))
     seekpath = seekpath_analysis(silicon, orm.Dict(dict={}))
     kpoints = seekpath["kpoints"]
-    ir_folder = orm.Folderdata(tree=Path("registry/Si_phonon/dfpt/out").resolve())
-    raman_folder = orm.Folderdata(tree=Path("registry/Si_phonon/raman/out").resolve())
+    ir_folder = orm.FolderData(tree=Path("registry/Si_phonon/dfpt/out").resolve())
+    raman_folder = orm.FolderData(tree=Path("registry/Si_phonon/raman/out").resolve())
     results = phonon_analysis(
         orm.Str("test_prefix"), ir_folder, kpoints, raman_folder, silicon
     )

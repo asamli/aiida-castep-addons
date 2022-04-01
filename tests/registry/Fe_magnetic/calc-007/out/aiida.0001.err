@@ -1,0 +1,5 @@
+Error in calculate_finite_basis: total energies are not variational - aborting
+Current trace stack:
+ calculate_finite_basis_corr
+ check_elec_ground_state
+ castep
