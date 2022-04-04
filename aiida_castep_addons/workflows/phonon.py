@@ -6,6 +6,7 @@ from copy import deepcopy
 from tempfile import TemporaryDirectory
 
 import aiida.orm as orm
+import galore
 import matplotlib.pyplot as plt
 import numpy as np
 from aiida.engine import ToContext, WorkChain, calcfunction
@@ -107,34 +108,48 @@ def phonon_analysis(prefix, ir_folder, kpoints, raman_folder, structure):
         band_data.labels = labels
 
         # Plotting IR spectrum with matplotlib and saving IR data as XyData
-        ir_frequencies = ir_phonon_data.vib_frequencies
-        ir_intensities = ir_phonon_data.ir_intensities
+        ir_raw_frequencies = ir_phonon_data.vib_frequencies
+        ir_raw_intensities = ir_phonon_data.ir_intensities
+        ir_frequencies = np.arange(0, max(ir_raw_frequencies) * 1.2, 0.01)
+        ir_xy = np.array(list(zip(ir_raw_frequencies, ir_raw_intensities)))
+        ir_intensities = galore.xy_to_1d(ir_xy, ir_frequencies, spikes=True)
+        ir_intensities = galore.broaden(ir_intensities, dist="lorentzian", d=0.01)
+        ir_intensities = galore.broaden(ir_intensities, dist="gaussian", d=0.01)
         ir_frequency_unit = ir_phonon_data.frequency_unit
         ir_intensity_unit = ir_phonon_data.ir_unit
         ir_data = orm.XyData()
         ir_data.set_x(np.array(ir_frequencies), "Wavenumber", ir_frequency_unit)
         ir_data.set_y(np.array(ir_intensities), "Intensity", ir_intensity_unit)
         plt.style.use("default")
-        plt.bar(ir_frequencies, ir_intensities, color="red")
+        plt.plot(ir_frequencies, ir_intensities, color="r")
         plt.xlabel(f"Wavenumber ({ir_frequency_unit})")
+        plt.xlim(left=0)
         plt.ylabel(f"Intensity ({ir_intensity_unit})")
+        plt.ylim(bottom=0)
         plt.savefig(fname=f"{temp}/{prefix.value}_ir.pdf", bbox_inches="tight")
         plt.close()
         ir_spectrum = orm.SinglefileData(f"{temp}/{prefix.value}_ir.pdf")
 
         # Plotting Raman spectrum with matplotlib and saving Raman data as XyData
-        raman_frequencies = raman_phonon_data.vib_frequencies
-        raman_activities = raman_phonon_data.raman_activities
+        raman_raw_frequencies = raman_phonon_data.vib_frequencies
+        raman_raw_activities = raman_phonon_data.raman_activities
+        raman_frequencies = np.arange(0, max(raman_raw_frequencies) * 1.2, 0.01)
+        raman_xy = np.array(list(zip(raman_raw_frequencies, raman_raw_activities)))
+        raman_activities = galore.xy_to_1d(raman_xy, raman_frequencies, spikes=True)
+        raman_activities = galore.broaden(raman_activities, dist="lorentzian", d=0.01)
+        raman_activities = galore.broaden(raman_activities, dist="gaussian", d=0.01)
         raman_frequency_unit = raman_phonon_data.frequency_unit
         raman_activity_unit = raman_phonon_data.raman_unit
         raman_data = orm.XyData()
         raman_data.set_x(
             np.array(raman_frequencies), "Raman shift", raman_frequency_unit
         )
-        ir_data.set_y(np.array(raman_activities), "Intensity", raman_activity_unit)
-        plt.bar(raman_frequencies, raman_activities, color="red")
+        raman_data.set_y(np.array(raman_activities), "Intensity", raman_activity_unit)
+        plt.plot(raman_frequencies, raman_activities, color="r")
         plt.xlabel(f"Raman shift ({raman_frequency_unit})")
+        plt.xlim(left=0)
         plt.ylabel(f"Intensity ({raman_activity_unit})")
+        plt.ylim(bottom=0)
         plt.savefig(fname=f"{temp}/{prefix.value}_raman.pdf", bbox_inches="tight")
         plt.close()
         raman_spectrum = orm.SinglefileData(f"{temp}/{prefix.value}_raman.pdf")
