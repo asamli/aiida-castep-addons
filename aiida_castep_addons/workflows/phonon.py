@@ -63,17 +63,15 @@ def add_metadata(file, fname, formula, uuid, label, description):
 def phonon_analysis(prefix, ir_folder, kpoints, raman_folder, structure):
     """Parse and plot the phonon band structure, IR spectrum and Raman spectrum"""
     ir_dot_phonon = ir_folder.get_object_content("aiida.phonon")
+    ir_lines = ir_dot_phonon.split("\n")
     raman_dot_phonon = raman_folder.get_object_content("aiida.phonon")
+    raman_lines = raman_dot_phonon.split("\n")
+
+    # Parsing the .phonon files from the two calculations
+    ir_phonon_data = PhononParser(ir_lines)
+    raman_phonon_data = PhononParser(raman_lines)
+    
     with TemporaryDirectory() as temp:
-        with open(f"{temp}/ir.phonon", "x") as phonon_file:
-            phonon_file.write(ir_dot_phonon)
-        with open(f"{temp}/raman.phonon", "x") as raman_file:
-            raman_file.write(raman_dot_phonon)
-
-        # Parsing the .phonon files from the two calculations
-        ir_phonon_data = PhononParser(open(f"{temp}/ir.phonon"))
-        raman_phonon_data = PhononParser(open(f"{temp}/raman.phonon"))
-
         # Plotting the phonon band structure with sumo and pymatgen
         qpoints = np.array(ir_phonon_data.qpoints)
         frequencies = np.array(ir_phonon_data.frequencies) / 33.36

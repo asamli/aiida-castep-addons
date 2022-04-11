@@ -7,10 +7,10 @@ from __future__ import absolute_import
 from copy import deepcopy
 
 import aiida.orm as orm
-import numpy as np
 from aiida.engine import WorkChain, calcfunction
 from aiida.orm.nodes.data.base import to_aiida_type
 from aiida_castep.workflows.relax import CastepRelaxWorkChain
+from aiida_castep_addons.parsers.magnetic import MagneticParser
 from pymatgen.analysis.magnetism.analyzer import MagneticStructureEnumerator
 
 __version__ = "0.0.1"
@@ -33,27 +33,31 @@ def enumerate_spins(structure, enum_options):
 
 
 @calcfunction
-def assemble_enum_data(workchains, origins):
+def assemble_enum_data(workchains, folders, indices, origins):
+    """Save data for all successfully relaxed orderings in a list of dictionaries"""
     enum_data = orm.List(list=[])
     for i, wc in enumerate(workchains):
         wc_node = orm.load_node(wc)
-        if wc_node.is_finished_ok:
-            initial_structure = wc_node.inputs.structure
-            final_structure = wc_node.outputs.output_structure
-            num_formula_units = final_structure.get_pymatgen().composition.get_reduced_composition_and_factor()[
-                1
-            ]
-            energy = (
-                wc_node.outputs.output_parameters["total_energy"] / num_formula_units
-            )
-            data_dict = {
-                "index": i + 1,
-                "initial_structure": initial_structure.uuid,
-                "origin": origins[i],
-                "final_structure": final_structure.uuid,
-                "final_energy": energy,
-            }
-            enum_data.append(data_dict)
+        initial_structure = wc_node.inputs.structure
+        final_structure = wc_node.outputs.output_structure
+        num_formula_units = final_structure.get_pymatgen().composition.get_reduced_composition_and_factor()[
+            1
+        ]
+        energy = wc_node.outputs.output_parameters["total_energy"] / num_formula_units
+        folder = orm.load_node(folders[i])
+        dot_castep = folder.get_object_content("aiida.castep")
+        lines = dot_castep.split("\n")
+        parser = MagneticParser(lines)
+        data_dict = {
+            "index": indices[i],
+            "initial_structure": initial_structure.uuid,
+            "origin": origins[i],
+            "final_structure": final_structure.uuid,
+            "final_energy": energy,
+            "final_spins": parser.spins,
+            "total_spin": parser.total_spin,
+        }
+        enum_data.append(data_dict)
     return enum_data
 
 
@@ -133,10 +137,20 @@ class CastepMagneticWorkChain(WorkChain):
         """Analyse the relaxations"""
         workchains = orm.List(list=[])
         origins = self.ctx.enum_structures["origins"]
+        folders = orm.List(list=[])
+        indices = orm.List(list=[])
         for i in range(len(origins)):
             key = f"structure_{i+1}"
-            workchains.append(self.ctx[key].uuid)
-        self.ctx.enum_data = assemble_enum_data(workchains, origins)
+            wc_node = self.ctx[key]
+            if wc_node.is_finished_ok:
+                workchains.append(wc_node.uuid)
+                folders.append(
+                    self.ctx[key].called_descendants[-1].outputs.retrieved.uuid
+                )
+                indices.append(i + 1)
+            else:
+                self.report(f"Ordering {i+1} failed to relax")
+        self.ctx.enum_data = assemble_enum_data(workchains, folders, indices, origins)
         gs_ordering = min(self.ctx.enum_data, key=lambda x: x["final_energy"])
         self.report(
             f"Data for all successful orderings saved. Ordering {gs_ordering['index']} is the magnetic ground state ({gs_ordering['final_energy']} eV). Returning final relaxed structure."

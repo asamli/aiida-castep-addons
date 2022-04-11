@@ -4,8 +4,11 @@ from pymatgen.core.structure import Structure
 
 
 class PhononParser:
-    def __init__(self, file):
-        self.lines = file.readlines()
+    """Parser for .phonon output files from CASTEP calculations"""
+
+    def __init__(self, lines):
+        """Read the lines in the file and run the other class methods"""
+        self.lines = lines
         self.lines = [line.strip() for line in self.lines]
         self.parse_structure()
         self.parse_units()
@@ -19,22 +22,22 @@ class PhononParser:
         species = []
         positions = []
         self.cell = []
-        for i in range(len(self.lines)):
-            line = self.lines[i]
+        read = False
+        for i, line in enumerate(self.lines):
             if "Unit" in line:
                 self.cell.append(self.lines[i + 1].split())
                 self.cell.append(self.lines[i + 2].split())
                 self.cell.append(self.lines[i + 3].split())
             elif "Fractional" in line:
-                for j in range(1, len(self.lines)):
-                    next_line = self.lines[i + j]
-                    if next_line == "END header":
-                        break
-                    else:
-                        next_line = next_line.split()
-                        species.append(next_line[-2])
-                        positions.append(next_line[1:4])
+                read = True
+                continue
+            elif line == "END header":
                 break
+
+            if read:
+                line = line.split()
+                species.append(line[-2])
+                positions.append(line[1:4])
         positions = [[float(coord) for coord in line] for line in positions]
         self.cell = [[float(num) for num in line] for line in self.cell]
         self.structure = Structure(self.cell, species, positions)
@@ -68,16 +71,13 @@ class PhononParser:
         """Parse the frequencies of all q-points"""
         self.frequencies = []
         freqs = []
-        for i in range(len(self.lines)):
-            line = self.lines[i]
+        for i, line in enumerate(self.lines):
             if "q-pt" in line:
-                for j in range(1, len(self.lines) - i):
-                    next_line = self.lines[i + j]
+                for j in range(1, len(self.lines)):
+                    next_line = self.lines[i + j].split()
                     if "Phonon" in next_line:
                         break
-                    else:
-                        next_line = next_line.split()
-                        freqs.append(float(next_line[1]))
+                    freqs.append(float(next_line[1]))
                 self.frequencies.append(freqs)
                 freqs = []
 
@@ -86,20 +86,17 @@ class PhononParser:
         self.eigenvectors = {}
         eigenvectors = []
         count = 0
-        for i in range(len(self.lines)):
-            line = self.lines[i]
+        for i, line in enumerate(self.lines):
             if "Mode" in line:
                 for j in range(1, len(self.lines) - i):
-                    next_line = self.lines[i + j]
-                    if "q-pt" in next_line:
+                    next_line = self.lines[i + j].split()
+                    if "q-pt=" in next_line:
                         break
-                    else:
-                        next_line = next_line.split()
-                        eigenvectors.append(next_line[2:])
-                        eigenvectors = [
-                            [float(num) for num in eigenvector]
-                            for eigenvector in eigenvectors
-                        ]
+                    eigenvectors.append(next_line[2:])
+                eigenvectors = [
+                    [float(num) for num in eigenvector]
+                    for eigenvector in eigenvectors
+                ]
                 self.eigenvectors.update(
                     {f"Q-point: {self.qpoints[count]}": eigenvectors}
                 )
