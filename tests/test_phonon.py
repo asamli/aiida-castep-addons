@@ -85,5 +85,5 @@ def test_phonon_wc(mock_castep_code):
     bld.use_supercell = True
     _, supercell_node = run_get_node(bld)
 
-    assert dfpt_node.exit_status == 0
-    assert supercell_node.exit_status == 0
+    assert dfpt_node.is_finished_ok
+    assert supercell_node.is_finished_ok

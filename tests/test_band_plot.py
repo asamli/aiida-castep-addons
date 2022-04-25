@@ -14746,5 +14746,5 @@ def test_band_plot_wc(mock_castep_code):
     )
     _, fe_node = run_get_node(bld)
 
-    assert si_node.exit_status == 0
-    assert fe_node.exit_status == 0
+    assert si_node.is_finished_ok
+    assert fe_node.is_finished_ok

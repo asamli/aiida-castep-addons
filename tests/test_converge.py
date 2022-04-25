@@ -76,7 +76,7 @@ def test_converge_wc(mock_castep_code):
     bld.converge_supercell = True
     results, node = run_get_node(bld)
 
-    assert node.exit_status == 0
+    assert node.is_finished_ok
     assert "converged_pwcutoff" in results
     assert "converged_kspacing" in results
     assert "converged_supercell" in results
