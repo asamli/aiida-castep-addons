@@ -83,8 +83,8 @@ def analysis(dos_data, dos_folder, structure, band_data, band_kpoints, prefix):
         dos_efermi = dos_data.get_attribute("efermi")
         pmg_dos = Dos(dos_efermi, dos_energies, {Spin.up: dos_densities[0]})
 
-    # Preparing projected DOS from the pdos_bin file
     with TemporaryDirectory() as temp:
+        # Preparing projected DOS from the pdos_bin file
         pdos_bin_data = dos_folder.get_object_content("aiida.pdos_bin", mode="rb")
         with open(f"{temp}/aiida.pdos_bin", "ab") as pdos_bin:
             pdos_bin.write(pdos_bin_data)
@@ -123,7 +123,7 @@ def analysis(dos_data, dos_folder, structure, band_data, band_kpoints, prefix):
             pmg_dos.densities[spin] /= scaling_factor
 
         # Plotting projected DOS
-        dos_plotter = SDOSPlotter(pmg_dos, sumo_pdos).get_plot()
+        dos_plotter = SDOSPlotter(pmg_dos, sumo_pdos).get_plot(xmin=-12, xmax=12)
         dos_plotter.savefig(fname=f"{temp}/{prefix.value}_dos.pdf", bbox_inches="tight")
         dos_plotter.close()
         dos_plot = orm.SinglefileData(f"{temp}/{prefix.value}_dos.pdf")
@@ -134,18 +134,17 @@ def analysis(dos_data, dos_folder, structure, band_data, band_kpoints, prefix):
             input=pmg_complete_dos,
             gaussian=0.3,
             lorentzian=0.2,
-            xmin=-4,
-            xmax=10,
+            xmin=-10 + dos_efermi,
+            xmax=4 + dos_efermi,
             weighting="he2",
         )
         ups_plot = galore.plot.plot_pdos(
             ups_data,
             show_orbitals=True,
             units="eV",
-            xmin=-4,
-            xmax=10,
+            flipx=True,
+            offset=dos_efermi,
         )
-        plt.xlabel("Binding energy / eV")
         ups_plot.savefig(fname=f"{temp}/{prefix.value}_ups.pdf", bbox_inches="tight")
         ups_plot.close()
         ups_spectrum = orm.SinglefileData(f"{temp}/{prefix.value}_ups.pdf")
@@ -155,18 +154,17 @@ def analysis(dos_data, dos_folder, structure, band_data, band_kpoints, prefix):
             input=pmg_complete_dos,
             gaussian=0.3,
             lorentzian=0.2,
-            xmin=-4,
-            xmax=10,
+            xmin=-10 + dos_efermi,
+            xmax=4 + dos_efermi,
             weighting="alka",
         )
         xps_plot = galore.plot.plot_pdos(
             xps_data,
             show_orbitals=True,
             units="eV",
-            xmin=-4,
-            xmax=10,
+            flipx=True,
+            offset=dos_efermi,
         )
-        plt.xlabel("Binding energy / eV")
         xps_plot.savefig(fname=f"{temp}/{prefix.value}_xps.pdf", bbox_inches="tight")
         xps_plot.close()
         xps_spectrum = orm.SinglefileData(f"{temp}/{prefix.value}_xps.pdf")
@@ -176,18 +174,17 @@ def analysis(dos_data, dos_folder, structure, band_data, band_kpoints, prefix):
             input=pmg_complete_dos,
             gaussian=0.3,
             lorentzian=0.2,
-            xmin=-4,
-            xmax=10,
+            xmin=-10 + dos_efermi,
+            xmax=4 + dos_efermi,
             weighting="yeh_haxpes",
         )
         haxpes_plot = galore.plot.plot_pdos(
             haxpes_data,
             show_orbitals=True,
             units="eV",
-            xmin=-4,
-            xmax=10,
+            flipx=True,
+            offset=dos_efermi,
         )
-        plt.xlabel("Binding energy / eV")
         haxpes_plot.savefig(
             fname=f"{temp}/{prefix.value}_haxpes.pdf", bbox_inches="tight"
         )
@@ -203,8 +200,8 @@ def analysis(dos_data, dos_folder, structure, band_data, band_kpoints, prefix):
                 input=pmg_complete_dos,
                 gaussian=0.3,
                 lorentzian=0.2,
-                xmin=-4,
-                xmax=10,
+                xmin=-10 + dos_efermi,
+                xmax=4 + dos_efermi,
                 weighting=weighting,
             )
             galore.plot.plot_pdos(
@@ -212,8 +209,8 @@ def analysis(dos_data, dos_folder, structure, band_data, band_kpoints, prefix):
                 ax=ax,
                 show_orbitals=False,
                 units="eV",
-                xmin=-4,
-                xmax=10,
+                flipx=True,
+                offset=dos_efermi,
             )
             line = ax.lines[-1]
             line.set_label(weighting)
@@ -223,7 +220,6 @@ def analysis(dos_data, dos_folder, structure, band_data, band_kpoints, prefix):
         ax.set_ylim((0, 1.2))
         legend = ax.legend(loc="best")
         legend.set_title("Weighting")
-        plt.xlabel("Binding energy / eV")
         plt.savefig(fname=f"{temp}/{prefix.value}_pe_spectra.pdf", bbox_inches="tight")
         plt.close()
         pe_spectra = orm.SinglefileData(f"{temp}/{prefix.value}_pe_spectra.pdf")
@@ -235,7 +231,9 @@ def analysis(dos_data, dos_folder, structure, band_data, band_kpoints, prefix):
             bands_efermi = labelled_bands.get_attribute("efermi")[0]
         else:
             bands_efermi = labelled_bands.get_attribute("efermi")
-        band_plotter = get_sumo_bands_plotter(labelled_bands, bands_efermi).get_plot()
+        band_plotter = get_sumo_bands_plotter(labelled_bands, bands_efermi).get_plot(
+            ymin=-12, ymax=12
+        )
         band_plotter.savefig(
             fname=f"{temp}/{prefix.value}_bands.pdf", bbox_inches="tight"
         )
@@ -350,7 +348,9 @@ class CastepBandPlotWorkChain(WorkChain):
             self.ctx.prefix = f'{self.ctx.inputs.calc.structure.get_formula()}_{self.ctx.parameters["xc_functional"]}'
         else:
             self.ctx.prefix = prefix
-        self.ctx.seekpath_parameters = self.inputs.get("seekpath_parameters", {})
+        self.ctx.seekpath_parameters = self.inputs.get(
+            "seekpath_parameters", orm.Dict(dict={})
+        )
 
     def run_dos(self):
         """Run the spectral density of states calculation"""
@@ -372,7 +372,6 @@ class CastepBandPlotWorkChain(WorkChain):
             {
                 "task": "spectral",
                 "spectral_task": "dos",
-                "spectral_perc_extra_bands": 50,
                 "pdos_calculate_weights": True,
             }
         )
@@ -389,13 +388,12 @@ class CastepBandPlotWorkChain(WorkChain):
             {
                 "task": "spectral",
                 "spectral_task": "bandstructure",
-                "spectral_perc_extra_bands": 50,
             }
         )
         inputs.calc.parameters = band_parameters
         current_structure = inputs.calc.structure
         seekpath_data = seekpath_analysis(
-            current_structure, orm.Dict(dict=self.ctx.seekpath_parameters)
+            current_structure, self.ctx.seekpath_parameters
         )
         self.ctx.band_kpoints = seekpath_data["kpoints"]
         inputs.calc.spectral_kpoints = self.ctx.band_kpoints
@@ -406,6 +404,7 @@ class CastepBandPlotWorkChain(WorkChain):
 
     def analyse_calculations(self):
         """Analyse the two calculations to plot the density of states, band structure and photoelectron spectra"""
+
         outputs = analysis(
             self.ctx.dos.outputs.output_bands,
             self.ctx.dos.called[-1].outputs.retrieved,

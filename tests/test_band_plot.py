@@ -14715,6 +14715,7 @@ def test_band_plot_wc(mock_castep_code):
         "xc_functional": "pbesol",
         "cut_off_energy": 350,
         "symmetry_generate": True,
+        "spectral_perc_extra_bands": 50,
     }
     bld.kpoints_spacing = 0.04
     silicon = orm.StructureData(ase=bulk("Si", "diamond", 5.43))
@@ -14736,6 +14737,7 @@ def test_band_plot_wc(mock_castep_code):
         "spin": 1,
         "spin_polarized": True,
         "symmetry_generate": True,
+        "spectral_perc_extra_bands": 50,
     }
     bld.kpoints_spacing = 0.04
     iron = orm.StructureData(ase=bulk("Fe", "bcc", 2.87))

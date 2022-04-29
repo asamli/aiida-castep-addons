@@ -33,27 +33,36 @@ def enumerate_spins(structure, enum_options):
 
 
 @calcfunction
-def assemble_enum_data(workchains, folders, indices, origins):
+def assemble_enum_data(indices, origins, spins, **kwargs):
     """Save data for all successfully relaxed orderings in a list of dictionaries"""
     enum_data = orm.List(list=[])
-    for i, wc in enumerate(workchains):
-        wc_node = orm.load_node(wc)
+    for i in indices:
+        out_params = kwargs[f"out_params_{i}"]
+
+        # Fetch the right relax WorkChain node
+        qb = orm.QueryBuilder()
+        qb.append(CastepRelaxWorkChain, project="*")
+        qb.append(orm.Dict, filters={"id":out_params.pk})
+        wc_node = qb.one()[0]
+
+        # Assemble the list of dictionaries
         initial_structure = wc_node.inputs.structure
         final_structure = wc_node.outputs.output_structure
         num_formula_units = final_structure.get_pymatgen().composition.get_reduced_composition_and_factor()[
             1
         ]
-        energy = wc_node.outputs.output_parameters["total_energy"] / num_formula_units
-        folder = orm.load_node(folders[i])
+        total_energy = out_params["total_energy"] / num_formula_units
+        folder = kwargs[f"folder_{i}"]
         dot_castep = folder.get_object_content("aiida.castep")
         lines = dot_castep.split("\n")
         parser = MagneticParser(lines)
         data_dict = {
-            "index": indices[i],
+            "index": i,
             "initial_structure": initial_structure.uuid,
-            "origin": origins[i],
+            "origin": origins[i-1],
+            "initial_spins": spins[i-1],
             "final_structure": final_structure.uuid,
-            "final_energy": energy,
+            "total_energy_per_fu": total_energy,
             "final_spins": parser.spins,
             "total_spin": parser.total_spin,
         }
@@ -123,37 +132,39 @@ class CastepMagneticWorkChain(WorkChain):
         self.ctx.enum_structures = enumerate_spins(
             inputs.structure, orm.Dict(dict=self.ctx.enum_options)
         )
+        self.ctx.spins = orm.List(list=[])
         for i in range(len(self.ctx.enum_structures["origins"])):
             key = f"structure_{i+1}"
             inputs.structure = self.ctx.enum_structures[key]
+            spins = self.ctx.enum_structures[f"{key}_spins"]
             inputs.calc.update(
                 {"settings": {"SPINS": self.ctx.enum_structures[f"{key}_spins"]}}
             )
+            self.ctx.spins.append(spins)
             running = self.submit(CastepRelaxWorkChain, **inputs)
             self.to_context(**{key: running})
         self.report("Running relaxations on enumerated structures")
 
     def analyse_relax(self):
         """Analyse the relaxations"""
-        workchains = orm.List(list=[])
+        kwargs = {}
         origins = self.ctx.enum_structures["origins"]
-        folders = orm.List(list=[])
         indices = orm.List(list=[])
         for i in range(len(origins)):
             key = f"structure_{i+1}"
             wc_node = self.ctx[key]
             if wc_node.is_finished_ok:
-                workchains.append(wc_node.uuid)
-                folders.append(
-                    self.ctx[key].called_descendants[-1].outputs.retrieved.uuid
+                kwargs[f"out_params_{i+1}"] = wc_node.outputs.output_parameters
+                kwargs[f"folder_{i+1}"] = (
+                    wc_node.called_descendants[-1].outputs.retrieved
                 )
                 indices.append(i + 1)
             else:
-                self.report(f"Ordering {i+1} failed to relax")
-        self.ctx.enum_data = assemble_enum_data(workchains, folders, indices, origins)
-        gs_ordering = min(self.ctx.enum_data, key=lambda x: x["final_energy"])
+                self.report(f"Ordering {i+1} failed to relax (Exit code {wc_node.exit_status})")
+        self.ctx.enum_data = assemble_enum_data(indices, origins, self.ctx.spins, **kwargs)
+        gs_ordering = min(self.ctx.enum_data, key=lambda x: x["total_energy_per_fu"])
         self.report(
-            f"Data for all successful orderings saved. Ordering {gs_ordering['index']} is the magnetic ground state ({gs_ordering['final_energy']} eV). Returning final relaxed structure."
+            f"Data for all successful orderings saved. Ordering {gs_ordering['index']} is the magnetic ground state ({gs_ordering['total_energy_per_fu']} eV). Returning final relaxed structure."
         )
         self.ctx.gs_structure = orm.load_node(gs_ordering["final_structure"])
 
