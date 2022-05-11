@@ -14694,6 +14694,7 @@ def test_analysis():
         band_data,
         kpoints,
         orm.Str("Si2_pbesol"),
+        orm.ArrayData(),
     )
 
     assert "dos_plot" in results

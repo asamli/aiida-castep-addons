@@ -41,15 +41,13 @@ def test_phonon_analysis():
     ir_folder = orm.FolderData(tree=Path("registry/Si_phonon/dfpt/out").resolve())
     raman_folder = orm.FolderData(tree=Path("registry/Si_phonon/raman/out").resolve())
     results = phonon_analysis(
-        orm.Str("test_prefix"), ir_folder, kpoints, raman_folder, silicon
+        orm.Str("test_prefix"), ir_folder, kpoints, raman_folder, silicon, orm.ArrayData()
     )
 
     assert "band_data" in results
     assert "band_plot" in results
-    assert "ir_data" in results
-    assert "ir_spectrum" in results
-    assert "raman_data" in results
-    assert "raman_spectrum" in results
+    assert "vib_spectrum_data" in results
+    assert "vib_spectra" in results
 
 
 def test_phonon_wc(mock_castep_code):

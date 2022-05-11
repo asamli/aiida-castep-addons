@@ -33,6 +33,7 @@ def test_plot_core_loss():
         orm.Str("test_label"),
         orm.Str("test_description"),
         orm.Str("test_prefix"),
+        orm.ArrayData(),
     )
 
     assert "optados_data" in results

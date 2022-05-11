@@ -42,7 +42,7 @@ def assemble_enum_data(indices, origins, spins, **kwargs):
         # Fetch the right relax WorkChain node
         qb = orm.QueryBuilder()
         qb.append(CastepRelaxWorkChain, project="*")
-        qb.append(orm.Dict, filters={"id":out_params.pk})
+        qb.append(orm.Dict, filters={"id": out_params.pk})
         wc_node = qb.one()[0]
 
         # Assemble the list of dictionaries
@@ -59,8 +59,8 @@ def assemble_enum_data(indices, origins, spins, **kwargs):
         data_dict = {
             "index": i,
             "initial_structure": initial_structure.uuid,
-            "origin": origins[i-1],
-            "initial_spins": spins[i-1],
+            "origin": origins[i - 1],
+            "initial_spins": spins[i - 1],
             "final_structure": final_structure.uuid,
             "total_energy_per_fu": total_energy,
             "final_spins": parser.spins,
@@ -88,6 +88,7 @@ class CastepMagneticWorkChain(WorkChain):
             serializer=to_aiida_type,
             help="Options for the Pymatgen spin enumerator",
             required=False,
+            default=lambda: orm.Dict(dict={}),
         )
 
         # The outputs
@@ -116,7 +117,6 @@ class CastepMagneticWorkChain(WorkChain):
         """Initialise internal variables"""
         self.ctx.inputs = self.exposed_inputs(CastepRelaxWorkChain)
         self.ctx.parameters = self.ctx.inputs.calc.parameters.get_dict()
-        self.ctx.enum_options = self.inputs.get("enum_options", {})
 
     def run_relax(self):
         """Run relaxations on enumerated structures from Pymatgen's spin enumerator"""
@@ -130,7 +130,7 @@ class CastepMagneticWorkChain(WorkChain):
         )
         inputs.calc.parameters = parameters
         self.ctx.enum_structures = enumerate_spins(
-            inputs.structure, orm.Dict(dict=self.ctx.enum_options)
+            inputs.structure, self.inputs.enum_options
         )
         self.ctx.spins = orm.List(list=[])
         for i in range(len(self.ctx.enum_structures["origins"])):
@@ -155,13 +155,17 @@ class CastepMagneticWorkChain(WorkChain):
             wc_node = self.ctx[key]
             if wc_node.is_finished_ok:
                 kwargs[f"out_params_{i+1}"] = wc_node.outputs.output_parameters
-                kwargs[f"folder_{i+1}"] = (
-                    wc_node.called_descendants[-1].outputs.retrieved
-                )
+                kwargs[f"folder_{i+1}"] = wc_node.called_descendants[
+                    -1
+                ].outputs.retrieved
                 indices.append(i + 1)
             else:
-                self.report(f"Ordering {i+1} failed to relax (Exit code {wc_node.exit_status})")
-        self.ctx.enum_data = assemble_enum_data(indices, origins, self.ctx.spins, **kwargs)
+                self.report(
+                    f"Ordering {i+1} failed to relax (Exit code {wc_node.exit_status})"
+                )
+        self.ctx.enum_data = assemble_enum_data(
+            indices, origins, self.ctx.spins, **kwargs
+        )
         gs_ordering = min(self.ctx.enum_data, key=lambda x: x["total_energy_per_fu"])
         self.report(
             f"Data for all successful orderings saved. Ordering {gs_ordering['index']} is the magnetic ground state ({gs_ordering['total_energy_per_fu']} eV). Returning final relaxed structure."

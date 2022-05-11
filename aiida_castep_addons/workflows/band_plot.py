@@ -63,7 +63,15 @@ def add_metadata(file, fname, formula, uuid, label, description):
 
 
 @calcfunction
-def analysis(dos_data, dos_folder, structure, band_data, band_kpoints, prefix):
+def analysis(
+    dos_data,
+    dos_folder,
+    structure,
+    band_data,
+    band_kpoints,
+    prefix,
+    experimental_spectra,
+):
     """Plot the density of states and band structure with Sumo as well as the UPS, XPS and HAXPES spectra with Galore"""
     # Preparing total DOS using parsed BandsData
     dos_processor = DOSProcessor(
@@ -145,6 +153,11 @@ def analysis(dos_data, dos_folder, structure, band_data, band_kpoints, prefix):
             flipx=True,
             offset=dos_efermi,
         )
+        try:
+            experimental_ups = experimental_spectra.get_array("ups")
+            ups_plot.plot(experimental_ups[0], experimental_ups[1], label="experiment")
+        except:
+            pass
         ups_plot.savefig(fname=f"{temp}/{prefix.value}_ups.pdf", bbox_inches="tight")
         ups_plot.close()
         ups_spectrum = orm.SinglefileData(f"{temp}/{prefix.value}_ups.pdf")
@@ -165,6 +178,11 @@ def analysis(dos_data, dos_folder, structure, band_data, band_kpoints, prefix):
             flipx=True,
             offset=dos_efermi,
         )
+        try:
+            experimental_xps = experimental_spectra.get_array("xps")
+            xps_plot.plot(experimental_xps[0], experimental_xps[1], label="experiment")
+        except:
+            pass
         xps_plot.savefig(fname=f"{temp}/{prefix.value}_xps.pdf", bbox_inches="tight")
         xps_plot.close()
         xps_spectrum = orm.SinglefileData(f"{temp}/{prefix.value}_xps.pdf")
@@ -185,6 +203,13 @@ def analysis(dos_data, dos_folder, structure, band_data, band_kpoints, prefix):
             flipx=True,
             offset=dos_efermi,
         )
+        try:
+            experimental_haxpes = experimental_spectra.get_array("haxpes")
+            haxpes_plot.plot(
+                experimental_haxpes[0], experimental_haxpes[1], label="experiment"
+            )
+        except:
+            pass
         haxpes_plot.savefig(
             fname=f"{temp}/{prefix.value}_haxpes.pdf", bbox_inches="tight"
         )
@@ -276,6 +301,14 @@ class CastepBandPlotWorkChain(WorkChain):
             serializer=to_aiida_type,
             help="Parameters to use with seekpath for the k-point path generation",
             required=False,
+            default=lambda: orm.Dict(dict={}),
+        )
+        spec.input(
+            "experimental_spectra",
+            valid_type=orm.ArrayData,
+            help="Experimental valence band UPS, XPS and/or HAXPES spectra as 2D arrays. Use 'ups', 'xps' and 'haxpes' as the array names.",
+            required=False,
+            default=lambda: orm.ArrayData(),
         )
 
         # The outputs
@@ -344,13 +377,10 @@ class CastepBandPlotWorkChain(WorkChain):
         self.ctx.inputs = self.exposed_inputs(CastepBaseWorkChain)
         self.ctx.parameters = self.ctx.inputs.calc.parameters.get_dict()
         prefix = self.inputs.get("file_prefix", None)
-        if prefix is None:
-            self.ctx.prefix = f'{self.ctx.inputs.calc.structure.get_formula()}_{self.ctx.parameters["xc_functional"]}'
-        else:
+        if prefix:
             self.ctx.prefix = prefix
-        self.ctx.seekpath_parameters = self.inputs.get(
-            "seekpath_parameters", orm.Dict(dict={})
-        )
+        else:
+            self.ctx.prefix = f'{self.ctx.inputs.calc.structure.get_formula()}_{self.ctx.parameters["xc_functional"]}'
 
     def run_dos(self):
         """Run the spectral density of states calculation"""
@@ -393,7 +423,7 @@ class CastepBandPlotWorkChain(WorkChain):
         inputs.calc.parameters = band_parameters
         current_structure = inputs.calc.structure
         seekpath_data = seekpath_analysis(
-            current_structure, self.ctx.seekpath_parameters
+            current_structure, self.inputs.seekpath_parameters
         )
         self.ctx.band_kpoints = seekpath_data["kpoints"]
         inputs.calc.spectral_kpoints = self.ctx.band_kpoints
@@ -412,6 +442,7 @@ class CastepBandPlotWorkChain(WorkChain):
             self.ctx.bands.outputs.output_bands,
             self.ctx.band_kpoints,
             orm.Str(self.ctx.prefix),
+            self.inputs.experimental_spectra,
         )
         self.ctx.dos_plot = add_metadata(
             outputs["dos_plot"],

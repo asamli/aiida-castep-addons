@@ -60,7 +60,9 @@ def add_metadata(file, fname, formula, uuid, label, description):
 
 
 @calcfunction
-def phonon_analysis(prefix, ir_folder, kpoints, raman_folder, structure):
+def phonon_analysis(
+    prefix, ir_folder, kpoints, raman_folder, structure, experimental_spectra
+):
     """Parse and plot the phonon band structure, IR spectrum and Raman spectrum"""
     ir_dot_phonon = ir_folder.get_object_content("aiida.phonon")
     ir_lines = ir_dot_phonon.split("\n")
@@ -70,7 +72,7 @@ def phonon_analysis(prefix, ir_folder, kpoints, raman_folder, structure):
     # Parsing the .phonon files from the two calculations
     ir_phonon_data = PhononParser(ir_lines)
     raman_phonon_data = PhononParser(raman_lines)
-    
+
     with TemporaryDirectory() as temp:
         # Plotting the phonon band structure with sumo and pymatgen
         qpoints = np.array(ir_phonon_data.qpoints)
@@ -105,7 +107,7 @@ def phonon_analysis(prefix, ir_folder, kpoints, raman_folder, structure):
         band_data.set_bands(frequencies, units="THz")
         band_data.labels = labels
 
-        # Plotting IR spectrum with matplotlib and saving IR data as XyData
+        # Preparing IR and Raman spectra for plotting and saving the data as ArrayData
         ir_raw_frequencies = ir_phonon_data.vib_frequencies
         ir_raw_intensities = ir_phonon_data.ir_intensities
         ir_frequencies = np.arange(0, max(ir_raw_frequencies) * 1.2, 0.01)
@@ -113,52 +115,83 @@ def phonon_analysis(prefix, ir_folder, kpoints, raman_folder, structure):
         ir_intensities = galore.xy_to_1d(ir_xy, ir_frequencies, spikes=True)
         ir_intensities = galore.broaden(ir_intensities, dist="lorentzian", d=0.01)
         ir_intensities = galore.broaden(ir_intensities, dist="gaussian", d=0.01)
+        ir_intensities = ir_intensities.astype("float64")
+        ir_intensities = [
+            (
+                (intensity - min(ir_intensities))
+                / (max(ir_intensities) - min(ir_intensities))
+            )
+            for intensity in ir_intensities
+        ]
         ir_frequency_unit = ir_phonon_data.frequency_unit
-        ir_intensity_unit = ir_phonon_data.ir_unit
-        ir_data = orm.XyData()
-        ir_data.set_x(np.array(ir_frequencies), "Wavenumber", ir_frequency_unit)
-        ir_data.set_y(np.array(ir_intensities), "Intensity", ir_intensity_unit)
-        plt.style.use("default")
-        plt.plot(ir_frequencies, ir_intensities, color="r")
-        plt.xlabel(f"Wavenumber ({ir_frequency_unit})")
-        plt.xlim(left=0)
-        plt.ylabel(f"Intensity ({ir_intensity_unit})")
-        plt.ylim(bottom=0)
-        plt.savefig(fname=f"{temp}/{prefix.value}_ir.pdf", bbox_inches="tight")
-        plt.close()
-        ir_spectrum = orm.SinglefileData(f"{temp}/{prefix.value}_ir.pdf")
 
-        # Plotting Raman spectrum with matplotlib and saving Raman data as XyData
         raman_raw_frequencies = raman_phonon_data.vib_frequencies
-        raman_raw_activities = raman_phonon_data.raman_activities
+        raman_raw_intensities = raman_phonon_data.raman_intensities
         raman_frequencies = np.arange(0, max(raman_raw_frequencies) * 1.2, 0.01)
-        raman_xy = np.array(list(zip(raman_raw_frequencies, raman_raw_activities)))
-        raman_activities = galore.xy_to_1d(raman_xy, raman_frequencies, spikes=True)
-        raman_activities = galore.broaden(raman_activities, dist="lorentzian", d=0.01)
-        raman_activities = galore.broaden(raman_activities, dist="gaussian", d=0.01)
-        raman_frequency_unit = raman_phonon_data.frequency_unit
-        raman_activity_unit = raman_phonon_data.raman_unit
-        raman_data = orm.XyData()
-        raman_data.set_x(
-            np.array(raman_frequencies), "Raman shift", raman_frequency_unit
+        raman_xy = np.array(list(zip(raman_raw_frequencies, raman_raw_intensities)))
+        raman_intensities = galore.xy_to_1d(raman_xy, raman_frequencies, spikes=True)
+        raman_intensities = galore.broaden(raman_intensities, dist="lorentzian", d=0.01)
+        raman_intensities = galore.broaden(raman_intensities, dist="gaussian", d=0.01)
+        raman_intensities = raman_intensities.astype("float64")
+        raman_intensities = [
+            (
+                (intensity - min(raman_intensities))
+                / (max(raman_intensities) - min(raman_intensities))
+            )
+            for intensity in raman_intensities
+        ]
+        vib_spectrum_data = orm.ArrayData()
+        vib_spectrum_data.set_array("ir", np.array([ir_frequencies, ir_intensities]))
+        vib_spectrum_data.set_array(
+            "raman", np.array([raman_frequencies, raman_intensities])
         )
-        raman_data.set_y(np.array(raman_activities), "Intensity", raman_activity_unit)
-        plt.plot(raman_frequencies, raman_activities, color="r")
-        plt.xlabel(f"Raman shift ({raman_frequency_unit})")
+
+        # Plotting IR and Raman spectra with matplotlib
+        plt.style.use("default")
+        plt.plot(ir_frequencies, ir_intensities, label="IR")
+        plt.plot(raman_frequencies, raman_intensities, label="Raman")
+        try:
+            experimental_ir = experimental_spectra.get_array("ir")
+            experimental_ir[1] = experimental_ir[1].astype("float64")
+            experimental_ir[1] = [
+                (
+                    (intensity - min(experimental_ir[1]))
+                    / (max(experimental_ir[1]) - min(experimental_ir[1]))
+                )
+                for intensity in experimental_ir[1]
+            ]
+            plt.plot(experimental_ir[0], experimental_ir[1], label="Experimental IR")
+        except:
+            pass
+        try:
+            experimental_raman = experimental_spectra.get_array("raman")
+            experimental_raman[1] = experimental_raman[1].astype("float64")
+            experimental_raman[1] = [
+                (
+                    (intensity - min(experimental_raman[1]))
+                    / (max(experimental_raman[1]) - min(experimental_raman[1]))
+                )
+                for intensity in experimental_raman[1]
+            ]
+            plt.plot(
+                experimental_raman[0], experimental_raman[1], label="Experimental Raman"
+            )
+        except:
+            pass
+        plt.xlabel(f"Frequency ({ir_frequency_unit})")
         plt.xlim(left=0)
-        plt.ylabel(f"Intensity ({raman_activity_unit})")
+        plt.ylabel(f"Normalised intensity")
         plt.ylim(bottom=0)
-        plt.savefig(fname=f"{temp}/{prefix.value}_raman.pdf", bbox_inches="tight")
+        plt.legend(loc="best")
+        plt.savefig(fname=f"{temp}/{prefix.value}_vib_spectra.pdf", bbox_inches="tight")
         plt.close()
-        raman_spectrum = orm.SinglefileData(f"{temp}/{prefix.value}_raman.pdf")
+        vib_spectra = orm.SinglefileData(f"{temp}/{prefix.value}_vib_spectra.pdf")
 
     return {
         "band_data": band_data,
         "band_plot": band_plot,
-        "ir_data": ir_data,
-        "ir_spectrum": ir_spectrum,
-        "raman_data": raman_data,
-        "raman_spectrum": raman_spectrum,
+        "vib_spectrum_data": vib_spectrum_data,
+        "vib_spectra": vib_spectra,
     }
 
 
@@ -188,6 +221,7 @@ class CastepPhononWorkChain(WorkChain):
             serializer=to_aiida_type,
             help="Parameters to use with seekpath for the k-point path generation",
             required=False,
+            default=lambda: orm.Dict(dict={}),
         )
         spec.input(
             "use_supercell",
@@ -196,6 +230,13 @@ class CastepPhononWorkChain(WorkChain):
             help="Use the finite displacement (supercell) method or not. Default is False (linear response/DFPT method).",
             required=False,
             default=lambda: orm.Bool(False),
+        )
+        spec.input(
+            "experimental_spectra",
+            valid_type=orm.ArrayData,
+            help="Experimental IR and/or Raman spectra as 2D arrays. Use 'ir' and 'raman' as the array names.",
+            required=False,
+            default=lambda: orm.ArrayData(),
         )
 
         # The outputs
@@ -212,27 +253,15 @@ class CastepPhononWorkChain(WorkChain):
             required=True,
         )
         spec.output(
-            "ir_data",
-            valid_type=orm.XyData,
-            help="IR spectrum data for vibrational modes as XyData",
+            "vib_spectrum_data",
+            valid_type=orm.ArrayData,
+            help="IR and Raman spectrum data as ArrayData",
             required=True,
         )
         spec.output(
-            "ir_spectrum",
+            "vib_spectra",
             valid_type=orm.SinglefileData,
-            help="IR spectrum of the material as a PDF file",
-            required=True,
-        )
-        spec.output(
-            "raman_data",
-            valid_type=orm.XyData,
-            help="Raman spectrum data for vibrational modes as XyData",
-            required=True,
-        )
-        spec.output(
-            "raman_spectrum",
-            valid_type=orm.SinglefileData,
-            help="Raman spectrum of the material as a PDF file",
+            help="IR and Raman spectra of the material as a PDF file",
             required=True,
         )
 
@@ -246,11 +275,10 @@ class CastepPhononWorkChain(WorkChain):
         self.ctx.inputs = self.exposed_inputs(CastepBaseWorkChain)
         self.ctx.parameters = self.ctx.inputs.calc.parameters.get_dict()
         prefix = self.inputs.get("file_prefix", None)
-        if prefix is None:
-            self.ctx.prefix = f'{self.ctx.inputs.calc.structure.get_formula()}_{self.ctx.parameters["xc_functional"]}'
-        else:
+        if prefix:
             self.ctx.prefix = prefix
-        self.ctx.seekpath_parameters = self.inputs.get("seekpath_parameters", {})
+        else:
+            self.ctx.prefix = f'{self.ctx.inputs.calc.structure.get_formula()}_{self.ctx.parameters["xc_functional"]}'
 
     def run_phonon(self):
         """Run the phonon calculation using a phonon fine k-point path from seekpath"""
@@ -266,7 +294,7 @@ class CastepPhononWorkChain(WorkChain):
         inputs.calc.parameters = phonon_parameters
         current_structure = inputs.calc.structure
         seekpath_data = seekpath_analysis(
-            current_structure, orm.Dict(dict=self.ctx.seekpath_parameters)
+            current_structure, self.inputs.seekpath_parameters
         )
         self.ctx.band_kpoints = seekpath_data["kpoints"]
         inputs.calc.phonon_fine_kpoints = self.ctx.band_kpoints
@@ -297,6 +325,7 @@ class CastepPhononWorkChain(WorkChain):
             self.ctx.band_kpoints,
             self.ctx.raman.called[-1].outputs.retrieved,
             self.ctx.inputs.calc.structure,
+            self.inputs.experimental_spectra,
         )
         self.ctx.phonon_bands = outputs["band_data"]
         self.ctx.phonon_band_plot = add_metadata(
@@ -307,19 +336,10 @@ class CastepPhononWorkChain(WorkChain):
             orm.Str(self.inputs.metadata.get("label", "")),
             orm.Str(self.inputs.metadata.get("description", "")),
         )
-        self.ctx.ir_data = outputs["ir_data"]
-        self.ctx.ir_spectrum = add_metadata(
-            outputs["ir_spectrum"],
-            orm.Str(f"{self.ctx.prefix}_ir.pdf"),
-            orm.Str(self.ctx.inputs.calc.structure.get_formula()),
-            orm.Str(self.uuid),
-            orm.Str(self.inputs.metadata.get("label", "")),
-            orm.Str(self.inputs.metadata.get("description", "")),
-        )
-        self.ctx.raman_data = outputs["raman_data"]
-        self.ctx.raman_spectrum = add_metadata(
-            outputs["raman_spectrum"],
-            orm.Str(f"{self.ctx.prefix}_raman.pdf"),
+        self.ctx.vib_spectrum_data = outputs["vib_spectrum_data"]
+        self.ctx.vib_spectra = add_metadata(
+            outputs["vib_spectra"],
+            orm.Str(f"{self.ctx.prefix}_vib_spectra.pdf"),
             orm.Str(self.ctx.inputs.calc.structure.get_formula()),
             orm.Str(self.uuid),
             orm.Str(self.inputs.metadata.get("label", "")),
@@ -331,7 +351,5 @@ class CastepPhononWorkChain(WorkChain):
         """Add the phonon band structure plot, IR spectrum data and Raman spectrum data to the WorkChain outputs"""
         self.out("phonon_bands", self.ctx.phonon_bands)
         self.out("phonon_band_plot", self.ctx.phonon_band_plot)
-        self.out("ir_data", self.ctx.ir_data)
-        self.out("ir_spectrum", self.ctx.ir_spectrum)
-        self.out("raman_data", self.ctx.raman_data)
-        self.out("raman_spectrum", self.ctx.raman_spectrum)
+        self.out("vib_spectrum_data", self.ctx.vib_spectrum_data)
+        self.out("vib_spectra", self.ctx.vib_spectra)

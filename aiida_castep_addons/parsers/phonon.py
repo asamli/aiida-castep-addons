@@ -59,7 +59,7 @@ class PhononParser:
         if len(vib_modes[0]) >= 3:
             self.ir_intensities = [float(line[2]) for line in vib_modes]
         if len(vib_modes[0]) == 4:
-            self.raman_activities = [float(line[-1]) for line in vib_modes]
+            self.raman_intensities = [float(line[-1]) for line in vib_modes]
 
     def parse_qpts(self):
         """Parse the q-points"""
@@ -94,8 +94,7 @@ class PhononParser:
                         break
                     eigenvectors.append(next_line[2:])
                 eigenvectors = [
-                    [float(num) for num in eigenvector]
-                    for eigenvector in eigenvectors
+                    [float(num) for num in eigenvector] for eigenvector in eigenvectors
                 ]
                 self.eigenvectors.update(
                     {f"Q-point: {self.qpoints[count]}": eigenvectors}

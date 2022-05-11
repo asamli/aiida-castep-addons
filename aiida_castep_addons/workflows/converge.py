@@ -315,10 +315,10 @@ class CastepConvergeWorkChain(WorkChain):
             self.ctx.final_supercell_length = self.inputs.final_supercell_length.value
             self.ctx.supercell_converged = False
             prefix = self.inputs.get("file_prefix", None)
-            if prefix is None:
-                self.ctx.prefix = f'{self.ctx.inputs.calc.structure.get_formula()}_{self.ctx.parameters["xc_functional"]}'
-            else:
+            if prefix:
                 self.ctx.prefix = prefix
+            else:
+                self.ctx.prefix = f'{self.ctx.inputs.calc.structure.get_formula()}_{self.ctx.parameters["xc_functional"]}'
         else:
             self.ctx.supercell_converged = True
 

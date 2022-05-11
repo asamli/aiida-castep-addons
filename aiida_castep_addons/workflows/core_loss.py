@@ -40,7 +40,7 @@ def add_metadata(file, fname, formula, uuid, label, description):
 
 
 @calcfunction
-def plot_core_loss(folder, uuid, label, description, prefix):
+def plot_core_loss(folder, uuid, label, description, prefix, experimental_spectra):
     """Plot the EELS/XANES spectrum using optaDOS"""
     files = [".bands", "-out.cell", ".dome_bin", ".elnes_bin"]
     labels = []
@@ -98,14 +98,24 @@ def plot_core_loss(folder, uuid, label, description, prefix):
                     all_intensities.append(intensities)
                     energies = []
                     intensities = []
+        for i, intensities in enumerate(all_intensities):
+            all_intensities[i] = [
+                intensity / max(intensities) for intensity in intensities
+            ]
         for i, label in enumerate(labels):
             plt.plot(all_energies[i], all_intensities[i], label=label)
+        experimental_labels = experimental_spectra.get_arraynames()
+        for label in experimental_labels:
+            data = experimental_spectra.get_array(label)
+            data[1] = data[1].astype("float64")
+            data[1] /= data[1].max()
+            plt.plot(data[0], data[1], label=label)
         plt.xlabel(f"Energy above core edge onset (eV)")
         plt.xlim(left=0)
-        plt.ylabel("Intensity (arbitrary units)")
+        plt.ylabel("Normalised intensity")
         plt.ylim(bottom=0)
         plt.legend(loc="best")
-        plt.savefig(fname=f"{temp}/{prefix.value}_core_loss.pdf")
+        plt.savefig(fname=f"{temp}/{prefix.value}_core_loss.pdf", bbox_inches="tight")
         core_loss_spectrum = orm.SinglefileData(f"{temp}/{prefix.value}_core_loss.pdf")
         return {
             "optados_data": optados_data,
@@ -132,6 +142,13 @@ class CastepCoreLossWorkChain(WorkChain):
             help="The prefix for the names of output files",
             required=False,
         )
+        spec.input(
+            "experimental_spectra",
+            valid_type=orm.ArrayData,
+            help="Experimental core edge EELS/XANES spectra as 2D arrays.",
+            required=False,
+            default=lambda: orm.ArrayData(),
+        )
 
         # The outputs
         spec.output(
@@ -155,11 +172,10 @@ class CastepCoreLossWorkChain(WorkChain):
         self.ctx.inputs = self.exposed_inputs(CastepBaseWorkChain)
         self.ctx.parameters = self.ctx.inputs.calc.parameters.get_dict()
         prefix = self.inputs.get("file_prefix", None)
-        if prefix is None:
-            self.ctx.prefix = f'{self.ctx.inputs.calc.structure.get_formula()}_{self.ctx.parameters["xc_functional"]}'
-        else:
+        if prefix:
             self.ctx.prefix = prefix
-        self.ctx.seekpath_parameters = self.inputs.get("seekpath_parameters", {})
+        else:
+            self.ctx.prefix = f'{self.ctx.inputs.calc.structure.get_formula()}_{self.ctx.parameters["xc_functional"]}'
 
     def run_core_loss(self):
         """Run the spectral density of states calculation"""
@@ -197,6 +213,7 @@ class CastepCoreLossWorkChain(WorkChain):
             orm.Str(self.inputs.metadata.get("label", "")),
             orm.Str(self.inputs.metadata.get("description", "")),
             orm.Str(self.ctx.prefix),
+            self.inputs.experimental_spectra,
         )
         self.ctx.optados_data = outputs["optados_data"]
         self.ctx.core_loss_spectrum = add_metadata(
