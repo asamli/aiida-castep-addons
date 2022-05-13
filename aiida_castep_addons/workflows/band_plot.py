@@ -16,7 +16,6 @@ from aiida_castep.utils.dos import DOSProcessor
 from aiida_castep.workflows.base import CastepBaseWorkChain
 from aiida_castep_addons.utils.sumo_plotter import get_sumo_bands_plotter
 from castepxbin.pdos import compute_pdos
-from matplotlib.cm import viridis as cmap
 from pymatgen.electronic_structure.dos import CompleteDos, Dos, Spin
 from PyPDF2 import PdfFileReader, PdfFileWriter
 from sumo.electronic_structure.dos import get_pdos
@@ -155,11 +154,25 @@ def analysis(
         )
         try:
             experimental_ups = experimental_spectra.get_array("ups")
-            ups_plot.plot(experimental_ups[0], experimental_ups[1], label="experiment")
+            ups_lines = []
+            for i, energy in enumerate(experimental_ups[0]):
+                ups_lines.append(f"{energy},{experimental_ups[1][i]} \n")
+            with open(f"{temp}/ups_data.csv", "w") as csv:
+                csv.writelines(ups_lines)
+            new_ups_plot = galore.plot.add_overlay(
+                plt=ups_plot,
+                overlay=f"{temp}/ups_data.csv",
+                overlay_label="experimental_ups",
+                overlay_style="-",
+            )
+            new_ups_plot.savefig(
+                fname=f"{temp}/{prefix.value}_ups.pdf", bbox_inches="tight"
+            )
         except:
-            pass
-        ups_plot.savefig(fname=f"{temp}/{prefix.value}_ups.pdf", bbox_inches="tight")
-        ups_plot.close()
+            ups_plot.savefig(
+                fname=f"{temp}/{prefix.value}_ups.pdf", bbox_inches="tight"
+            )
+        plt.close("all")
         ups_spectrum = orm.SinglefileData(f"{temp}/{prefix.value}_ups.pdf")
 
         # Plotting XPS spectrum
@@ -180,11 +193,25 @@ def analysis(
         )
         try:
             experimental_xps = experimental_spectra.get_array("xps")
-            xps_plot.plot(experimental_xps[0], experimental_xps[1], label="experiment")
+            xps_lines = []
+            for i, energy in enumerate(experimental_xps[0]):
+                xps_lines.append(f"{energy},{experimental_xps[1][i]} \n")
+            with open(f"{temp}/xps_data.csv", "w") as csv:
+                csv.writelines(xps_lines)
+            new_xps_plot = galore.plot.add_overlay(
+                plt=xps_plot,
+                overlay=f"{temp}/xps_data.csv",
+                overlay_label="experimental_xps",
+                overlay_style="-",
+            )
+            new_xps_plot.savefig(
+                fname=f"{temp}/{prefix.value}_xps.pdf", bbox_inches="tight"
+            )
         except:
-            pass
-        xps_plot.savefig(fname=f"{temp}/{prefix.value}_xps.pdf", bbox_inches="tight")
-        xps_plot.close()
+            xps_plot.savefig(
+                fname=f"{temp}/{prefix.value}_xps.pdf", bbox_inches="tight"
+            )
+        plt.close("all")
         xps_spectrum = orm.SinglefileData(f"{temp}/{prefix.value}_xps.pdf")
 
         # Plotting HAXPES spectrum
@@ -205,15 +232,25 @@ def analysis(
         )
         try:
             experimental_haxpes = experimental_spectra.get_array("haxpes")
-            haxpes_plot.plot(
-                experimental_haxpes[0], experimental_haxpes[1], label="experiment"
+            haxpes_lines = []
+            for i, energy in enumerate(experimental_haxpes[0]):
+                haxpes_lines.append(f"{energy},{experimental_haxpes[1][i]} \n")
+            with open(f"{temp}/haxpes_data.csv", "w") as csv:
+                csv.writelines(haxpes_lines)
+            new_haxpes_plot = galore.plot.add_overlay(
+                plt=haxpes_plot,
+                overlay=f"{temp}/haxpes_data.csv",
+                overlay_label="experimental_haxpes",
+                overlay_style="-",
+            )
+            new_haxpes_plot.savefig(
+                fname=f"{temp}/{prefix.value}_haxpes.pdf", bbox_inches="tight"
             )
         except:
-            pass
-        haxpes_plot.savefig(
-            fname=f"{temp}/{prefix.value}_haxpes.pdf", bbox_inches="tight"
-        )
-        haxpes_plot.close()
+            haxpes_plot.savefig(
+                fname=f"{temp}/{prefix.value}_haxpes.pdf", bbox_inches="tight"
+            )
+        plt.close("all")
         haxpes_spectrum = orm.SinglefileData(f"{temp}/{prefix.value}_haxpes.pdf")
 
         # Plotting overlaid photoelectron spectra
@@ -239,7 +276,7 @@ def analysis(
             )
             line = ax.lines[-1]
             line.set_label(weighting)
-            line.set_color(cmap(i / len(weightings)))
+            line.set_color(f"C{i}")
             ymax = max(line.get_ydata())
             line.set_data(line.get_xdata(), line.get_ydata() / ymax)
         ax.set_ylim((0, 1.2))
