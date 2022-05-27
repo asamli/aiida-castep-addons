@@ -75,7 +75,8 @@ def phonon_analysis(
 
     with TemporaryDirectory() as temp:
         # Plotting the phonon band structure with sumo and pymatgen
-        qpoints = np.array(ir_phonon_data.qpoints)
+        qpoints = kpoints.get_kpoints()
+        parsed_qpoints = np.array(ir_phonon_data.qpoints)
         frequencies = np.array(ir_phonon_data.frequencies) / 33.36
         bands = np.transpose(frequencies)
         lattice = Lattice(ir_phonon_data.cell)
@@ -90,7 +91,11 @@ def phonon_analysis(
             else:
                 label_dict[label] = qpoint
         pmg_bands = PhononBandStructureSymmLine(
-            qpoints, bands, rec_lattice, labels_dict=label_dict, structure=pmg_structure
+            parsed_qpoints,
+            bands,
+            rec_lattice,
+            labels_dict=label_dict,
+            structure=pmg_structure,
         )
         phonon_plotter = SPhononBSPlotter(pmg_bands).get_plot(ymin=-2)
         phonon_plotter.plot()
@@ -103,7 +108,7 @@ def phonon_analysis(
         # Create BandsData for the phonon band structure
         band_data = orm.BandsData()
         band_data.set_cell_from_structure(structure)
-        band_data.set_kpoints(qpoints)
+        band_data.set_kpoints(parsed_qpoints)
         band_data.set_bands(frequencies, units="THz")
         band_data.labels = labels
 

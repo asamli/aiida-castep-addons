@@ -50,6 +50,7 @@ def plot_core_loss(folder, uuid, label, description, prefix, experimental_spectr
     all_intensities = []
     read = False
     with TemporaryDirectory() as temp:
+        # Saving output files in the temporary directory
         for file in files:
             if file[-3:] == "bin":
                 data = folder.get_object_content(f"aiida{file}", mode="rb")
@@ -59,6 +60,8 @@ def plot_core_loss(folder, uuid, label, description, prefix, experimental_spectr
                 data = folder.get_object_content(f"aiida{file}")
                 with open(f"{temp}/aiida{file}", "w") as f:
                     f.write(data)
+
+        # Preparing optaDOS input file and running optaDOS
         with open(f"{temp}/aiida.odi", "w") as odi:
             odi.writelines(
                 [
@@ -69,6 +72,8 @@ def plot_core_loss(folder, uuid, label, description, prefix, experimental_spectr
                 ]
             )
         subprocess.run("optados.mpi aiida", cwd=temp, shell=True, check=True)
+
+        # Adding workflow metadata to optaDOS output file and storing it
         with open(f"{temp}/aiida_core_edge.dat", "r+") as dat:
             lines = dat.readlines()
             dat.writelines(
@@ -79,42 +84,63 @@ def plot_core_loss(folder, uuid, label, description, prefix, experimental_spectr
                 ]
             )
         optados_data = orm.SinglefileData(f"{temp}/aiida_core_edge.dat")
+
+        # Parsing EELS/XANES data from optaDOS output file and normalising intensities
         lines = [line.strip() for line in lines]
         for i, line in enumerate(lines):
-            if line == "#" and i > 3:
-                read = True
-                continue
+            split_line = line.split()
+            if len(split_line) > 2:
+                if line[0] == "#" and split_line[2] == "1":
+                    read = True
+                elif line[0] == "#" and split_line[2] != "1":
+                    read = False
+                    continue
 
             if read:
                 if len(line) != 0:
                     if line[0] == "#":
                         labels.append(line[2:])
                     else:
-                        line = line.split()
-                        energies.append(float(line[0]))
-                        intensities.append(float(line[-1]))
+                        energies.append(float(split_line[0]))
+                        intensities.append(float(split_line[-1]))
                 else:
                     all_energies.append(energies)
                     all_intensities.append(intensities)
                     energies = []
                     intensities = []
+                    continue
         for i, intensities in enumerate(all_intensities):
             all_intensities[i] = [
-                intensity / max(intensities) for intensity in intensities
+                ((intensity - min(intensities)) / (max(intensities) - min(intensities)))
+                for intensity in intensities
             ]
+
+        # Plotting EELS/XANES spectrum
         for i, label in enumerate(labels):
-            plt.plot(all_energies[i], all_intensities[i], label=label)
+            plt.plot(
+                all_energies[i],
+                all_intensities[i],
+                label=label,
+            )
         experimental_labels = experimental_spectra.get_arraynames()
         for label in experimental_labels:
             data = experimental_spectra.get_array(label)
             data[1] = data[1].astype("float64")
-            data[1] /= data[1].max()
-            plt.plot(data[0], data[1], label=label)
+            data[1] = [
+                ((intensity - min(data[1])) / (max(data[1]) - min(data[1])))
+                for intensity in data[1]
+            ]
+            plt.plot(
+                data[0],
+                data[1],
+                linestyle="dashed",
+                label=label,
+            )
         plt.xlabel(f"Energy above core edge onset (eV)")
         plt.xlim(left=0)
         plt.ylabel("Normalised intensity")
         plt.ylim(bottom=0)
-        plt.legend(loc="best")
+        plt.legend(bbox_to_anchor=(1.05, 1), loc="upper left")
         plt.savefig(fname=f"{temp}/{prefix.value}_core_loss.pdf", bbox_inches="tight")
         core_loss_spectrum = orm.SinglefileData(f"{temp}/{prefix.value}_core_loss.pdf")
         return {

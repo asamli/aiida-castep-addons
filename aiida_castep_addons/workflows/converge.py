@@ -74,7 +74,8 @@ def plot_phonons(files, kpoints, matrices, prefix):
             phonon_data = PhononParser(open(f"{temp}/{i}.phonon"))
 
             # Plotting the phonon band structure with sumo and pymatgen
-            qpoints = np.array(phonon_data.qpoints)
+            qpoints = kpoints.get_kpoints()
+            parsed_qpoints = np.array(phonon_data.qpoints)
             frequencies = np.array(phonon_data.frequencies) / 33.36
             bands = np.transpose(frequencies)
             lattice = Lattice(phonon_data.cell)
@@ -89,7 +90,7 @@ def plot_phonons(files, kpoints, matrices, prefix):
                 else:
                     label_dict[label] = qpoint
             pmg_bands = PhononBandStructureSymmLine(
-                qpoints,
+                parsed_qpoints,
                 bands,
                 rec_lattice,
                 labels_dict=label_dict,
@@ -452,7 +453,7 @@ class CastepConvergeWorkChain(WorkChain):
                 "K-point spacing not converged but very low. Decreasing lower limit by 0.01 A-1."
             )
         else:
-            self.ctx.converged_kspacing = self.ctx.fine_kspacing
+            self.ctx.converged_kspacing = orm.Float(self.ctx.fine_kspacing)
             self.ctx.kspacing_converged = True
             self.report(
                 "K-point spacing not converged but too low to decrease further. Taking the lower limit as the converged value."
