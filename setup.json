@@ -13,7 +13,7 @@
         "Development Status :: 3 - Alpha",
         "Framework :: AiiDA"
     ],
-    "version": "0.1.0a0",
+    "version": "0.2.0",
     "entry_points": {
         "aiida.parsers": [
             "castep_addons.phonon_parser = aiida_castep_addons.parsers:PhononParser"
@@ -30,10 +30,10 @@
     "setup_requires": ["reentry"],
     "reentry_register": true,
     "install_requires": [
-        "aiida-core>=1.1.0,<2.0.0",
-        "sqlalchemy<1.4",
+        "aiida-core",
+        "sqlalchemy",
         "six",
-        "psycopg2-binary<2.9",
+        "psycopg2-binary",
         "voluptuous",
 	    "sumo",
         "galore",

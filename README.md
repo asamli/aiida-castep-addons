@@ -26,7 +26,7 @@ Workflows:
 * `castep_addons.converge`: Workflow to converge the plane-wave energy cutoff, k-point mesh density and/or the phonon supercell size.
 * `castep_addons.band_plot`: Workflow to calculate the density of states and band structures which are then plotted using `Sumo`. `Galore` is also integrated to plot UPS, XPS and HAXPES spectra.
 * `castep_addons.phonon`: Workflow to calculate the phonon band structure (plotted using `Sumo`) and IR and Raman spectra (plotted using `matplotlib.pyplot`). The spectra are broadened with `Galore`.
-* `castep_addons.magnetic`: Workflow to enumerate magnetic orderings for a structure using `Pymatgen`, relax each structure and analyse the results.
+* `castep_addons.magnetic`: Workflow to enumerate magnetic orderings for a structure using `Pymatgen`, relax each structure and analyse the results. Note: The [EnumLib](https://github.com/msg-byu/enumlib) package must be installed in order to use this workflow.
 * `castep_addons.core_loss`: Workflow to do spectral core loss calculations and plot EELS/XANES spectra using `OptaDOS`.
 
 Parsers:

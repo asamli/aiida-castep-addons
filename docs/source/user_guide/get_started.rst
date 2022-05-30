@@ -20,6 +20,8 @@ Use the following commands to install the plugin::
 Then use ``verdi computer setup`` and ``verdi code setup`` to add computer and code nodes
 to the AiiDA database.
 
+If you want to use the magnetic enumeration workflow, the `EnumLib <https://github.com/msg-byu/enumlib>`_ package must be installed first. 
+
 Usage
 +++++
 

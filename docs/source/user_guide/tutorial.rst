@@ -51,14 +51,14 @@ You can choose to either set the k-point mesh using the ``kpoints_spacing`` inpu
 
 or as an AiiDA ``KpointsData`` node::
 
-    KpointsData = DataFactory("array.kpoints")
+    KpointsData = DataFactory("core.array.kpoints")
     kpoints = KpointsData()
     kpoints.set_kpoints_mesh((4, 4, 4))
     bld.calc.kpoints = kpoints
 
 For the structure you can simply use ``ase.bulk`` to create the primitive unit cell and provide it as StructureData::
 
-    StructureData = DataFactory("structure")
+    StructureData = DataFactory("core.structure")
     silicon = StructureData(ase=bulk("Si", "diamond", 5.43))
     bld.calc.structure = silicon
 
@@ -71,7 +71,7 @@ The final step is to set the computational resources for the calculations. If yo
 
 For computers with different schedulers please refer to this `official AiiDA page. <https://aiida.readthedocs.io/projects/aiida-core/en/latest/topics/schedulers.html#topics-schedulers-job-resources-node>`_
 
-Optionally you can make the workflow clean the remote directory with::
+Optionally you can make the workflow clean the remote calculation directories with::
 
     bld.clean_workdir = True
 
