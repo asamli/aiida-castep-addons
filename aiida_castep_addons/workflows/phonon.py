@@ -9,7 +9,7 @@ import aiida.orm as orm
 import galore
 import matplotlib.pyplot as plt
 import numpy as np
-from aiida.engine import ToContext, WorkChain, calcfunction
+from aiida.engine import ToContext, WorkChain, calcfunction, if_
 from aiida.orm.nodes.data.base import to_aiida_type
 from aiida.tools.data.array.kpoints import get_explicit_kpoints_path
 from aiida_castep.workflows.base import CastepBaseWorkChain
@@ -200,6 +200,78 @@ def phonon_analysis(
     }
 
 
+@calcfunction
+def thermo_analysis(prefix, thermo_folder):
+    """Parse the thermodynamics data from the .castep file and plot each quantity against temperature"""
+    thermo_dot_castep = thermo_folder.get_object_content("aiida.castep")
+    thermo_lines = thermo_dot_castep.split("\n")
+    temperatures = []
+    energies = []
+    free_energies = []
+    entropies = []
+    heat_capacities = []
+    read_thermo = False
+    for line in thermo_lines:
+        line = line.strip()
+        if "Zero-point" in line:
+            read_thermo = True
+            continue
+        elif read_thermo and line == "":
+            break
+
+        if read_thermo:
+            if line[0] == "-" or line[0] == "T":
+                continue
+            else:
+                line = line.split()
+                temperatures.append(float(line[0]))
+                energies.append(float(line[1]))
+                free_energies.append(float(line[2]))
+                entropies.append(float(line[3]))
+                heat_capacities.append(float(line[4]))
+
+    thermo_data = orm.Dict(
+        dict={
+            "temperatures": temperatures,
+            "energies": energies,
+            "free_energies": free_energies,
+            "entropies": entropies,
+            "heat_capacities": heat_capacities,
+        }
+    )
+
+    with TemporaryDirectory() as temp:
+        # Plotting energy and Helmholtz free energy against temperature
+        plt.plot(temperatures, energies, label="Energy")
+        plt.plot(temperatures, free_energies, label="Helmholtz free energy")
+        plt.xlabel(f"Temperature (K)")
+        plt.ylabel(f"eV")
+        plt.legend(loc="best")
+        plt.savefig(
+            fname=f"{temp}/{prefix.value}_thermo_energies.pdf", bbox_inches="tight"
+        )
+        plt.close()
+        energy_plot = orm.SinglefileData(f"{temp}/{prefix.value}_thermo_energies.pdf")
+
+        # Plotting entropy and heat capacity against temperature
+        plt.plot(temperatures, entropies, label="Entropy")
+        plt.plot(temperatures, heat_capacities, label="Heat capacity (Cv)")
+        plt.xlabel(f"Temperature (K)")
+        plt.ylabel(f"J/mol/K")
+        plt.legend(loc="best")
+        plt.savefig(
+            fname=f"{temp}/{prefix.value}_thermo_entropies.pdf", bbox_inches="tight"
+        )
+        plt.close()
+        entropy_plot = orm.SinglefileData(f"{temp}/{prefix.value}_thermo_entropies.pdf")
+
+    return {
+        "thermo_data": thermo_data,
+        "energy_plot": energy_plot,
+        "entropy_plot": entropy_plot,
+    }
+
+
 class CastepPhononWorkChain(WorkChain):
     """
     WorkChain to calculate and plot the phonon band structure,
@@ -237,6 +309,22 @@ class CastepPhononWorkChain(WorkChain):
             default=lambda: orm.Bool(False),
         )
         spec.input(
+            "run_thermo",
+            valid_type=orm.Bool,
+            serializer=to_aiida_type,
+            help="Run a thermodynamics calculation or not (False by default)",
+            required=False,
+            default=lambda: orm.Bool(False),
+        )
+        spec.input(
+            "thermo_parameters",
+            valid_type=orm.Dict,
+            serializer=to_aiida_type,
+            help="Additional CASTEP parameters for the thermodynamics calculation as a dictionary",
+            required=False,
+            default=lambda: orm.Dict(dict={}),
+        )
+        spec.input(
             "experimental_spectra",
             valid_type=orm.ArrayData,
             help="Experimental IR and/or Raman spectra as 2D arrays. Use 'ir' and 'raman' as the array names.",
@@ -269,10 +357,33 @@ class CastepPhononWorkChain(WorkChain):
             help="IR and Raman spectra of the material as a PDF file",
             required=True,
         )
+        spec.output(
+            "thermo_data",
+            valid_type=orm.Dict,
+            help="Parsed thermodynamics data as a dictionary",
+            required=False,
+        )
+        spec.output(
+            "thermo_energy_plot",
+            valid_type=orm.SinglefileData,
+            help="A plot of energy and Helmholtz free energy against temperature as a PDF file",
+            required=False,
+        )
+        spec.output(
+            "thermo_entropy_plot",
+            valid_type=orm.SinglefileData,
+            help="A plot of entropy and heat capacity against temperature as a PDF file",
+            required=False,
+        )
 
         # Outline of the WorkChain (the class methods to be run and their order)
         spec.outline(
-            cls.setup, cls.run_phonon, cls.run_raman, cls.analyse_phonons, cls.results
+            cls.setup,
+            cls.run_phonon,
+            cls.run_raman,
+            if_(cls.should_run_thermo)(cls.run_thermo, cls.analyse_thermo),
+            cls.analyse_phonons,
+            cls.results,
         )
 
     def setup(self):
@@ -285,9 +396,13 @@ class CastepPhononWorkChain(WorkChain):
         else:
             self.ctx.prefix = f'{self.ctx.inputs.calc.structure.get_formula()}_{self.ctx.parameters["xc_functional"]}'
 
+    def should_run_thermo(self):
+        """Whether a thermodynamics calculation should be run or not"""
+        return self.inputs.run_thermo
+
     def run_phonon(self):
         """Run the phonon calculation using a phonon fine k-point path from seekpath"""
-        inputs = self.exposed_inputs(CastepBaseWorkChain)
+        inputs = self.ctx.inputs
         phonon_parameters = deepcopy(self.ctx.parameters)
         phonon_parameters.update({"task": "phonon+efield"})
         if self.inputs.use_supercell:
@@ -302,8 +417,9 @@ class CastepPhononWorkChain(WorkChain):
             current_structure, self.inputs.seekpath_parameters
         )
         self.ctx.band_kpoints = seekpath_data["kpoints"]
+        self.ctx.seekpath_structure = seekpath_data["prim_cell"]
         inputs.calc.phonon_fine_kpoints = self.ctx.band_kpoints
-        inputs.calc.structure = seekpath_data["prim_cell"]
+        inputs.calc.structure = self.ctx.seekpath_structure
         running = self.submit(CastepBaseWorkChain, **inputs)
         self.report("Running phonon band structure calculation")
         return ToContext(phonon=running)
@@ -322,8 +438,30 @@ class CastepPhononWorkChain(WorkChain):
         self.report("Running gamma-only Raman spectrum calculation")
         return ToContext(raman=running)
 
+    def run_thermo(self):
+        """Run the thermodynamics calculation"""
+        inputs = self.ctx.inputs
+        thermo_parameters = deepcopy(self.ctx.parameters)
+        thermo_parameters.update({"task": "thermodynamics"})
+        thermo_parameters.update(self.inputs.thermo_parameters)
+        if self.inputs.use_supercell:
+            thermo_parameters.update({"phonon_fine_method": "supercell"})
+        else:
+            thermo_parameters.update(
+                {"phonon_fine_method": "interpolate", "fix_occupancy": True}
+            )
+        phonon_kpoints = orm.KpointsData()
+        phonon_kpoints.set_kpoints_mesh((3, 3, 3))
+        inputs.calc.phonon_kpoints = phonon_kpoints
+        inputs.calc.parameters = thermo_parameters
+        inputs.calc.phonon_fine_kpoints = self.ctx.band_kpoints
+        inputs.calc.structure = self.ctx.seekpath_structure
+        running = self.submit(CastepBaseWorkChain, **inputs)
+        self.report("Running thermodynamics calculation")
+        return ToContext(thermo=running)
+
     def analyse_phonons(self):
-        """Analyse the output .phonon file from the calculation to plot the phonon band structure and extract IR and Raman spectrum data"""
+        """Analyse the output .phonon file from the calculations to plot the phonon band structure and extract IR and Raman spectrum data"""
         outputs = phonon_analysis(
             orm.Str(self.ctx.prefix),
             self.ctx.phonon.called[-1].outputs.retrieved,
@@ -352,9 +490,37 @@ class CastepPhononWorkChain(WorkChain):
         )
         self.report("Phonon analysis complete")
 
+    def analyse_thermo(self):
+        """Analyse the output .castep file from the thermodynamics calculation"""
+        outputs = thermo_analysis(
+            orm.Str(self.ctx.prefix),
+            self.ctx.thermo.called[-1].outputs.retrieved,
+        )
+        self.ctx.thermo_data = outputs["thermo_data"]
+        self.ctx.thermo_energy_plot = add_metadata(
+            outputs["energy_plot"],
+            orm.Str(f"{self.ctx.prefix}_thermo_energies.pdf"),
+            orm.Str(self.ctx.inputs.calc.structure.get_formula()),
+            orm.Str(self.uuid),
+            orm.Str(self.inputs.metadata.get("label", "")),
+            orm.Str(self.inputs.metadata.get("description", "")),
+        )
+        self.ctx.thermo_entropy_plot = add_metadata(
+            outputs["entropy_plot"],
+            orm.Str(f"{self.ctx.prefix}_thermo_entropies.pdf"),
+            orm.Str(self.ctx.inputs.calc.structure.get_formula()),
+            orm.Str(self.uuid),
+            orm.Str(self.inputs.metadata.get("label", "")),
+            orm.Str(self.inputs.metadata.get("description", "")),
+        )
+
     def results(self):
         """Add the phonon band structure plot, IR spectrum data and Raman spectrum data to the WorkChain outputs"""
         self.out("phonon_bands", self.ctx.phonon_bands)
         self.out("phonon_band_plot", self.ctx.phonon_band_plot)
         self.out("vib_spectrum_data", self.ctx.vib_spectrum_data)
         self.out("vib_spectra", self.ctx.vib_spectra)
+        if self.inputs.run_thermo:
+            self.out("thermo_data", self.ctx.thermo_data)
+            self.out("thermo_energy_plot", self.ctx.thermo_energy_plot)
+            self.out("thermo_entropy_plot", self.ctx.thermo_energy_plot)

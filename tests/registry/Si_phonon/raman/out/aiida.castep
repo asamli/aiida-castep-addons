@@ -62,7 +62,7 @@
  FFT Lib : mkl
  Fundamental constants values: CODATA 2014
 
- Run started: Thu, 27 Jan 2022 13:35:31 +0000
+ Run started: Wed, 15 Jun 2022 15:30:54 +0100
  +-------------------------------------------------+
  |                                                 |
  |  D D D D    F F F F F  P P P P     T T T T T    |
@@ -92,7 +92,7 @@
  Converged in 56 iterations to an ae energy of -7872.211 eV
 
    ============================================================                
-   | Pseudopotential Report - Date of generation 27-01-2022   |                
+   | Pseudopotential Report - Date of generation 15-06-2022   |                
    ------------------------------------------------------------                
    | Element: Si Ionic charge:  4.00 Level of theory: PBESOL  |                
    | Atomic Solver: Koelling-Harmon                           |                
@@ -118,12 +118,12 @@
 
  Pseudo atomic calculation performed for Si 3s2 3p2
 
- Converged in 24 iterations to a total energy of -213.5526 eV
+ Converged in 24 iterations to a total energy of -213.5503 eV
  Calculation parallelised over 4 processes.
- Data is distributed by G-vector(2-way) and k-point(2-way)
+ Data is distributed by k-point(4-way)
 
  ************************************ Title ************************************
- MgO_pbesol_phonon
+ Si_pbesol_phonon
 
  ***************************** General Parameters ******************************
   
@@ -168,7 +168,7 @@
  output    efield chi2 unit                     : pm/V
   
  wavefunctions paging                           : none
- random number generator seed                   : randomised (133531480)
+ random number generator seed                   : randomised (153054570)
  data distribution                              : optimal for this architecture
  optimization strategy                          : balance speed and memory
 
@@ -186,9 +186,9 @@
 
  **************************** Basis Set Parameters *****************************
   
- plane wave basis set cut-off                   :   800.0000   eV
+ plane wave basis set cut-off                   :   400.0000   eV
  size of standard grid                          :     1.7500
- size of   fine   gmax                          :    25.3584   1/A
+ size of   fine   gmax                          :    17.9311   1/A
  finite basis set correction                    : none
 
  **************************** Electronic Parameters ****************************
@@ -269,8 +269,8 @@
             x  Element    Atom        Fractional coordinates of atoms  x
             x            Number           u          v          w      x
             x----------------------------------------------------------x
-            x  Si           1         0.000000   0.000000   0.000000   x 
-            x  Si           2         0.250000   0.250000   0.250000   x 
+            x  Si           1         0.500000   0.500000  -0.500000   x 
+            x  Si           2         0.750000  -0.250000   0.750000   x 
             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 
@@ -292,9 +292,9 @@
                            -------------------------------
                               k-Points For BZ Sampling
                            -------------------------------
-                       MP grid size for SCF calculation is  4  4  4
+                       MP grid size for SCF calculation is  8  8  8
                             with an offset of   0.000  0.000  0.000
-                       Number of kpoints used =            10
+                       Number of kpoints used =            60
 
                            -------------------------------
                                Symmetry and Constraints
@@ -322,34 +322,35 @@
   
 +---------------- MEMORY AND SCRATCH DISK ESTIMATES PER PROCESS --------------+
 |                                                     Memory          Disk    |
-| Baseline code, static data and system overhead      347.0 MB         0.0 MB |
+| Baseline code, static data and system overhead      361.0 MB         0.0 MB |
 | BLAS internal memory storage                          0.0 MB         0.0 MB |
-| Model and support data                               13.9 MB         0.0 MB |
-| Electronic energy minimisation requirements           3.0 MB         0.0 MB |
-| Force calculation requirements                        2.5 MB         0.0 MB |
+| Model and support data                               14.7 MB         0.0 MB |
+| Electronic energy minimisation requirements           4.3 MB         0.0 MB |
+| Force calculation requirements                        2.0 MB         0.0 MB |
 |                                               ----------------------------- |
-| Approx. total storage required per process          364.0 MB         0.0 MB |
+| Approx. total storage required per process          380.0 MB         0.0 MB |
 |                                                                             |
 | Requirements will fluctuate during execution and may exceed these estimates |
 +-----------------------------------------------------------------------------+
-Calculating total energy with cut-off of  800.000 eV.
+Calculating total energy with cut-off of  400.000 eV.
 ------------------------------------------------------------------------ <-- SCF
 SCF loop      Energy                           Energy gain       Timer   <-- SCF
                                                per atom          (sec)   <-- SCF
 ------------------------------------------------------------------------ <-- SCF
-Initial  -4.27177766E+001                                          2.38  <-- SCF
-      1  -4.21305884E+002                    1.89294054E+002       2.65  <-- SCF
-      2  -4.38369982E+002                    8.53204913E+000       2.93  <-- SCF
-      3  -4.38618767E+002                    1.24392232E-001       3.22  <-- SCF
-      4  -4.38620866E+002                    1.04975372E-003       3.53  <-- SCF
-      5  -4.38620894E+002                    1.39033541E-005       3.81  <-- SCF
-      6  -4.38620894E+002                    2.51674913E-007       4.09  <-- SCF
-      7  -4.38620894E+002                    5.28494029E-009       4.34  <-- SCF
-      8  -4.38620894E+002                    1.27996725E-010       4.66  <-- SCF
-      9  -4.38620894E+002                    3.33526209E-012       5.12  <-- SCF
+Initial  -4.28250387E+001                                          2.29  <-- SCF
+      1  -4.21165460E+002                    1.89170210E+002       2.66  <-- SCF
+      2  -4.38248949E+002                    8.54174480E+000       3.05  <-- SCF
+      3  -4.38617559E+002                    1.84304765E-001       3.40  <-- SCF
+      4  -4.38622161E+002                    2.30121328E-003       3.77  <-- SCF
+      5  -4.38622250E+002                    4.44831962E-005       4.14  <-- SCF
+      6  -4.38622252E+002                    1.10303454E-006       4.50  <-- SCF
+      7  -4.38622252E+002                    2.98314058E-008       4.87  <-- SCF
+      8  -4.38622252E+002                    8.44353016E-010       5.23  <-- SCF
+      9  -4.38622252E+002                    2.50386342E-011       5.60  <-- SCF
+     10  -4.38622252E+002                    1.93348527E-012       6.21  <-- SCF
 ------------------------------------------------------------------------ <-- SCF
  
-Final energy =  -438.6208944320     eV
+Final energy =  -438.6222523034     eV
 (energy not corrected for finite basis set)
  
 
@@ -357,36 +358,36 @@ Writing analysis data to aiida.castep_bin
 
 Writing model to aiida.check
 
- Efield perturbation    1:  X                                             5.25s
-  Parallel strategy changed for perturbation using 20 k-points
+ Efield perturbation    1:  X                                             6.40s
+  Parallel strategy changed for perturbation using 144 k-points
   Data is distributed by G-vector(1-way) and k-point(4-way) and band(1-way)
   +---------------- MEMORY AND SCRATCH DISK ESTIMATES PER PROCESS --------------+
   |                                                     Memory          Disk    |
-  | Baseline code, static data and system overhead      347.0 MB         0.0 MB |
+  | Baseline code, static data and system overhead      361.0 MB         0.0 MB |
   | BLAS internal memory storage                          0.0 MB         0.0 MB |
-  | Model and support data                               13.9 MB         0.0 MB |
-  | DFPT E-field response requirements                    7.9 MB         0.0 MB |
+  | Model and support data                               14.7 MB         0.0 MB |
+  | DFPT E-field response requirements                   13.1 MB         0.0 MB |
   |                                               ----------------------------- |
-  | Approx. total storage required per process          368.9 MB         0.0 MB |
+  | Approx. total storage required per process          388.8 MB         0.0 MB |
   |                                                                             |
   | Requirements will fluctuate during execution and may exceed these estimates |
   +-----------------------------------------------------------------------------+
- Perturbation    1 (of    1): Si    1 X at q=( 0.000, 0.000, 0.000):      8.39s
-  Parallel strategy changed for perturbation using 40 k-points
+ Perturbation    1 (of    1): Si    1 X at q=( 0.000, 0.000, 0.000):     12.84s
+  Parallel strategy changed for perturbation using 288 k-points
   Data is distributed by G-vector(1-way) and k-point(4-way) and band(1-way)
   +---------------- MEMORY AND SCRATCH DISK ESTIMATES PER PROCESS --------------+
   |                                                     Memory          Disk    |
-  | Baseline code, static data and system overhead      347.0 MB         0.0 MB |
+  | Baseline code, static data and system overhead      361.0 MB         0.0 MB |
   | BLAS internal memory storage                          0.0 MB         0.0 MB |
-  | Model and support data                               13.9 MB         0.0 MB |
-  | DFPT phonon calculation requirements                 16.2 MB         0.0 MB |
+  | Model and support data                               14.7 MB         0.0 MB |
+  | DFPT phonon calculation requirements                 34.8 MB         0.0 MB |
   |                                               ----------------------------- |
-  | Approx. total storage required per process          377.1 MB         0.0 MB |
+  | Approx. total storage required per process          410.5 MB         0.0 MB |
   |                                                                             |
   | Requirements will fluctuate during execution and may exceed these estimates |
   +-----------------------------------------------------------------------------+
 
- Phonon calculation: q-point   1 (of    1) ( 0.000, 0.000, 0.000):       13.08s
+ Phonon calculation: q-point   1 (of    1) ( 0.000, 0.000, 0.000):       23.65s
  -------------------------------------------------------------------------------
  
  ==============================================================================
@@ -406,48 +407,48 @@ Writing model to aiida.check
  + Mode     3: not Raman active; calculation not required                     +
  + Mode     4: performing Raman intensity calculation                         +
 
- Efield perturbation    1:  X                                            26.53s
+ Efield perturbation    1:  X                                            74.46s
   +---------------- MEMORY AND SCRATCH DISK ESTIMATES PER PROCESS --------------+
   |                                                     Memory          Disk    |
-  | Baseline code, static data and system overhead      347.0 MB         0.0 MB |
+  | Baseline code, static data and system overhead      361.0 MB         0.0 MB |
   | BLAS internal memory storage                          0.0 MB         0.0 MB |
-  | Model and support data                               13.9 MB         0.0 MB |
-  | DFPT E-field response requirements                   31.9 MB         0.0 MB |
+  | Model and support data                               14.7 MB         0.0 MB |
+  | DFPT E-field response requirements                   84.3 MB         0.0 MB |
   |                                               ----------------------------- |
-  | Approx. total storage required per process          392.8 MB         0.0 MB |
+  | Approx. total storage required per process          460.0 MB         0.0 MB |
   |                                                                             |
   | Requirements will fluctuate during execution and may exceed these estimates |
   +-----------------------------------------------------------------------------+
 
- Efield perturbation    2:  Y                                            40.23s
+ Efield perturbation    2:  Y                                           121.84s
 
- Efield perturbation    3:  Z                                            48.69s
+ Efield perturbation    3:  Z                                           149.39s
 
- Efield perturbation    1:  X                                            66.76s
+ Efield perturbation    1:  X                                           210.50s
 
- Efield perturbation    2:  Y                                            80.64s
+ Efield perturbation    2:  Y                                           257.17s
 
- Efield perturbation    3:  Z                                            88.70s
- + Mode number:   4 completed;                   time taken:    84.03 seconds +
+ Efield perturbation    3:  Z                                           284.69s
+ + Mode number:   4 completed;                   time taken:   289.28 seconds +
  + Mode     5: degenerate with previous; explicit calculation not required    +
  + Mode     6: degenerate with previous; explicit calculation not required    +
  +----------------------------------------------------------------------------+
  +   E N D    O F    R A M A N    I N T E N S I T Y    C A L C U L A T I O N  +
- +         Raman intensity calculation completed in      84.03 seconds        +
+ +         Raman intensity calculation completed in     289.28 seconds        +
  +============================================================================+
  + -------------------------------------------------------------------------- +
  +  q-pt=    1 (  0.000000  0.000000  0.000000)     1.0000000000              +
  + -------------------------------------------------------------------------- +
- +  Acoustic sum rule correction <  24.083361 cm-1 applied                    +
+ +  Acoustic sum rule correction <  56.148039 cm-1 applied                    +
  +     N      Frequency irrep.    ir intensity active  raman activity  active + 
  +                (cm-1)         ((D/A)**2/amu)              (A**4/amu)       + 
  +                                                                            +
  +     1      -0.026685   a          0.0000000  N            0.0000000  N     + 
  +     2      -0.026685   a          0.0000000  N            0.0000000  N     + 
  +     3      -0.026685   a          0.0000000  N            0.0000000  N     + 
- +     4     509.263675   b          0.0000000  N         1168.0325141  Y     + 
- +     5     509.263675   b          0.0000000  N         1168.1789299  Y     + 
- +     6     509.263675   b          0.0000000  N         1168.1445325  Y     + 
+ +     4     512.379443   b          0.0000000  N          644.8258162  Y     + 
+ +     5     512.379443   b          0.0000000  N          644.8258162  Y     + 
+ +     6     512.379443   b          0.0000000  N          644.7951185  Y     + 
  + .......................................................................... +
  +        Character table from group theory analysis of eigenvectors          +
  +                           Point Group =  32, Oh                            +
@@ -456,34 +457,6 @@ Writing model to aiida.check
  +           | ----------------------------------------                       +
  + a T1u   1 |    3   1  -1  -1   0  -3  -1   1   1   0                       +
  + b T2g   1 |    3  -1  -1   1   0   3  -1  -1   1   0                       +
- + -------------------------------------------------------------------------- +
- +  q-pt=    1 (  0.000000  0.000000  0.000000)     1.0000000000              +
- +  q->0 along (  0.000000  0.000000  1.000000)                               +
- + -------------------------------------------------------------------------- +
- +  Acoustic sum rule correction <  24.083361 cm-1 applied                    +
- +     N      Frequency irrep.    ir intensity active            raman active + 
- +                (cm-1)         ((D/A)**2/amu)                               + 
- +                                                                            +
- +     1      -0.026685   a          0.0000000  N                       N     + 
- +     2      -0.026685   a          0.0000000  N                       N     + 
- +     3      -0.026685   a          0.0000000  N                       N     + 
- +     4     509.263675   b          0.0000000  N                       Y     + 
- +     5     509.263675   b          0.0000000  N                       Y     + 
- +     6     509.263675   b          0.0000000  N                       Y     + 
- + .......................................................................... +
- +        Character table from group theory analysis of eigenvectors          +
- +                           Point Group =  32, Oh                            +
- + (Due to LO/TO splitting this character table may not contain some symmetry +
- +  operations of the full crystallographic point group.  Additional          +
- +  representations may be also be present corresponding to split LO modes.   +
- +  A conventional analysis can be generated by specifying an additional null +
- +  (all zero) field direction or one along any unique crystallographic axis  +
- +  in %BLOCK PHONON_GAMMA_DIRECTIONS in <seedname>.cell.)                    +
- + .......................................................................... +
- +  Rep  Mul |    E  2'   3   I m_v  -3                                       +
- +           | ------------------------                                       +
- + a Tu    1 |    3  -1   0  -3   1   0                                       +
- + b Tg    1 |    3   1   0   3   1   0                                       +
  ==============================================================================
  ===================================================
                    Born Effective Charges
@@ -515,19 +488,19 @@ Writing model to aiida.check
  +     0.0000    0.0000    0.0000                                             +
  +                                                                            +
  + Mode number:   4 Raman tensor       Depolarisation Ratio                   +
- +    -0.0000   -1.0465   -0.1667      0.750000                               +
- +    -1.0465    0.0000   -0.5164                                             +
- +    -0.1667   -0.5164   -0.0000                                             +
+ +    -0.0001    0.0000    0.8660      0.750000                               +
+ +     0.0000   -0.0000    0.1308                                             +
+ +     0.8660    0.1308   -0.0001                                             +
  +                                                                            +
  + Mode number:   5 Raman tensor       Depolarisation Ratio                   +
- +    -0.0000    0.1448    0.9954      0.750000                               +
- +     0.1448   -0.0000   -0.6148                                             +
- +     0.9954   -0.6148   -0.0001                                             +
+ +     0.0000    0.0000    0.1308      0.750000                               +
+ +     0.0000    0.0001   -0.8660                                             +
+ +     0.1308   -0.8660    0.0001                                             +
  +                                                                            +
  + Mode number:   6 Raman tensor       Depolarisation Ratio                   +
- +    -0.0000    0.5229   -0.6092      0.750000                               +
- +     0.5229   -0.0000   -0.8632                                             +
- +    -0.6092   -0.8632   -0.0002                                             +
+ +    -0.0001    0.8759    0.0001      0.750000                               +
+ +     0.8759   -0.0001    0.0000                                             +
+ +     0.0001    0.0000   -0.0000                                             +
  +                                                                            +
  +----------------------------------------------------------------------------+
   
@@ -538,27 +511,27 @@ Writing model to aiida.check
  * -------------------------------------------------------- *
  *                         x            y            z      *
  *                                                          *
- * Si              1     -0.00000      0.00000      0.00000 *
+ * Si              1     -0.00000     -0.00000      0.00000 *
  * Si              2      0.00000      0.00000      0.00000 *
  *                                                          *
  ************************************************************
 
  Pseudo atomic calculation performed for Si 3s2 3p2
 
- Converged in 24 iterations to a total energy of -213.5526 eV
+ Converged in 24 iterations to a total energy of -213.5503 eV
 Charge spilling parameter for spin component 1 = 0.86%
 
             Orbital Populations       
      Ion    Atom   Orbital             Charge
   -------------------------------------------
-     Si     1      S                    1.363
-     Si     1      Px                   0.864
+     Si     1      S                    1.364
+     Si     1      Px                   0.853
      Si     1      Py                   0.901
-     Si     1      Pz                   0.872
-     Si     2      S                    1.363
-     Si     2      Px                   0.864
+     Si     1      Pz                   0.882
+     Si     2      S                    1.364
+     Si     2      Px                   0.853
      Si     2      Py                   0.901
-     Si     2      Pz                   0.872
+     Si     2      Pz                   0.882
   -------------------------------------------
                            Total:       8.000
   -------------------------------------------
@@ -584,17 +557,16 @@ Writing model to aiida.check
  A BibTeX formatted list of references used in this run has been written to 
  aiida.bib
  
-Initialisation time =      2.32 s
-Calculation time    =     95.03 s
+Initialisation time =      2.20 s
+Calculation time    =    310.92 s
 Finalisation time   =      0.02 s
-Total time          =     97.37 s
-Peak Memory Use     = 501756 kB
+Total time          =    313.14 s
+Peak Memory Use     = 506784 kB
   
-Overall parallel efficiency rating: Very good (88%)                             
+Overall parallel efficiency rating: Excellent (94%)                             
   
 Data was distributed by:-
-G-vector (2-way); efficiency rating: Excellent (97%)                            
-k-point (2-way); efficiency rating: Excellent (91%)                             
+k-point (4-way); efficiency rating: Excellent (95%)                             
   
 Parallel notes:
-1) Calculation only took 97.4 s, so efficiency estimates may be inaccurate.     
+1) Calculation only took 313.1 s, so efficiency estimates may be inaccurate.    

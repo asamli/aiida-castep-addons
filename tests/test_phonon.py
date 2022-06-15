@@ -8,6 +8,7 @@ from aiida_castep_addons.workflows.phonon import (
     add_metadata,
     phonon_analysis,
     seekpath_analysis,
+    thermo_analysis,
 )
 from ase.build import bulk
 
@@ -41,13 +42,27 @@ def test_phonon_analysis():
     ir_folder = orm.FolderData(tree=Path("registry/Si_phonon/dfpt/out").resolve())
     raman_folder = orm.FolderData(tree=Path("registry/Si_phonon/raman/out").resolve())
     results = phonon_analysis(
-        orm.Str("test_prefix"), ir_folder, kpoints, raman_folder, silicon, orm.ArrayData()
+        orm.Str("test_prefix"),
+        ir_folder,
+        kpoints,
+        raman_folder,
+        silicon,
+        orm.ArrayData(),
     )
 
     assert "band_data" in results
     assert "band_plot" in results
     assert "vib_spectrum_data" in results
     assert "vib_spectra" in results
+
+
+def test_thermo_analysis():
+    thermo_folder = orm.FolderData(tree=Path("registry/Si_phonon/thermo/out").resolve())
+    results = thermo_analysis(orm.Str("test_prefix"), thermo_folder)
+
+    assert "thermo_data" in results
+    assert "energy_plot" in results
+    assert "entropy_plot" in results
 
 
 def test_phonon_wc(mock_castep_code):
@@ -59,11 +74,11 @@ def test_phonon_wc(mock_castep_code):
     bld.calc.parameters = {
         "xc_functional": "pbesol",
         "fix_occupancy": True,
-        "cut_off_energy": 800,
+        "cut_off_energy": 400,
         "phonon_max_cycles": 100,
         "symmetry_generate": True,
     }
-    bld.kpoints_spacing = 0.09
+    bld.kpoints_spacing = 0.04
     phonon_kpoints = orm.KpointsData()
     phonon_kpoints.set_kpoints_mesh((3, 3, 3))
     bld.calc.phonon_kpoints = phonon_kpoints
@@ -80,8 +95,13 @@ def test_phonon_wc(mock_castep_code):
     bld.clean_workdir = True
     _, dfpt_node = run_get_node(bld)
 
+    bld.run_thermo = True
+    _, thermo_node = run_get_node(bld)
+
+    bld.run_thermo = False
     bld.use_supercell = True
     _, supercell_node = run_get_node(bld)
 
     assert dfpt_node.is_finished_ok
+    assert thermo_node.is_finished_ok
     assert supercell_node.is_finished_ok
