@@ -7,10 +7,9 @@ from __future__ import absolute_import
 from copy import deepcopy
 
 import aiida.orm as orm
-from aiida.engine import WorkChain, calcfunction
+from aiida.engine import WorkChain, calcfunction, if_
 from aiida.orm.nodes.data.base import to_aiida_type
 from aiida_castep.workflows.relax import CastepRelaxWorkChain
-from aiida_castep_addons.parsers.magnetic import MagneticParser
 from pymatgen.analysis.magnetism.analyzer import MagneticStructureEnumerator
 
 __version__ = "0.0.1"
@@ -52,10 +51,7 @@ def assemble_enum_data(indices, origins, spins, **kwargs):
             1
         ]
         total_energy = out_params["total_energy"] / num_formula_units
-        folder = kwargs[f"folder_{i}"]
-        dot_castep = folder.get_object_content("aiida.castep")
-        lines = dot_castep.split("\n")
-        parser = MagneticParser(lines)
+        final_spins = out_params["spins"]
         data_dict = {
             "index": i,
             "initial_structure": initial_structure.uuid,
@@ -63,8 +59,8 @@ def assemble_enum_data(indices, origins, spins, **kwargs):
             "initial_spins": spins[i - 1],
             "final_structure": final_structure.uuid,
             "total_energy_per_fu": total_energy,
-            "final_spins": parser.spins,
-            "total_spin": parser.total_spin,
+            "final_spins": final_spins,
+            "total_spin": sum(final_spins),
         }
         enum_data.append(data_dict)
     return enum_data
@@ -96,27 +92,36 @@ class CastepMagneticWorkChain(WorkChain):
             "enum_data",
             valid_type=orm.List,
             help="Data for the enumerated structures",
-            required=True,
+            required=False,
         )
         spec.output(
             "gs_structure",
             valid_type=orm.StructureData,
             help="The ground-state (lowest energy) structure",
-            required=True,
+            required=False,
         )
 
         # Outline of the WorkChain (the class methods to be run and their order)
         spec.outline(
             cls.setup,
-            cls.run_relax,
-            cls.analyse_relax,
-            cls.results,
+            if_(cls.should_run_relax)(cls.run_relax, cls.analyse_relax, cls.results),
         )
 
     def setup(self):
         """Initialise internal variables"""
         self.ctx.inputs = self.exposed_inputs(CastepRelaxWorkChain)
         self.ctx.parameters = self.ctx.inputs.calc.parameters.get_dict()
+
+    def should_run_relax(self):
+        """Enumerate magnetic orderings with Pymatgen and stop the workflow if there are too many structures"""
+        self.ctx.enum_structures = enumerate_spins(
+            self.ctx.inputs.structure, self.inputs.enum_options
+        )
+        if len(self.ctx.enum_structures["origins"]) > 100:
+            self.report("Too many enumerated structures. Stopping workflow.")
+            return False
+        else:
+            return True
 
     def run_relax(self):
         """Run relaxations on enumerated structures from Pymatgen's spin enumerator"""
@@ -129,9 +134,6 @@ class CastepMagneticWorkChain(WorkChain):
             }
         )
         inputs.calc.parameters = parameters
-        self.ctx.enum_structures = enumerate_spins(
-            inputs.structure, self.inputs.enum_options
-        )
         self.ctx.spins = orm.List(list=[])
         for i in range(len(self.ctx.enum_structures["origins"])):
             key = f"structure_{i+1}"
@@ -155,9 +157,6 @@ class CastepMagneticWorkChain(WorkChain):
             wc_node = self.ctx[key]
             if wc_node.is_finished_ok:
                 kwargs[f"out_params_{i+1}"] = wc_node.outputs.output_parameters
-                kwargs[f"folder_{i+1}"] = wc_node.called_descendants[
-                    -1
-                ].outputs.retrieved
                 indices.append(i + 1)
             else:
                 self.report(
@@ -174,5 +173,6 @@ class CastepMagneticWorkChain(WorkChain):
 
     def results(self):
         """Add the enumeration data and lowest energy structure to WorkChain outputs"""
-        self.out("enum_data", self.ctx.enum_data)
-        self.out("gs_structure", self.ctx.gs_structure)
+        if self.should_run_relax():
+            self.out("enum_data", self.ctx.enum_data)
+            self.out("gs_structure", self.ctx.gs_structure)

@@ -31,4 +31,3 @@ Workflows:
 
 Parsers:
 * `castep_addons.phonon`: Parser for CASTEP .phonon output files to extract the structure, vibrational spectrum data, q-points, phonon frequencies and eigenvectors.
-* `castep_addons.magnetic`: Parser to extract final spin data for spin-polarised calculations from .castep files.
