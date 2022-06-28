@@ -206,15 +206,18 @@ def thermo_analysis(prefix, thermo_folder):
     thermo_dot_castep = thermo_folder.get_object_content("aiida.castep")
     thermo_lines = thermo_dot_castep.split("\n")
     temperatures = []
-    energies = []
+    enthalpies = []
     free_energies = []
     entropies = []
     heat_capacities = []
     read_thermo = False
+    zero_point_energy = 0
     for line in thermo_lines:
         line = line.strip()
         if "Zero-point" in line:
             read_thermo = True
+            line = line.split()
+            zero_point_energy = float(line[-2])
             continue
         elif read_thermo and line == "":
             break
@@ -225,15 +228,15 @@ def thermo_analysis(prefix, thermo_folder):
             else:
                 line = line.split()
                 temperatures.append(float(line[0]))
-                energies.append(float(line[1]))
-                free_energies.append(float(line[2]))
+                enthalpies.append(float(line[1]) - zero_point_energy)
+                free_energies.append(float(line[2]) - zero_point_energy)
                 entropies.append(float(line[3]))
                 heat_capacities.append(float(line[4]))
 
     thermo_data = orm.Dict(
         dict={
             "temperatures": temperatures,
-            "energies": energies,
+            "enthalpies": enthalpies,
             "free_energies": free_energies,
             "entropies": entropies,
             "heat_capacities": heat_capacities,
@@ -241,11 +244,13 @@ def thermo_analysis(prefix, thermo_folder):
     )
 
     with TemporaryDirectory() as temp:
-        # Plotting energy and Helmholtz free energy against temperature
-        plt.plot(temperatures, energies, label="Energy")
+        # Plotting enthalpy and Helmholtz free energy against temperature
+        plt.plot(temperatures, enthalpies, label="Enthalpy")
         plt.plot(temperatures, free_energies, label="Helmholtz free energy")
         plt.xlabel(f"Temperature (K)")
+        plt.xlim(left=min(temperatures))
         plt.ylabel(f"eV")
+        plt.ylim(bottom=min(free_energies))
         plt.legend(loc="best")
         plt.savefig(
             fname=f"{temp}/{prefix.value}_thermo_energies.pdf", bbox_inches="tight"
@@ -257,7 +262,9 @@ def thermo_analysis(prefix, thermo_folder):
         plt.plot(temperatures, entropies, label="Entropy")
         plt.plot(temperatures, heat_capacities, label="Heat capacity (Cv)")
         plt.xlabel(f"Temperature (K)")
+        plt.xlim(left=min(temperatures))
         plt.ylabel(f"J/mol/K")
+        plt.ylim(bottom=min(entropies + heat_capacities))
         plt.legend(loc="best")
         plt.savefig(
             fname=f"{temp}/{prefix.value}_thermo_entropies.pdf", bbox_inches="tight"
@@ -366,7 +373,7 @@ class CastepPhononWorkChain(WorkChain):
         spec.output(
             "thermo_energy_plot",
             valid_type=orm.SinglefileData,
-            help="A plot of energy and Helmholtz free energy against temperature as a PDF file",
+            help="A plot of enthalpy and Helmholtz free energy against temperature as a PDF file",
             required=False,
         )
         spec.output(
