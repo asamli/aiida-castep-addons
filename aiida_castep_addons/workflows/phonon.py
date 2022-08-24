@@ -60,9 +60,7 @@ def add_metadata(file, fname, formula, uuid, label, description):
 
 
 @calcfunction
-def phonon_analysis(
-    prefix, ir_folder, kpoints, raman_folder, structure, experimental_spectra
-):
+def phonon_analysis(prefix, ir_folder, kpoints, raman_folder, experimental_spectra):
     """Parse and plot the phonon band structure, IR spectrum and Raman spectrum"""
     ir_dot_phonon = ir_folder.get_object_content("aiida.phonon")
     ir_lines = ir_dot_phonon.split("\n")
@@ -107,7 +105,8 @@ def phonon_analysis(
 
         # Create BandsData for the phonon band structure
         band_data = orm.BandsData()
-        band_data.set_cell_from_structure(structure)
+        aiida_structure = orm.StructureData(pymatgen=pmg_structure)
+        band_data.set_cell_from_structure(aiida_structure)
         band_data.set_kpoints(parsed_qpoints)
         band_data.set_bands(frequencies, units="THz")
         band_data.labels = labels
@@ -316,6 +315,14 @@ class CastepPhononWorkChain(WorkChain):
             default=lambda: orm.Bool(False),
         )
         spec.input(
+            "run_phonon",
+            valid_type=orm.Bool,
+            serializer=to_aiida_type,
+            help="Run the phonon band structure and Raman calculations or not (True by default)",
+            required=False,
+            default=lambda: orm.Bool(True),
+        )
+        spec.input(
             "run_thermo",
             valid_type=orm.Bool,
             serializer=to_aiida_type,
@@ -344,25 +351,25 @@ class CastepPhononWorkChain(WorkChain):
             "phonon_bands",
             valid_type=orm.BandsData,
             help="The parsed BandsData for the phonon bands.",
-            required=True,
+            required=False,
         )
         spec.output(
             "phonon_band_plot",
             valid_type=orm.SinglefileData,
             help="A plot of the phonon band structure as a PDF file",
-            required=True,
+            required=False,
         )
         spec.output(
             "vib_spectrum_data",
             valid_type=orm.ArrayData,
             help="IR and Raman spectrum data as ArrayData",
-            required=True,
+            required=False,
         )
         spec.output(
             "vib_spectra",
             valid_type=orm.SinglefileData,
             help="IR and Raman spectra of the material as a PDF file",
-            required=True,
+            required=False,
         )
         spec.output(
             "thermo_data",
@@ -386,10 +393,10 @@ class CastepPhononWorkChain(WorkChain):
         # Outline of the WorkChain (the class methods to be run and their order)
         spec.outline(
             cls.setup,
-            cls.run_phonon,
-            cls.run_raman,
+            if_(cls.should_run_phonon)(
+                cls.run_phonon, cls.run_raman, cls.analyse_phonons
+            ),
             if_(cls.should_run_thermo)(cls.run_thermo, cls.analyse_thermo),
-            cls.analyse_phonons,
             cls.results,
         )
 
@@ -402,6 +409,10 @@ class CastepPhononWorkChain(WorkChain):
             self.ctx.prefix = prefix
         else:
             self.ctx.prefix = f'{self.ctx.inputs.calc.structure.get_formula()}_{self.ctx.parameters["xc_functional"]}'
+
+    def should_run_phonon(self):
+        """Whether the phonon band structure and Raman calculations should be run or not"""
+        return self.inputs.run_phonon
 
     def should_run_thermo(self):
         """Whether a thermodynamics calculation should be run or not"""
@@ -419,14 +430,11 @@ class CastepPhononWorkChain(WorkChain):
                 {"phonon_fine_method": "interpolate", "fix_occupancy": True}
             )
         inputs.calc.parameters = phonon_parameters
-        current_structure = inputs.calc.structure
         seekpath_data = seekpath_analysis(
-            current_structure, self.inputs.seekpath_parameters
+            inputs.calc.structure, self.inputs.seekpath_parameters
         )
         self.ctx.band_kpoints = seekpath_data["kpoints"]
-        self.ctx.seekpath_structure = seekpath_data["prim_cell"]
         inputs.calc.phonon_fine_kpoints = self.ctx.band_kpoints
-        inputs.calc.structure = self.ctx.seekpath_structure
         running = self.submit(CastepBaseWorkChain, **inputs)
         self.report("Running phonon band structure calculation")
         return ToContext(phonon=running)
@@ -457,12 +465,11 @@ class CastepPhononWorkChain(WorkChain):
             thermo_parameters.update(
                 {"phonon_fine_method": "interpolate", "fix_occupancy": True}
             )
-        phonon_kpoints = orm.KpointsData()
-        phonon_kpoints.set_kpoints_mesh((3, 3, 3))
-        inputs.calc.phonon_kpoints = phonon_kpoints
         inputs.calc.parameters = thermo_parameters
-        inputs.calc.phonon_fine_kpoints = self.ctx.band_kpoints
-        inputs.calc.structure = self.ctx.seekpath_structure
+        seekpath_data = seekpath_analysis(
+            inputs.calc.structure, self.inputs.seekpath_parameters
+        )
+        inputs.calc.phonon_fine_kpoints = seekpath_data["kpoints"]
         running = self.submit(CastepBaseWorkChain, **inputs)
         self.report("Running thermodynamics calculation")
         return ToContext(thermo=running)
@@ -474,7 +481,6 @@ class CastepPhononWorkChain(WorkChain):
             self.ctx.phonon.called[-1].outputs.retrieved,
             self.ctx.band_kpoints,
             self.ctx.raman.called[-1].outputs.retrieved,
-            self.ctx.inputs.calc.structure,
             self.inputs.experimental_spectra,
         )
         self.ctx.phonon_bands = outputs["band_data"]
@@ -523,11 +529,12 @@ class CastepPhononWorkChain(WorkChain):
 
     def results(self):
         """Add the phonon band structure plot, IR spectrum data and Raman spectrum data to the WorkChain outputs"""
-        self.out("phonon_bands", self.ctx.phonon_bands)
-        self.out("phonon_band_plot", self.ctx.phonon_band_plot)
-        self.out("vib_spectrum_data", self.ctx.vib_spectrum_data)
-        self.out("vib_spectra", self.ctx.vib_spectra)
+        if self.inputs.run_phonon:
+            self.out("phonon_bands", self.ctx.phonon_bands)
+            self.out("phonon_band_plot", self.ctx.phonon_band_plot)
+            self.out("vib_spectrum_data", self.ctx.vib_spectrum_data)
+            self.out("vib_spectra", self.ctx.vib_spectra)
         if self.inputs.run_thermo:
             self.out("thermo_data", self.ctx.thermo_data)
             self.out("thermo_energy_plot", self.ctx.thermo_energy_plot)
-            self.out("thermo_entropy_plot", self.ctx.thermo_energy_plot)
+            self.out("thermo_entropy_plot", self.ctx.thermo_entropy_plot)

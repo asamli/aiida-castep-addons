@@ -14699,6 +14699,7 @@ def test_analysis():
 
     assert "dos_plot" in results
     assert "labelled_bands" in results
+    assert "band_gap" in results
     assert "band_plot" in results
     assert "ups_spectrum" in results
     assert "xps_spectrum" in results

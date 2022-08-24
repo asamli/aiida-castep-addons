@@ -96,9 +96,11 @@ def test_phonon_wc(mock_castep_code):
     _, dfpt_node = run_get_node(bld)
 
     bld.run_thermo = True
+    bld.run_phonon = False
     _, thermo_node = run_get_node(bld)
 
     bld.run_thermo = False
+    bld.run_phonon = True
     bld.use_supercell = True
     _, supercell_node = run_get_node(bld)
 

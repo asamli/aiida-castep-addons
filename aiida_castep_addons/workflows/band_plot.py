@@ -14,7 +14,10 @@ from aiida.orm.nodes.data.base import to_aiida_type
 from aiida.tools.data.array.kpoints import get_explicit_kpoints_path
 from aiida_castep.utils.dos import DOSProcessor
 from aiida_castep.workflows.base import CastepBaseWorkChain
-from aiida_castep_addons.utils.sumo_plotter import get_sumo_bands_plotter
+from aiida_castep_addons.utils.sumo_plotter import (
+    get_pmg_bandstructure,
+    get_sumo_bands_plotter,
+)
 from castepxbin.pdos import compute_pdos
 from pymatgen.electronic_structure.dos import CompleteDos, Dos, Spin
 from PyPDF2 import PdfFileReader, PdfFileWriter
@@ -293,6 +296,10 @@ def analysis(
             bands_efermi = labelled_bands.get_attribute("efermi")[0]
         else:
             bands_efermi = labelled_bands.get_attribute("efermi")
+        pmg_bands = get_pmg_bandstructure(labelled_bands, bands_efermi)
+        if labelled_bands.get_attribute("nspins") > 1:
+            pmg_bands.efermi = bands_efermi
+        band_gap = pmg_bands.get_band_gap()
         band_plotter = get_sumo_bands_plotter(labelled_bands, bands_efermi).get_plot(
             ymin=-12, ymax=12
         )
@@ -304,6 +311,7 @@ def analysis(
     return {
         "dos_plot": dos_plot,
         "labelled_bands": labelled_bands,
+        "band_gap": orm.Dict(dict=band_gap),
         "band_plot": band_plot,
         "ups_spectrum": ups_spectrum,
         "xps_spectrum": xps_spectrum,
@@ -371,6 +379,12 @@ class CastepBandPlotWorkChain(WorkChain):
             "labelled_band_data",
             valid_type=orm.BandsData,
             help="The labelled BandsData for the band structure calculation",
+            required=True,
+        )
+        spec.output(
+            "band_gap",
+            valid_type=orm.Dict,
+            help="The band gap information from Pymatgen as a dictionary",
             required=True,
         )
         spec.output(
@@ -490,6 +504,7 @@ class CastepBandPlotWorkChain(WorkChain):
             orm.Str(self.inputs.metadata.get("description", "")),
         )
         self.ctx.labelled_bands = outputs["labelled_bands"]
+        self.ctx.band_gap = outputs["band_gap"]
         self.ctx.band_plot = add_metadata(
             outputs["band_plot"],
             orm.Str(f"{self.ctx.prefix}_bands.pdf"),
@@ -540,6 +555,7 @@ class CastepBandPlotWorkChain(WorkChain):
         self.out("dos_folder", self.ctx.dos.called[-1].outputs.retrieved)
         self.out("dos_plot", self.ctx.dos_plot)
         self.out("labelled_band_data", self.ctx.labelled_bands)
+        self.out("band_gap", self.ctx.band_gap)
         self.out("band_plot", self.ctx.band_plot)
         self.out("ups_spectrum", self.ctx.ups_spectrum)
         self.out("xps_spectrum", self.ctx.xps_spectrum)
