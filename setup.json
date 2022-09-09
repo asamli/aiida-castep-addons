@@ -23,7 +23,8 @@
 	    "castep_addons.band_plot = aiida_castep_addons.workflows.band_plot:CastepBandPlotWorkChain",
 	    "castep_addons.phonon = aiida_castep_addons.workflows.phonon:CastepPhononWorkChain",
         "castep_addons.magnetic = aiida_castep_addons.workflows.magnetic:CastepMagneticWorkChain",
-        "castep_addons.core_loss = aiida_castep_addons.workflows.core_loss:CastepCoreLossWorkChain"
+        "castep_addons.core_loss = aiida_castep_addons.workflows.core_loss:CastepCoreLossWorkChain",
+        "castep_addons.alloy = aiida_castep_addons.workflows.alloy:CastepAlloyWorkChain"
 	]
     },
     "include_package_data": true,
@@ -38,6 +39,7 @@
 	    "sumo",
         "galore",
         "PyPDF2",
+        "bsym",
 	    "aiida-castep@git+https://github.com/zhubonan/aiida-castep"
     ],
     "extras_require": {

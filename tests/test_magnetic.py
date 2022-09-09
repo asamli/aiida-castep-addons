@@ -19,10 +19,11 @@ def test_magnetic_wc(mock_castep_code):
     bld.base.pseudos_family = "C19"
     bld.calc.parameters = {
         "xc_functional": "pbesol",
-        "cut_off_energy": 450,
+        "cut_off_energy": 675,
+        "max_scf_cycles": 200,
         "symmetry_generate": True,
     }
-    bld.base.kpoints_spacing = 0.03
+    bld.base.kpoints_spacing = 0.04
     structure = orm.StructureData(ase=bulk("Fe", "bcc", 2.86))
     bld.structure = structure
     bld.calc.metadata.options.max_wallclock_seconds = 3600

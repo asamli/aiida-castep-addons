@@ -62,7 +62,7 @@
  FFT Lib : mkl
  Fundamental constants values: CODATA 2014
 
- Run started: Tue, 23 Aug 2022 14:22:17 +0100
+ Run started: Wed, 15 Jun 2022 15:30:54 +0100
  +-------------------------------------------------+
  |                                                 |
  |  D D D D    F F F F F  P P P P     T T T T T    |
@@ -92,7 +92,7 @@
  Converged in 56 iterations to an ae energy of -7872.211 eV
 
    ============================================================                
-   | Pseudopotential Report - Date of generation 23-08-2022   |                
+   | Pseudopotential Report - Date of generation 15-06-2022   |                
    ------------------------------------------------------------                
    | Element: Si Ionic charge:  4.00 Level of theory: PBESOL  |                
    | Atomic Solver: Koelling-Harmon                           |                
@@ -168,7 +168,7 @@
  output    efield chi2 unit                     : pm/V
   
  wavefunctions paging                           : none
- random number generator seed                   : randomised (142217352)
+ random number generator seed                   : randomised (153054570)
  data distribution                              : optimal for this architecture
  optimization strategy                          : balance speed and memory
 
@@ -269,8 +269,8 @@
             x  Element    Atom        Fractional coordinates of atoms  x
             x            Number           u          v          w      x
             x----------------------------------------------------------x
-            x  Si           1         0.000000   0.000000   0.000000   x 
-            x  Si           2         0.250000   0.250000   0.250000   x 
+            x  Si           1         0.500000   0.500000  -0.500000   x 
+            x  Si           2         0.750000  -0.250000   0.750000   x 
             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 
@@ -337,17 +337,17 @@ Calculating total energy with cut-off of  400.000 eV.
 SCF loop      Energy                           Energy gain       Timer   <-- SCF
                                                per atom          (sec)   <-- SCF
 ------------------------------------------------------------------------ <-- SCF
-Initial  -4.13766836E+001                                          2.40  <-- SCF
-      1  -4.20586954E+002                    1.89605135E+002       2.77  <-- SCF
-      2  -4.38182681E+002                    8.79786321E+000       3.12  <-- SCF
-      3  -4.38614752E+002                    2.16035689E-001       3.50  <-- SCF
-      4  -4.38622123E+002                    3.68524044E-003       3.87  <-- SCF
-      5  -4.38622250E+002                    6.33799361E-005       4.29  <-- SCF
-      6  -4.38622252E+002                    1.36188916E-006       4.64  <-- SCF
-      7  -4.38622252E+002                    3.14320416E-008       5.05  <-- SCF
-      8  -4.38622252E+002                    7.39558115E-010       5.41  <-- SCF
-      9  -4.38622252E+002                    2.15583607E-011       5.84  <-- SCF
-     10  -4.38622252E+002                    2.22350806E-012       6.33  <-- SCF
+Initial  -4.28250387E+001                                          2.29  <-- SCF
+      1  -4.21165460E+002                    1.89170210E+002       2.66  <-- SCF
+      2  -4.38248949E+002                    8.54174480E+000       3.05  <-- SCF
+      3  -4.38617559E+002                    1.84304765E-001       3.40  <-- SCF
+      4  -4.38622161E+002                    2.30121328E-003       3.77  <-- SCF
+      5  -4.38622250E+002                    4.44831962E-005       4.14  <-- SCF
+      6  -4.38622252E+002                    1.10303454E-006       4.50  <-- SCF
+      7  -4.38622252E+002                    2.98314058E-008       4.87  <-- SCF
+      8  -4.38622252E+002                    8.44353016E-010       5.23  <-- SCF
+      9  -4.38622252E+002                    2.50386342E-011       5.60  <-- SCF
+     10  -4.38622252E+002                    1.93348527E-012       6.21  <-- SCF
 ------------------------------------------------------------------------ <-- SCF
  
 Final energy =  -438.6222523034     eV
@@ -358,7 +358,7 @@ Writing analysis data to aiida.castep_bin
 
 Writing model to aiida.check
 
- Efield perturbation    1:  X                                             6.51s
+ Efield perturbation    1:  X                                             6.40s
   Parallel strategy changed for perturbation using 144 k-points
   Data is distributed by G-vector(1-way) and k-point(4-way) and band(1-way)
   +---------------- MEMORY AND SCRATCH DISK ESTIMATES PER PROCESS --------------+
@@ -372,7 +372,7 @@ Writing model to aiida.check
   |                                                                             |
   | Requirements will fluctuate during execution and may exceed these estimates |
   +-----------------------------------------------------------------------------+
- Perturbation    1 (of    1): Si    1 X at q=( 0.000, 0.000, 0.000):     12.86s
+ Perturbation    1 (of    1): Si    1 X at q=( 0.000, 0.000, 0.000):     12.84s
   Parallel strategy changed for perturbation using 288 k-points
   Data is distributed by G-vector(1-way) and k-point(4-way) and band(1-way)
   +---------------- MEMORY AND SCRATCH DISK ESTIMATES PER PROCESS --------------+
@@ -387,7 +387,7 @@ Writing model to aiida.check
   | Requirements will fluctuate during execution and may exceed these estimates |
   +-----------------------------------------------------------------------------+
 
- Phonon calculation: q-point   1 (of    1) ( 0.000, 0.000, 0.000):       23.42s
+ Phonon calculation: q-point   1 (of    1) ( 0.000, 0.000, 0.000):       23.65s
  -------------------------------------------------------------------------------
  
  ==============================================================================
@@ -407,7 +407,7 @@ Writing model to aiida.check
  + Mode     3: not Raman active; calculation not required                     +
  + Mode     4: performing Raman intensity calculation                         +
 
- Efield perturbation    1:  X                                            70.95s
+ Efield perturbation    1:  X                                            74.46s
   +---------------- MEMORY AND SCRATCH DISK ESTIMATES PER PROCESS --------------+
   |                                                     Memory          Disk    |
   | Baseline code, static data and system overhead      361.0 MB         0.0 MB |
@@ -420,35 +420,35 @@ Writing model to aiida.check
   | Requirements will fluctuate during execution and may exceed these estimates |
   +-----------------------------------------------------------------------------+
 
- Efield perturbation    2:  Y                                           117.17s
+ Efield perturbation    2:  Y                                           121.84s
 
- Efield perturbation    3:  Z                                           143.96s
+ Efield perturbation    3:  Z                                           149.39s
 
- Efield perturbation    1:  X                                           203.59s
+ Efield perturbation    1:  X                                           210.50s
 
- Efield perturbation    2:  Y                                           249.98s
+ Efield perturbation    2:  Y                                           257.17s
 
- Efield perturbation    3:  Z                                           276.91s
- + Mode number:   4 completed;                   time taken:   280.38 seconds +
+ Efield perturbation    3:  Z                                           284.69s
+ + Mode number:   4 completed;                   time taken:   289.28 seconds +
  + Mode     5: degenerate with previous; explicit calculation not required    +
  + Mode     6: degenerate with previous; explicit calculation not required    +
  +----------------------------------------------------------------------------+
  +   E N D    O F    R A M A N    I N T E N S I T Y    C A L C U L A T I O N  +
- +         Raman intensity calculation completed in     280.39 seconds        +
+ +         Raman intensity calculation completed in     289.28 seconds        +
  +============================================================================+
  + -------------------------------------------------------------------------- +
  +  q-pt=    1 (  0.000000  0.000000  0.000000)     1.0000000000              +
  + -------------------------------------------------------------------------- +
- +  Acoustic sum rule correction <  56.148119 cm-1 applied                    +
+ +  Acoustic sum rule correction <  56.148039 cm-1 applied                    +
  +     N      Frequency irrep.    ir intensity active  raman activity  active + 
  +                (cm-1)         ((D/A)**2/amu)              (A**4/amu)       + 
  +                                                                            +
  +     1      -0.026685   a          0.0000000  N            0.0000000  N     + 
  +     2      -0.026685   a          0.0000000  N            0.0000000  N     + 
  +     3      -0.026685   a          0.0000000  N            0.0000000  N     + 
- +     4     512.379453   b          0.0000000  N          644.8686098  Y     + 
- +     5     512.379453   b          0.0000000  N          644.8349984  Y     + 
- +     6     512.379453   b          0.0000000  N          644.8824466  Y     + 
+ +     4     512.379443   b          0.0000000  N          644.8258162  Y     + 
+ +     5     512.379443   b          0.0000000  N          644.8258162  Y     + 
+ +     6     512.379443   b          0.0000000  N          644.7951185  Y     + 
  + .......................................................................... +
  +        Character table from group theory analysis of eigenvectors          +
  +                           Point Group =  32, Oh                            +
@@ -488,19 +488,19 @@ Writing model to aiida.check
  +     0.0000    0.0000    0.0000                                             +
  +                                                                            +
  + Mode number:   4 Raman tensor       Depolarisation Ratio                   +
- +     0.0000   -0.1536    0.0600      0.750000                               +
- +    -0.1536    0.0001   -0.8602                                             +
- +     0.0600   -0.8602    0.0001                                             +
+ +    -0.0001    0.0000    0.8660      0.750000                               +
+ +     0.0000   -0.0000    0.1308                                             +
+ +     0.8660    0.1308   -0.0001                                             +
  +                                                                            +
  + Mode number:   5 Raman tensor       Depolarisation Ratio                   +
- +     0.0001   -0.2046    0.8463      0.750000                               +
- +    -0.2046    0.0001    0.0956                                             +
- +     0.8463    0.0956    0.0001                                             +
+ +     0.0000    0.0000    0.1308      0.750000                               +
+ +     0.0000    0.0001   -0.8660                                             +
+ +     0.1308   -0.8660    0.0001                                             +
  +                                                                            +
  + Mode number:   6 Raman tensor       Depolarisation Ratio                   +
- +    -0.0001    0.8377    0.2177      0.750000                               +
- +     0.8377   -0.0001   -0.1344                                             +
- +     0.2177   -0.1344   -0.0000                                             +
+ +    -0.0001    0.8759    0.0001      0.750000                               +
+ +     0.8759   -0.0001    0.0000                                             +
+ +     0.0001    0.0000   -0.0000                                             +
  +                                                                            +
  +----------------------------------------------------------------------------+
   
@@ -511,7 +511,7 @@ Writing model to aiida.check
  * -------------------------------------------------------- *
  *                         x            y            z      *
  *                                                          *
- * Si              1      0.00000      0.00000      0.00000 *
+ * Si              1     -0.00000     -0.00000      0.00000 *
  * Si              2      0.00000      0.00000      0.00000 *
  *                                                          *
  ************************************************************
@@ -557,16 +557,16 @@ Writing model to aiida.check
  A BibTeX formatted list of references used in this run has been written to 
  aiida.bib
  
-Initialisation time =      2.31 s
-Calculation time    =    301.66 s
-Finalisation time   =      0.01 s
-Total time          =    303.99 s
-Peak Memory Use     = 505932 kB
+Initialisation time =      2.20 s
+Calculation time    =    310.92 s
+Finalisation time   =      0.02 s
+Total time          =    313.14 s
+Peak Memory Use     = 506784 kB
   
 Overall parallel efficiency rating: Excellent (94%)                             
   
 Data was distributed by:-
-k-point (4-way); efficiency rating: Excellent (96%)                             
+k-point (4-way); efficiency rating: Excellent (95%)                             
   
 Parallel notes:
-1) Calculation only took 304.0 s, so efficiency estimates may be inaccurate.    
+1) Calculation only took 313.1 s, so efficiency estimates may be inaccurate.    

@@ -434,6 +434,7 @@ class CastepPhononWorkChain(WorkChain):
             inputs.calc.structure, self.inputs.seekpath_parameters
         )
         self.ctx.band_kpoints = seekpath_data["kpoints"]
+        inputs.calc.structure = seekpath_data["prim_cell"]
         inputs.calc.phonon_fine_kpoints = self.ctx.band_kpoints
         running = self.submit(CastepBaseWorkChain, **inputs)
         self.report("Running phonon band structure calculation")
@@ -469,6 +470,7 @@ class CastepPhononWorkChain(WorkChain):
         seekpath_data = seekpath_analysis(
             inputs.calc.structure, self.inputs.seekpath_parameters
         )
+        inputs.calc.structure = seekpath_data["prim_cell"]
         inputs.calc.phonon_fine_kpoints = seekpath_data["kpoints"]
         running = self.submit(CastepBaseWorkChain, **inputs)
         self.report("Running thermodynamics calculation")

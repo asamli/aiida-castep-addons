@@ -203,10 +203,10 @@ class CastepConvergeWorkChain(WorkChain):
             default=lambda: orm.Float(0.01),
         )
         spec.input(
-            "energy_error",
+            "energy_tolerance",
             valid_type=orm.Float,
             serializer=to_aiida_type,
-            help="""The acceptable error for the ground state energy in electron volts (eV). When the energy difference per atom between two
+            help="""The tolerance for the ground state energy in electron volts (eV). When the energy difference per atom between two
                     convergence calculations goes below this value, the former is considered converged.""",
             required=False,
             default=lambda: orm.Float(0.001),
@@ -236,7 +236,7 @@ class CastepConvergeWorkChain(WorkChain):
             default=lambda: orm.Float(5.0),
         )
         spec.input(
-            "frequency_error",
+            "frequency_tolerance",
             valid_type=orm.Float,
             serializer=to_aiida_type,
             help="""The acceptable mean percentage error (MPE) for the phonon band frequencies. When the MPE 
@@ -364,7 +364,7 @@ class CastepConvergeWorkChain(WorkChain):
                 abs(last_energy - second_last_energy)
                 / wc.outputs.output_parameters["num_ions"]
             )
-            if energy_diff_per_atom < self.inputs.energy_error:
+            if energy_diff_per_atom < self.inputs.energy_tolerance:
                 conv_pwcutoff = self.ctx.pwcutoff_calcs[i - 1].inputs.calc.parameters[
                     "cut_off_energy"
                 ]
@@ -417,7 +417,7 @@ class CastepConvergeWorkChain(WorkChain):
                 abs(last_energy - second_last_energy)
                 / wc.outputs.output_parameters["num_ions"]
             )
-            if energy_diff_per_atom < self.inputs.energy_error:
+            if energy_diff_per_atom < self.inputs.energy_tolerance:
                 conv_kspacing = self.ctx.kspacing_calcs[
                     i - 1
                 ].inputs.kpoints_spacing.value
@@ -456,8 +456,7 @@ class CastepConvergeWorkChain(WorkChain):
             }
         )
         inputs.calc.parameters = parameters
-        current_structure = inputs.calc.structure
-        seekpath_data = seekpath_analysis(current_structure)
+        seekpath_data = seekpath_analysis(inputs.calc.structure)
         self.ctx.kpoints = seekpath_data["kpoints"]
         inputs.calc.phonon_fine_kpoints = self.ctx.kpoints
         inputs.calc.structure = seekpath_data["prim_cell"]
@@ -512,7 +511,7 @@ class CastepConvergeWorkChain(WorkChain):
             )
             mean_percentage_error = np.mean(percentage_errors)
             if (
-                mean_percentage_error < (self.inputs.frequency_error / 100)
+                mean_percentage_error < (self.inputs.frequency_tolerance / 100)
                 and not self.ctx.supercell_converged
             ):
                 self.report(
