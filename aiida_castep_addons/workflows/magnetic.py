@@ -12,8 +12,6 @@ from aiida.orm.nodes.data.base import to_aiida_type
 from aiida_castep.workflows.relax import CastepRelaxWorkChain
 from pymatgen.analysis.magnetism.analyzer import MagneticStructureEnumerator
 
-__version__ = "0.0.1"
-
 
 @calcfunction
 def enumerate_spins(structure, enum_options):

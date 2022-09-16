@@ -11,52 +11,12 @@ import matplotlib.pyplot as plt
 import numpy as np
 from aiida.engine import ToContext, WorkChain, calcfunction, if_
 from aiida.orm.nodes.data.base import to_aiida_type
-from aiida.tools.data.array.kpoints import get_explicit_kpoints_path
 from aiida_castep.workflows.base import CastepBaseWorkChain
 from aiida_castep_addons.parsers.phonon import PhononParser
+from aiida_castep_addons.utils import add_metadata, seekpath_analysis
 from pymatgen.core.lattice import Lattice
 from pymatgen.phonon.bandstructure import PhononBandStructureSymmLine
-from PyPDF2 import PdfFileReader, PdfFileWriter
 from sumo.plotting.phonon_bs_plotter import SPhononBSPlotter
-
-__version__ = "0.0.1"
-
-
-@calcfunction
-def seekpath_analysis(structure, parameters):
-    """
-    Use seekpath for automatic k-point path generation.
-    The k-point path is only valid for the generated primitive cell which may or may not be the same as the input structure.
-    """
-    seekpath = get_explicit_kpoints_path(structure, **parameters.get_dict())
-    return {
-        "kpoints": seekpath["explicit_kpoints"],
-        "prim_cell": seekpath["primitive_structure"],
-    }
-
-
-@calcfunction
-def add_metadata(file, fname, formula, uuid, label, description):
-    """Add workflow metadata to a PDF file with PyPDF2"""
-    with TemporaryDirectory() as temp:
-        with file.open(mode="rb") as fin:
-            reader = PdfFileReader(fin)
-            writer = PdfFileWriter()
-            writer.appendPagesFromReader(reader)
-            metadata = reader.getDocumentInfo()
-            writer.addMetadata(metadata)
-            writer.addMetadata(
-                {
-                    "/Formula": formula.value,
-                    "/WorkchainUUID": uuid.value,
-                    "/WorkchainLabel": label.value,
-                    "/WorkchainDescription": description.value,
-                }
-            )
-            with open(f"{temp}/{fname.value}", "ab") as fout:
-                writer.write(fout)
-        output_file = orm.SinglefileData(f"{temp}/{fname.value}")
-    return output_file
 
 
 @calcfunction
@@ -307,14 +267,6 @@ class CastepPhononWorkChain(WorkChain):
             default=lambda: orm.Dict(dict={}),
         )
         spec.input(
-            "use_supercell",
-            valid_type=orm.Bool,
-            serializer=to_aiida_type,
-            help="Use the finite displacement (supercell) method or not. Default is False (linear response/DFPT method).",
-            required=False,
-            default=lambda: orm.Bool(False),
-        )
-        spec.input(
             "run_phonon",
             valid_type=orm.Bool,
             serializer=to_aiida_type,
@@ -403,12 +355,12 @@ class CastepPhononWorkChain(WorkChain):
     def setup(self):
         """Initialise internal variables"""
         self.ctx.inputs = self.exposed_inputs(CastepBaseWorkChain)
+        self.ctx.phonon_kpoints = self.ctx.inputs.calc.get("phonon_kpoints", [3, 3, 3])
         self.ctx.parameters = self.ctx.inputs.calc.parameters.get_dict()
-        prefix = self.inputs.get("file_prefix", None)
-        if prefix:
-            self.ctx.prefix = prefix
-        else:
-            self.ctx.prefix = f'{self.ctx.inputs.calc.structure.get_formula()}_{self.ctx.parameters["xc_functional"]}'
+        self.ctx.prefix = self.inputs.get(
+            "file_prefix",
+            f"{self.ctx.inputs.calc.structure.get_formula()}_{self.ctx.parameters['xc_functional']}",
+        )
 
     def should_run_phonon(self):
         """Whether the phonon band structure and Raman calculations should be run or not"""
@@ -423,12 +375,8 @@ class CastepPhononWorkChain(WorkChain):
         inputs = self.ctx.inputs
         phonon_parameters = deepcopy(self.ctx.parameters)
         phonon_parameters.update({"task": "phonon+efield"})
-        if self.inputs.use_supercell:
+        if "phonon_fine_method" not in phonon_parameters:
             phonon_parameters.update({"phonon_fine_method": "supercell"})
-        else:
-            phonon_parameters.update(
-                {"phonon_fine_method": "interpolate", "fix_occupancy": True}
-            )
         inputs.calc.parameters = phonon_parameters
         seekpath_data = seekpath_analysis(
             inputs.calc.structure, self.inputs.seekpath_parameters
@@ -460,13 +408,10 @@ class CastepPhononWorkChain(WorkChain):
         thermo_parameters = deepcopy(self.ctx.parameters)
         thermo_parameters.update({"task": "thermodynamics"})
         thermo_parameters.update(self.inputs.thermo_parameters)
-        if self.inputs.use_supercell:
+        if "phonon_fine_method" not in thermo_parameters:
             thermo_parameters.update({"phonon_fine_method": "supercell"})
-        else:
-            thermo_parameters.update(
-                {"phonon_fine_method": "interpolate", "fix_occupancy": True}
-            )
         inputs.calc.parameters = thermo_parameters
+        inputs.calc.phonon_kpoints = self.ctx.phonon_kpoints
         seekpath_data = seekpath_analysis(
             inputs.calc.structure, self.inputs.seekpath_parameters
         )

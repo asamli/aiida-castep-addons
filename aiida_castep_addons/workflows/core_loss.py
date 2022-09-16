@@ -10,33 +10,7 @@ import matplotlib.pyplot as plt
 from aiida.engine import ToContext, WorkChain, calcfunction
 from aiida.orm.nodes.data.base import to_aiida_type
 from aiida_castep.workflows.base import CastepBaseWorkChain
-from PyPDF2 import PdfFileReader, PdfFileWriter
-
-__version__ = "0.0.1"
-
-
-@calcfunction
-def add_metadata(file, fname, formula, uuid, label, description):
-    """Add workflow metadata to a PDF file with PyPDF2"""
-    with TemporaryDirectory() as temp:
-        with file.open(mode="rb") as fin:
-            reader = PdfFileReader(fin)
-            writer = PdfFileWriter()
-            writer.appendPagesFromReader(reader)
-            metadata = reader.getDocumentInfo()
-            writer.addMetadata(metadata)
-            writer.addMetadata(
-                {
-                    "/Formula": formula.value,
-                    "/WorkchainUUID": uuid.value,
-                    "/WorkchainLabel": label.value,
-                    "/WorkchainDescription": description.value,
-                }
-            )
-            with open(f"{temp}/{fname.value}", "ab") as fout:
-                writer.write(fout)
-        output_file = orm.SinglefileData(f"{temp}/{fname.value}")
-    return output_file
+from aiida_castep_addons.utils import add_metadata
 
 
 @calcfunction
@@ -142,6 +116,7 @@ def plot_core_loss(folder, uuid, label, description, prefix, experimental_spectr
         plt.ylim(bottom=0)
         plt.legend(bbox_to_anchor=(1.05, 1), loc="upper left")
         plt.savefig(fname=f"{temp}/{prefix.value}_core_loss.pdf", bbox_inches="tight")
+        plt.close()
         core_loss_spectrum = orm.SinglefileData(f"{temp}/{prefix.value}_core_loss.pdf")
         return {
             "optados_data": optados_data,
@@ -197,11 +172,10 @@ class CastepCoreLossWorkChain(WorkChain):
         """Initialise internal variables"""
         self.ctx.inputs = self.exposed_inputs(CastepBaseWorkChain)
         self.ctx.parameters = self.ctx.inputs.calc.parameters.get_dict()
-        prefix = self.inputs.get("file_prefix", None)
-        if prefix:
-            self.ctx.prefix = prefix
-        else:
-            self.ctx.prefix = f'{self.ctx.inputs.calc.structure.get_formula()}_{self.ctx.parameters["xc_functional"]}'
+        self.ctx.prefix = self.inputs.get(
+            "file_prefix",
+            f"{self.ctx.inputs.calc.structure.get_formula()}_{self.ctx.parameters['xc_functional']}",
+        )
 
     def run_core_loss(self):
         """Run the spectral density of states calculation"""

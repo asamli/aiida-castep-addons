@@ -1,25 +1,8 @@
-from pathlib import Path
-
 import aiida.orm as orm
 from aiida.engine import run_get_node
 from aiida.plugins import WorkflowFactory
 from aiida_castep.data.otfg import upload_otfg_family
-from aiida_castep_addons.workflows.alloy import add_metadata, generate_structures
-from ase.build import bulk
-
-
-def test_add_metadata():
-    file = orm.SinglefileData(Path("registry/test.pdf").resolve())
-    new_file = add_metadata(
-        file,
-        orm.Str("changed_test.pdf"),
-        orm.Str("test_formula"),
-        orm.Str("test_uuid"),
-        orm.Str("test_label"),
-        orm.Str("test_description"),
-    )
-
-    assert new_file.filename == "changed_test.pdf"
+from aiida_castep_addons.workflows.alloy import generate_structures
 
 
 def test_generate_structures():

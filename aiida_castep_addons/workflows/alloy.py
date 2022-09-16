@@ -12,35 +12,11 @@ import numpy as np
 from aiida.engine import WorkChain, calcfunction
 from aiida.orm.nodes.data.base import to_aiida_type
 from aiida_castep.workflows.relax import CastepRelaxWorkChain
+from aiida_castep_addons.utils import add_metadata
 from bsym.interface.pymatgen import unique_structure_substitutions
 from pymatgen.core.periodic_table import Element
-from PyPDF2 import PdfFileReader, PdfFileWriter
 
 __version__ = "0.0.1"
-
-
-@calcfunction
-def add_metadata(file, fname, formula, uuid, label, description):
-    """Add workflow metadata to a PDF file with PyPDF2"""
-    with TemporaryDirectory() as temp:
-        with file.open(mode="rb") as fin:
-            reader = PdfFileReader(fin)
-            writer = PdfFileWriter()
-            writer.appendPagesFromReader(reader)
-            metadata = reader.getDocumentInfo()
-            writer.addMetadata(metadata)
-            writer.addMetadata(
-                {
-                    "/Formula": formula.value,
-                    "/WorkchainUUID": uuid.value,
-                    "/WorkchainLabel": label.value,
-                    "/WorkchainDescription": description.value,
-                }
-            )
-            with open(f"{temp}/{fname.value}", "ab") as fout:
-                writer.write(fout)
-        output_file = orm.SinglefileData(f"{temp}/{fname.value}")
-    return output_file
 
 
 @calcfunction
@@ -225,11 +201,10 @@ class CastepAlloyWorkChain(WorkChain):
         """Initialise internal variables and generate symmetry-inequivalent structures for different compositions"""
         self.ctx.inputs = self.exposed_inputs(CastepRelaxWorkChain)
         self.ctx.parameters = self.ctx.inputs.calc.parameters.get_dict()
-        prefix = self.inputs.get("file_prefix", None)
-        if prefix:
-            self.ctx.prefix = prefix
-        else:
-            self.ctx.prefix = f'{self.ctx.inputs.structure.get_formula()}_{self.ctx.parameters["xc_functional"]}'
+        self.ctx.prefix = self.inputs.get(
+            "file_prefix",
+            f"{self.ctx.inputs.structure.get_formula()}_{self.ctx.parameters['xc_functional']}",
+        )
         self.ctx.structures = generate_structures(
             self.ctx.inputs.structure,
             self.inputs.to_substitute,

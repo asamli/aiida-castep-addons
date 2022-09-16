@@ -11,57 +11,17 @@ import matplotlib.pyplot as plt
 import numpy as np
 from aiida.engine import ToContext, WorkChain, calcfunction
 from aiida.orm.nodes.data.base import to_aiida_type
-from aiida.tools.data.array.kpoints import get_explicit_kpoints_path
 from aiida_castep.utils.dos import DOSProcessor
 from aiida_castep.workflows.base import CastepBaseWorkChain
+from aiida_castep_addons.utils import add_metadata, seekpath_analysis
 from aiida_castep_addons.utils.sumo_plotter import (
     get_pmg_bandstructure,
     get_sumo_bands_plotter,
 )
 from castepxbin.pdos import compute_pdos
 from pymatgen.electronic_structure.dos import CompleteDos, Dos, Spin
-from PyPDF2 import PdfFileReader, PdfFileWriter
 from sumo.electronic_structure.dos import get_pdos
 from sumo.plotting.dos_plotter import SDOSPlotter
-
-__version__ = "0.0.1"
-
-
-@calcfunction
-def seekpath_analysis(structure, parameters):
-    """
-    Use seekpath for automatic k-point path generation.
-    The k-point path is only valid for the generated primitive cell which may or may not be the same as the input structure.
-    """
-    seekpath = get_explicit_kpoints_path(structure, **parameters.get_dict())
-    return {
-        "kpoints": seekpath["explicit_kpoints"],
-        "prim_cell": seekpath["primitive_structure"],
-    }
-
-
-@calcfunction
-def add_metadata(file, fname, formula, uuid, label, description):
-    """Add workflow metadata to a PDF file with PyPDF2"""
-    with TemporaryDirectory() as temp:
-        with file.open(mode="rb") as fin:
-            reader = PdfFileReader(fin)
-            writer = PdfFileWriter()
-            writer.appendPagesFromReader(reader)
-            metadata = reader.getDocumentInfo()
-            writer.addMetadata(metadata)
-            writer.addMetadata(
-                {
-                    "/Formula": formula.value,
-                    "/WorkchainUUID": uuid.value,
-                    "/WorkchainLabel": label.value,
-                    "/WorkchainDescription": description.value,
-                }
-            )
-            with open(f"{temp}/{fname.value}", "ab") as fout:
-                writer.write(fout)
-        output_file = orm.SinglefileData(f"{temp}/{fname.value}")
-    return output_file
 
 
 @calcfunction
@@ -427,11 +387,10 @@ class CastepBandPlotWorkChain(WorkChain):
         """Initialise internal variables"""
         self.ctx.inputs = self.exposed_inputs(CastepBaseWorkChain)
         self.ctx.parameters = self.ctx.inputs.calc.parameters.get_dict()
-        prefix = self.inputs.get("file_prefix", None)
-        if prefix:
-            self.ctx.prefix = prefix
-        else:
-            self.ctx.prefix = f'{self.ctx.inputs.calc.structure.get_formula()}_{self.ctx.parameters["xc_functional"]}'
+        self.ctx.prefix = self.inputs.get(
+            "file_prefix",
+            f"{self.ctx.inputs.calc.structure.get_formula()}_{self.ctx.parameters['xc_functional']}",
+        )
 
     def run_dos(self):
         """Run the spectral density of states calculation"""

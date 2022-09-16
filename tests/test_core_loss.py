@@ -4,25 +4,8 @@ import aiida.orm as orm
 from aiida.engine import run_get_node
 from aiida.plugins import WorkflowFactory
 from aiida_castep.data.otfg import upload_otfg_family
-from aiida_castep_addons.workflows.core_loss import (
-    add_metadata,
-    plot_core_loss,
-)
+from aiida_castep_addons.workflows.core_loss import plot_core_loss
 from ase.build import bulk
-
-
-def test_add_metadata():
-    file = orm.SinglefileData(Path("registry/test.pdf").resolve())
-    new_file = add_metadata(
-        file,
-        orm.Str("changed_test.pdf"),
-        orm.Str("test_formula"),
-        orm.Str("test_uuid"),
-        orm.Str("test_label"),
-        orm.Str("test_description"),
-    )
-
-    assert new_file.filename == "changed_test.pdf"
 
 
 def test_plot_core_loss():

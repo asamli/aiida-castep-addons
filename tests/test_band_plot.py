@@ -6,34 +6,8 @@ import numpy as np
 from aiida.engine import run_get_node
 from aiida.plugins import WorkflowFactory
 from aiida_castep.data.otfg import upload_otfg_family
-from aiida_castep_addons.workflows.band_plot import (
-    add_metadata,
-    analysis,
-    seekpath_analysis,
-)
+from aiida_castep_addons.workflows.band_plot import analysis, seekpath_analysis
 from ase.build import bulk
-
-
-def test_seekpath_analysis():
-    silicon = orm.StructureData(ase=bulk("Si", "diamond", 5.43))
-    seekpath = seekpath_analysis(silicon, orm.Dict(dict={}))
-
-    assert "kpoints" in seekpath
-    assert "prim_cell" in seekpath
-
-
-def test_add_metadata():
-    file = orm.SinglefileData(Path("registry/test.pdf").resolve())
-    new_file = add_metadata(
-        file,
-        orm.Str("changed_test.pdf"),
-        orm.Str("test_formula"),
-        orm.Str("test_uuid"),
-        orm.Str("test_label"),
-        orm.Str("test_description"),
-    )
-
-    assert new_file.filename == "changed_test.pdf"
 
 
 def test_analysis():

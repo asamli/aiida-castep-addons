@@ -10,53 +10,13 @@ import matplotlib.pyplot as plt
 import numpy as np
 from aiida.engine import WorkChain, append_, calcfunction, while_
 from aiida.orm.nodes.data.base import to_aiida_type
-from aiida.tools.data.array.kpoints import get_explicit_kpoints_path
 from aiida_castep.workflows.base import CastepBaseWorkChain
 from aiida_castep_addons.parsers.phonon import PhononParser
+from aiida_castep_addons.utils import add_metadata, seekpath_analysis
 from matplotlib.lines import Line2D
 from pymatgen.core.lattice import Lattice
 from pymatgen.phonon.bandstructure import PhononBandStructureSymmLine
-from PyPDF2 import PdfFileReader, PdfFileWriter
 from sumo.plotting.phonon_bs_plotter import SPhononBSPlotter
-
-__version__ = "0.0.1"
-
-
-@calcfunction
-def seekpath_analysis(structure):
-    """
-    Use seekpath for automatic k-point path generation.
-    The k-point path is only valid for the generated primitive cell which may or may not be the same as the input structure.
-    """
-    seekpath = get_explicit_kpoints_path(structure)
-    return {
-        "kpoints": seekpath["explicit_kpoints"],
-        "prim_cell": seekpath["primitive_structure"],
-    }
-
-
-@calcfunction
-def add_metadata(file, fname, formula, uuid, label, description):
-    """Add workflow metadata to a PDF file with PyPDF2"""
-    with TemporaryDirectory() as temp:
-        with file.open(mode="rb") as fin:
-            reader = PdfFileReader(fin)
-            writer = PdfFileWriter()
-            writer.appendPagesFromReader(reader)
-            metadata = reader.getDocumentInfo()
-            writer.addMetadata(metadata)
-            writer.addMetadata(
-                {
-                    "/Formula": formula.value,
-                    "/WorkchainUUID": uuid.value,
-                    "/WorkchainLabel": label.value,
-                    "/WorkchainDescription": description.value,
-                }
-            )
-            with open(f"{temp}/{fname.value}", "ab") as fout:
-                writer.write(fout)
-        output_file = orm.SinglefileData(f"{temp}/{fname.value}")
-    return output_file
 
 
 @calcfunction
@@ -129,120 +89,31 @@ class CastepConvergeWorkChain(WorkChain):
         # The inputs
         spec.expose_inputs(CastepBaseWorkChain)
         spec.input(
-            "converge_pwcutoff",
-            valid_type=orm.Bool,
+            "converge_settings",
+            valid_type=orm.Dict,
             serializer=to_aiida_type,
-            help="Whether to converge the plane-wave cutoff or not (True by default)",
+            help="""Settings to modify the convergence calculations. Accepted keys are 'converge_pwcutoff' (True or False), 'converge_kspacing' (True or False), 'converge_supercell' (True or False), 'pwcutoff_start' (value in eV), 'pwcutoff_end' (value in eV), 'pwcutoff_step' (value in eV),
+             'kspacing_start (value in inverse Angstroms)', 'kspacing_end (value in inverse Angstroms)', 'kspacing_step (value in inverse Angstroms)', 'supercell_start (length in Angstroms)', 'supercell_end (length in Angstroms)', 'supercell_step (length in Angstroms)', 
+             'energy_tolerance (value in eV)' and 'frequency_tolerance (value as a percentage)'.""",
             required=False,
-            default=lambda: orm.Bool(True),
-        )
-        spec.input(
-            "converge_kspacing",
-            valid_type=orm.Bool,
-            serializer=to_aiida_type,
-            help="Whether to converge the k-point spacing or not (True by default)",
-            required=False,
-            default=lambda: orm.Bool(True),
-        )
-        spec.input(
-            "converge_supercell",
-            valid_type=orm.Bool,
-            serializer=to_aiida_type,
-            help="Whether to converge the supercell for phonon calculations or not (False by default)",
-            required=False,
-            default=lambda: orm.Bool(False),
-        )
-        spec.input(
-            "initial_pwcutoff",
-            valid_type=orm.Int,
-            serializer=to_aiida_type,
-            help="Initial plane-wave cutoff value in electron volts (eV)",
-            required=False,
-            default=lambda: orm.Int(200),
-        )
-        spec.input(
-            "final_pwcutoff",
-            valid_type=orm.Int,
-            serializer=to_aiida_type,
-            help="""Final plane-wave cutoff value in electron volts (eV). 
-                    It is considered the converged value if cutoff convergence is disabled.""",
-            required=False,
-            default=lambda: orm.Int(500),
-        )
-        spec.input(
-            "pwcutoff_step",
-            valid_type=orm.Int,
-            serializer=to_aiida_type,
-            help="Plane-wave cutoff step (increment) in electron volts (eV)",
-            required=False,
-            default=lambda: orm.Int(50),
-        )
-        spec.input(
-            "coarse_kspacing",
-            valid_type=orm.Float,
-            serializer=to_aiida_type,
-            help="The Monkhorst-Pack k-point spacing for the coarsest grid in inverse Angstroms",
-            required=False,
-            default=lambda: orm.Float(0.1),
-        )
-        spec.input(
-            "fine_kspacing",
-            valid_type=orm.Float,
-            serializer=to_aiida_type,
-            help="""The Monkhorst-Pack k-point spacing for the finest grid in inverse Angstroms. 
-                    It is considered the converged value if k-spacing convergence is disabled.""",
-            required=False,
-            default=lambda: orm.Float(0.05),
-        )
-        spec.input(
-            "kspacing_step",
-            valid_type=orm.Float,
-            serializer=to_aiida_type,
-            help="The Monkhorst-Pack k-point spacing step (reduction) in inverse Angstroms",
-            required=False,
-            default=lambda: orm.Float(0.01),
-        )
-        spec.input(
-            "energy_tolerance",
-            valid_type=orm.Float,
-            serializer=to_aiida_type,
-            help="""The tolerance for the ground state energy in electron volts (eV). When the energy difference per atom between two
-                    convergence calculations goes below this value, the former is considered converged.""",
-            required=False,
-            default=lambda: orm.Float(0.001),
-        )
-        spec.input(
-            "initial_supercell_length",
-            valid_type=orm.Float,
-            serializer=to_aiida_type,
-            help="Initial supercell length in Angstroms",
-            required=False,
-            default=lambda: orm.Float(5.0),
-        )
-        spec.input(
-            "final_supercell_length",
-            valid_type=orm.Float,
-            serializer=to_aiida_type,
-            help="Final supercell length in Angstroms",
-            required=False,
-            default=lambda: orm.Float(15.0),
-        )
-        spec.input(
-            "supercell_step",
-            valid_type=orm.Float,
-            serializer=to_aiida_type,
-            help="Supercell length step (increment) in Angstroms",
-            required=False,
-            default=lambda: orm.Float(5.0),
-        )
-        spec.input(
-            "frequency_tolerance",
-            valid_type=orm.Float,
-            serializer=to_aiida_type,
-            help="""The acceptable mean percentage error (MPE) for the phonon band frequencies. When the MPE 
-                   between two convergence calculations goes below this value, the former is considered converged.""",
-            required=False,
-            default=lambda: orm.Float(5.0),
+            default=lambda: orm.Dict(
+                dict={
+                    "converge_pwcutoff": True,
+                    "converge_kspacing": True,
+                    "converge_supercell": False,
+                    "pwcutoff_start": 200,
+                    "pwcutoff_end": 500,
+                    "pwcutoff_step": 50,
+                    "kspacing_start": 0.1,
+                    "kspacing_end": 0.05,
+                    "kspacing_step": 0.01,
+                    "supercell_start": 5.0,
+                    "supercell_end": 15.0,
+                    "supercell_step": 5.0,
+                    "energy_tolerance": 0.001,
+                    "frequency_tolerance": 5.0,
+                }
+            ),
         )
         spec.input(
             "file_prefix",
@@ -297,29 +168,41 @@ class CastepConvergeWorkChain(WorkChain):
         """Initialise internal variables"""
         self.ctx.inputs = self.exposed_inputs(CastepBaseWorkChain)
         self.ctx.parameters = self.ctx.inputs.calc.parameters.get_dict()
-        self.ctx.initial_pwcutoff = self.inputs.initial_pwcutoff.value
-        self.ctx.final_pwcutoff = self.inputs.final_pwcutoff.value
-        self.ctx.coarse_kspacing = self.inputs.coarse_kspacing.value
-        self.ctx.fine_kspacing = self.inputs.fine_kspacing.value
-        if self.inputs.converge_pwcutoff:
+        converge_settings = self.inputs.converge_settings.get_dict()
+        if converge_settings.get("converge_pwcutoff", True):
+            self.ctx.pwcutoff_start = converge_settings.get("pwcutoff_start", 200)
+            self.ctx.pwcutoff_end = converge_settings.get("pwcutoff_end", 500)
+            self.ctx.pwcutoff_step = converge_settings.get("pwcutoff_step", 50)
+            self.ctx.kspacing_start = converge_settings.get("kspacing_start", 0.1)
+            self.ctx.energy_tolerance = converge_settings.get("energy_tolerance", 0.001)
             self.ctx.pwcutoff_converged = False
         else:
             self.ctx.pwcutoff_converged = True
-        if self.inputs.converge_kspacing:
+
+        if converge_settings.get("converge_kspacing", True):
+            self.ctx.kspacing_start = converge_settings.get("kspacing_start", 0.1)
+            self.ctx.kspacing_end = converge_settings.get("kspacing_end", 0.05)
+            self.ctx.kspacing_step = converge_settings.get("pwcutoff_step", 0.01)
+            self.ctx.pwcutoff_end = converge_settings.get("pwcutoff_end", 500)
+            self.ctx.energy_tolerance = converge_settings.get("energy_tolerance", 0.001)
             self.ctx.kspacing_converged = False
         else:
             self.ctx.kspacing_converged = True
-        if self.inputs.converge_supercell:
-            self.ctx.initial_supercell_length = (
-                self.inputs.initial_supercell_length.value
+
+        if converge_settings.get("converge_supercell", True):
+            self.ctx.supercell_start = converge_settings.get("supercell_start", 5.0)
+            self.ctx.supercell_end = converge_settings.get("supercell_end", 15.0)
+            self.ctx.supercell_step = converge_settings.get("supercell_step", 5.0)
+            self.ctx.pwcutoff_end = converge_settings.get("pwcutoff_end", 500)
+            self.ctx.kspacing_end = converge_settings.get("kspacing_end", 0.05)
+            self.ctx.frequency_tolerance = converge_settings.get(
+                "frequency_tolerance", 5.0
             )
-            self.ctx.final_supercell_length = self.inputs.final_supercell_length.value
             self.ctx.supercell_converged = False
-            prefix = self.inputs.get("file_prefix", None)
-            if prefix:
-                self.ctx.prefix = prefix
-            else:
-                self.ctx.prefix = f'{self.ctx.inputs.calc.structure.get_formula()}_{self.ctx.parameters["xc_functional"]}'
+            self.ctx.prefix = self.inputs.get(
+                "file_prefix",
+                f"{self.ctx.inputs.calc.structure.get_formula()}_{self.ctx.parameters['xc_functional']}",
+            )
         else:
             self.ctx.supercell_converged = True
 
@@ -338,11 +221,11 @@ class CastepConvergeWorkChain(WorkChain):
     def run_pwcutoff_conv(self):
         """Run parallel plane-wave energy cutoff convergence calculations with the energy cutoff range and increment provided"""
         inputs = self.ctx.inputs
-        inputs.kpoints_spacing = self.ctx.coarse_kspacing
+        inputs.kpoints_spacing = self.ctx.kspacing_start
         for pwcutoff in range(
-            self.ctx.initial_pwcutoff,
-            self.ctx.final_pwcutoff + 1,
-            self.inputs.pwcutoff_step.value,
+            self.ctx.pwcutoff_start,
+            self.ctx.pwcutoff_end + 1,
+            self.ctx.pwcutoff_step,
         ):
             parameters = deepcopy(self.ctx.parameters)
             parameters["cut_off_energy"] = pwcutoff
@@ -364,17 +247,17 @@ class CastepConvergeWorkChain(WorkChain):
                 abs(last_energy - second_last_energy)
                 / wc.outputs.output_parameters["num_ions"]
             )
-            if energy_diff_per_atom < self.inputs.energy_tolerance:
+            if energy_diff_per_atom < self.ctx.energy_tolerance:
                 conv_pwcutoff = self.ctx.pwcutoff_calcs[i - 1].inputs.calc.parameters[
                     "cut_off_energy"
                 ]
                 self.report(f"Plane-wave energy cutoff converged at {conv_pwcutoff} eV")
                 self.ctx.converged_pwcutoff = orm.Int(conv_pwcutoff)
-                self.ctx.final_pwcutoff = self.ctx.converged_pwcutoff
+                self.ctx.pwcutoff_end = self.ctx.converged_pwcutoff
                 self.ctx.pwcutoff_converged = True
                 return
-        self.ctx.initial_pwcutoff = self.ctx.final_pwcutoff
-        self.ctx.final_pwcutoff += 200
+        self.ctx.pwcutoff_start = self.ctx.pwcutoff_end
+        self.ctx.pwcutoff_end += 200
         self.report(
             "Plane-wave energy cutoff not converged. Increasing upper limit by 200 eV."
         )
@@ -382,14 +265,14 @@ class CastepConvergeWorkChain(WorkChain):
     def run_kspacing_conv(self):
         """Run parallel k-point spacing convergence calculations with the k-point spacing range and step provided"""
         inputs = self.ctx.inputs
-        inputs.kpoints_spacing = self.ctx.coarse_kspacing
+        inputs.kpoints_spacing = self.ctx.kspacing_start
         parameters = deepcopy(self.ctx.parameters)
-        parameters["cut_off_energy"] = self.ctx.final_pwcutoff
+        parameters["cut_off_energy"] = self.ctx.pwcutoff_end
         inputs.calc.parameters = parameters
         for kspacing in np.arange(
-            self.ctx.coarse_kspacing,
-            self.ctx.fine_kspacing - 0.01,
-            -self.inputs.kspacing_step.value,
+            self.ctx.kspacing_start,
+            self.ctx.kspacing_end - 0.01,
+            -self.ctx.kspacing_step,
         ):
             inputs.kpoints_spacing = kspacing
             running = self.submit(CastepBaseWorkChain, **inputs)
@@ -417,28 +300,28 @@ class CastepConvergeWorkChain(WorkChain):
                 abs(last_energy - second_last_energy)
                 / wc.outputs.output_parameters["num_ions"]
             )
-            if energy_diff_per_atom < self.inputs.energy_tolerance:
+            if energy_diff_per_atom < self.ctx.energy_tolerance:
                 conv_kspacing = self.ctx.kspacing_calcs[
                     i - 1
                 ].inputs.kpoints_spacing.value
                 self.report(f"K-point spacing converged at {conv_kspacing} A-1")
                 self.ctx.converged_kspacing = orm.Float(conv_kspacing)
-                self.ctx.fine_kspacing = self.ctx.converged_kspacing
+                self.ctx.kspacing_end = self.ctx.converged_kspacing
                 self.ctx.kspacing_converged = True
                 return
-        self.ctx.coarse_kspacing = self.ctx.fine_kspacing
-        if self.ctx.fine_kspacing >= 0.03:
-            self.ctx.fine_kspacing -= 0.02
+        self.ctx.kspacing_start = self.ctx.kspacing_end
+        if self.ctx.kspacing_end >= 0.03:
+            self.ctx.kspacing_end -= 0.02
             self.report(
                 "K-point spacing not converged. Decreasing lower limit by 0.02 A-1."
             )
-        elif self.ctx.fine_kspacing >= 0.015:
-            self.ctx.fine_kspacing -= 0.01
+        elif self.ctx.kspacing_end >= 0.015:
+            self.ctx.kspacing_end -= 0.01
             self.report(
                 "K-point spacing not converged but very low. Decreasing lower limit by 0.01 A-1."
             )
         else:
-            self.ctx.converged_kspacing = orm.Float(self.ctx.fine_kspacing)
+            self.ctx.converged_kspacing = orm.Float(self.ctx.kspacing_end)
             self.ctx.kspacing_converged = True
             self.report(
                 "K-point spacing not converged but too low to decrease further. Taking the lower limit as the converged value."
@@ -452,20 +335,20 @@ class CastepConvergeWorkChain(WorkChain):
             {
                 "task": "phonon",
                 "phonon_fine_method": "supercell",
-                "cut_off_energy": self.ctx.final_pwcutoff,
+                "cut_off_energy": self.ctx.pwcutoff_end,
             }
         )
         inputs.calc.parameters = parameters
-        seekpath_data = seekpath_analysis(inputs.calc.structure)
+        seekpath_data = seekpath_analysis(inputs.calc.structure, orm.Dict(dict={}))
         self.ctx.kpoints = seekpath_data["kpoints"]
         inputs.calc.phonon_fine_kpoints = self.ctx.kpoints
         inputs.calc.structure = seekpath_data["prim_cell"]
-        inputs.kpoints_spacing = self.ctx.fine_kspacing
+        inputs.kpoints_spacing = self.ctx.kspacing_end
         pmg_lattice = inputs.calc.structure.get_pymatgen().lattice
         self.ctx.supercell_lengths = np.arange(
-            self.ctx.initial_supercell_length,
-            self.ctx.final_supercell_length + 0.1,
-            self.inputs.supercell_step.value,
+            self.ctx.supercell_start,
+            self.ctx.supercell_end + 0.1,
+            self.ctx.supercell_step,
         )
         for length in self.ctx.supercell_lengths:
             matrix_a = int(np.ceil(length / pmg_lattice.a))
@@ -511,7 +394,7 @@ class CastepConvergeWorkChain(WorkChain):
             )
             mean_percentage_error = np.mean(percentage_errors)
             if (
-                mean_percentage_error < (self.inputs.frequency_tolerance / 100)
+                mean_percentage_error < (self.ctx.frequency_tolerance / 100)
                 and not self.ctx.supercell_converged
             ):
                 self.report(
@@ -527,8 +410,9 @@ class CastepConvergeWorkChain(WorkChain):
                         ]
                     ),
                 )
-        if not self.ctx.converged_supercell:
+        if not self.ctx.supercell_converged:
             self.ctx.supercell_converged = True
+            self.ctx.converged_supercell = orm.ArrayData()
             self.ctx.converged_supercell.set_array(
                 "matrix",
                 np.array(wc.inputs.calc.parameters["phonon_supercell_matrix"]),
@@ -553,10 +437,10 @@ class CastepConvergeWorkChain(WorkChain):
 
     def results(self):
         """Add converged plane-wave cutoff, k-point spacing, and supercell matrix to WorkChain outputs"""
-        if self.inputs.converge_pwcutoff:
+        if self.ctx.get("converged_pwcutoff", None):
             self.out("converged_pwcutoff", self.ctx.converged_pwcutoff)
-        if self.inputs.converge_kspacing:
+        if self.ctx.get("converged_kspacing", None):
             self.out("converged_kspacing", self.ctx.converged_kspacing)
-        if self.inputs.converge_supercell:
+        if self.ctx.get("converged_supercell", None):
             self.out("converged_supercell", self.ctx.converged_supercell)
             self.out("supercell_plot", self.ctx.supercell_plot)

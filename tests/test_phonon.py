@@ -5,34 +5,11 @@ from aiida.engine import run_get_node
 from aiida.plugins import WorkflowFactory
 from aiida_castep.data.otfg import upload_otfg_family
 from aiida_castep_addons.workflows.phonon import (
-    add_metadata,
     phonon_analysis,
     seekpath_analysis,
     thermo_analysis,
 )
 from ase.build import bulk
-
-
-def test_seekpath_analysis():
-    silicon = orm.StructureData(ase=bulk("Si", "diamond", 5.43))
-    seekpath = seekpath_analysis(silicon, orm.Dict(dict={}))
-
-    assert "kpoints" in seekpath
-    assert "prim_cell" in seekpath
-
-
-def test_add_metadata():
-    file = orm.SinglefileData(Path("registry/test.pdf").resolve())
-    new_file = add_metadata(
-        file,
-        orm.Str("changed_test.pdf"),
-        orm.Str("test_formula"),
-        orm.Str("test_uuid"),
-        orm.Str("test_label"),
-        orm.Str("test_description"),
-    )
-
-    assert new_file.filename == "changed_test.pdf"
 
 
 def test_phonon_analysis():
@@ -71,13 +48,15 @@ def test_phonon_wc(mock_castep_code):
     bld.calc.code = mock_castep_code
     upload_otfg_family(["NCP"], "NCP", "NCP potential library")
     bld.pseudos_family = "NCP"
-    bld.calc.parameters = {
+    phonon_parameters = {
         "xc_functional": "pbesol",
+        "phonon_fine_method": "interpolate",
         "fix_occupancy": True,
         "cut_off_energy": 400,
         "phonon_max_cycles": 100,
         "symmetry_generate": True,
     }
+    bld.calc.parameters = phonon_parameters
     bld.kpoints_spacing = 0.04
     phonon_kpoints = orm.KpointsData()
     phonon_kpoints.set_kpoints_mesh((3, 3, 3))
@@ -101,7 +80,8 @@ def test_phonon_wc(mock_castep_code):
 
     bld.run_thermo = False
     bld.run_phonon = True
-    bld.use_supercell = True
+    phonon_parameters["phonon_fine_method"] = "supercell"
+    bld.calc.parameters = phonon_parameters
     _, supercell_node = run_get_node(bld)
 
     assert dfpt_node.is_finished_ok
