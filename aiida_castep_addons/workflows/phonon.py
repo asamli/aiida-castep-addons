@@ -71,7 +71,7 @@ def phonon_analysis(prefix, ir_folder, kpoints, raman_folder, experimental_spect
         band_data.set_bands(frequencies, units="THz")
         band_data.labels = labels
 
-        # Preparing IR and Raman spectra for plotting and saving the data as ArrayData
+        # Plotting IR and Raman spectra with matplotlib and saving the data as ArrayData
         ir_raw_frequencies = ir_phonon_data.vib_frequencies
         ir_raw_intensities = ir_phonon_data.ir_intensities
         ir_frequencies = np.arange(0, max(ir_raw_frequencies) * 1.2, 0.01)
@@ -88,32 +88,40 @@ def phonon_analysis(prefix, ir_folder, kpoints, raman_folder, experimental_spect
             for intensity in ir_intensities
         ]
         ir_frequency_unit = ir_phonon_data.frequency_unit
-
-        raman_raw_frequencies = raman_phonon_data.vib_frequencies
-        raman_raw_intensities = raman_phonon_data.raman_intensities
-        raman_frequencies = np.arange(0, max(raman_raw_frequencies) * 1.2, 0.01)
-        raman_xy = np.array(list(zip(raman_raw_frequencies, raman_raw_intensities)))
-        raman_intensities = galore.xy_to_1d(raman_xy, raman_frequencies, spikes=True)
-        raman_intensities = galore.broaden(raman_intensities, dist="lorentzian", d=0.01)
-        raman_intensities = galore.broaden(raman_intensities, dist="gaussian", d=0.01)
-        raman_intensities = raman_intensities.astype("float64")
-        raman_intensities = [
-            (
-                (intensity - min(raman_intensities))
-                / (max(raman_intensities) - min(raman_intensities))
-            )
-            for intensity in raman_intensities
-        ]
         vib_spectrum_data = orm.ArrayData()
         vib_spectrum_data.set_array("ir", np.array([ir_frequencies, ir_intensities]))
-        vib_spectrum_data.set_array(
-            "raman", np.array([raman_frequencies, raman_intensities])
-        )
-
-        # Plotting IR and Raman spectra with matplotlib
         plt.style.use("default")
         plt.plot(ir_frequencies, ir_intensities, label="IR")
-        plt.plot(raman_frequencies, raman_intensities, label="Raman")
+        try:
+            raman_raw_frequencies = raman_phonon_data.vib_frequencies
+            raman_raw_intensities = raman_phonon_data.raman_intensities
+            raman_frequencies = np.arange(0, max(raman_raw_frequencies) * 1.2, 0.01)
+            raman_xy = np.array(list(zip(raman_raw_frequencies, raman_raw_intensities)))
+            raman_intensities = galore.xy_to_1d(
+                raman_xy, raman_frequencies, spikes=True
+            )
+            raman_intensities = galore.broaden(
+                raman_intensities, dist="lorentzian", d=0.01
+            )
+            raman_intensities = galore.broaden(
+                raman_intensities, dist="gaussian", d=0.01
+            )
+            raman_intensities = raman_intensities.astype("float64")
+            raman_intensities = [
+                (
+                    (intensity - min(raman_intensities))
+                    / (max(raman_intensities) - min(raman_intensities))
+                )
+                for intensity in raman_intensities
+            ]
+            vib_spectrum_data.set_array(
+                "raman", np.array([raman_frequencies, raman_intensities])
+            )
+            plt.plot(raman_frequencies, raman_intensities, label="Raman")
+        except:
+            pass
+
+        # Plotting experimental IR and Raman spectra with matplotlib
         try:
             experimental_ir = experimental_spectra.get_array("ir")
             experimental_ir[1] = experimental_ir[1].astype("float64")
@@ -291,6 +299,12 @@ class CastepPhononWorkChain(WorkChain):
             default=lambda: orm.Dict(dict={}),
         )
         spec.input(
+            "continuation_folder",
+            valid_type=orm.RemoteData,
+            help="The folder to use for a continuation calculation. Disables all other calculations if provided.",
+            required=False,
+        )
+        spec.input(
             "experimental_spectra",
             valid_type=orm.ArrayData,
             help="Experimental IR and/or Raman spectra as 2D arrays. Use 'ir' and 'raman' as the array names.",
@@ -345,6 +359,9 @@ class CastepPhononWorkChain(WorkChain):
         # Outline of the WorkChain (the class methods to be run and their order)
         spec.outline(
             cls.setup,
+            if_(cls.should_run_continuation)(
+                cls.run_continuation, cls.analyse_continuation
+            ),
             if_(cls.should_run_phonon)(
                 cls.run_phonon, cls.run_raman, cls.analyse_phonons
             ),
@@ -355,20 +372,58 @@ class CastepPhononWorkChain(WorkChain):
     def setup(self):
         """Initialise internal variables"""
         self.ctx.inputs = self.exposed_inputs(CastepBaseWorkChain)
-        self.ctx.phonon_kpoints = self.ctx.inputs.calc.get("phonon_kpoints", [3, 3, 3])
+        phonon_kpoints = orm.KpointsData()
+        phonon_kpoints.set_kpoints_mesh([3, 3, 3])
+        self.ctx.phonon_kpoints = self.ctx.inputs.calc.get(
+            "phonon_kpoints", phonon_kpoints
+        )
         self.ctx.parameters = self.ctx.inputs.calc.parameters.get_dict()
         self.ctx.prefix = self.inputs.get(
             "file_prefix",
             f"{self.ctx.inputs.calc.structure.get_formula()}_{self.ctx.parameters['xc_functional']}",
         )
+        self.ctx.phonon_continuation = False
+        self.ctx.thermo_continuation = False
+
+    def should_run_continuation(self):
+        """Whether a continuation calculation should be run or not"""
+        if self.inputs.get("continuation_folder", None):
+            return True
+        else:
+            return False
 
     def should_run_phonon(self):
         """Whether the phonon band structure and Raman calculations should be run or not"""
-        return self.inputs.run_phonon
+        if self.inputs.get("continuation_folder", None):
+            return False
+        else:
+            return self.inputs.run_phonon
 
     def should_run_thermo(self):
         """Whether a thermodynamics calculation should be run or not"""
-        return self.inputs.run_thermo
+        if self.inputs.get("continuation_folder", None):
+            return False
+        else:
+            return self.inputs.run_thermo
+
+    def run_continuation(self):
+        """Run the continuation calculation"""
+        inputs = self.ctx.inputs
+        phonon_parameters = deepcopy(self.ctx.parameters)
+        phonon_parameters.update({"continuation": "default"})
+        if "task" not in phonon_parameters:
+            phonon_parameters.update({"task": "phonon"})
+        if "phonon_fine_kpoints" not in inputs.calc:
+            seekpath_data = seekpath_analysis(
+                inputs.calc.structure, self.inputs.seekpath_parameters
+            )
+            inputs.calc.structure = seekpath_data["prim_cell"]
+            inputs.calc.phonon_fine_kpoints = seekpath_data["kpoints"]
+        inputs.calc.parameters = phonon_parameters
+        inputs.calc.parent_calc_folder = self.inputs.continuation_folder
+        running = self.submit(CastepBaseWorkChain, **inputs)
+        self.report("Running continuation calculation")
+        return ToContext(continuation=running)
 
     def run_phonon(self):
         """Run the phonon calculation using a phonon fine k-point path from seekpath"""
@@ -420,6 +475,61 @@ class CastepPhononWorkChain(WorkChain):
         running = self.submit(CastepBaseWorkChain, **inputs)
         self.report("Running thermodynamics calculation")
         return ToContext(thermo=running)
+
+    def analyse_continuation(self):
+        """Analyse the outputs of the continuation calculation"""
+        continuation_folder = self.ctx.continuation.called[-1].outputs.retrieved
+        if "aiida.phonon" in continuation_folder.list_object_names():
+            self.ctx.phonon_continuation = True
+            outputs = phonon_analysis(
+                orm.Str(self.ctx.prefix),
+                continuation_folder,
+                self.ctx.continuation.inputs.calc.phonon_fine_kpoints,
+                continuation_folder,
+                self.inputs.experimental_spectra,
+            )
+            self.ctx.phonon_bands = outputs["band_data"]
+            self.ctx.phonon_band_plot = add_metadata(
+                outputs["band_plot"],
+                orm.Str(f"{self.ctx.prefix}_phonon_bands.pdf"),
+                orm.Str(self.ctx.inputs.calc.structure.get_formula()),
+                orm.Str(self.uuid),
+                orm.Str(self.inputs.metadata.get("label", "")),
+                orm.Str(self.inputs.metadata.get("description", "")),
+            )
+            self.ctx.vib_spectrum_data = outputs["vib_spectrum_data"]
+            self.ctx.vib_spectra = add_metadata(
+                outputs["vib_spectra"],
+                orm.Str(f"{self.ctx.prefix}_vib_spectra.pdf"),
+                orm.Str(self.ctx.inputs.calc.structure.get_formula()),
+                orm.Str(self.uuid),
+                orm.Str(self.inputs.metadata.get("label", "")),
+                orm.Str(self.inputs.metadata.get("description", "")),
+            )
+        if "Thermodynamics" in continuation_folder.get_object_content("aiida.castep"):
+            self.ctx.thermo_continuation = True
+            outputs = thermo_analysis(
+                orm.Str(self.ctx.prefix),
+                continuation_folder,
+            )
+            self.ctx.thermo_data = outputs["thermo_data"]
+            self.ctx.thermo_energy_plot = add_metadata(
+                outputs["energy_plot"],
+                orm.Str(f"{self.ctx.prefix}_thermo_energies.pdf"),
+                orm.Str(self.ctx.inputs.calc.structure.get_formula()),
+                orm.Str(self.uuid),
+                orm.Str(self.inputs.metadata.get("label", "")),
+                orm.Str(self.inputs.metadata.get("description", "")),
+            )
+            self.ctx.thermo_entropy_plot = add_metadata(
+                outputs["entropy_plot"],
+                orm.Str(f"{self.ctx.prefix}_thermo_entropies.pdf"),
+                orm.Str(self.ctx.inputs.calc.structure.get_formula()),
+                orm.Str(self.uuid),
+                orm.Str(self.inputs.metadata.get("label", "")),
+                orm.Str(self.inputs.metadata.get("description", "")),
+            )
+        self.report("Continuation analysis complete")
 
     def analyse_phonons(self):
         """Analyse the output .phonon file from the calculations to plot the phonon band structure and extract IR and Raman spectrum data"""
@@ -473,15 +583,16 @@ class CastepPhononWorkChain(WorkChain):
             orm.Str(self.inputs.metadata.get("label", "")),
             orm.Str(self.inputs.metadata.get("description", "")),
         )
+        self.report("Thermodynamics analysis complete")
 
     def results(self):
         """Add the phonon band structure plot, IR spectrum data and Raman spectrum data to the WorkChain outputs"""
-        if self.inputs.run_phonon:
+        if self.inputs.run_phonon or self.ctx.phonon_continuation:
             self.out("phonon_bands", self.ctx.phonon_bands)
             self.out("phonon_band_plot", self.ctx.phonon_band_plot)
             self.out("vib_spectrum_data", self.ctx.vib_spectrum_data)
             self.out("vib_spectra", self.ctx.vib_spectra)
-        if self.inputs.run_thermo:
+        if self.inputs.run_thermo or self.ctx.thermo_continuation:
             self.out("thermo_data", self.ctx.thermo_data)
             self.out("thermo_energy_plot", self.ctx.thermo_energy_plot)
             self.out("thermo_entropy_plot", self.ctx.thermo_entropy_plot)

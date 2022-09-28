@@ -10,8 +10,8 @@ How to install
 -------------
 In a conda environment type:
 ```
-git clone https://github.com/asamli/test-repo.git
-cd test-repo
+git clone https://github.com/asamli/aiida-castep-addons.git
+cd aiida-castep-addons
 pip install -e .
 ```
 
@@ -25,7 +25,7 @@ Features
 Workflows:
 * `castep_addons.converge`: Workflow to converge the plane-wave energy cutoff, k-point mesh density and/or the phonon supercell size.
 * `castep_addons.band_plot`: Workflow to calculate the density of states and band structures which are then plotted using `Sumo`. `Galore` is also integrated to plot UPS, XPS and HAXPES spectra.
-* `castep_addons.phonon`: Workflow to calculate the phonon band structure (plotted using `Sumo`), IR and Raman spectra, and thermodynamics (plotted using `matplotlib.pyplot`). The spectra are broadened with `Galore`.
+* `castep_addons.phonon`: Workflow to calculate the phonon band structure (plotted using `Sumo`), IR and Raman spectra, and thermodynamics data (plotted using `matplotlib.pyplot`). The spectra are broadened with `Galore` and an old calculation can be continued with different settings instead of doing a new calculation.
 * `castep_addons.magnetic`: Workflow to enumerate magnetic orderings for a structure using `Pymatgen`, relax each structure and analyse the results. Note: The [EnumLib](https://github.com/msg-byu/enumlib) package must be installed in order to use this workflow.
 * `castep_addons.core_loss`: Workflow to do spectral core loss calculations and plot EELS/XANES spectra using `OptaDOS`.
 * `castep_addons.alloy`: Workflow to generate alloy structures with `Bsym` calculate thermodynamic properties of mixing after relaxing each structure.

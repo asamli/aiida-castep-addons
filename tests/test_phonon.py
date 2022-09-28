@@ -71,7 +71,6 @@ def test_phonon_wc(mock_castep_code):
     bld.metadata.description = (
         "Phonon band structure and vibrational spectra of Si with the PBEsol functional"
     )
-    bld.clean_workdir = True
     _, dfpt_node = run_get_node(bld)
 
     bld.run_thermo = True
@@ -84,6 +83,14 @@ def test_phonon_wc(mock_castep_code):
     bld.calc.parameters = phonon_parameters
     _, supercell_node = run_get_node(bld)
 
+    bld.continuation_folder = supercell_node.called_descendants[1].outputs.remote_folder
+    phonon_fine_kpoints = orm.KpointsData()
+    phonon_fine_kpoints.set_kpoints([[0, 0, 0], [0.5, 0.5, 0.5]])
+    phonon_fine_kpoints.labels = [[0, "GAMMA"], [1, "L"]]
+    bld.calc.phonon_fine_kpoints = phonon_fine_kpoints
+    _, continuation_node = run_get_node(bld)
+
     assert dfpt_node.is_finished_ok
     assert thermo_node.is_finished_ok
     assert supercell_node.is_finished_ok
+    assert continuation_node.is_finished_ok
