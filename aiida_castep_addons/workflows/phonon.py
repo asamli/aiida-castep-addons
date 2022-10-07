@@ -74,11 +74,11 @@ def phonon_analysis(prefix, ir_folder, kpoints, raman_folder, experimental_spect
         # Plotting IR and Raman spectra with matplotlib and saving the data as ArrayData
         ir_raw_frequencies = ir_phonon_data.vib_frequencies
         ir_raw_intensities = ir_phonon_data.ir_intensities
-        ir_frequencies = np.arange(0, max(ir_raw_frequencies) * 1.2, 0.01)
+        ir_frequencies = np.arange(0, max(ir_raw_frequencies) * 1.2, 0.1)
         ir_xy = np.array(list(zip(ir_raw_frequencies, ir_raw_intensities)))
         ir_intensities = galore.xy_to_1d(ir_xy, ir_frequencies, spikes=True)
-        ir_intensities = galore.broaden(ir_intensities, dist="lorentzian", d=0.01)
-        ir_intensities = galore.broaden(ir_intensities, dist="gaussian", d=0.01)
+        ir_intensities = galore.broaden(ir_intensities, dist="lorentzian", d=0.1)
+        ir_intensities = galore.broaden(ir_intensities, dist="gaussian", d=0.1)
         ir_intensities = ir_intensities.astype("float64")
         ir_intensities = [
             (
@@ -95,16 +95,16 @@ def phonon_analysis(prefix, ir_folder, kpoints, raman_folder, experimental_spect
         try:
             raman_raw_frequencies = raman_phonon_data.vib_frequencies
             raman_raw_intensities = raman_phonon_data.raman_intensities
-            raman_frequencies = np.arange(0, max(raman_raw_frequencies) * 1.2, 0.01)
+            raman_frequencies = np.arange(0, max(raman_raw_frequencies) * 1.2, 0.1)
             raman_xy = np.array(list(zip(raman_raw_frequencies, raman_raw_intensities)))
             raman_intensities = galore.xy_to_1d(
                 raman_xy, raman_frequencies, spikes=True
             )
             raman_intensities = galore.broaden(
-                raman_intensities, dist="lorentzian", d=0.01
+                raman_intensities, dist="lorentzian", d=0.1
             )
             raman_intensities = galore.broaden(
-                raman_intensities, dist="gaussian", d=0.01
+                raman_intensities, dist="gaussian", d=0.1
             )
             raman_intensities = raman_intensities.astype("float64")
             raman_intensities = [

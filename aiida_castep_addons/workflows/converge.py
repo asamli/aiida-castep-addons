@@ -182,14 +182,14 @@ class CastepConvergeWorkChain(WorkChain):
         if converge_settings.get("converge_kspacing", True):
             self.ctx.kspacing_start = converge_settings.get("kspacing_start", 0.1)
             self.ctx.kspacing_end = converge_settings.get("kspacing_end", 0.05)
-            self.ctx.kspacing_step = converge_settings.get("pwcutoff_step", 0.01)
+            self.ctx.kspacing_step = converge_settings.get("kspacing_step", 0.01)
             self.ctx.pwcutoff_end = converge_settings.get("pwcutoff_end", 500)
             self.ctx.energy_tolerance = converge_settings.get("energy_tolerance", 0.001)
             self.ctx.kspacing_converged = False
         else:
             self.ctx.kspacing_converged = True
 
-        if converge_settings.get("converge_supercell", True):
+        if converge_settings.get("converge_supercell", False):
             self.ctx.supercell_start = converge_settings.get("supercell_start", 5.0)
             self.ctx.supercell_end = converge_settings.get("supercell_end", 15.0)
             self.ctx.supercell_step = converge_settings.get("supercell_step", 5.0)
