@@ -9,14 +9,12 @@ from tempfile import TemporaryDirectory
 import aiida.orm as orm
 import matplotlib.pyplot as plt
 import numpy as np
-from aiida.engine import WorkChain, calcfunction
+from aiida.engine import WorkChain, calcfunction, while_
 from aiida.orm.nodes.data.base import to_aiida_type
 from aiida_castep.workflows.relax import CastepRelaxWorkChain
 from aiida_castep_addons.utils import add_metadata
 from bsym.interface.pymatgen import unique_structure_substitutions
 from pymatgen.core.periodic_table import Element
-
-__version__ = "0.0.1"
 
 
 @calcfunction
@@ -48,26 +46,47 @@ def generate_structures(structure, to_substitute, susbtituent, supercell_size):
 def analysis(xs, lens, temperatures, prefix, **kwargs):
     """Use thermodynamics output data to calculate and plot mixing free energies and enthalpies for the lowest energy configuration at each composition"""
     total_energies = []
+    all_energies = []
+    changed_charges = []
     min_energies = []
     mixing_entropies = []
 
-    # Storing the minimum energy for each composition in a list and its unique key in lists
+    # Storing the minimum energy for each composition in a list
     for i in range(len(xs)):
         for j in range(lens[i]):
             key = f"out_params_{i}_{j}"
+            try:
+                charges = np.array(kwargs[key]["charges"])
+                charges /= abs(charges.max())
+                if i == 0:
+                    initial_charges = charges
+                else:
+                    percentage_errors = abs((charges - initial_charges)) / initial_charges
+                    if percentage_errors.max() > 0.1:
+                        changed_charges.append(kwargs[key].uuid)
+            except:
+                pass
             total_energy_per_atom = (
                 kwargs[key]["total_energy"] / kwargs[key]["num_ions"]
             )
             total_energies.append(total_energy_per_atom)
+        all_energies.append(total_energies)
         min_energies.append(min(total_energies))
-        min_energy_index = np.argmin(total_energies)
-        min_energy_key = f"{i}_{min_energy_index}"
         total_energies = []
 
     # Calculating and storing mixing enthalpies and free energies
+    enthalpies = np.full((len(xs), max(lens)), np.nan)
+    for i in range(len(xs)):
+        for j in range(lens[i]):
+            enthalpies[i][j] = (
+                all_energies[i][j]
+                - ((1 - xs[i]) * all_energies[0][0])
+                - (xs[i] * all_energies[-1][-1])
+            )
+    all_enthalpies = np.transpose(enthalpies)
     mixing_enthalpies = [
         (min_energies[i] - ((1 - xs[i]) * min_energies[0]) - (xs[i] * min_energies[-1]))
-        for i in range(0, len(min_energies))
+        for i in range(len(min_energies))
     ]
     for i, x in enumerate(xs):
         if x == 0 or x == 1:
@@ -89,6 +108,9 @@ def analysis(xs, lens, temperatures, prefix, **kwargs):
         dict={
             "x_values": xs.get_list(),
             "temperatures": temperatures,
+            "changed_charges": changed_charges,
+            "total_energies": all_energies,
+            "min_energies": min_energies,
             "mixing_free_energies": mixing_free_energies,
             "mixing_enthalpies": mixing_enthalpies,
         }
@@ -99,8 +121,8 @@ def analysis(xs, lens, temperatures, prefix, **kwargs):
         (r"$\Delta G_{mix}$" + f" {temperature} K") for temperature in temperatures
     ]
     for i, label in enumerate(labels):
-        plt.plot(xs, mixing_free_energies[i], label=label)
-    plt.plot(xs, mixing_enthalpies, linestyle="dashed", label=r"$\Delta H_{mix}$")
+        plt.plot(xs, mixing_free_energies[i], "o-", label=label)
+    plt.plot(xs, mixing_enthalpies, "o--", label=r"$\Delta H_{mix}$")
     plt.xlim(left=0, right=1)
     plt.xlabel("x")
     plt.ylabel("Mixing energy (eV per atom)")
@@ -112,10 +134,22 @@ def analysis(xs, lens, temperatures, prefix, **kwargs):
         mixing_energy_plot = orm.SinglefileData(
             f"{temp}/{prefix.value}_mixing_energies.pdf"
         )
+        plt.close("all")
+        for i in range(len(all_enthalpies)):
+            plt.plot(xs, all_enthalpies[i], "ro")
+        plt.xlabel("x")
+        plt.ylabel("Mixing enthalpy (eV per atom)")
+        plt.savefig(
+            fname=f"{temp}/{prefix.value}_all_enthalpies.pdf", bbox_inches="tight"
+        )
+        all_enthalpy_plot = orm.SinglefileData(
+            f"{temp}/{prefix.value}_all_enthalpies.pdf"
+        )
 
     return {
         "mixing_energies": mixing_energies,
         "mixing_energy_plot": mixing_energy_plot,
+        "all_enthalpy_plot": all_enthalpy_plot,
     }
 
 
@@ -188,11 +222,17 @@ class CastepAlloyWorkChain(WorkChain):
             help="A plot of the mixing free energies and enthalpies for each composition",
             required=True,
         )
+        spec.output(
+            "all_enthalpy_plot",
+            valid_type=orm.SinglefileData,
+            help="A plot of the mixing enthalpies of all configurations for each composition",
+            required=True,
+        )
 
         # Outline of the WorkChain (the class methods to be run and their order)
         spec.outline(
             cls.setup,
-            cls.run_relax,
+            while_(cls.should_run_relax)(cls.run_relax),
             cls.analyse_calcs,
             cls.results,
         )
@@ -213,6 +253,16 @@ class CastepAlloyWorkChain(WorkChain):
         )
         self.ctx.xs = self.ctx.structures["xs"]
         self.ctx.lens = self.ctx.structures["lens"]
+        if sum(self.ctx.lens) > 100:
+            self.ctx.num_groups = np.ceil(sum(self.ctx.lens) / 100)
+        else:
+            self.ctx.num_groups = 1
+        self.ctx.current_x = 0
+        self.ctx.current_len = 0
+
+    def should_run_relax(self):
+        print(self.ctx.num_groups)
+        return self.ctx.num_groups > 0
 
     def run_relax(self):
         """Relax the symmetry-inequivalent structures for all compositions"""
@@ -220,12 +270,23 @@ class CastepAlloyWorkChain(WorkChain):
         relax_parameters = deepcopy(self.ctx.parameters)
         relax_parameters["task"] = "geometryoptimization"
         inputs.calc.parameters = relax_parameters
-        for i in range(len(self.ctx.xs)):
-            for j in range(self.ctx.lens[i]):
+        count = 0
+        end_of_group = False
+        for i in range(self.ctx.current_x, len(self.ctx.xs)):
+            for j in range(self.ctx.current_len, self.ctx.lens[i]):
+                if count == 100:
+                    end_of_group = True
+                    self.ctx.current_x = i
+                    self.ctx.current_len = j
+                    break
                 inputs.structure = self.ctx.structures[f"structure_{i}_{j}"]
                 key = f"{i}_{j}_relax"
                 running = self.submit(CastepRelaxWorkChain, **inputs)
                 self.to_context(**{key: running})
+                count += 1
+            if end_of_group:
+                break
+        self.ctx.num_groups -= 1
         self.report("Running relaxations on symmetry-inequivalent structures")
 
     def analyse_calcs(self):
@@ -258,9 +319,18 @@ class CastepAlloyWorkChain(WorkChain):
             orm.Str(self.inputs.metadata.get("label", "")),
             orm.Str(self.inputs.metadata.get("description", "")),
         )
+        self.ctx.all_enthalpy_plot = add_metadata(
+            outputs["all_enthalpy_plot"],
+            orm.Str(f"{self.ctx.prefix}_all_enthalpies.pdf"),
+            orm.Str(self.ctx.inputs.structure.get_formula()),
+            orm.Str(self.uuid),
+            orm.Str(self.inputs.metadata.get("label", "")),
+            orm.Str(self.inputs.metadata.get("description", "")),
+        )
 
     def results(self):
         """Add the relaxed structures, mixing energies and the mixing energy plot to WorkChain outputs"""
         self.out("relaxed_structures", self.ctx.relaxed_structures)
         self.out("mixing_energies", self.ctx.mixing_energies)
         self.out("mixing_energy_plot", self.ctx.mixing_energy_plot)
+        self.out("all_enthalpy_plot", self.ctx.all_enthalpy_plot)

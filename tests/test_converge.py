@@ -4,28 +4,40 @@ import aiida.orm as orm
 from aiida.engine import run_get_node
 from aiida.plugins import WorkflowFactory
 from aiida_castep.data.otfg import upload_otfg_family
-from aiida_castep_addons.workflows.converge import plot_phonons, seekpath_analysis
+from aiida_castep_addons.workflows.converge import (
+    check_supercell_conv,
+    seekpath_analysis,
+)
 from ase.build import bulk
 
 
-def test_plot_phonons():
+def test_check_supercell_conv():
     silicon = orm.StructureData(ase=bulk("Si", "diamond", 5.43))
     seekpath = seekpath_analysis(silicon, orm.Dict(dict={}))
     kpoints = seekpath["kpoints"]
-    files = []
+    kwargs = {}
     matrices = [
         ["2 0 0", "0 2 0", "0 0 2"],
         ["3 0 0", "0 3 0", "0 0 3"],
         ["4 0 0", "0 4 0", "0 0 4"],
     ]
     folders = ["calc-016", "calc-017", "calc-018"]
-    for folder in folders:
-        with open(f"registry/Si_converge/{folder}/out/aiida.phonon") as dot_phonon:
-            phonon_data = " ".join(dot_phonon.readlines())
-            files.append(phonon_data)
-    supercell_convergence_plot = plot_phonons(
-        orm.List(list=files), kpoints, orm.List(list=matrices), orm.Str("Si2_pbesol")
+    for i, folder in enumerate(folders):
+        kwargs[f"retrieved_{i}"] = orm.FolderData(
+            tree=Path(f"registry/Si_converge/{folder}/out").resolve()
+        )
+    supercell_conv = check_supercell_conv(
+        orm.List(list=matrices),
+        orm.Float(5.0),
+        kpoints,
+        orm.Str("Si2_pbesol"),
+        **kwargs,
     )
+
+    assert supercell_conv["is_converged"] == orm.Bool(True)
+    assert "converged_supercell" in supercell_conv
+    assert supercell_conv["converged_supercell_label"] == orm.Str("3x3x3")
+    assert "supercell_plot" in supercell_conv
 
 
 def test_converge_wc(mock_castep_code):

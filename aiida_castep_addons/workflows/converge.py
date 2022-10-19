@@ -20,27 +20,96 @@ from sumo.plotting.phonon_bs_plotter import SPhononBSPlotter
 
 
 @calcfunction
-def plot_phonons(files, kpoints, matrices, prefix):
+def check_pwcutoff_conv(pwcutoffs, energy_tolerance, **kwargs):
+    """Check if the total energy per atom is converged with respect to the plane-wave energy cutoff"""
+    is_converged = orm.Bool()
+    converged_pwcutoff = orm.Int()
+    for i in range(len(pwcutoffs)):
+        if i == 0:
+            continue
+        last_energy = kwargs[f"out_params_{i}"]["total_energy"]
+        second_last_energy = kwargs[f"out_params_{i-1}"]["total_energy"]
+        energy_diff_per_atom = (
+            abs(last_energy - second_last_energy)
+            / kwargs[f"out_params_{i}"]["num_ions"]
+        )
+        if energy_diff_per_atom < energy_tolerance:
+            is_converged = orm.Bool(True)
+            converged_pwcutoff = orm.Int(pwcutoffs[i - 1])
+            break
+
+    return {"is_converged": is_converged, "converged_pwcutoff": converged_pwcutoff}
+
+
+@calcfunction
+def check_kspacing_conv(kspacings, kgrids, energy_tolerance, **kwargs):
+    """Check if the total energy per atom is converged with respect to the k-point grid spacing"""
+    is_converged = orm.Bool()
+    converged_kspacing = orm.Float()
+    for i in range(len(kspacings)):
+        if i == 0:
+            continue
+        last_mesh = kgrids[i]
+        second_last_mesh = kgrids[i - 1]
+        if last_mesh == second_last_mesh:
+            continue
+        last_energy = kwargs[f"out_params_{i}"]["total_energy"]
+        second_last_energy = kwargs[f"out_params_{i-1}"]["total_energy"]
+        energy_diff_per_atom = (
+            abs(last_energy - second_last_energy)
+            / kwargs[f"out_params_{i}"]["num_ions"]
+        )
+        if energy_diff_per_atom < energy_tolerance:
+            is_converged = orm.Bool(True)
+            converged_kspacing = orm.Float(kspacings[i - 1])
+            break
+
+    return {"is_converged": is_converged, "converged_kspacing": converged_kspacing}
+
+
+@calcfunction
+def check_supercell_conv(matrices, frequency_tolerance, kpoints, prefix, **kwargs):
+    """Check if the phonon frequencies are converged with respect to the supercell size and
+    plot phonon dispersions for different supercell sizes with sumo and pymatgen"""
+    is_converged = orm.Bool()
+    converged_supercell = orm.ArrayData()
+    converged_supercell_label = orm.Str()
     supercell_labels = [
         f"{matrices[i][0][0]}x{matrices[i][1][2]}x{matrices[i][2][4]}"
         for i in range(len(matrices))
     ]
     with TemporaryDirectory() as temp:
-        for i, file in enumerate(files):
+        for i in range(len(matrices)):
+            # Checking for convergence
+            file = kwargs[f"retrieved_{i}"].get_object_content("aiida.phonon")
             with open(f"{temp}/{i}.phonon", "x") as phonon_file:
                 phonon_file.write(file)
+            if i == 0:
+                continue
+            last_phonon_data = PhononParser(open(f"{temp}/{i}.phonon"))
+            last_freqs = np.array(last_phonon_data.frequencies)
+            second_last_phonon_data = PhononParser(open(f"{temp}/{i-1}.phonon"))
+            second_last_freqs = np.array(second_last_phonon_data.frequencies)
 
-            # Parsing the .phonon files from the calculations
-            phonon_data = PhononParser(open(f"{temp}/{i}.phonon"))
+            percentage_errors = (
+                np.absolute((second_last_freqs - last_freqs)) / last_freqs
+            )
+            mean_percentage_error = np.mean(percentage_errors)
+            if mean_percentage_error < (
+                frequency_tolerance / 100
+            ) and is_converged == orm.Bool(False):
+                is_converged = orm.Bool(True)
+                converged_supercell.set_array("matrix", np.array(matrices[i - 1]))
+                converged_supercell_label = orm.Str(supercell_labels[i - 1])
 
             # Plotting the phonon band structure with sumo and pymatgen
             qpoints = kpoints.get_kpoints()
-            parsed_qpoints = np.array(phonon_data.qpoints)
-            frequencies = np.array(phonon_data.frequencies) / 33.36
+            parsed_qpoints = np.array(last_phonon_data.qpoints)
+            frequencies = np.array(last_phonon_data.frequencies) / 33.36
             bands = np.transpose(frequencies)
-            lattice = Lattice(phonon_data.cell)
+            lattice = Lattice(last_phonon_data.cell)
             rec_lattice = lattice.reciprocal_lattice
-            pmg_structure = phonon_data.structure
+            pmg_structure = last_phonon_data.structure
             labels = kpoints.labels
             label_dict = {}
             for index, label in labels:
@@ -71,7 +140,15 @@ def plot_phonons(files, kpoints, matrices, prefix):
             fname=f"{temp}/{prefix.value}_supercell_convergence.pdf",
             bbox_inches="tight",
         )
-        return orm.SinglefileData(f"{temp}/{prefix.value}_supercell_convergence.pdf")
+        supercell_plot = orm.SinglefileData(
+            f"{temp}/{prefix.value}_supercell_convergence.pdf"
+        )
+        return {
+            "is_converged": is_converged,
+            "converged_supercell": converged_supercell,
+            "converged_supercell_label": converged_supercell_label,
+            "supercell_plot": supercell_plot,
+        }
 
 
 class CastepConvergeWorkChain(WorkChain):
@@ -236,31 +313,27 @@ class CastepConvergeWorkChain(WorkChain):
 
     def analyse_pwcutoff_conv(self):
         """Analyse the plane-wave energy cutoff convergence calculations"""
+        kwargs = {}
+        pwcutoffs = []
         for i, wc in enumerate(self.ctx.pwcutoff_calcs):
-            if i == 0:
-                continue
-            last_energy = wc.outputs.output_parameters["total_energy"]
-            second_last_energy = self.ctx.pwcutoff_calcs[
-                i - 1
-            ].outputs.output_parameters["total_energy"]
-            energy_diff_per_atom = (
-                abs(last_energy - second_last_energy)
-                / wc.outputs.output_parameters["num_ions"]
-            )
-            if energy_diff_per_atom < self.ctx.energy_tolerance:
-                conv_pwcutoff = self.ctx.pwcutoff_calcs[i - 1].inputs.calc.parameters[
-                    "cut_off_energy"
-                ]
-                self.report(f"Plane-wave energy cutoff converged at {conv_pwcutoff} eV")
-                self.ctx.converged_pwcutoff = orm.Int(conv_pwcutoff)
-                self.ctx.pwcutoff_end = self.ctx.converged_pwcutoff
-                self.ctx.pwcutoff_converged = True
-                return
-        self.ctx.pwcutoff_start = self.ctx.pwcutoff_end
-        self.ctx.pwcutoff_end += 200
-        self.report(
-            "Plane-wave energy cutoff not converged. Increasing upper limit by 200 eV."
+            pwcutoffs.append(wc.inputs.calc.parameters["cut_off_energy"])
+            kwargs[f"out_params_{i}"] = wc.outputs.output_parameters
+        pwcutoff_conv = check_pwcutoff_conv(
+            orm.List(list=pwcutoffs), orm.Float(self.ctx.energy_tolerance), **kwargs
         )
+        if pwcutoff_conv["is_converged"]:
+            self.ctx.converged_pwcutoff = pwcutoff_conv["converged_pwcutoff"]
+            self.report(
+                f"Plane-wave energy cutoff converged at {self.ctx.converged_pwcutoff.value} eV"
+            )
+            self.ctx.pwcutoff_end = self.ctx.converged_pwcutoff.value
+            self.ctx.pwcutoff_converged = True
+        else:
+            self.ctx.pwcutoff_start = self.ctx.pwcutoff_end
+            self.ctx.pwcutoff_end += 200
+            self.report(
+                "Plane-wave energy cutoff not converged. Increasing upper limit by 200 eV."
+            )
 
     def run_kspacing_conv(self):
         """Run parallel k-point spacing convergence calculations with the k-point spacing range and step provided"""
@@ -281,51 +354,44 @@ class CastepConvergeWorkChain(WorkChain):
 
     def analyse_kspacing_conv(self):
         """Analyse previous k-point spacing convergence calculations"""
+        kwargs = {}
+        kspacings = []
+        kgrids = []
         for i, wc in enumerate(self.ctx.kspacing_calcs):
-            if i == 0:
-                continue
-            last_mesh = wc.called[-1].inputs.kpoints.get_kpoints_mesh()
-            second_last_mesh = (
-                self.ctx.kspacing_calcs[i - 1]
-                .called[-1]
-                .inputs.kpoints.get_kpoints_mesh()
-            )
-            if last_mesh == second_last_mesh:
-                continue
-            last_energy = wc.outputs.output_parameters["total_energy"]
-            second_last_energy = self.ctx.kspacing_calcs[
-                i - 1
-            ].outputs.output_parameters["total_energy"]
-            energy_diff_per_atom = (
-                abs(last_energy - second_last_energy)
-                / wc.outputs.output_parameters["num_ions"]
-            )
-            if energy_diff_per_atom < self.ctx.energy_tolerance:
-                conv_kspacing = self.ctx.kspacing_calcs[
-                    i - 1
-                ].inputs.kpoints_spacing.value
-                self.report(f"K-point spacing converged at {conv_kspacing} A-1")
-                self.ctx.converged_kspacing = orm.Float(conv_kspacing)
-                self.ctx.kspacing_end = self.ctx.converged_kspacing
-                self.ctx.kspacing_converged = True
-                return
-        self.ctx.kspacing_start = self.ctx.kspacing_end
-        if self.ctx.kspacing_end >= 0.03:
-            self.ctx.kspacing_end -= 0.02
+            kspacings.append(wc.inputs.kpoints_spacing)
+            kgrids.append(wc.called[-1].inputs.kpoints.get_kpoints_mesh())
+            kwargs[f"out_params_{i}"] = wc.outputs.output_parameters
+        kspacing_conv = check_kspacing_conv(
+            orm.List(list=kspacings),
+            orm.List(list=kgrids),
+            orm.Float(self.ctx.energy_tolerance),
+            **kwargs,
+        )
+        if kspacing_conv["is_converged"]:
+            self.ctx.converged_kspacing = kspacing_conv["converged_kspacing"]
             self.report(
-                "K-point spacing not converged. Decreasing lower limit by 0.02 A-1."
+                f"K-point spacing converged at {self.ctx.converged_kspacing.value} A-1"
             )
-        elif self.ctx.kspacing_end >= 0.015:
-            self.ctx.kspacing_end -= 0.01
-            self.report(
-                "K-point spacing not converged but very low. Decreasing lower limit by 0.01 A-1."
-            )
-        else:
-            self.ctx.converged_kspacing = orm.Float(self.ctx.kspacing_end)
+            self.ctx.kspacing_end = self.ctx.converged_kspacing
             self.ctx.kspacing_converged = True
-            self.report(
-                "K-point spacing not converged but too low to decrease further. Taking the lower limit as the converged value."
-            )
+        else:
+            self.ctx.kspacing_start = self.ctx.kspacing_end
+            if self.ctx.kspacing_end >= 0.03:
+                self.ctx.kspacing_end -= 0.02
+                self.report(
+                    "K-point spacing not converged. Decreasing lower limit by 0.02 A-1."
+                )
+            elif self.ctx.kspacing_end >= 0.015:
+                self.ctx.kspacing_end -= 0.01
+                self.report(
+                    "K-point spacing not converged but very low. Decreasing lower limit by 0.01 A-1."
+                )
+            else:
+                self.ctx.converged_kspacing = orm.Float(self.ctx.kspacing_end)
+                self.ctx.kspacing_converged = True
+                self.report(
+                    "K-point spacing not converged but too low to decrease further. Taking the lower limit as the converged value."
+                )
 
     def run_supercell_conv(self):
         """Run parallel supercell convergence calculations with the supercell length range and step provided"""
@@ -366,74 +432,39 @@ class CastepConvergeWorkChain(WorkChain):
 
     def analyse_supercell_conv(self):
         """Analyse previous supercell convergence calculations"""
-        files = []
+        kwargs = {}
         matrices = []
         for i, wc in enumerate(self.ctx.supercell_calcs):
-            last_phonon_file = wc.called[-1].outputs.retrieved.get_object_content(
-                "aiida.phonon"
-            )
-            last_matrix = wc.inputs.calc.parameters["phonon_supercell_matrix"]
-            files.append(last_phonon_file)
-            matrices.append(last_matrix)
-            if i == 0:
-                continue
-            second_last_phonon_file = files[-2]
-            with TemporaryDirectory() as temp:
-                with open(f"{temp}/last.phonon", "x") as file:
-                    file.write(last_phonon_file)
-                last_phonon_data = PhononParser(open(f"{temp}/last.phonon"))
-                last_freqs = np.array(last_phonon_data.frequencies)
-                with open(f"{temp}/second_last.phonon", "x") as file:
-                    file.write(second_last_phonon_file)
-                second_last_phonon_data = PhononParser(
-                    open(f"{temp}/second_last.phonon")
-                )
-                second_last_freqs = np.array(second_last_phonon_data.frequencies)
-            percentage_errors = (
-                np.absolute((second_last_freqs - last_freqs)) / last_freqs
-            )
-            mean_percentage_error = np.mean(percentage_errors)
-            if (
-                mean_percentage_error < (self.ctx.frequency_tolerance / 100)
-                and not self.ctx.supercell_converged
-            ):
-                self.report(
-                    f"Supercell converged at {self.ctx.supercell_lengths[i-1]} Angstroms"
-                )
-                self.ctx.supercell_converged = True
-                self.ctx.converged_supercell = orm.ArrayData()
-                self.ctx.converged_supercell.set_array(
-                    "matrix",
-                    np.array(
-                        self.ctx.supercell_calcs[-1].inputs.calc.parameters[
-                            "phonon_supercell_matrix"
-                        ]
-                    ),
-                )
-        if not self.ctx.supercell_converged:
-            self.ctx.supercell_converged = True
-            self.ctx.converged_supercell = orm.ArrayData()
-            self.ctx.converged_supercell.set_array(
-                "matrix",
-                np.array(wc.inputs.calc.parameters["phonon_supercell_matrix"]),
-            )
-            self.report(
-                f"Supercell not converged but very large. Taking {self.ctx.supercell_lengths[-1]} Angstroms as converged supercell."
-            )
-        supercell_plot = plot_phonons(
-            orm.List(list=files),
-            self.ctx.kpoints,
+            matrices.append(wc.inputs.calc.parameters["phonon_supercell_matrix"])
+            kwargs[f"retrieved_{i}"] = wc.called[-1].outputs.retrieved
+        supercell_conv = check_supercell_conv(
             orm.List(list=matrices),
+            orm.Float(self.ctx.frequency_tolerance),
+            self.ctx.kpoints,
             orm.Str(self.ctx.prefix),
+            **kwargs,
         )
-        self.ctx.supercell_plot = add_metadata(
-            supercell_plot,
-            orm.Str(f"{self.ctx.prefix}_supercell_convergence.pdf"),
-            orm.Str(self.ctx.inputs.calc.structure.get_formula()),
-            orm.Str(self.uuid),
-            orm.Str(self.inputs.metadata.get("label", "")),
-            orm.Str(self.inputs.metadata.get("description", "")),
-        )
+        if supercell_conv["is_converged"]:
+            self.report(
+                f"Supercell size converged at {supercell_conv['converged_supercell_label'].value}"
+            )
+            self.ctx.supercell_converged = True
+            self.ctx.converged_supercell = supercell_conv["converged_supercell"]
+            supercell_plot = supercell_conv["supercell_plot"]
+            self.ctx.supercell_plot = add_metadata(
+                supercell_plot,
+                orm.Str(f"{self.ctx.prefix}_supercell_convergence.pdf"),
+                orm.Str(self.ctx.inputs.calc.structure.get_formula()),
+                orm.Str(self.uuid),
+                orm.Str(self.inputs.metadata.get("label", "")),
+                orm.Str(self.inputs.metadata.get("description", "")),
+            )
+        else:
+            self.ctx.supercell_start = self.ctx.supercell_end
+            self.ctx.supercell_end += 10
+            self.report(
+                "Supercell size not converged. Increasing upper length limit by 10 Angstroms."
+            )
 
     def results(self):
         """Add converged plane-wave cutoff, k-point spacing, and supercell matrix to WorkChain outputs"""

@@ -272,7 +272,7 @@ class CastepPhononWorkChain(WorkChain):
             serializer=to_aiida_type,
             help="Parameters to use with seekpath for the k-point path generation",
             required=False,
-            default=lambda: orm.Dict(dict={}),
+            default=lambda: orm.Dict(),
         )
         spec.input(
             "run_phonon",
@@ -288,7 +288,7 @@ class CastepPhononWorkChain(WorkChain):
             serializer=to_aiida_type,
             help="Run a thermodynamics calculation or not (False by default)",
             required=False,
-            default=lambda: orm.Bool(False),
+            default=lambda: orm.Bool(),
         )
         spec.input(
             "thermo_parameters",
@@ -296,7 +296,7 @@ class CastepPhononWorkChain(WorkChain):
             serializer=to_aiida_type,
             help="Additional CASTEP parameters for the thermodynamics calculation as a dictionary",
             required=False,
-            default=lambda: orm.Dict(dict={}),
+            default=lambda: orm.Dict(),
         )
         spec.input(
             "continuation_folder",

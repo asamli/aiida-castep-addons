@@ -82,7 +82,7 @@ class CastepMagneticWorkChain(WorkChain):
             serializer=to_aiida_type,
             help="Options for the Pymatgen spin enumerator",
             required=False,
-            default=lambda: orm.Dict(dict={}),
+            default=lambda: orm.Dict(),
         )
 
         # The outputs

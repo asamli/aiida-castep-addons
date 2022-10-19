@@ -306,7 +306,7 @@ class CastepBandPlotWorkChain(WorkChain):
             serializer=to_aiida_type,
             help="Parameters to use with seekpath for the k-point path generation",
             required=False,
-            default=lambda: orm.Dict(dict={}),
+            default=lambda: orm.Dict(),
         )
         spec.input(
             "experimental_spectra",
