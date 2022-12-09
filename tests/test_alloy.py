@@ -2,10 +2,13 @@ import aiida.orm as orm
 from aiida.engine import run_get_node
 from aiida.plugins import WorkflowFactory
 from aiida_castep.data.otfg import upload_otfg_family
-from aiida_castep_addons.workflows.alloy import generate_structures
+from aiida_castep_addons.workflows.alloy import (
+    generate_bsym_structures,
+    generate_sqs_structures,
+)
 
 
-def test_generate_structures():
+def test_generate_bsym_structures():
     rutile = orm.StructureData(
         cell=[
             [4.5941, 0, 0],
@@ -19,8 +22,33 @@ def test_generate_structures():
     rutile.append_atom(position=(3.70146637, 0.89263363, 1.47945), symbols="O")
     rutile.append_atom(position=(0.89263363, 3.70146637, 1.47945), symbols="O")
     rutile.append_atom(position=(3.18968363, 3.18968363, 0), symbols="O")
-    structures = generate_structures(
-        rutile, orm.Str("Ti"), orm.Str("Zr"), orm.List(list=[1, 1, 1])
+    structures = generate_bsym_structures(
+        rutile, orm.Str("Ti"), orm.Str("Zr"), orm.List(list=[1, 1, 1]), orm.List()
+    )
+
+    assert "xs" in structures
+    assert "lens" in structures
+    assert "structure_0_0" in structures
+    assert "structure_1_0" in structures
+    assert "structure_2_0" in structures
+
+
+def test_generate_sqs_structures():
+    rutile = orm.StructureData(
+        cell=[
+            [4.5941, 0, 0],
+            [0, 4.5941, 0],
+            [0, 0, 2.9589],
+        ]
+    )
+    rutile.append_atom(position=(0, 0, 0), symbols="Ti")
+    rutile.append_atom(position=(2.29705, 2.29705, 1.47945), symbols="Ti")
+    rutile.append_atom(position=(1.40441637, 1.40441637, 0), symbols="O")
+    rutile.append_atom(position=(3.70146637, 0.89263363, 1.47945), symbols="O")
+    rutile.append_atom(position=(0.89263363, 3.70146637, 1.47945), symbols="O")
+    rutile.append_atom(position=(3.18968363, 3.18968363, 0), symbols="O")
+    structures = generate_sqs_structures(
+        rutile, orm.Str("Ti"), orm.Str("Zr"), orm.List(list=[1, 1, 1]), orm.List()
     )
 
     assert "xs" in structures

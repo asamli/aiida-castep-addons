@@ -25,7 +25,10 @@
         "castep_addons.magnetic = aiida_castep_addons.workflows.magnetic:CastepMagneticWorkChain",
         "castep_addons.core_loss = aiida_castep_addons.workflows.core_loss:CastepCoreLossWorkChain",
         "castep_addons.alloy = aiida_castep_addons.workflows.alloy:CastepAlloyWorkChain"
-	]
+	],
+    "aiida.schedulers": [
+        "mscastep.slurm = aiida_castep_addons.schedulers.slurm_mscastep:MSCastepSlurmScheduler"
+    ]
     },
     "include_package_data": true,
     "setup_requires": ["reentry"],
