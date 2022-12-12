@@ -43,6 +43,7 @@
         "galore",
         "PyPDF2",
         "bsym",
+        "icet",
 	    "aiida-castep@git+https://github.com/zhubonan/aiida-castep"
     ],
     "extras_require": {
