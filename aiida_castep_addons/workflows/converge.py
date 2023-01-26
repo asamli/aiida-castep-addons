@@ -143,6 +143,7 @@ def check_supercell_conv(matrices, frequency_tolerance, kpoints, prefix, **kwarg
         supercell_plot = orm.SinglefileData(
             f"{temp}/{prefix.value}_supercell_convergence.pdf"
         )
+        plt.close("all")
         return {
             "is_converged": is_converged,
             "converged_supercell": converged_supercell,

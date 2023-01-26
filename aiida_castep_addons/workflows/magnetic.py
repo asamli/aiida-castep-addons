@@ -21,11 +21,17 @@ def enumerate_spins(structure, enum_options):
     )
     enum_structures = {}
     enum_structures["origins"] = orm.List(list=enum.ordered_structure_origins)
+    spins = []
     for i, structure in enumerate(enum.ordered_structures):
-        spins = [specie.spin for specie in structure.species]
+        for specie in structure.species:
+            try:
+                spins.append(specie.spin)
+            except:
+                spins.append(0)
         enum_structures[f"structure_{i+1}_spins"] = orm.List(list=spins)
         structure.remove_spin()
         enum_structures[f"structure_{i+1}"] = orm.StructureData(pymatgen=structure)
+        spins = []
     return enum_structures
 
 
@@ -171,6 +177,5 @@ class CastepMagneticWorkChain(WorkChain):
 
     def results(self):
         """Add the enumeration data and lowest energy structure to WorkChain outputs"""
-        if self.should_run_relax():
-            self.out("enum_data", self.ctx.enum_data)
-            self.out("gs_structure", self.ctx.gs_structure)
+        self.out("enum_data", self.ctx.enum_data)
+        self.out("gs_structure", self.ctx.gs_structure)

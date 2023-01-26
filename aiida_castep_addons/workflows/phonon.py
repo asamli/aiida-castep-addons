@@ -156,7 +156,7 @@ def phonon_analysis(prefix, ir_folder, kpoints, raman_folder, experimental_spect
         plt.ylim(bottom=0)
         plt.legend(loc="best")
         plt.savefig(fname=f"{temp}/{prefix.value}_vib_spectra.pdf", bbox_inches="tight")
-        plt.close()
+        plt.close("all")
         vib_spectra = orm.SinglefileData(f"{temp}/{prefix.value}_vib_spectra.pdf")
 
     return {
@@ -222,7 +222,7 @@ def thermo_analysis(prefix, thermo_folder):
         plt.savefig(
             fname=f"{temp}/{prefix.value}_thermo_energies.pdf", bbox_inches="tight"
         )
-        plt.close()
+        plt.close("all")
         energy_plot = orm.SinglefileData(f"{temp}/{prefix.value}_thermo_energies.pdf")
 
         # Plotting entropy and heat capacity against temperature
@@ -236,7 +236,7 @@ def thermo_analysis(prefix, thermo_folder):
         plt.savefig(
             fname=f"{temp}/{prefix.value}_thermo_entropies.pdf", bbox_inches="tight"
         )
-        plt.close()
+        plt.close("all")
         entropy_plot = orm.SinglefileData(f"{temp}/{prefix.value}_thermo_entropies.pdf")
 
     return {

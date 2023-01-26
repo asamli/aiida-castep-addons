@@ -235,6 +235,7 @@ def analysis(xs, lens, temperatures, prefix, **kwargs):
         all_enthalpy_plot = orm.SinglefileData(
             f"{temp}/{prefix.value}_all_enthalpies.pdf"
         )
+        plt.close("all")
 
     return {
         "mixing_energies": mixing_energies,

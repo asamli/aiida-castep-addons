@@ -116,7 +116,7 @@ def plot_core_loss(folder, uuid, label, description, prefix, experimental_spectr
         plt.ylim(bottom=0)
         plt.legend(bbox_to_anchor=(1.05, 1), loc="upper left")
         plt.savefig(fname=f"{temp}/{prefix.value}_core_loss.pdf", bbox_inches="tight")
-        plt.close()
+        plt.close("all")
         core_loss_spectrum = orm.SinglefileData(f"{temp}/{prefix.value}_core_loss.pdf")
         return {
             "optados_data": optados_data,

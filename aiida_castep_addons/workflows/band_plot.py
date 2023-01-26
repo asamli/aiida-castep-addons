@@ -246,7 +246,7 @@ def analysis(
         legend = ax.legend(loc="best")
         legend.set_title("Weighting")
         plt.savefig(fname=f"{temp}/{prefix.value}_pe_spectra.pdf", bbox_inches="tight")
-        plt.close()
+        plt.close("all")
         pe_spectra = orm.SinglefileData(f"{temp}/{prefix.value}_pe_spectra.pdf")
 
         # Plotting band structure
@@ -267,6 +267,7 @@ def analysis(
             fname=f"{temp}/{prefix.value}_bands.pdf", bbox_inches="tight"
         )
         band_plot = orm.SinglefileData(f"{temp}/{prefix.value}_bands.pdf")
+        plt.close("all")
 
     return {
         "dos_plot": dos_plot,
