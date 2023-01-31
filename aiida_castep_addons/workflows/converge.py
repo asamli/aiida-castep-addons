@@ -27,6 +27,10 @@ def check_pwcutoff_conv(pwcutoffs, energy_tolerance, **kwargs):
     for i in range(len(pwcutoffs)):
         if i == 0:
             continue
+        last_pwcutoff = pwcutoffs[i]
+        second_last_pwcutoff = pwcutoffs[i - 1]
+        if last_pwcutoff == second_last_pwcutoff:
+            continue
         last_energy = kwargs[f"out_params_{i}"]["total_energy"]
         second_last_energy = kwargs[f"out_params_{i-1}"]["total_energy"]
         energy_diff_per_atom = (
@@ -330,7 +334,7 @@ class CastepConvergeWorkChain(WorkChain):
             self.ctx.pwcutoff_end = self.ctx.converged_pwcutoff.value
             self.ctx.pwcutoff_converged = True
         else:
-            self.ctx.pwcutoff_start = self.ctx.pwcutoff_end
+            self.ctx.pwcutoff_start = self.ctx.pwcutoff_end + self.ctx.pwcutoff_step
             self.ctx.pwcutoff_end += 200
             self.report(
                 "Plane-wave energy cutoff not converged. Increasing upper limit by 200 eV."
@@ -376,7 +380,7 @@ class CastepConvergeWorkChain(WorkChain):
             self.ctx.kspacing_end = self.ctx.converged_kspacing
             self.ctx.kspacing_converged = True
         else:
-            self.ctx.kspacing_start = self.ctx.kspacing_end
+            self.ctx.kspacing_start = self.ctx.kspacing_end - self.ctx.kspacing_step
             if self.ctx.kspacing_end >= 0.03:
                 self.ctx.kspacing_end -= 0.02
                 self.report(
