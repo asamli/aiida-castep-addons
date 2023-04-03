@@ -1,4 +1,6 @@
-"""Module for Phonon WorkChain"""
+"""
+Module for Phonon WorkChain
+"""
 
 from __future__ import absolute_import
 

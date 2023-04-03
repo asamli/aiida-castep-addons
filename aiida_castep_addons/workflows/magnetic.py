@@ -2,6 +2,7 @@
 Module for Magnetic WorkChain
 Inspired by the VASP workchain of the same name in aiida-user-addons
 """
+
 from __future__ import absolute_import
 
 from copy import deepcopy

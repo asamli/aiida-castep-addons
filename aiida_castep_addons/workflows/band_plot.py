@@ -1,4 +1,7 @@
-"""Module for Density of States and Band Structure WorkChain"""
+"""
+Module for Density of States and Band Structure WorkChain
+"""
+
 from __future__ import absolute_import
 
 from copy import deepcopy
@@ -268,6 +271,7 @@ def analysis(
         )
         band_plot = orm.SinglefileData(f"{temp}/{prefix.value}_bands.pdf")
         plt.close("all")
+        plt.style.use("default")
 
     return {
         "dos_plot": dos_plot,

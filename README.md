@@ -29,6 +29,7 @@ Workflows:
 * `castep_addons.magnetic`: Workflow to enumerate magnetic orderings for a structure using `Pymatgen`, relax each structure and analyse the results. Note: The [EnumLib](https://github.com/msg-byu/enumlib) package must be installed in order to use this workflow.
 * `castep_addons.core_loss`: Workflow to do spectral core loss calculations and plot EELS/XANES spectra using `OptaDOS`.
 * `castep_addons.alloy`: Workflow to generate alloy structures with `Bsym` or `ICET` and calculate thermodynamic properties of mixing after relaxing each structure.
+* `castep_addons.nmr`: Workflow for calculations of NMR chemical shifts.
 
 Parsers:
 * `castep_addons.phonon`: Parser for CASTEP .phonon output files to extract the structure, vibrational spectrum data, q-points, phonon frequencies and eigenvectors.

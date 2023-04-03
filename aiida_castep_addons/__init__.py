@@ -5,4 +5,4 @@ aiida_castep_addons
 Useful addons for the aiida-castep plugin
 """
 
-__version__ = "0.2.0"
+__version__ = "0.3.0"

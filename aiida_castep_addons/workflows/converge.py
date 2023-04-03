@@ -1,4 +1,6 @@
-"""Module for Convergence WorkChain"""
+"""
+Module for Convergence WorkChain
+"""
 
 from __future__ import absolute_import
 
@@ -335,9 +337,9 @@ class CastepConvergeWorkChain(WorkChain):
             self.ctx.pwcutoff_converged = True
         else:
             self.ctx.pwcutoff_start = self.ctx.pwcutoff_end + self.ctx.pwcutoff_step
-            self.ctx.pwcutoff_end += 200
+            self.ctx.pwcutoff_end += 2 * self.ctx.pwcutoff_step
             self.report(
-                "Plane-wave energy cutoff not converged. Increasing upper limit by 200 eV."
+                "Plane-wave energy cutoff not converged. Increasing upper limit."
             )
 
     def run_kspacing_conv(self):
@@ -381,16 +383,9 @@ class CastepConvergeWorkChain(WorkChain):
             self.ctx.kspacing_converged = True
         else:
             self.ctx.kspacing_start = self.ctx.kspacing_end - self.ctx.kspacing_step
-            if self.ctx.kspacing_end >= 0.03:
-                self.ctx.kspacing_end -= 0.02
-                self.report(
-                    "K-point spacing not converged. Decreasing lower limit by 0.02 A-1."
-                )
-            elif self.ctx.kspacing_end >= 0.015:
-                self.ctx.kspacing_end -= 0.01
-                self.report(
-                    "K-point spacing not converged but very low. Decreasing lower limit by 0.01 A-1."
-                )
+            if self.ctx.kspacing_end >= (4 * self.ctx.kspacing_step):
+                self.ctx.kspacing_end -= 2 * self.ctx.kspacing_setp
+                self.report("K-point spacing not converged. Decreasing lower limit.")
             else:
                 self.ctx.converged_kspacing = orm.Float(self.ctx.kspacing_end)
                 self.ctx.kspacing_converged = True

@@ -1,4 +1,7 @@
-"""Module for Density of States and Band Structure WorkChain"""
+"""
+Module for Core Loss WorkChain
+"""
+
 from __future__ import absolute_import
 
 import subprocess
@@ -10,6 +13,7 @@ import matplotlib.pyplot as plt
 from aiida.engine import ToContext, WorkChain, calcfunction
 from aiida.orm.nodes.data.base import to_aiida_type
 from aiida_castep.workflows.base import CastepBaseWorkChain
+
 from aiida_castep_addons.utils import add_metadata
 
 
@@ -63,10 +67,12 @@ def plot_core_loss(folder, uuid, label, description, prefix, experimental_spectr
         lines = [line.strip() for line in lines]
         for i, line in enumerate(lines):
             split_line = line.split()
-            if len(split_line) > 2:
-                if line[0] == "#" and split_line[2] == "1":
+            if len(split_line) > 2 and line[0] == "#":
+                if split_line[2] == "1" and (
+                    split_line[3][0] == "K" or split_line[3][0] == "L"
+                ):
                     read = True
-                elif line[0] == "#" and split_line[2] != "1":
+                else:
                     read = False
                     continue
 
@@ -90,6 +96,7 @@ def plot_core_loss(folder, uuid, label, description, prefix, experimental_spectr
             ]
 
         # Plotting EELS/XANES spectrum
+        plt.style.use("default")
         for i, label in enumerate(labels):
             plt.plot(
                 all_energies[i],
@@ -126,7 +133,7 @@ def plot_core_loss(folder, uuid, label, description, prefix, experimental_spectr
 
 class CastepCoreLossWorkChain(WorkChain):
     """
-    WorkChain for core loss calculations and core edge EELS/XANES plots with optaDOS
+    WorkChain for core loss calculations and core edge EELS/XANES plots with OptaDOS
     """
 
     @classmethod
@@ -180,23 +187,23 @@ class CastepCoreLossWorkChain(WorkChain):
     def run_core_loss(self):
         """Run the spectral density of states calculation"""
         inputs = self.ctx.inputs
-        dos_parameters = deepcopy(self.ctx.parameters)
+        parameters = deepcopy(self.ctx.parameters)
         if ("spectral_kpoints" not in inputs.calc) and (
-            "spectral_kpoint_mp_spacing" not in dos_parameters
+            "spectral_kpoint_mp_spacing" not in parameters
         ):
             if "kpoints_spacing" not in inputs:
                 inputs.calc.spectral_kpoints = inputs.calc.kpoints
             else:
-                dos_parameters.update(
+                parameters.update(
                     {"spectral_kpoint_mp_spacing": inputs.kpoints_spacing}
                 )
-        dos_parameters.update(
+        parameters.update(
             {
                 "task": "spectral",
                 "spectral_task": "coreloss",
             }
         )
-        inputs.calc.parameters = dos_parameters
+        inputs.calc.parameters = parameters
         inputs.calc.metadata.options.additional_retrieve_list = [
             "*.dome_bin",
             "*.elnes_bin",

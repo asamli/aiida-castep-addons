@@ -1,6 +1,7 @@
 """
 Module for Alloy WorkChain
 """
+
 from __future__ import absolute_import
 
 from copy import deepcopy
@@ -169,11 +170,12 @@ def analysis(xs, lens, temperatures, prefix, **kwargs):
     enthalpies = np.full((len(xs), max(lens)), np.nan)
     for i in range(len(xs)):
         for j in range(lens[i]):
-            enthalpies[i][j] = (
-                all_energies[i][j]
-                - ((1 - xs[i]) * all_energies[0][0])
-                - (xs[i] * all_energies[-1][-1])
-            )
+            if all_energies[i][j] != 0.0:
+                enthalpies[i][j] = (
+                    all_energies[i][j]
+                    - ((1 - xs[i]) * all_energies[0][0])
+                    - (xs[i] * all_energies[-1][-1])
+                )
     all_enthalpies = np.transpose(enthalpies)
     mixing_enthalpies = [
         (min_energies[i] - ((1 - xs[i]) * min_energies[0]) - (xs[i] * min_energies[-1]))
@@ -201,8 +203,8 @@ def analysis(xs, lens, temperatures, prefix, **kwargs):
             "temperatures": temperatures,
             "total_energies": all_energies,
             "min_energies": min_energies,
-            "mixing_free_energies": mixing_free_energies,
             "mixing_enthalpies": mixing_enthalpies,
+            "mixing_free_energies": mixing_free_energies,
         }
     )
 
@@ -210,6 +212,7 @@ def analysis(xs, lens, temperatures, prefix, **kwargs):
     labels = [
         (r"$\Delta G_{mix}$" + f" {temperature} K") for temperature in temperatures
     ]
+    plt.style.use("default")
     for i, label in enumerate(labels):
         plt.plot(xs, mixing_free_energies[i], "o-", label=label)
     plt.plot(xs, mixing_enthalpies, "o--", label=r"$\Delta H_{mix}$")
@@ -378,7 +381,6 @@ class CastepAlloyWorkChain(WorkChain):
         self.ctx.current_len = 0
 
     def should_run_relax(self):
-        print(self.ctx.num_groups)
         return self.ctx.num_groups > 0
 
     def run_relax(self):
@@ -404,6 +406,7 @@ class CastepAlloyWorkChain(WorkChain):
                 count += 1
             if end_of_group:
                 break
+            self.ctx.current_len = 0
         self.ctx.num_groups -= 1
         self.report("Running relaxations on symmetry-inequivalent structures")
 
@@ -415,10 +418,15 @@ class CastepAlloyWorkChain(WorkChain):
         for i in range(len(self.ctx.xs)):
             for j in range(self.ctx.lens[i]):
                 key = f"{i}_{j}_relax"
-                structure = self.ctx[key].outputs.output_structure
-                relaxed_structures.append(structure.uuid)
-                output_parameters = self.ctx[f"{i}_{j}_relax"].outputs.output_parameters
-                kwargs[f"out_params_{i}_{j}"] = output_parameters
+                if self.ctx[key].is_finished_ok:
+                    structure = self.ctx[key].outputs.output_structure
+                    relaxed_structures.append(structure.uuid)
+                    output_parameters = self.ctx[
+                        f"{i}_{j}_relax"
+                    ].outputs.output_parameters
+                    kwargs[f"out_params_{i}_{j}"] = output_parameters
+                else:
+                    relaxed_structures.append("failed")
             self.ctx.relaxed_structures.append(relaxed_structures)
             relaxed_structures = []
         outputs = analysis(

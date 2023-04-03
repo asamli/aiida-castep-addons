@@ -1,0 +1,121 @@
+#$magres-abinitio-v1.0
+# See http://www.ccpnc.ac.uk/pmwiki.php/CCPNC/Fileformat for format definition and code samples and libraries
+[calculation]
+calc_code CASTEP
+calc_code_version  20.1
+calc_code_hgversion 328d1dd6+  Castep201_branch  Wed Mar 10 09:27:36 2021 +0000     
+calc_code_platform linux_x86_64_gfortran10                                         
+calc_name aiida
+calc_comment                                                                                 
+calc_xcfunctional PBESOL 
+calc_cutoffenergy    350.00000000 eV
+calc_pspot Si 3|1.8|5|6|7|30:31:32
+calc_kpoint_mp_grid 8 8 8
+calc_kpoint_mp_offset       0.00000000      0.00000000      0.00000000
+[/calculation]
+[atoms]
+units lattice Angstrom
+lattice           0.0000000000000000E+00          2.7149999999999999E+00          2.7149999999999999E+00          2.7149999999999999E+00          0.0000000000000000E+00          2.7149999999999999E+00          2.7149999999999999E+00          2.7149999999999999E+00          0.0000000000000000E+00
+units atom Angstrom
+symmetry x,y,z
+symmetry x+y+z+1/4,-z+1/4,-x+1/4
+symmetry y,x,-x-y-z
+symmetry -z+1/4,x+y+z+1/4,-y+1/4
+symmetry -x-y-z,z,y
+symmetry -y+1/4,-x+1/4,-z+1/4
+symmetry z,-x-y-z,x
+symmetry -x+1/4,-y+1/4,x+y+z+1/4
+symmetry z,x,y
+symmetry -x+1/4,x+y+z+1/4,-z+1/4
+symmetry -x-y-z,y,x
+symmetry -y+1/4,-z+1/4,x+y+z+1/4
+symmetry y,-x-y-z,z
+symmetry -z+1/4,-y+1/4,-x+1/4
+symmetry x,z,-x-y-z
+symmetry x+y+z+1/4,-x+1/4,-y+1/4
+symmetry y,z,x
+symmetry -z+1/4,-x+1/4,x+y+z+1/4
+symmetry x,-x-y-z,y
+symmetry x+y+z+1/4,-y+1/4,-z+1/4
+symmetry z,y,-x-y-z
+symmetry -x+1/4,-z+1/4,-y+1/4
+symmetry -x-y-z,x,z
+symmetry -y+1/4,x+y+z+1/4,-x+1/4
+symmetry -x+1/4,-y+1/4,-z+1/4
+symmetry -x-y-z,z,x
+symmetry -y+1/4,-x+1/4,x+y+z+1/4
+symmetry z,-x-y-z,y
+symmetry x+y+z+1/4,-z+1/4,-y+1/4
+symmetry y,x,z
+symmetry -z+1/4,x+y+z+1/4,-x+1/4
+symmetry x,y,-x-y-z
+symmetry -z+1/4,-x+1/4,-y+1/4
+symmetry x,-x-y-z,z
+symmetry x+y+z+1/4,-y+1/4,-x+1/4
+symmetry y,z,-x-y-z
+symmetry -y+1/4,x+y+z+1/4,-z+1/4
+symmetry z,y,x
+symmetry -x+1/4,-z+1/4,x+y+z+1/4
+symmetry -x-y-z,x,y
+symmetry -y+1/4,-z+1/4,-x+1/4
+symmetry z,x,-x-y-z
+symmetry -x+1/4,x+y+z+1/4,-y+1/4
+symmetry -x-y-z,y,z
+symmetry -z+1/4,-y+1/4,x+y+z+1/4
+symmetry x,z,y
+symmetry x+y+z+1/4,-x+1/4,-z+1/4
+symmetry y,-x-y-z,x
+atom Si      Si   1          0.0000000000000000E+00          0.0000000000000000E+00          0.0000000000000000E+00
+atom Si      Si   2          1.3574999999999999E+00          1.3574999999999999E+00          1.3574999999999999E+00
+[/atoms]
+[magres]
+units ms ppm
+ms Si  1          4.0252613574660501E+02         -2.4633699929666170E-16         -4.9261385772435443E-16         -1.5396062456041356E-17          4.0252613574660546E+02         -1.8481289034146518E-16         -4.3102960790018904E-16         -4.3114988963812686E-16          4.0252613574660518E+02
+ms Si  2          4.0252613574660552E+02          1.5396062456041356E-17         -2.4639714016563061E-16         -2.5403503052468237E-16          4.0252613574660501E+02         -6.7736660719685083E-16         -4.3114988963812686E-16         -4.3102960790018904E-16          4.0252613574660518E+02
+[/magres]
+[magres_old]
+============
+Atom: Si       1
+============
+Si       1 Coordinates      0.000    0.000    0.000   A
+
+TOTAL Shielding Tensor
+
+             402.5261     -0.0000     -0.0000
+              -0.0000    402.5261     -0.0000
+              -0.0000     -0.0000    402.5261
+
+Si       1 Eigenvalue  sigma_xx     402.5261 (ppm)
+Si       1 Eigenvector sigma_xx      -0.1614      0.9869     -0.0000
+Si       1 Eigenvalue  sigma_yy     402.5261 (ppm)
+Si       1 Eigenvector sigma_yy       0.0000      0.0000      1.0000
+Si       1 Eigenvalue  sigma_zz     402.5261 (ppm)
+Si       1 Eigenvector sigma_zz       0.9869      0.1614      0.0000
+
+Si       1 Isotropic:      402.5261 (ppm)
+Si       1 Anisotropy:      -0.0000 (ppm)
+Si       1 Asymmetry:     N/A
+
+============
+Atom: Si       2
+============
+Si       2 Coordinates      1.357    1.357    1.357   A
+
+TOTAL Shielding Tensor
+
+             402.5261      0.0000     -0.0000
+              -0.0000    402.5261     -0.0000
+              -0.0000     -0.0000    402.5261
+
+Si       2 Eigenvalue  sigma_xx     402.5261 (ppm)
+Si       2 Eigenvector sigma_xx      -0.1122      0.9937     -0.0000
+Si       2 Eigenvalue  sigma_yy     402.5261 (ppm)
+Si       2 Eigenvector sigma_yy       0.0000      0.0000      1.0000
+Si       2 Eigenvalue  sigma_zz     402.5261 (ppm)
+Si       2 Eigenvector sigma_zz      -0.9937     -0.1122      0.0000
+
+Si       2 Isotropic:      402.5261 (ppm)
+Si       2 Anisotropy:       0.0000 (ppm)
+Si       2 Asymmetry:     N/A
+
+[/magres_old]
