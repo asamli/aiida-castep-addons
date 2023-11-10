@@ -1,0 +1,660 @@
+ +-------------------------------------------------+
+ |                                                 |
+ |      CCC   AA    SSS  TTTTT  EEEEE  PPPP        |
+ |     C     A  A  S       T    E      P   P       |
+ |     C     AAAA   SS     T    EEE    PPPP        |
+ |     C     A  A     S    T    E      P           |
+ |      CCC  A  A  SSS     T    EEEEE  P           |
+ |                                                 |
+ +-------------------------------------------------+
+ |                                                 |
+ | Welcome to Academic Release CASTEP version 20.11|          
+ | Ab Initio Total Energy Program                  |
+ |                                                 |
+ | Authors:                                        |
+ | M. Segall, M. Probert, C. Pickard, P. Hasnip,   |
+ | S. Clark, K. Refson, J. R. Yates, M. Payne      |
+ |                                                 |
+ | Contributors:                                   |
+ | P. Lindan, P. Haynes, J. White, V. Milman,      |
+ | N. Govind, M. Gibson, P. Tulip, V. Cocula,      |
+ | B. Montanari, D. Quigley, M. Glover,            |
+ | L. Bernasconi, A. Perlov, M. Plummer,           |
+ | E. McNellis, J. Meyer, J. Gale, D. Jochym       |
+ | J. Aarons, B. Walker, R. Gillen, D. Jones       |
+ | T. Green, I. J. Bush, C. J. Armstrong,          |
+ | E. J. Higgins, E. L. Brown, M. S. McFly,        |
+ | J. Wilkins, B-C. Shih, P. J. P. Byrne,          |
+ | R. J. Maurer, J. C. Womack, J. Dziedzic,        |
+ | J. R. Kermode, A. Bartok-Partay                 |
+ |                                                 |
+ | Copyright (c) 2000 - 2020                       |
+ |                                                 |
+ |     Distributed under license from Cambridge    |
+ |     Enterprise for academic use only.           |
+ |                                                 |
+ | Please cite                                     |
+ |                                                 |
+ |     "First principles methods using CASTEP"     |
+ |                                                 |
+ |         Zeitschrift fuer Kristallographie       |
+ |           220(5-6) pp. 567-570 (2005)           |
+ |                                                 |
+ | S. J. Clark, M. D. Segall, C. J. Pickard,       |
+ | P. J. Hasnip, M. J. Probert, K. Refson,         |
+ | M. C. Payne                                     |
+ |                                                 |
+ |       in all publications arising from          |
+ |              your use of CASTEP                 |
+ |                                                 |
+ +-------------------------------------------------+
+ |                                                 |
+ |              http://www.castep.org              |
+ |                                                 |
+ +-------------------------------------------------+
+ 
+ 
+ 
+ Compiled for linux_x86_64_ifort on Mon, 14 Mar 2022 10:35:52 +0000
+ from code version 328d1dd6+  Castep201_branch  Wed Mar 10 09:27:36 2021 +0000
+ Compiler: Intel Fortran 18.0.3.222; Optimisation: fast
+ MATHLIBS: Intel MKL(2018.0.3) (LAPACK version 3.7.0)
+ FFT Lib : mkl
+ Fundamental constants values: CODATA 2014
+ 
+ Run started: Thu, 02 Nov 2023 12:17:23 +0000
+ 
+ Atomic calculation performed for O: 1s2 2s2 2p4
+ 
+ Converged in 57 iterations to an ae energy of -2034.019 eV
+ 
+   ============================================================                
+   | Pseudopotential Report - Date of generation  2-11-2023   |                
+   ------------------------------------------------------------                
+   | Element: O Ionic charge:  6.00 Level of theory: PBESOL   |                
+   | Atomic Solver: Koelling-Harmon                           |                
+   |                                                          |                
+   |               Reference Electronic Structure             |                
+   |         Orbital         Occupation         Energy        |                
+   |            2s              2.000           -0.875        |                
+   |            2p              4.000           -0.330        |                
+   |                                                          |                
+   |                 Pseudopotential Definition               |                
+   |        Beta     l      e      Rc     scheme   norm       |                
+   |          1      0   -0.875   1.100     qc      0         |                
+   |          2      0    0.250   1.100     qc      0         |                
+   |          3      1   -0.330   1.100     qc      0         |                
+   |          4      1    0.250   1.100     qc      0         |                
+   |         loc     2    0.000   1.100     pn      0         |                
+   |                                                          |                
+   | Augmentation charge Rinner = 0.769                       |                
+   | Partial core correction Rc = 0.769                       |                
+   ------------------------------------------------------------                
+   | "2|1.1|17|20|23|20:21(qc=8)"                             |                
+   ------------------------------------------------------------                
+   |      Author: Chris J. Pickard, Cambridge University      |                
+   ============================================================                
+ 
+ Atomic calculation performed for Ti: 1s2 2s2 2p6 3s2 3p6 3d2 4s2
+ 
+ Converged in 72 iterations to an ae energy of -23200.392 eV
+ 
+   ============================================================                
+   | Pseudopotential Report - Date of generation  2-11-2023   |                
+   ------------------------------------------------------------                
+   | Element: Ti Ionic charge: 12.00 Level of theory: PBESOL  |                
+   | Atomic Solver: Koelling-Harmon                           |                
+   |                                                          |                
+   |               Reference Electronic Structure             |                
+   |         Orbital         Occupation         Energy        |                
+   |            3s              2.000           -2.295        |                
+   |            3p              6.000           -1.425        |                
+   |            4s              2.000           -0.165        |                
+   |            3d              2.000           -0.157        |                
+   |                                                          |                
+   |                 Pseudopotential Definition               |                
+   |        Beta     l      e      Rc     scheme   norm       |                
+   |          1      0   -2.295   1.793     qc      0         |                
+   |          2      0   -0.165   1.793     qc      0         |                
+   |          3      0    0.250   1.793     qc      0         |                
+   |          4      1   -1.425   1.793     qc      0         |                
+   |          5      1    0.250   1.793     qc      0         |                
+   |          6      2   -0.157   1.793     qc      0         |                
+   |          7      2    0.250   1.793     qc      0         |                
+   |         loc     3    0.000   1.793     pn      0         |                
+   |                                                          |                
+   | Augmentation charge Rinner = 1.263                       |                
+   | Partial core correction Rc = 1.263                       |                
+   ------------------------------------------------------------                
+   | "3|1.8|9|10|11|30U:40:31:32(qc=5.5)"                     |                
+   ------------------------------------------------------------                
+   |      Author: Chris J. Pickard, Cambridge University      |                
+   ============================================================                
+ 
+ Pseudo atomic calculation performed for O 2s2 2p4
+ 
+ Converged in 14 iterations to a total energy of -431.1268 eV
+ 
+ Pseudo atomic calculation performed for Ti 3s2 3p6 3d2 4s2
+ 
+ Converged in 31 iterations to a total energy of -1585.3732 eV
+ Calculation parallelised over 15 processes.
+ Data is distributed by G-vector(3-way) and k-point(5-way)
+
+ ************************************ Title ************************************
+ 
+
+ ***************************** General Parameters ******************************
+  
+ output verbosity                               : normal  (1)
+ write checkpoint data to                       : aiida.check
+ type of calculation                            : single point energy
+ stress calculation                             : off
+ density difference calculation                 : off
+ electron localisation func (ELF) calculation   : off
+ Hirshfeld analysis                             : off
+ molecular orbital projected DOS                : off
+ deltaSCF calculation                           : off
+ calculation limited to maximum                 :      41040   seconds
+ timing information                             : on
+ memory usage estimate                          : on
+ write extra output files                       : on
+ write final potential to formatted file        : off
+ write final density to formatted file          : off
+ write BibTeX reference list                    : on
+ write OTFG pseudopotential files               : on
+ write electrostatic potential file             : on
+ write bands file                               : on
+ checkpoint writing                             : both castep_bin and check files
+  
+ output         length unit                     : A
+ output           mass unit                     : amu
+ output           time unit                     : ps
+ output         charge unit                     : e
+ output           spin unit                     : hbar/2
+ output         energy unit                     : eV
+ output          force unit                     : eV/A
+ output       velocity unit                     : A/ps
+ output       pressure unit                     : GPa
+ output     inv_length unit                     : 1/A
+ output      frequency unit                     : cm-1
+ output force constant unit                     : eV/A**2
+ output         volume unit                     : A**3
+ output   IR intensity unit                     : (D/A)**2/amu
+ output         dipole unit                     : D
+ output         efield unit                     : eV/A/e
+ output        entropy unit                     : J/mol/K
+ output    efield chi2 unit                     : pm/V
+  
+ wavefunctions paging                           : none
+ random number generator seed                   : randomised (121723876)
+ data distribution                              : optimal for this architecture
+ optimization strategy                          : balance speed and memory
+
+ *********************** Exchange-Correlation Parameters ***********************
+  
+ using functional                               : PBE for solids (2008)
+ relativistic treatment                         : Koelling-Harmon
+ DFT+D: Semi-empirical dispersion correction    : off
+
+ ************************* Pseudopotential Parameters **************************
+  
+ pseudopotential representation                 : reciprocal space
+ <beta|phi> representation                      : reciprocal space
+ spin-orbit coupling                            : off
+
+ **************************** Basis Set Parameters *****************************
+  
+ plane wave basis set cut-off                   :   850.0000   eV
+ size of standard grid                          :     1.7500
+ size of   fine   gmax                          :    26.1388   1/A
+ finite basis set correction                    : none
+
+ **************************** Electronic Parameters ****************************
+  
+ number of  electrons                           :  132.0    
+ net charge of system                           :  0.000    
+ treating system as non-spin-polarized
+ number of bands                                :         79
+
+ ********************* Electronic Minimization Parameters **********************
+  
+ Method: Treating system as metallic with density mixing treatment of electrons,
+         and number of  SD  steps               :          1
+         and number of  CG  steps               :          4
+  
+ total energy / atom convergence tol.           : 0.1000E-04   eV
+ eigen-energy convergence tolerance             : 0.1000E-05   eV
+ max force / atom convergence tol.              : ignored
+ convergence tolerance window                   :          3   cycles
+ max. number of SCF cycles                      :        200
+ number of fixed-spin iterations                :         10
+ smearing scheme                                : Gaussian
+ smearing width                                 : 0.2000       eV
+ Fermi energy convergence tolerance             : 0.2721E-13   eV
+ periodic dipole correction                     : NONE
+
+ ************************** Density Mixing Parameters **************************
+  
+ density-mixing scheme                          : Pulay
+ max. length of mixing history                  :         20
+ charge density mixing amplitude                : 0.8000    
+ cut-off energy for mixing                      :  850.0       eV
+
+ *********************** Population Analysis Parameters ************************
+  
+ Population analysis with cutoff                :  3.000       A
+ Population analysis output                     : summary and pdos components
+
+ *******************************************************************************
+  
+ 
+                           -------------------------------
+                                      Unit Cell
+                           -------------------------------
+        Real Lattice(A)                      Reciprocal Lattice(1/A)
+     1.9212100     4.9382260     0.0000000        1.635215647   0.636178387  -0.011637817
+    -1.9212100     4.9382260     0.0000000       -1.635215647   0.636178387  -0.011637817
+     0.0000000     0.1709760     9.3463610        0.000000000   0.000000000   0.672260071
+ 
+                       Lattice parameters(A)       Cell Angles
+                    a =      5.298785          alpha =   89.023307
+                    b =      5.298785          beta  =   89.023307
+                    c =      9.347925          gamma =   42.516909
+ 
+                       Current cell volume =           177.344754       A**3
+                                   density =             2.521620   AMU/A**3
+                                           =             4.187248     g/cm^3
+ 
+                           -------------------------------
+                                     Cell Contents
+                           -------------------------------
+                         Total number of ions in cell =   16
+                      Total number of species in cell =    2
+                        Max number of any one species =   10
+ 
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            x  Element    Atom        Fractional coordinates of atoms  x
+            x            Number           u          v          w      x
+            x----------------------------------------------------------x
+            x  O            1         0.676036   0.676036   0.945249   x 
+            x  O            2         0.323964   0.323964   0.054751   x 
+            x  O            3         0.241544   0.241544   0.755889   x 
+            x  O            4         0.758456   0.758456   0.244111   x 
+            x  O            5         0.589838   0.589838   0.658363   x 
+            x  O            6         0.410162   0.410162   0.341637   x 
+            x  O            7         0.956593   0.956593   0.847406   x 
+            x  O            8         0.043407   0.043407   0.152594   x 
+            x  O            9         0.871077   0.871077   0.556969   x 
+            x  O           10         0.128923   0.128923   0.443031   x 
+            x  Ti           1         0.129638   0.129638   0.953680   x 
+            x  Ti           2         0.870362   0.870362   0.046320   x 
+            x  Ti           3         0.054479   0.054479   0.639114   x 
+            x  Ti           4         0.945521   0.945521   0.360886   x 
+            x  Ti           5         0.781270   0.781270   0.736175   x 
+            x  Ti           6         0.218730   0.218730   0.263825   x 
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ 
+ 
+                         No user defined ionic velocities
+ 
+                           -------------------------------
+                                   Details of Species
+                           -------------------------------
+ 
+                               Mass of species in AMU
+                                    O   15.9994000
+                                    Ti   47.8670000
+ 
+                          Electric Quadrupole Moment (Barn)
+                                    O   -0.0255800 Isotope 17
+                                    Ti    0.3020000 Isotope 47
+ 
+                          Files used for pseudopotentials:
+                                    O 2|1.1|17|20|23|20:21(qc=8)
+                                    Ti 3|1.8|9|10|11|30U:40:31:32(qc=5.5)
+ 
+                           -------------------------------
+                              k-Points For BZ Sampling
+                           -------------------------------
+                       MP grid size for SCF calculation is  4  4  2
+                            with an offset of   0.000  0.000  0.000
+                       Number of kpoints used =            10
+ 
+                           -------------------------------
+                               Symmetry and Constraints
+                           -------------------------------
+ 
+                      Maximum deviation from symmetry = 0.219301E-14     ANG
+ 
+                      Number of symmetry operations   =           4
+                      Number of ionic constraints     =           3
+                      Point group of crystal =     5: C2h, 2/m, 2/m
+                      Space group of crystal =    12: C2/m, -C 2y
+ 
+             Set iprint > 1 for details on symmetry rotations/translations
+ 
+                         Centre of mass is constrained
+             Set iprint > 1 for details of linear ionic constraints
+ 
+                         Number of cell constraints= 2
+                         Cell constraints are:  1 1 3 4 4 6
+ 
+                         External pressure/stress (GPa)
+                          0.00000   0.00000   0.00000
+                                    0.00000   0.00000
+                                              0.00000
+  
++---------------- MEMORY AND SCRATCH DISK ESTIMATES PER PROCESS --------------+
+|                                                     Memory          Disk    |
+| Baseline code, static data and system overhead      229.0 MB         0.0 MB |
+| BLAS internal memory storage                          0.0 MB         0.0 MB |
+| Model and support data                              206.1 MB       188.7 MB |
+| Electronic energy minimisation requirements          43.9 MB         0.0 MB |
+| Force calculation requirements                       10.5 MB         0.0 MB |
+|                                               ----------------------------- |
+| Approx. total storage required per process          478.9 MB       188.7 MB |
+|                                                                             |
+| Requirements will fluctuate during execution and may exceed these estimates |
++-----------------------------------------------------------------------------+
+Calculating total energy with cut-off of  850.000 eV.
+------------------------------------------------------------------------ <-- SCF
+SCF loop      Energy           Fermi           Energy gain       Timer   <-- SCF
+                               energy          per atom          (sec)   <-- SCF
+------------------------------------------------------------------------ <-- SCF
+Initial  -1.26045655E+004  0.00000000E+000                        10.39  <-- SCF
+      1  -1.32380541E+004  9.36496903E+000   3.95930371E+001      13.66  <-- SCF
+      2  -1.39405697E+004  8.88608277E+000   4.39072226E+001      16.51  <-- SCF
+      3  -1.39848095E+004  8.91421141E+000   2.76498786E+000      19.53  <-- SCF
+      4  -1.39867452E+004  8.74316719E+000   1.20981992E-001      22.58  <-- SCF
+      5  -1.40165570E+004  6.53760226E+000   1.86323356E+000      26.30  <-- SCF
+      6  -1.39709863E+004  8.78612206E+000  -2.84816602E+000      29.92  <-- SCF
+      7  -1.39718647E+004  8.74912105E+000   5.49011986E-002      32.89  <-- SCF
+      8  -1.39703126E+004  8.48771295E+000  -9.70098465E-002      36.42  <-- SCF
+      9  -1.39694336E+004  8.31098165E+000  -5.49317452E-002      39.92  <-- SCF
+     10  -1.39690042E+004  8.05964636E+000  -2.68430805E-002      43.42  <-- SCF
+     11  -1.39688940E+004  7.95903363E+000  -6.88563937E-003      47.10  <-- SCF
+     12  -1.39688666E+004  7.95060397E+000  -1.71356340E-003      50.74  <-- SCF
+     13  -1.39688635E+004  7.95234545E+000  -1.89234988E-004      54.25  <-- SCF
+     14  -1.39688632E+004  7.96050620E+000  -2.24279026E-005      57.38  <-- SCF
+     15  -1.39688631E+004  7.96333550E+000  -4.16280209E-006      59.72  <-- SCF
+     16  -1.39688631E+004  7.96487538E+000  -3.83087816E-007      61.88  <-- SCF
+------------------------------------------------------------------------ <-- SCF
+ 
+Final energy, E             =  -13968.66112170     eV
+Final free energy (E-TS)    =  -13968.86311392     eV
+(energies not corrected for finite basis set)
+ 
+NB est. 0K energy (E-0.5TS)      =  -13968.76211781     eV
+ 
+
+Writing analysis data to aiida.castep_bin
+
+Writing model to aiida.check
+ 
+ ******************** Symmetrised Forces ********************
+ *                                                          *
+ *               Cartesian components (eV/A)                *
+ * -------------------------------------------------------- *
+ *                         x            y            z      *
+ *                                                          *
+ * O               1     -0.00000      0.11656     -0.06953 *
+ * O               2      0.00000     -0.11656      0.06953 *
+ * O               3     -0.00000     -0.21221      0.01193 *
+ * O               4     -0.00000      0.21221     -0.01193 *
+ * O               5      0.00000      0.07084      0.07301 *
+ * O               6      0.00000     -0.07084     -0.07301 *
+ * O               7      0.00000      0.00703     -0.00586 *
+ * O               8     -0.00000     -0.00703      0.00586 *
+ * O               9     -0.00000      0.33188      0.17939 *
+ * O              10     -0.00000     -0.33188     -0.17939 *
+ * Ti              1      0.00000      0.26333      0.02834 *
+ * Ti              2     -0.00000     -0.26333     -0.02834 *
+ * Ti              3     -0.00000      0.22419      0.04155 *
+ * Ti              4     -0.00000     -0.22419     -0.04155 *
+ * Ti              5     -0.00000     -0.22217      0.06133 *
+ * Ti              6     -0.00000      0.22217     -0.06133 *
+ *                                                          *
+ ************************************************************
+ 
+ Pseudo atomic calculation performed for O 2s2 2p4
+ 
+ Converged in 14 iterations to a total energy of -431.1268 eV
+ 
+ Pseudo atomic calculation performed for Ti 3s2 3p6 3d2 4s2
+ 
+ Converged in 31 iterations to a total energy of -1585.3732 eV
+Charge spilling parameter for spin component 1 = 0.14%
+ 
+            Orbital Populations       
+     Ion    Atom   Orbital             Charge
+  -------------------------------------------
+      O     1      S                    1.833
+      O     1      Px                   1.569
+      O     1      Py                   1.634
+      O     1      Pz                   1.617
+      O     2      S                    1.833
+      O     2      Px                   1.569
+      O     2      Py                   1.634
+      O     2      Pz                   1.617
+      O     3      S                    1.834
+      O     3      Px                   1.570
+      O     3      Py                   1.638
+      O     3      Pz                   1.616
+      O     4      S                    1.834
+      O     4      Px                   1.570
+      O     4      Py                   1.638
+      O     4      Pz                   1.616
+      O     5      S                    1.836
+      O     5      Px                   1.541
+      O     5      Py                   1.600
+      O     5      Pz                   1.656
+      O     6      S                    1.836
+      O     6      Px                   1.541
+      O     6      Py                   1.600
+      O     6      Pz                   1.656
+      O     7      S                    1.839
+      O     7      Px                   1.686
+      O     7      Py                   1.573
+      O     7      Pz                   1.572
+      O     8      S                    1.839
+      O     8      Px                   1.686
+      O     8      Py                   1.573
+      O     8      Pz                   1.572
+      O     9      S                    1.845
+      O     9      Px                   1.643
+      O     9      Py                   1.569
+      O     9      Pz                   1.554
+      O    10      S                    1.845
+      O    10      Px                   1.643
+      O    10      Py                   1.569
+      O    10      Pz                   1.554
+     Ti     1      S                    1.998
+     Ti     1      Px                   1.994
+     Ti     1      Py                   1.999
+     Ti     1      Pz                   2.000
+     Ti     1      S                    0.249
+     Ti     1      Dzz                  0.558
+     Ti     1      Dzy                  0.530
+     Ti     1      Dzx                  0.375
+     Ti     1      Dxx-yy               0.504
+     Ti     1      Dxy                  0.364
+     Ti     1      Px                   0.144
+     Ti     1      Py                   0.130
+     Ti     1      Pz                   0.105
+     Ti     2      S                    1.998
+     Ti     2      Px                   1.994
+     Ti     2      Py                   1.999
+     Ti     2      Pz                   2.000
+     Ti     2      S                    0.249
+     Ti     2      Dzz                  0.558
+     Ti     2      Dzy                  0.530
+     Ti     2      Dzx                  0.375
+     Ti     2      Dxx-yy               0.504
+     Ti     2      Dxy                  0.364
+     Ti     2      Px                   0.144
+     Ti     2      Py                   0.130
+     Ti     2      Pz                   0.105
+     Ti     3      S                    1.996
+     Ti     3      Px                   1.992
+     Ti     3      Py                   1.997
+     Ti     3      Pz                   1.996
+     Ti     3      S                    0.269
+     Ti     3      Dzz                  0.474
+     Ti     3      Dzy                  0.556
+     Ti     3      Dzx                  0.423
+     Ti     3      Dxx-yy               0.509
+     Ti     3      Dxy                  0.338
+     Ti     3      Px                   0.142
+     Ti     3      Py                   0.111
+     Ti     3      Pz                   0.146
+     Ti     4      S                    1.996
+     Ti     4      Px                   1.992
+     Ti     4      Py                   1.997
+     Ti     4      Pz                   1.996
+     Ti     4      S                    0.269
+     Ti     4      Dzz                  0.474
+     Ti     4      Dzy                  0.556
+     Ti     4      Dzx                  0.423
+     Ti     4      Dxx-yy               0.509
+     Ti     4      Dxy                  0.338
+     Ti     4      Px                   0.142
+     Ti     4      Py                   0.111
+     Ti     4      Pz                   0.146
+     Ti     5      S                    1.996
+     Ti     5      Px                   1.993
+     Ti     5      Py                   1.996
+     Ti     5      Pz                   1.994
+     Ti     5      S                    0.269
+     Ti     5      Dzz                  0.547
+     Ti     5      Dzy                  0.446
+     Ti     5      Dzx                  0.402
+     Ti     5      Dxx-yy               0.498
+     Ti     5      Dxy                  0.367
+     Ti     5      Px                   0.141
+     Ti     5      Py                   0.118
+     Ti     5      Pz                   0.107
+     Ti     6      S                    1.996
+     Ti     6      Px                   1.993
+     Ti     6      Py                   1.996
+     Ti     6      Pz                   1.994
+     Ti     6      S                    0.269
+     Ti     6      Dzz                  0.547
+     Ti     6      Dzy                  0.446
+     Ti     6      Dzx                  0.402
+     Ti     6      Dxx-yy               0.498
+     Ti     6      Dxy                  0.367
+     Ti     6      Px                   0.141
+     Ti     6      Py                   0.118
+     Ti     6      Pz                   0.107
+  -------------------------------------------
+                           Total:     132.000
+  -------------------------------------------
+ 
+     Atomic Populations (Mulliken)
+     -----------------------------
+Species          Ion     s      p      d      f     Total  Charge (e)
+=====================================================================
+  O               1     1.83   4.82   0.00   0.00   6.65    -0.65
+  O               2     1.83   4.82   0.00   0.00   6.65    -0.65
+  O               3     1.83   4.82   0.00   0.00   6.66    -0.66
+  O               4     1.83   4.82   0.00   0.00   6.66    -0.66
+  O               5     1.84   4.80   0.00   0.00   6.63    -0.63
+  O               6     1.84   4.80   0.00   0.00   6.63    -0.63
+  O               7     1.84   4.83   0.00   0.00   6.67    -0.67
+  O               8     1.84   4.83   0.00   0.00   6.67    -0.67
+  O               9     1.84   4.77   0.00   0.00   6.61    -0.61
+  O              10     1.84   4.77   0.00   0.00   6.61    -0.61
+  Ti              1     2.25   6.37   2.33   0.00  10.95     1.05
+  Ti              2     2.25   6.37   2.33   0.00  10.95     1.05
+  Ti              3     2.26   6.38   2.30   0.00  10.95     1.05
+  Ti              4     2.26   6.38   2.30   0.00  10.95     1.05
+  Ti              5     2.27   6.35   2.26   0.00  10.88     1.12
+  Ti              6     2.27   6.35   2.26   0.00  10.88     1.12
+=====================================================================
+ 
+                 Bond                   Population      Length (A)
+======================================================================
+              O 10 -- Ti 6                   0.44        1.88114
+              O 9  -- Ti 5                   0.44        1.88114
+              O 6  -- Ti 4                   0.96        1.96155
+              O 5  -- Ti 3                   0.96        1.96155
+              O 9  -- Ti 4                   0.34        1.96241
+              O 10 -- Ti 3                   0.34        1.96241
+              O 4  -- Ti 6                   0.70        1.96883
+              O 3  -- Ti 5                   0.70        1.96883
+              O 2  -- Ti 2                   0.81        1.97634
+              O 1  -- Ti 1                   0.81        1.97634
+              O 9  -- Ti 3                   0.20        1.98029
+              O 10 -- Ti 4                   0.20        1.98029
+              O 8  -- Ti 2                   0.29        1.99248
+              O 7  -- Ti 1                   0.29        1.99248
+              O 8  -- Ti 1                   0.26        2.03098
+              O 7  -- Ti 2                   0.26        2.03098
+              O 7  -- Ti 5                   0.26        2.03601
+              O 8  -- Ti 6                   0.26        2.03601
+              O 5  -- Ti 5                   0.29        2.03814
+              O 6  -- Ti 6                   0.29        2.03814
+              O 4  -- Ti 2                   0.23        2.13667
+              O 3  -- Ti 1                   0.23        2.13667
+              O 2  -- Ti 1                   0.19        2.15465
+              O 1  -- Ti 2                   0.19        2.15465
+              O 8  -- Ti 4                   0.19        2.15800
+              O 7  -- Ti 3                   0.19        2.15800
+              O 4  -- Ti 4                   0.17        2.16305
+              O 3  -- Ti 3                   0.17        2.16305
+              O 2  -- Ti 6                   0.21        2.19673
+              O 1  -- Ti 5                   0.21        2.19673
+              O 3  -- O 5                   -0.09        2.61096
+              O 4  -- O 6                   -0.09        2.61096
+              O 1  -- O 2                   -0.09        2.63212
+              O 2  -- O 4                   -0.08        2.68348
+              O 1  -- O 3                   -0.08        2.68348
+              Ti 1 -- Ti 2                  -0.69        2.68815
+              O 9  -- O 10                  -0.03        2.74233
+              O 6  -- O 9                   -0.05        2.80418
+              O 5  -- O 10                  -0.05        2.80418
+              O 1  -- O 5                   -0.03        2.82848
+              O 2  -- O 6                   -0.03        2.82848
+              Ti 4 -- Ti 6                  -0.77        2.83102
+              Ti 3 -- Ti 5                  -0.77        2.83102
+              Ti 3 -- Ti 4                  -0.49        2.83282
+              O 8  -- O 10                  -0.02        2.85803
+              O 7  -- O 9                   -0.02        2.85803
+              O 2  -- O 8                   -0.04        2.90203
+              O 1  -- O 7                   -0.04        2.90203
+              O 6  -- O 8                   -0.05        2.90872
+              O 5  -- O 7                   -0.05        2.90872
+              O 5  -- O 9                   -0.03        2.91845
+              O 6  -- O 10                  -0.03        2.91845
+              O 2  -- O 3                   -0.02        2.92417
+              O 1  -- O 4                   -0.02        2.92417
+              O 3  -- O 7                   -0.04        2.92645
+              O 4  -- O 8                   -0.04        2.92645
+              O 3  -- O 9                   -0.02        2.94931
+              O 4  -- O 10                  -0.02        2.94931
+              O 7  -- O 8                   -0.01        2.99392
+======================================================================
+ 
+
+Writing analysis data to aiida.castep_bin
+
+Writing model to aiida.check
+ 
+ A BibTeX formatted list of references used in this run has been written to 
+ aiida.bib
+ 
+Initialisation time =      8.98 s
+Calculation time    =     55.71 s
+Finalisation time   =      0.30 s
+Total time          =     65.00 s
+Peak Memory Use     = 930180 kB
+  
+Overall parallel efficiency rating: Mediocre (57%)                              
+  
+Data was distributed by:-
+G-vector (3-way); efficiency rating: Satisfactory (63%)                         
+k-point (5-way); efficiency rating: Very good (81%)                             
+  
+Parallel notes:
+1) Calculation only took 64.7 s, so efficiency estimates may be inaccurate.     

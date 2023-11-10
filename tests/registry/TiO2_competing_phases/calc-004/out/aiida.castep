@@ -1,0 +1,502 @@
+ +-------------------------------------------------+
+ |                                                 |
+ |      CCC   AA    SSS  TTTTT  EEEEE  PPPP        |
+ |     C     A  A  S       T    E      P   P       |
+ |     C     AAAA   SS     T    EEE    PPPP        |
+ |     C     A  A     S    T    E      P           |
+ |      CCC  A  A  SSS     T    EEEEE  P           |
+ |                                                 |
+ +-------------------------------------------------+
+ |                                                 |
+ | Welcome to Academic Release CASTEP version 20.11|          
+ | Ab Initio Total Energy Program                  |
+ |                                                 |
+ | Authors:                                        |
+ | M. Segall, M. Probert, C. Pickard, P. Hasnip,   |
+ | S. Clark, K. Refson, J. R. Yates, M. Payne      |
+ |                                                 |
+ | Contributors:                                   |
+ | P. Lindan, P. Haynes, J. White, V. Milman,      |
+ | N. Govind, M. Gibson, P. Tulip, V. Cocula,      |
+ | B. Montanari, D. Quigley, M. Glover,            |
+ | L. Bernasconi, A. Perlov, M. Plummer,           |
+ | E. McNellis, J. Meyer, J. Gale, D. Jochym       |
+ | J. Aarons, B. Walker, R. Gillen, D. Jones       |
+ | T. Green, I. J. Bush, C. J. Armstrong,          |
+ | E. J. Higgins, E. L. Brown, M. S. McFly,        |
+ | J. Wilkins, B-C. Shih, P. J. P. Byrne,          |
+ | R. J. Maurer, J. C. Womack, J. Dziedzic,        |
+ | J. R. Kermode, A. Bartok-Partay                 |
+ |                                                 |
+ | Copyright (c) 2000 - 2020                       |
+ |                                                 |
+ |     Distributed under license from Cambridge    |
+ |     Enterprise for academic use only.           |
+ |                                                 |
+ | Please cite                                     |
+ |                                                 |
+ |     "First principles methods using CASTEP"     |
+ |                                                 |
+ |         Zeitschrift fuer Kristallographie       |
+ |           220(5-6) pp. 567-570 (2005)           |
+ |                                                 |
+ | S. J. Clark, M. D. Segall, C. J. Pickard,       |
+ | P. J. Hasnip, M. J. Probert, K. Refson,         |
+ | M. C. Payne                                     |
+ |                                                 |
+ |       in all publications arising from          |
+ |              your use of CASTEP                 |
+ |                                                 |
+ +-------------------------------------------------+
+ |                                                 |
+ |              http://www.castep.org              |
+ |                                                 |
+ +-------------------------------------------------+
+ 
+ 
+ 
+ Compiled for linux_x86_64_ifort on Mon, 14 Mar 2022 10:35:52 +0000
+ from code version 328d1dd6+  Castep201_branch  Wed Mar 10 09:27:36 2021 +0000
+ Compiler: Intel Fortran 18.0.3.222; Optimisation: fast
+ MATHLIBS: Intel MKL(2018.0.3) (LAPACK version 3.7.0)
+ FFT Lib : mkl
+ Fundamental constants values: CODATA 2014
+ 
+ Run started: Thu, 02 Nov 2023 11:40:55 +0000
+ 
+ Atomic calculation performed for Ti: 1s2 2s2 2p6 3s2 3p6 3d2 4s2
+ 
+ Converged in 72 iterations to an ae energy of -23200.392 eV
+ 
+   ============================================================                
+   | Pseudopotential Report - Date of generation  2-11-2023   |                
+   ------------------------------------------------------------                
+   | Element: Ti Ionic charge: 12.00 Level of theory: PBESOL  |                
+   | Atomic Solver: Koelling-Harmon                           |                
+   |                                                          |                
+   |               Reference Electronic Structure             |                
+   |         Orbital         Occupation         Energy        |                
+   |            3s              2.000           -2.295        |                
+   |            3p              6.000           -1.425        |                
+   |            4s              2.000           -0.165        |                
+   |            3d              2.000           -0.157        |                
+   |                                                          |                
+   |                 Pseudopotential Definition               |                
+   |        Beta     l      e      Rc     scheme   norm       |                
+   |          1      0   -2.295   1.793     qc      0         |                
+   |          2      0   -0.165   1.793     qc      0         |                
+   |          3      0    0.250   1.793     qc      0         |                
+   |          4      1   -1.425   1.793     qc      0         |                
+   |          5      1    0.250   1.793     qc      0         |                
+   |          6      2   -0.157   1.793     qc      0         |                
+   |          7      2    0.250   1.793     qc      0         |                
+   |         loc     3    0.000   1.793     pn      0         |                
+   |                                                          |                
+   | Augmentation charge Rinner = 1.263                       |                
+   | Partial core correction Rc = 1.263                       |                
+   ------------------------------------------------------------                
+   | "3|1.8|9|10|11|30U:40:31:32(qc=5.5)"                     |                
+   ------------------------------------------------------------                
+   |      Author: Chris J. Pickard, Cambridge University      |                
+   ============================================================                
+ 
+ Pseudo atomic calculation performed for Ti 3s2 3p6 3d2 4s2
+ 
+ Converged in 31 iterations to a total energy of -1585.3732 eV
+ Calculation parallelised over 15 processes.
+ Data is distributed by k-point(15-way)
+
+ ************************************ Title ************************************
+ 
+
+ ***************************** General Parameters ******************************
+  
+ output verbosity                               : normal  (1)
+ write checkpoint data to                       : aiida.check
+ type of calculation                            : single point energy
+ stress calculation                             : off
+ density difference calculation                 : off
+ electron localisation func (ELF) calculation   : off
+ Hirshfeld analysis                             : off
+ molecular orbital projected DOS                : off
+ deltaSCF calculation                           : off
+ calculation limited to maximum                 :      41040   seconds
+ timing information                             : on
+ memory usage estimate                          : on
+ write extra output files                       : on
+ write final potential to formatted file        : off
+ write final density to formatted file          : off
+ write BibTeX reference list                    : on
+ write OTFG pseudopotential files               : on
+ write electrostatic potential file             : on
+ write bands file                               : on
+ checkpoint writing                             : both castep_bin and check files
+  
+ output         length unit                     : A
+ output           mass unit                     : amu
+ output           time unit                     : ps
+ output         charge unit                     : e
+ output           spin unit                     : hbar/2
+ output         energy unit                     : eV
+ output          force unit                     : eV/A
+ output       velocity unit                     : A/ps
+ output       pressure unit                     : GPa
+ output     inv_length unit                     : 1/A
+ output      frequency unit                     : cm-1
+ output force constant unit                     : eV/A**2
+ output         volume unit                     : A**3
+ output   IR intensity unit                     : (D/A)**2/amu
+ output         dipole unit                     : D
+ output         efield unit                     : eV/A/e
+ output        entropy unit                     : J/mol/K
+ output    efield chi2 unit                     : pm/V
+  
+ wavefunctions paging                           : none
+ random number generator seed                   : randomised (114055861)
+ data distribution                              : optimal for this architecture
+ optimization strategy                          : balance speed and memory
+
+ *********************** Exchange-Correlation Parameters ***********************
+  
+ using functional                               : PBE for solids (2008)
+ relativistic treatment                         : Koelling-Harmon
+ DFT+D: Semi-empirical dispersion correction    : off
+
+ ************************* Pseudopotential Parameters **************************
+  
+ pseudopotential representation                 : reciprocal space
+ <beta|phi> representation                      : reciprocal space
+ spin-orbit coupling                            : off
+
+ **************************** Basis Set Parameters *****************************
+  
+ plane wave basis set cut-off                   :   850.0000   eV
+ size of standard grid                          :     1.7500
+ size of   fine   gmax                          :    26.1388   1/A
+ finite basis set correction                    : none
+
+ **************************** Electronic Parameters ****************************
+  
+ number of  electrons                           :  36.00    
+ net charge of system                           :  0.000    
+ treating system as non-spin-polarized
+ number of bands                                :         22
+
+ ********************* Electronic Minimization Parameters **********************
+  
+ Method: Treating system as metallic with density mixing treatment of electrons,
+         and number of  SD  steps               :          1
+         and number of  CG  steps               :          4
+  
+ total energy / atom convergence tol.           : 0.1000E-04   eV
+ eigen-energy convergence tolerance             : 0.1000E-05   eV
+ max force / atom convergence tol.              : ignored
+ convergence tolerance window                   :          3   cycles
+ max. number of SCF cycles                      :        200
+ number of fixed-spin iterations                :         10
+ smearing scheme                                : Gaussian
+ smearing width                                 : 0.2000       eV
+ Fermi energy convergence tolerance             : 0.2721E-13   eV
+ periodic dipole correction                     : NONE
+
+ ************************** Density Mixing Parameters **************************
+  
+ density-mixing scheme                          : Pulay
+ max. length of mixing history                  :         20
+ charge density mixing amplitude                : 0.8000    
+ cut-off energy for mixing                      :  850.0       eV
+
+ *********************** Population Analysis Parameters ************************
+  
+ Population analysis with cutoff                :  3.000       A
+ Population analysis output                     : summary and pdos components
+
+ *******************************************************************************
+  
+ 
+                           -------------------------------
+                                      Unit Cell
+                           -------------------------------
+        Real Lattice(A)                      Reciprocal Lattice(1/A)
+     2.2884270    -3.9636730     0.0000000        1.372817509  -0.792596325   0.000000000
+     2.2884270     3.9636730     0.0000000        1.372817509   0.792596325   0.000000000
+     0.0000000     0.0000000     2.8286830        0.000000000   0.000000000   2.221240523
+ 
+                       Lattice parameters(A)       Cell Angles
+                    a =      4.576855          alpha =   90.000000
+                    b =      4.576855          beta  =   90.000000
+                    c =      2.828683          gamma =  120.000015
+ 
+                       Current cell volume =            51.315570       A**3
+                                   density =             2.798390   AMU/A**3
+                                           =             4.646837     g/cm^3
+ 
+                           -------------------------------
+                                     Cell Contents
+                           -------------------------------
+                         Total number of ions in cell =    3
+                      Total number of species in cell =    1
+                        Max number of any one species =    3
+ 
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            x  Element    Atom        Fractional coordinates of atoms  x
+            x            Number           u          v          w      x
+            x----------------------------------------------------------x
+            x  Ti           1         0.000000   0.000000   0.000000   x 
+            x  Ti           2         0.333333   0.666667   0.500000   x 
+            x  Ti           3         0.666667   0.333333   0.500000   x 
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ 
+ 
+                         No user defined ionic velocities
+ 
+                           -------------------------------
+                                   Details of Species
+                           -------------------------------
+ 
+                               Mass of species in AMU
+                                    Ti   47.8670000
+ 
+                          Electric Quadrupole Moment (Barn)
+                                    Ti    0.3020000 Isotope 47
+ 
+                          Files used for pseudopotentials:
+                                    Ti 3|1.8|9|10|11|30U:40:31:32(qc=5.5)
+ 
+                           -------------------------------
+                              k-Points For BZ Sampling
+                           -------------------------------
+                       MP grid size for SCF calculation is  5  5  6
+                            with an offset of   0.000  0.000  0.000
+                       Number of kpoints used =            15
+ 
+                           -------------------------------
+                               Symmetry and Constraints
+                           -------------------------------
+ 
+                      Maximum deviation from symmetry = 0.396370E-05     ANG
+ 
+ !-----------------------------------------------------------------------------!
+ !                                                                             !
+ !                     * * *      W A R N I N G     * * *                      !
+ !                                                                             !
+ !   Atomic positions are slightly inconsistent with symmetry operations,      !
+ !   (although the discrepancy is lower than value of SYMMETRY_TOL).           !
+  !   In severe cases this could lead to seriously inaccurate results.         !
+ !                                                                             !
+ !   It is recommended that symmetries are satisfied to a tolerance of 1e-8au  !
+ !   or better. Consider one or more of the following:                         !
+ !     - Adjust input so that atomic positions and symmetry are consistent.    !
+ !     - Use SNAP_TO_SYMMETRY keyword in the cell file to adjust co-ordinates. !
+ !     - Reduce the value of SYMMETRY_TOL in the cell file.                    !
+ !     - Remove incorrect symmetry operations from .cell file.                 !
+ !                                                                             !
+ !-----------------------------------------------------------------------------!
+ 
+ 
+                      Number of symmetry operations   =          24
+                      Number of ionic constraints     =           3
+                      Point group of crystal =    27: D6h, 6/mmm, 6/m 2/m 2/m
+                      Space group of crystal =   191: P6/mmm, -P 6 2
+ 
+             Set iprint > 1 for details on symmetry rotations/translations
+ 
+                         Centre of mass is constrained
+             Set iprint > 1 for details of linear ionic constraints
+ 
+                         Number of cell constraints= 3
+                         Cell constraints are:  1 1 3 0 0 6
+ 
+                         External pressure/stress (GPa)
+                          0.00000   0.00000   0.00000
+                                    0.00000   0.00000
+                                              0.00000
+  
++---------------- MEMORY AND SCRATCH DISK ESTIMATES PER PROCESS --------------+
+|                                                     Memory          Disk    |
+| Baseline code, static data and system overhead      231.0 MB         0.0 MB |
+| BLAS internal memory storage                          0.0 MB         0.0 MB |
+| Model and support data                              103.8 MB       116.2 MB |
+| Electronic energy minimisation requirements          15.3 MB         0.0 MB |
+| Force calculation requirements                        5.6 MB         0.0 MB |
+|                                               ----------------------------- |
+| Approx. total storage required per process          350.1 MB       116.2 MB |
+|                                                                             |
+| Requirements will fluctuate during execution and may exceed these estimates |
++-----------------------------------------------------------------------------+
+Calculating total energy with cut-off of  850.000 eV.
+------------------------------------------------------------------------ <-- SCF
+SCF loop      Energy           Fermi           Energy gain       Timer   <-- SCF
+                               energy          per atom          (sec)   <-- SCF
+------------------------------------------------------------------------ <-- SCF
+Initial  -4.32624480E+003  0.00000000E+000                         6.57  <-- SCF
+      1  -4.68635517E+003  1.18724698E+001   1.20036788E+002       6.76  <-- SCF
+      2  -4.77301083E+003  9.58327567E+000   2.88852198E+001       6.92  <-- SCF
+      3  -4.77855389E+003  9.29458721E+000   1.84768772E+000       7.09  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 7 to 16.                              
+  
+      4  -4.77888415E+003  8.40145505E+000   1.10085840E-001       7.34  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 7 to 16.                              
+  
+      5  -4.77864448E+003  8.54586191E+000  -7.98902076E-002       7.62  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 7 to 16.                              
+  
+      6  -4.77810651E+003  8.81706790E+000  -1.79322348E-001       7.87  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 7 to 16.                              
+  
+      7  -4.77810945E+003  8.74893197E+000   9.79015386E-004       8.14  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 7 to 16.                              
+  
+      8  -4.77810682E+003  8.75595146E+000  -8.75904686E-004       8.39  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 7 to 16.                              
+  
+      9  -4.77810689E+003  8.75305849E+000   2.21072808E-005       8.63  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 7 to 16.                              
+  
+     10  -4.77810687E+003  8.75336323E+000  -6.31283326E-006       8.82  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 7 to 16.                              
+  
+     11  -4.77810687E+003  8.75329265E+000   4.36911470E-007       9.01  <-- SCF
+------------------------------------------------------------------------ <-- SCF
+ 
+Final energy, E             =  -4778.045524861     eV
+Final free energy (E-TS)    =  -4778.106867678     eV
+(energies not corrected for finite basis set)
+ 
+NB est. 0K energy (E-0.5TS)      =  -4778.076196270     eV
+ 
+
+Writing analysis data to aiida.castep_bin
+
+Writing model to aiida.check
+ 
+ ******************** Symmetrised Forces ********************
+ *                                                          *
+ *               Cartesian components (eV/A)                *
+ * -------------------------------------------------------- *
+ *                         x            y            z      *
+ *                                                          *
+ * Ti              1     -0.00000     -0.00000      0.00000 *
+ * Ti              2     -0.00000      0.00000      0.00000 *
+ * Ti              3      0.00000      0.00000     -0.00000 *
+ *                                                          *
+ ************************************************************
+ 
+ Pseudo atomic calculation performed for Ti 3s2 3p6 3d2 4s2
+ 
+ Converged in 31 iterations to a total energy of -1585.3732 eV
+Charge spilling parameter for spin component 1 = 0.07%
+ 
+            Orbital Populations       
+     Ion    Atom   Orbital             Charge
+  -------------------------------------------
+     Ti     1      S                    2.001
+     Ti     1      Px                   2.004
+     Ti     1      Py                   2.003
+     Ti     1      Pz                   2.005
+     Ti     1      S                    0.315
+     Ti     1      Dzz                  0.499
+     Ti     1      Dzy                  0.633
+     Ti     1      Dzx                  0.569
+     Ti     1      Dxx-yy               0.411
+     Ti     1      Dxy                  0.487
+     Ti     1      Px                   0.397
+     Ti     1      Py                   0.289
+     Ti     1      Pz                   0.330
+     Ti     2      S                    2.005
+     Ti     2      Px                   2.008
+     Ti     2      Py                   2.007
+     Ti     2      Pz                   2.007
+     Ti     2      S                    0.272
+     Ti     2      Dzz                  0.588
+     Ti     2      Dzy                  0.494
+     Ti     2      Dzx                  0.495
+     Ti     2      Dxx-yy               0.582
+     Ti     2      Dxy                  0.615
+     Ti     2      Px                   0.366
+     Ti     2      Py                   0.253
+     Ti     2      Pz                   0.338
+     Ti     3      S                    2.005
+     Ti     3      Px                   2.008
+     Ti     3      Py                   2.007
+     Ti     3      Pz                   2.007
+     Ti     3      S                    0.272
+     Ti     3      Dzz                  0.588
+     Ti     3      Dzy                  0.494
+     Ti     3      Dzx                  0.495
+     Ti     3      Dxx-yy               0.582
+     Ti     3      Dxy                  0.615
+     Ti     3      Px                   0.366
+     Ti     3      Py                   0.253
+     Ti     3      Pz                   0.338
+  -------------------------------------------
+                           Total:      36.000
+  -------------------------------------------
+ 
+     Atomic Populations (Mulliken)
+     -----------------------------
+Species          Ion     s      p      d      f     Total  Charge (e)
+=====================================================================
+  Ti              1     2.32   7.03   2.60   0.00  11.94     0.06
+  Ti              2     2.28   6.98   2.77   0.00  12.03    -0.03
+  Ti              3     2.28   6.98   2.77   0.00  12.03    -0.03
+=====================================================================
+ 
+                 Bond                   Population      Length (A)
+======================================================================
+              Ti 2 -- Ti 3                   1.15        2.64245
+======================================================================
+ 
+
+Writing analysis data to aiida.castep_bin
+
+Writing model to aiida.check
+ 
+ A BibTeX formatted list of references used in this run has been written to 
+ aiida.bib
+ 
+Initialisation time =      5.94 s
+Calculation time    =      3.89 s
+Finalisation time   =      0.09 s
+Total time          =      9.91 s
+Peak Memory Use     = 682292 kB
+  
+Overall parallel efficiency rating: Poor (42%)                                  
+  
+Data was distributed by:-
+k-point (15-way); efficiency rating: Poor (43%)                                 
+  
+Parallel notes:
+1) Calculation only took 9.8 s, so efficiency estimates may be inaccurate.      

@@ -13,26 +13,29 @@
         "Development Status :: 3 - Alpha",
         "Framework :: AiiDA"
     ],
-    "version": "0.3.0",
+    "version": "0.4.0",
     "entry_points": {
         "aiida.parsers": [
             "castep_addons.phonon_parser = aiida_castep_addons.parsers:PhononParser"
         ],
-	"aiida.workflows": [
-	    "castep_addons.converge = aiida_castep_addons.workflows.converge:CastepConvergeWorkChain",
-	    "castep_addons.band_plot = aiida_castep_addons.workflows.band_plot:CastepBandPlotWorkChain",
-	    "castep_addons.phonon = aiida_castep_addons.workflows.phonon:CastepPhononWorkChain",
-        "castep_addons.magnetic = aiida_castep_addons.workflows.magnetic:CastepMagneticWorkChain",
-        "castep_addons.core_loss = aiida_castep_addons.workflows.core_loss:CastepCoreLossWorkChain",
-        "castep_addons.alloy = aiida_castep_addons.workflows.alloy:CastepAlloyWorkChain",
-        "castep_addons.nmr = aiida_castep_addons.workflows.nmr:CastepNMRWorkChain"
-	],
-    "aiida.schedulers": [
-        "mscastep.slurm = aiida_castep_addons.schedulers.slurm_mscastep:MSCastepSlurmScheduler"
-    ]
+        "aiida.workflows": [
+            "castep_addons.converge = aiida_castep_addons.workflows.converge:CastepConvergeWorkChain",
+            "castep_addons.band_plot = aiida_castep_addons.workflows.band_plot:CastepBandPlotWorkChain",
+            "castep_addons.phonon = aiida_castep_addons.workflows.phonon:CastepPhononWorkChain",
+            "castep_addons.magnetic = aiida_castep_addons.workflows.magnetic:CastepMagneticWorkChain",
+            "castep_addons.core_loss = aiida_castep_addons.workflows.core_loss:CastepCoreLossWorkChain",
+            "castep_addons.alloy = aiida_castep_addons.workflows.alloy:CastepAlloyWorkChain",
+            "castep_addons.nmr = aiida_castep_addons.workflows.nmr:CastepNMRWorkChain",
+            "castep_addons.competing_phases = aiida_castep_addons.workflows.competing_phases:CastepCompetingPhasesWorkChain"
+        ],
+        "aiida.schedulers": [
+            "mscastep.slurm = aiida_castep_addons.schedulers.slurm_mscastep:MSCastepSlurmScheduler"
+        ]
     },
     "include_package_data": true,
-    "setup_requires": ["reentry"],
+    "setup_requires": [
+        "reentry"
+    ],
     "reentry_register": true,
     "install_requires": [
         "aiida-core",
@@ -40,12 +43,12 @@
         "six",
         "psycopg2-binary",
         "voluptuous",
-	    "sumo",
+        "sumo",
         "galore",
         "PyPDF2",
         "bsym",
         "icet",
-	    "aiida-castep@git+https://github.com/zhubonan/aiida-castep"
+        "aiida-castep@git+https://github.com/zhubonan/aiida-castep"
     ],
     "extras_require": {
         "testing": [

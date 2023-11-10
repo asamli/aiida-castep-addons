@@ -1,0 +1,596 @@
+ +-------------------------------------------------+
+ |                                                 |
+ |      CCC   AA    SSS  TTTTT  EEEEE  PPPP        |
+ |     C     A  A  S       T    E      P   P       |
+ |     C     AAAA   SS     T    EEE    PPPP        |
+ |     C     A  A     S    T    E      P           |
+ |      CCC  A  A  SSS     T    EEEEE  P           |
+ |                                                 |
+ +-------------------------------------------------+
+ |                                                 |
+ | Welcome to Academic Release CASTEP version 20.11|          
+ | Ab Initio Total Energy Program                  |
+ |                                                 |
+ | Authors:                                        |
+ | M. Segall, M. Probert, C. Pickard, P. Hasnip,   |
+ | S. Clark, K. Refson, J. R. Yates, M. Payne      |
+ |                                                 |
+ | Contributors:                                   |
+ | P. Lindan, P. Haynes, J. White, V. Milman,      |
+ | N. Govind, M. Gibson, P. Tulip, V. Cocula,      |
+ | B. Montanari, D. Quigley, M. Glover,            |
+ | L. Bernasconi, A. Perlov, M. Plummer,           |
+ | E. McNellis, J. Meyer, J. Gale, D. Jochym       |
+ | J. Aarons, B. Walker, R. Gillen, D. Jones       |
+ | T. Green, I. J. Bush, C. J. Armstrong,          |
+ | E. J. Higgins, E. L. Brown, M. S. McFly,        |
+ | J. Wilkins, B-C. Shih, P. J. P. Byrne,          |
+ | R. J. Maurer, J. C. Womack, J. Dziedzic,        |
+ | J. R. Kermode, A. Bartok-Partay                 |
+ |                                                 |
+ | Copyright (c) 2000 - 2020                       |
+ |                                                 |
+ |     Distributed under license from Cambridge    |
+ |     Enterprise for academic use only.           |
+ |                                                 |
+ | Please cite                                     |
+ |                                                 |
+ |     "First principles methods using CASTEP"     |
+ |                                                 |
+ |         Zeitschrift fuer Kristallographie       |
+ |           220(5-6) pp. 567-570 (2005)           |
+ |                                                 |
+ | S. J. Clark, M. D. Segall, C. J. Pickard,       |
+ | P. J. Hasnip, M. J. Probert, K. Refson,         |
+ | M. C. Payne                                     |
+ |                                                 |
+ |       in all publications arising from          |
+ |              your use of CASTEP                 |
+ |                                                 |
+ +-------------------------------------------------+
+ |                                                 |
+ |              http://www.castep.org              |
+ |                                                 |
+ +-------------------------------------------------+
+ 
+ 
+ 
+ Compiled for linux_x86_64_ifort on Mon, 14 Mar 2022 10:35:52 +0000
+ from code version 328d1dd6+  Castep201_branch  Wed Mar 10 09:27:36 2021 +0000
+ Compiler: Intel Fortran 18.0.3.222; Optimisation: fast
+ MATHLIBS: Intel MKL(2018.0.3) (LAPACK version 3.7.0)
+ FFT Lib : mkl
+ Fundamental constants values: CODATA 2014
+ 
+ Run started: Thu, 02 Nov 2023 13:48:09 +0000
+ 
+ Atomic calculation performed for O: 1s2 2s2 2p4
+ 
+ Converged in 57 iterations to an ae energy of -2034.019 eV
+ 
+   ============================================================                
+   | Pseudopotential Report - Date of generation  2-11-2023   |                
+   ------------------------------------------------------------                
+   | Element: O Ionic charge:  6.00 Level of theory: PBESOL   |                
+   | Atomic Solver: Koelling-Harmon                           |                
+   |                                                          |                
+   |               Reference Electronic Structure             |                
+   |         Orbital         Occupation         Energy        |                
+   |            2s              2.000           -0.875        |                
+   |            2p              4.000           -0.330        |                
+   |                                                          |                
+   |                 Pseudopotential Definition               |                
+   |        Beta     l      e      Rc     scheme   norm       |                
+   |          1      0   -0.875   1.100     qc      0         |                
+   |          2      0    0.250   1.100     qc      0         |                
+   |          3      1   -0.330   1.100     qc      0         |                
+   |          4      1    0.250   1.100     qc      0         |                
+   |         loc     2    0.000   1.100     pn      0         |                
+   |                                                          |                
+   | Augmentation charge Rinner = 0.769                       |                
+   | Partial core correction Rc = 0.769                       |                
+   ------------------------------------------------------------                
+   | "2|1.1|17|20|23|20:21(qc=8)"                             |                
+   ------------------------------------------------------------                
+   |      Author: Chris J. Pickard, Cambridge University      |                
+   ============================================================                
+ 
+ Atomic calculation performed for Zr: 1s2 2s2 2p6 3s2 3p6 3d10 4s2 4p6 4d2 5s2
+ 
+ Converged in 74 iterations to an ae energy of -97865.213 eV
+ 
+ Warning: ion_atom_descreen_psp: negative charge density encountered
+   ============================================================                
+   | Pseudopotential Report - Date of generation  2-11-2023   |                
+   ------------------------------------------------------------                
+   | Element: Zr Ionic charge: 12.00 Level of theory: PBESOL  |                
+   | Atomic Solver: Koelling-Harmon                           |                
+   |                                                          |                
+   |               Reference Electronic Structure             |                
+   |         Orbital         Occupation         Energy        |                
+   |            4s              2.000           -2.001        |                
+   |            4p              6.000           -1.192        |                
+   |            5s              2.000           -0.164        |                
+   |            4d              2.000           -0.133        |                
+   |                                                          |                
+   |                 Pseudopotential Definition               |                
+   |        Beta     l      e      Rc     scheme   norm       |                
+   |          1      0   -2.001   2.105     qc      0         |                
+   |          2      0   -0.164   2.105     qc      0         |                
+   |          3      0    0.250   2.105     qc      0         |                
+   |          4      1   -1.192   2.105     qc      0         |                
+   |          5      1    0.250   2.105     qc      0         |                
+   |          6      2   -0.133   2.105     qc      0         |                
+   |          7      2    0.250   2.105     qc      0         |                
+   |         loc     3    0.000   2.105     pn      0         |                
+   |                                                          |                
+   | Augmentation charge Rinner = 1.471                       |                
+   | Partial core correction Rc = 1.471                       |                
+   ------------------------------------------------------------                
+   | "3|2.1|7|8|9|40U:50:41:42"                               |                
+   ------------------------------------------------------------                
+   |      Author: Chris J. Pickard, Cambridge University      |                
+   ============================================================                
+ 
+ Pseudo atomic calculation performed for O 2s2 2p4
+ 
+ Converged in 14 iterations to a total energy of -431.1268 eV
+ 
+ Pseudo atomic calculation performed for Zr 4s2 4p6 4d2 5s2
+ 
+ Converged in 24 iterations to a total energy of -1285.5743 eV
+ Calculation parallelised over 16 processes.
+ Data is distributed by k-point(16-way)
+
+ ************************************ Title ************************************
+ 
+
+ ***************************** General Parameters ******************************
+  
+ output verbosity                               : normal  (1)
+ write checkpoint data to                       : aiida.check
+ type of calculation                            : single point energy
+ stress calculation                             : off
+ density difference calculation                 : off
+ electron localisation func (ELF) calculation   : off
+ Hirshfeld analysis                             : off
+ molecular orbital projected DOS                : off
+ deltaSCF calculation                           : off
+ calculation limited to maximum                 :      41040   seconds
+ timing information                             : on
+ memory usage estimate                          : on
+ write extra output files                       : on
+ write final potential to formatted file        : off
+ write final density to formatted file          : off
+ write BibTeX reference list                    : on
+ write OTFG pseudopotential files               : on
+ write electrostatic potential file             : on
+ write bands file                               : on
+ checkpoint writing                             : both castep_bin and check files
+  
+ output         length unit                     : A
+ output           mass unit                     : amu
+ output           time unit                     : ps
+ output         charge unit                     : e
+ output           spin unit                     : hbar/2
+ output         energy unit                     : eV
+ output          force unit                     : eV/A
+ output       velocity unit                     : A/ps
+ output       pressure unit                     : GPa
+ output     inv_length unit                     : 1/A
+ output      frequency unit                     : cm-1
+ output force constant unit                     : eV/A**2
+ output         volume unit                     : A**3
+ output   IR intensity unit                     : (D/A)**2/amu
+ output         dipole unit                     : D
+ output         efield unit                     : eV/A/e
+ output        entropy unit                     : J/mol/K
+ output    efield chi2 unit                     : pm/V
+  
+ wavefunctions paging                           : none
+ random number generator seed                   : randomised (134809581)
+ data distribution                              : optimal for this architecture
+ optimization strategy                          : balance speed and memory
+
+ *********************** Exchange-Correlation Parameters ***********************
+  
+ using functional                               : PBE for solids (2008)
+ relativistic treatment                         : Koelling-Harmon
+ DFT+D: Semi-empirical dispersion correction    : off
+
+ ************************* Pseudopotential Parameters **************************
+  
+ pseudopotential representation                 : reciprocal space
+ <beta|phi> representation                      : reciprocal space
+ spin-orbit coupling                            : off
+
+ **************************** Basis Set Parameters *****************************
+  
+ plane wave basis set cut-off                   :   850.0000   eV
+ size of standard grid                          :     1.7500
+ size of   fine   gmax                          :    26.1388   1/A
+ finite basis set correction                    : none
+
+ **************************** Electronic Parameters ****************************
+  
+ number of  electrons                           :  96.00    
+ net charge of system                           :  0.000    
+ treating system as non-spin-polarized
+ number of bands                                :         58
+
+ ********************* Electronic Minimization Parameters **********************
+  
+ Method: Treating system as metallic with density mixing treatment of electrons,
+         and number of  SD  steps               :          1
+         and number of  CG  steps               :          4
+  
+ total energy / atom convergence tol.           : 0.1000E-04   eV
+ eigen-energy convergence tolerance             : 0.1000E-05   eV
+ max force / atom convergence tol.              : ignored
+ convergence tolerance window                   :          3   cycles
+ max. number of SCF cycles                      :        200
+ number of fixed-spin iterations                :         10
+ smearing scheme                                : Gaussian
+ smearing width                                 : 0.2000       eV
+ Fermi energy convergence tolerance             : 0.2721E-13   eV
+ periodic dipole correction                     : NONE
+
+ ************************** Density Mixing Parameters **************************
+  
+ density-mixing scheme                          : Pulay
+ max. length of mixing history                  :         20
+ charge density mixing amplitude                : 0.8000    
+ cut-off energy for mixing                      :  850.0       eV
+
+ *********************** Population Analysis Parameters ************************
+  
+ Population analysis with cutoff                :  3.000       A
+ Population analysis output                     : summary and pdos components
+
+ *******************************************************************************
+  
+ 
+                           -------------------------------
+                                      Unit Cell
+                           -------------------------------
+        Real Lattice(A)                      Reciprocal Lattice(1/A)
+     5.2684600     0.0000000     0.0000000        1.192603779   0.000000000   0.000000000
+     0.0000000     5.2336490     0.0000000        0.000000000   1.200536243  -0.212872057
+     0.0000000     0.9460160     5.3352540        0.000000000   0.000000000   1.177673136
+ 
+                       Lattice parameters(A)       Cell Angles
+                    a =      5.268460          alpha =   79.945154
+                    b =      5.233649          beta  =   90.000000
+                    c =      5.418476          gamma =   90.000000
+ 
+                       Current cell volume =           147.110401       A**3
+                                   density =             3.350485   AMU/A**3
+                                           =             5.563611     g/cm^3
+ 
+                           -------------------------------
+                                     Cell Contents
+                           -------------------------------
+                         Total number of ions in cell =   12
+                      Total number of species in cell =    2
+                        Max number of any one species =    8
+ 
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            x  Element    Atom        Fractional coordinates of atoms  x
+            x            Number           u          v          w      x
+            x----------------------------------------------------------x
+            x  O            1         0.819822   0.938985   0.854613   x 
+            x  O            2         0.680178   0.938985   0.354613   x 
+            x  O            3         0.744326   0.452990   0.021936   x 
+            x  O            4         0.244326   0.547010   0.478064   x 
+            x  O            5         0.755674   0.452990   0.521936   x 
+            x  O            6         0.255674   0.547010   0.978064   x 
+            x  O            7         0.319822   0.061015   0.645387   x 
+            x  O            8         0.180178   0.061015   0.145387   x 
+            x  Zr           1         0.044180   0.275981   0.789744   x 
+            x  Zr           2         0.455820   0.275981   0.289744   x 
+            x  Zr           3         0.544180   0.724019   0.710256   x 
+            x  Zr           4         0.955820   0.724019   0.210256   x 
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ 
+ 
+                         No user defined ionic velocities
+ 
+                           -------------------------------
+                                   Details of Species
+                           -------------------------------
+ 
+                               Mass of species in AMU
+                                    O   15.9994000
+                                    Zr   91.2240000
+ 
+                          Electric Quadrupole Moment (Barn)
+                                    O   -0.0255800 Isotope 17
+                                    Zr   -0.1760000 Isotope 91
+ 
+                          Files used for pseudopotentials:
+                                    O 2|1.1|17|20|23|20:21(qc=8)
+                                    Zr 3|2.1|7|8|9|40U:50:41:42
+ 
+                           -------------------------------
+                              k-Points For BZ Sampling
+                           -------------------------------
+                       MP grid size for SCF calculation is  4  4  4
+                            with an offset of   0.000  0.000  0.000
+                       Number of kpoints used =            16
+ 
+                           -------------------------------
+                               Symmetry and Constraints
+                           -------------------------------
+ 
+                      Maximum deviation from symmetry = 0.177700E-14     ANG
+ 
+                      Number of symmetry operations   =           4
+                      Number of ionic constraints     =           3
+                      Point group of crystal =     5: C2h, 2/m, 2/m
+                      Space group of crystal =    14: P2_1/c, -P 2ybc
+ 
+             Set iprint > 1 for details on symmetry rotations/translations
+ 
+                         Centre of mass is constrained
+             Set iprint > 1 for details of linear ionic constraints
+ 
+                         Number of cell constraints= 2
+                         Cell constraints are:  1 2 3 4 0 0
+ 
+                         External pressure/stress (GPa)
+                          0.00000   0.00000   0.00000
+                                    0.00000   0.00000
+                                              0.00000
+  
++---------------- MEMORY AND SCRATCH DISK ESTIMATES PER PROCESS --------------+
+|                                                     Memory          Disk    |
+| Baseline code, static data and system overhead      229.0 MB         0.0 MB |
+| BLAS internal memory storage                          0.0 MB         0.0 MB |
+| Model and support data                              228.3 MB       342.3 MB |
+| Electronic energy minimisation requirements          69.1 MB         0.0 MB |
+| Force calculation requirements                       14.1 MB         0.0 MB |
+|                                               ----------------------------- |
+| Approx. total storage required per process          526.4 MB       342.3 MB |
+|                                                                             |
+| Requirements will fluctuate during execution and may exceed these estimates |
++-----------------------------------------------------------------------------+
+Calculating total energy with cut-off of  850.000 eV.
+------------------------------------------------------------------------ <-- SCF
+SCF loop      Energy           Fermi           Energy gain       Timer   <-- SCF
+                               energy          per atom          (sec)   <-- SCF
+------------------------------------------------------------------------ <-- SCF
+Initial  -7.43015963E+003  0.00000000E+000                        11.73  <-- SCF
+      1  -8.19068523E+003  1.07660518E+001   6.33771337E+001      13.45  <-- SCF
+      2  -8.70172578E+003  8.66525281E+000   4.25867124E+001      15.15  <-- SCF
+      3  -8.72202245E+003  9.33837454E+000   1.69138911E+000      16.74  <-- SCF
+      4  -8.72362512E+003  9.24286156E+000   1.33555421E-001      18.96  <-- SCF
+      5  -8.70720178E+003  9.08243517E+000  -1.36861157E+000      21.10  <-- SCF
+      6  -8.70712244E+003  8.96500022E+000  -6.61153835E-003      23.24  <-- SCF
+      7  -8.70712766E+003  8.96469483E+000   4.34815964E-004      25.42  <-- SCF
+      8  -8.70712475E+003  8.97180078E+000  -2.42625225E-004      27.39  <-- SCF
+      9  -8.70712507E+003  8.97447658E+000   2.74436151E-005      29.24  <-- SCF
+     10  -8.70712509E+003  8.97463645E+000   1.16069467E-006      30.55  <-- SCF
+     11  -8.70712509E+003  8.97468447E+000   4.57812962E-007      31.85  <-- SCF
+------------------------------------------------------------------------ <-- SCF
+ 
+Final energy, E             =  -8707.125094402     eV
+Final free energy (E-TS)    =  -8707.125094402     eV
+(energies not corrected for finite basis set)
+ 
+NB est. 0K energy (E-0.5TS)      =  -8707.125094402     eV
+ 
+
+Writing analysis data to aiida.castep_bin
+
+Writing model to aiida.check
+ 
+ ******************** Symmetrised Forces ********************
+ *                                                          *
+ *               Cartesian components (eV/A)                *
+ * -------------------------------------------------------- *
+ *                         x            y            z      *
+ *                                                          *
+ * O               1      0.07788     -0.06393      0.07389 *
+ * O               2     -0.07788     -0.06393      0.07389 *
+ * O               3     -0.05549      0.12107      0.10477 *
+ * O               4     -0.05549     -0.12107     -0.10477 *
+ * O               5      0.05549      0.12107      0.10477 *
+ * O               6      0.05549     -0.12107     -0.10477 *
+ * O               7      0.07788      0.06393     -0.07389 *
+ * O               8     -0.07788      0.06393     -0.07389 *
+ * Zr              1      0.08951     -0.23386      0.14813 *
+ * Zr              2     -0.08951     -0.23386      0.14813 *
+ * Zr              3      0.08951      0.23386     -0.14813 *
+ * Zr              4     -0.08951      0.23386     -0.14813 *
+ *                                                          *
+ ************************************************************
+ 
+ Pseudo atomic calculation performed for O 2s2 2p4
+ 
+ Converged in 14 iterations to a total energy of -431.1268 eV
+ 
+ Pseudo atomic calculation performed for Zr 4s2 4p6 4d2 5s2
+ 
+ Converged in 24 iterations to a total energy of -1285.5743 eV
+Charge spilling parameter for spin component 1 = 0.20%
+ 
+            Orbital Populations       
+     Ion    Atom   Orbital             Charge
+  -------------------------------------------
+      O     1      S                    1.838
+      O     1      Px                   1.627
+      O     1      Py                   1.619
+      O     1      Pz                   1.632
+      O     2      S                    1.838
+      O     2      Px                   1.627
+      O     2      Py                   1.621
+      O     2      Pz                   1.630
+      O     3      S                    1.847
+      O     3      Px                   1.631
+      O     3      Py                   1.629
+      O     3      Pz                   1.635
+      O     4      S                    1.846
+      O     4      Px                   1.635
+      O     4      Py                   1.628
+      O     4      Pz                   1.630
+      O     5      S                    1.846
+      O     5      Px                   1.635
+      O     5      Py                   1.628
+      O     5      Pz                   1.630
+      O     6      S                    1.847
+      O     6      Px                   1.631
+      O     6      Py                   1.629
+      O     6      Pz                   1.635
+      O     7      S                    1.838
+      O     7      Px                   1.627
+      O     7      Py                   1.621
+      O     7      Pz                   1.630
+      O     8      S                    1.838
+      O     8      Px                   1.627
+      O     8      Py                   1.619
+      O     8      Pz                   1.632
+     Zr     1      S                    1.997
+     Zr     1      Px                   1.991
+     Zr     1      Py                   1.991
+     Zr     1      Pz                   1.993
+     Zr     1      S                    0.311
+     Zr     1      Dzz                  0.358
+     Zr     1      Dzy                  0.382
+     Zr     1      Dzx                  0.413
+     Zr     1      Dxx-yy               0.324
+     Zr     1      Dxy                  0.445
+     Zr     1      Px                   0.130
+     Zr     1      Py                   0.103
+     Zr     1      Pz                   0.108
+     Zr     2      S                    1.997
+     Zr     2      Px                   1.991
+     Zr     2      Py                   1.990
+     Zr     2      Pz                   1.994
+     Zr     2      S                    0.313
+     Zr     2      Dzz                  0.356
+     Zr     2      Dzy                  0.380
+     Zr     2      Dzx                  0.414
+     Zr     2      Dxx-yy               0.325
+     Zr     2      Dxy                  0.447
+     Zr     2      Px                   0.124
+     Zr     2      Py                   0.105
+     Zr     2      Pz                   0.106
+     Zr     3      S                    1.997
+     Zr     3      Px                   1.991
+     Zr     3      Py                   1.990
+     Zr     3      Pz                   1.994
+     Zr     3      S                    0.313
+     Zr     3      Dzz                  0.356
+     Zr     3      Dzy                  0.380
+     Zr     3      Dzx                  0.414
+     Zr     3      Dxx-yy               0.325
+     Zr     3      Dxy                  0.447
+     Zr     3      Px                   0.124
+     Zr     3      Py                   0.105
+     Zr     3      Pz                   0.106
+     Zr     4      S                    1.997
+     Zr     4      Px                   1.991
+     Zr     4      Py                   1.991
+     Zr     4      Pz                   1.993
+     Zr     4      S                    0.311
+     Zr     4      Dzz                  0.358
+     Zr     4      Dzy                  0.382
+     Zr     4      Dzx                  0.413
+     Zr     4      Dxx-yy               0.324
+     Zr     4      Dxy                  0.445
+     Zr     4      Px                   0.130
+     Zr     4      Py                   0.103
+     Zr     4      Pz                   0.108
+  -------------------------------------------
+                           Total:      96.000
+  -------------------------------------------
+ 
+     Atomic Populations (Mulliken)
+     -----------------------------
+Species          Ion     s      p      d      f     Total  Charge (e)
+=====================================================================
+  O               1     1.84   4.88   0.00   0.00   6.72    -0.72
+  O               2     1.84   4.88   0.00   0.00   6.72    -0.72
+  O               3     1.85   4.89   0.00   0.00   6.74    -0.74
+  O               4     1.85   4.89   0.00   0.00   6.74    -0.74
+  O               5     1.85   4.89   0.00   0.00   6.74    -0.74
+  O               6     1.85   4.89   0.00   0.00   6.74    -0.74
+  O               7     1.84   4.88   0.00   0.00   6.72    -0.72
+  O               8     1.84   4.88   0.00   0.00   6.72    -0.72
+  Zr              1     2.31   6.31   1.92   0.00  10.54     1.46
+  Zr              2     2.31   6.31   1.92   0.00  10.54     1.46
+  Zr              3     2.31   6.31   1.92   0.00  10.54     1.46
+  Zr              4     2.31   6.31   1.92   0.00  10.54     1.46
+=====================================================================
+ 
+                 Bond                   Population      Length (A)
+======================================================================
+               O 2 -- Zr 4                   0.45        2.07214
+               O 1 -- Zr 3                   0.45        2.07214
+               O 7 -- Zr 1                   0.45        2.07214
+               O 8 -- Zr 2                   0.45        2.07214
+               O 7 -- Zr 3                   0.35        2.10118
+               O 1 -- Zr 1                   0.35        2.10118
+               O 8 -- Zr 4                   0.35        2.10118
+               O 2 -- Zr 2                   0.35        2.10118
+               O 8 -- Zr 1                   0.29        2.17614
+               O 2 -- Zr 3                   0.29        2.17614
+               O 1 -- Zr 4                   0.29        2.17614
+               O 7 -- Zr 2                   0.29        2.17614
+               O 4 -- Zr 2                   0.24        2.19095
+               O 3 -- Zr 4                   0.24        2.19095
+               O 6 -- Zr 1                   0.24        2.19095
+               O 5 -- Zr 3                   0.24        2.19095
+               O 6 -- Zr 3                   0.30        2.19200
+               O 5 -- Zr 1                   0.30        2.19200
+               O 3 -- Zr 2                   0.30        2.19200
+               O 4 -- Zr 4                   0.30        2.19200
+               O 6 -- Zr 2                   0.27        2.26707
+               O 5 -- Zr 4                   0.27        2.26707
+               O 4 -- Zr 1                   0.27        2.26707
+               O 3 -- Zr 3                   0.27        2.26707
+               O 5 -- Zr 2                   0.26        2.31166
+               O 3 -- Zr 1                   0.26        2.31166
+               O 6 -- Zr 4                   0.26        2.31166
+               O 4 -- Zr 3                   0.26        2.31166
+               O 6 -- O 8                   -0.08        2.57769
+               O 2 -- O 5                   -0.08        2.57769
+               O 4 -- O 7                   -0.08        2.57769
+               O 1 -- O 3                   -0.08        2.57769
+               O 1 -- O 8                   -0.05        2.61649
+               O 2 -- O 7                   -0.05        2.61649
+               O 3 -- O 6                   -0.10        2.62403
+               O 4 -- O 5                   -0.10        2.62403
+               O 4 -- O 6                   -0.08        2.70990
+               O 3 -- O 5                   -0.08        2.70990
+               O 7 -- O 8                   -0.06        2.80735
+               O 1 -- O 2                   -0.06        2.80735
+               O 2 -- O 8                   -0.04        2.89473
+               O 1 -- O 7                   -0.04        2.89473
+               O 1 -- O 5                   -0.01        2.98447
+               O 6 -- O 7                   -0.01        2.98447
+               O 2 -- O 3                   -0.01        2.98447
+               O 4 -- O 8                   -0.01        2.98447
+======================================================================
+ 
+
+Writing analysis data to aiida.castep_bin
+
+Writing model to aiida.check
+ 
+ A BibTeX formatted list of references used in this run has been written to 
+ aiida.bib
+ 
+Initialisation time =     10.50 s
+Calculation time    =     23.88 s
+Finalisation time   =      0.42 s
+Total time          =     34.80 s
+Peak Memory Use     = 1072632 kB
+  
+Overall parallel efficiency rating: Satisfactory (68%)                          
+  
+Data was distributed by:-
+k-point (16-way); efficiency rating: Satisfactory (69%)                         
+  
+Parallel notes:
+1) Calculation only took 34.4 s, so efficiency estimates may be inaccurate.     

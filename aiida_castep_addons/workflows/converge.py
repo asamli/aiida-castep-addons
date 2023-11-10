@@ -131,13 +131,25 @@ def check_supercell_conv(matrices, frequency_tolerance, kpoints, prefix, **kwarg
                 labels_dict=label_dict,
                 structure=pmg_structure,
             )
+            colours = [
+                "tab:blue",
+                "tab:orange",
+                "tab:green",
+                "tab:red",
+                "tab:purple",
+                "tab:brown",
+                "tab:pink",
+                "tab:gray",
+                "tab:olive",
+                "tab:cyan",
+            ]
             SPhononBSPlotter(pmg_bands).get_plot(
                 ymin=-2,
                 plt=plt,
-                color=f"C{i}",
+                color=colours[i],
             )
         plt.legend(
-            [Line2D([0], [0], color=f"C{i}") for i in range(len(supercell_labels))],
+            [Line2D([0], [0], color=colours[i]) for i in range(len(supercell_labels))],
             supercell_labels,
             bbox_to_anchor=(1.05, 1),
             loc="upper left",
@@ -461,10 +473,8 @@ class CastepConvergeWorkChain(WorkChain):
             )
         else:
             self.ctx.supercell_start = self.ctx.supercell_end
-            self.ctx.supercell_end += 10
-            self.report(
-                "Supercell size not converged. Increasing upper length limit by 10 Angstroms."
-            )
+            self.ctx.supercell_end += 2 * self.ctx.supercell_step
+            self.report("Supercell size not converged. Increasing upper length limit.")
 
     def results(self):
         """Add converged plane-wave cutoff, k-point spacing, and supercell matrix to WorkChain outputs"""
