@@ -12,6 +12,7 @@ from aiida.engine import WorkChain, calcfunction, if_
 from aiida.orm.nodes.data.base import to_aiida_type
 from aiida_castep.workflows.relax import CastepRelaxWorkChain
 from pymatgen.analysis.magnetism.analyzer import MagneticStructureEnumerator
+from pymatgen.io.ase import AseAtomsAdaptor
 
 
 @calcfunction
@@ -31,7 +32,8 @@ def enumerate_spins(structure, enum_options):
                 spins.append(0)
         enum_structures[f"structure_{i+1}_spins"] = orm.List(list=spins)
         structure.remove_spin()
-        enum_structures[f"structure_{i+1}"] = orm.StructureData(pymatgen=structure)
+        ase_structure = AseAtomsAdaptor.get_atoms(structure)
+        enum_structures[f"structure_{i+1}"] = orm.StructureData(ase=ase_structure)
         spins = []
     return enum_structures
 

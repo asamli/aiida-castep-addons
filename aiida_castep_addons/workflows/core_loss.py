@@ -94,6 +94,7 @@ def plot_core_loss(folder, uuid, label, description, prefix, experimental_spectr
                 ((intensity - min(intensities)) / (max(intensities) - min(intensities)))
                 for intensity in intensities
             ]
+        experimental_labels = experimental_spectra.get_arraynames()
 
         # Plotting EELS/XANES spectrum
         plt.style.use("default")

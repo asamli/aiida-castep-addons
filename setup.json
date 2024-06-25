@@ -13,7 +13,7 @@
         "Development Status :: 3 - Alpha",
         "Framework :: AiiDA"
     ],
-    "version": "0.4.0",
+    "version": "0.5.0",
     "entry_points": {
         "aiida.parsers": [
             "castep_addons.phonon_parser = aiida_castep_addons.parsers:PhononParser"
@@ -45,9 +45,10 @@
         "voluptuous",
         "sumo",
         "galore",
-        "PyPDF2",
+        "pypdf",
         "bsym",
         "icet",
+        "doped",
         "aiida-castep@git+https://github.com/zhubonan/aiida-castep"
     ],
     "extras_require": {

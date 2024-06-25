@@ -4,8 +4,9 @@ import aiida.orm as orm
 from aiida.engine import run_get_node
 from aiida.plugins import WorkflowFactory
 from aiida_castep.data.otfg import upload_otfg_family
-from aiida_castep_addons.workflows.nmr import nmr_analysis
 from ase.build import bulk
+
+from aiida_castep_addons.workflows.nmr import nmr_analysis
 
 
 def test_nmr_analysis():

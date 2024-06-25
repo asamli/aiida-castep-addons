@@ -13,12 +13,13 @@ import numpy as np
 from aiida.engine import WorkChain, append_, calcfunction, while_
 from aiida.orm.nodes.data.base import to_aiida_type
 from aiida_castep.workflows.base import CastepBaseWorkChain
-from aiida_castep_addons.parsers.phonon import PhononParser
-from aiida_castep_addons.utils import add_metadata, seekpath_analysis
 from matplotlib.lines import Line2D
 from pymatgen.core.lattice import Lattice
 from pymatgen.phonon.bandstructure import PhononBandStructureSymmLine
 from sumo.plotting.phonon_bs_plotter import SPhononBSPlotter
+
+from aiida_castep_addons.parsers.phonon import PhononParser
+from aiida_castep_addons.utils import add_metadata, seekpath_analysis
 
 
 @calcfunction
@@ -396,7 +397,7 @@ class CastepConvergeWorkChain(WorkChain):
         else:
             self.ctx.kspacing_start = self.ctx.kspacing_end - self.ctx.kspacing_step
             if self.ctx.kspacing_end >= (4 * self.ctx.kspacing_step):
-                self.ctx.kspacing_end -= 2 * self.ctx.kspacing_setp
+                self.ctx.kspacing_end -= 2 * self.ctx.kspacing_step
                 self.report("K-point spacing not converged. Decreasing lower limit.")
             else:
                 self.ctx.converged_kspacing = orm.Float(self.ctx.kspacing_end)

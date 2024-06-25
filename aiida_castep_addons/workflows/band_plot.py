@@ -16,15 +16,16 @@ from aiida.engine import ToContext, WorkChain, calcfunction
 from aiida.orm.nodes.data.base import to_aiida_type
 from aiida_castep.utils.dos import DOSProcessor
 from aiida_castep.workflows.base import CastepBaseWorkChain
+from castepxbin.pdos import compute_pdos
+from pymatgen.electronic_structure.dos import CompleteDos, Dos, Spin
+from sumo.electronic_structure.dos import get_pdos
+from sumo.plotting.dos_plotter import SDOSPlotter
+
 from aiida_castep_addons.utils import add_metadata, seekpath_analysis
 from aiida_castep_addons.utils.sumo_plotter import (
     get_pmg_bandstructure,
     get_sumo_bands_plotter,
 )
-from castepxbin.pdos import compute_pdos
-from pymatgen.electronic_structure.dos import CompleteDos, Dos, Spin
-from sumo.electronic_structure.dos import get_pdos
-from sumo.plotting.dos_plotter import SDOSPlotter
 
 
 @calcfunction

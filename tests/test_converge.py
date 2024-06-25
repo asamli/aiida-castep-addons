@@ -4,11 +4,14 @@ import aiida.orm as orm
 from aiida.engine import run_get_node
 from aiida.plugins import WorkflowFactory
 from aiida_castep.data.otfg import upload_otfg_family
+from ase.build import bulk
+
 from aiida_castep_addons.workflows.converge import (
+    check_kspacing_conv,
+    check_pwcutoff_conv,
     check_supercell_conv,
     seekpath_analysis,
 )
-from ase.build import bulk
 
 
 def test_check_supercell_conv():

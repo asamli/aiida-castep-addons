@@ -1,0 +1,39 @@
+GERun: 
+GERun: Note: Lines like this one prefixed with "GERun:" are for debugging
+GERun:       purposes only and you do not need to report them to rc-support
+GERun:       unless your job fails for other reasons.
+GERun: 
+GERun: 
+GERun: Grid Engine parallel launcher abstraction layer version iv (public)
+GERun: Dr Owain Kenway, RCAS, RITS, ISD, UCL, 7th of February, 2018
+GERun: 
+GERun: For licensing terms, see LICENSE.txt
+GERun: 
+GERun: Using environment: intel
+GERun: Running on 18 slots:
+GERun:    18 MPI tasks
+GERun:     1 threads per task
+GERun: TMPDIR=/tmpdir/job/1637945.undefined
+GERun: 
+GERun: Contents of machinefile:
+GERun: node-d00a-232
+GERun: node-d00a-232
+GERun: node-d00a-232
+GERun: node-d00a-232
+GERun: node-d00a-232
+GERun: node-d00a-232
+GERun: node-d00a-232
+GERun: node-d00a-232
+GERun: node-d00a-232
+GERun: node-d00a-232
+GERun: node-d00a-232
+GERun: node-d00a-232
+GERun: node-d00a-232
+GERun: node-d00a-232
+GERun: node-d00a-232
+GERun: node-d00a-232
+GERun: node-d00a-232
+GERun: node-d00a-232
+GERun: 
+GERun: GErun command being run:
+GERun:  mpirun --rsh=ssh -machinefile /tmpdir/job/1637945.undefined/machines.unique -np 18 -rr /home/zccaesa/bin/CASTEP-20.11/bin/linux_x86_64_ifort--mpi/castep.mpi aiida

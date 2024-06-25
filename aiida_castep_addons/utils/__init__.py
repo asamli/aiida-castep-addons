@@ -1,12 +1,13 @@
 """
 Useful functions for workflows
 """
+
 from tempfile import TemporaryDirectory
 
 import aiida.orm as orm
 from aiida.engine import calcfunction
 from aiida.tools.data.array.kpoints import get_explicit_kpoints_path
-from PyPDF2 import PdfFileReader, PdfFileWriter
+from pypdf import PdfReader, PdfWriter
 
 
 @calcfunction
@@ -27,12 +28,12 @@ def add_metadata(file, fname, formula, uuid, label, description):
     """Add workflow metadata to a PDF file with PyPDF2"""
     with TemporaryDirectory() as temp:
         with file.open(mode="rb") as fin:
-            reader = PdfFileReader(fin)
-            writer = PdfFileWriter()
-            writer.appendPagesFromReader(reader)
-            metadata = reader.getDocumentInfo()
-            writer.addMetadata(metadata)
-            writer.addMetadata(
+            reader = PdfReader(fin)
+            writer = PdfWriter()
+            writer.append_pages_from_reader(reader)
+            metadata = reader.metadata
+            writer.add_metadata(metadata)
+            writer.add_metadata(
                 {
                     "/Formula": formula.value,
                     "/WorkchainUUID": uuid.value,

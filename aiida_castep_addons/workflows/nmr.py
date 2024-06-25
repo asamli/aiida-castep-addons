@@ -18,12 +18,14 @@ def nmr_analysis(folder):
     lines = nmr_dot_castep.split("\n")
     nmr_lines = iter(lines)
     species = []
-    iso_shifts = []
-    aniso_shifts = []
+    iso_shieldings = []
+    aniso_shieldings = []
     asym = []
+    cq = []
+    eta = []
     read = False
     for line in nmr_lines:
-        if " Chemical Shielding Tensor " in line:
+        if " Chemical Shielding and Electric Field Gradient Tensors " in line:
             read = True
             next(nmr_lines)
             next(nmr_lines)
@@ -34,18 +36,21 @@ def nmr_analysis(folder):
 
         if read:
             line = line.split()
-            print(line)
             species.append(f"{line[1]} {line[2]}")
-            iso_shifts.append(line[3])
-            aniso_shifts.append(line[4])
+            iso_shieldings.append(line[3])
+            aniso_shieldings.append(line[4])
             asym.append(line[5])
+            cq.append(line[6])
+            eta.append(line[7])
 
     nmr_data = orm.Dict(
         dict={
             "species": species,
-            "isotropic_shifts": iso_shifts,
-            "anisotropic_shifts": aniso_shifts,
+            "isotropic_shieldings": iso_shieldings,
+            "anisotropic_shieldings": aniso_shieldings,
             "asymmetry": asym,
+            "cq": cq,
+            "eta": eta,
         }
     )
 
@@ -85,7 +90,12 @@ class CastepNMRWorkChain(WorkChain):
         """Run the NMR calculation"""
         inputs = self.ctx.inputs
         parameters = deepcopy(self.ctx.parameters)
-        parameters.update({"task": "magres"})
+        parameters.update(
+            {
+                "task": "magres",
+                "magres_task": "nmr",
+            }
+        )
         inputs.calc.parameters = parameters
         running = self.submit(CastepBaseWorkChain, **inputs)
         self.report("Running NMR calculation")

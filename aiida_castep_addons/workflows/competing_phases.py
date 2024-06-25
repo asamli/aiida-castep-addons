@@ -11,18 +11,20 @@ import aiida.orm as orm
 from aiida.engine import WorkChain, calcfunction
 from aiida.orm.nodes.data.base import to_aiida_type
 from aiida_castep.workflows.relax import CastepRelaxWorkChain
-from aiida_castep_addons.workflows.converge import CastepConvergeWorkChain
-from aiida_castep_addons.utils import add_metadata
-from pymatgen.core.composition import Composition
 from doped.chemical_potentials import (
     CompetingPhases,
-    ExtrinsicCompetingPhases,
     CompetingPhasesAnalyzer,
+    ExtrinsicCompetingPhases,
     _calculate_formation_energies,
     combine_extrinsic,
 )
 from monty.serialization import dumpfn
 from pymatgen.analysis.chempot_diagram import ChemicalPotentialDiagram
+from pymatgen.core.composition import Composition
+from pymatgen.io.ase import AseAtomsAdaptor
+
+from aiida_castep_addons.utils import add_metadata
+from aiida_castep_addons.workflows.converge import CastepConvergeWorkChain
 
 
 @calcfunction
@@ -43,9 +45,9 @@ def generate_competing_phases(
     for i, entry in enumerate(entries):
         names.append(entry.name)
         pmg_structure = entry.structure
-        pmg_structure.add_oxidation_state_by_guess()
+        ase_structure = AseAtomsAdaptor.get_atoms(pmg_structure)
         phase_entries[f"{entry.name}_{i}_structure"] = orm.StructureData(
-            pymatgen=pmg_structure
+            ase=ase_structure
         )
         molecules.append(entry.data["molecule"])
     phase_entries["names"] = names
@@ -82,10 +84,9 @@ def competing_phases_analysis(
                     elemental_energies[element] = energy_per_atom
 
         d = {
-            "formula": phase_formula,
-            "energy": total_energy,
-            "energy_per_atom": energy_per_atom,
-            "energy_per_fu": energy_per_fu,
+            "Formula": phase_formula,
+            "DFT Energy (eV/atom)": energy_per_atom,
+            "DFT Energy (eV/fu)": energy_per_fu,
         }
         data.append(d)
     formation_energy_df = _calculate_formation_energies(data, elemental_energies)
@@ -105,9 +106,9 @@ def competing_phases_analysis(
                     chem_formula.value, extrinsic_species=extrinsic_species[i]
                 )
                 cpa.from_csv(f"{temp}/{prefix.value}_competing_phase_energies.csv")
-                all_chempots.append(cpa.chem_limits)
+                all_chempots.append(cpa.chempots)
             if len(all_chempots) == 1:
-                dumpfn(cpa.chem_limits, f"{temp}/{prefix.value}_chempots.json")
+                dumpfn(cpa.chempots, f"{temp}/{prefix.value}_chempots.json")
                 chempots = orm.SinglefileData(f"{temp}/{prefix.value}_chempots.json")
                 cpd = ChemicalPotentialDiagram(cpa.intrinsic_phase_diagram.entries)
                 plot = cpd.get_plot()
@@ -131,7 +132,7 @@ def competing_phases_analysis(
         else:
             cpa = CompetingPhasesAnalyzer(chem_formula.value)
             cpa.from_csv(f"{temp}/{prefix.value}_competing_phase_energies.csv")
-            dumpfn(cpa.chem_limits, f"{temp}/{prefix.value}_chempots.json")
+            dumpfn(cpa.chempots, f"{temp}/{prefix.value}_chempots.json")
             chempots = orm.SinglefileData(f"{temp}/{prefix.value}_chempots.json")
             cpd = ChemicalPotentialDiagram(cpa.intrinsic_phase_diagram.entries)
             plot = cpd.get_plot()

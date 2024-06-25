@@ -14,11 +14,12 @@ import numpy as np
 from aiida.engine import ToContext, WorkChain, calcfunction, if_
 from aiida.orm.nodes.data.base import to_aiida_type
 from aiida_castep.workflows.base import CastepBaseWorkChain
-from aiida_castep_addons.parsers.phonon import PhononParser
-from aiida_castep_addons.utils import add_metadata, seekpath_analysis
 from pymatgen.core.lattice import Lattice
 from pymatgen.phonon.bandstructure import PhononBandStructureSymmLine
 from sumo.plotting.phonon_bs_plotter import SPhononBSPlotter
+
+from aiida_castep_addons.parsers.phonon import PhononParser
+from aiida_castep_addons.utils import add_metadata, seekpath_analysis
 
 
 @calcfunction
