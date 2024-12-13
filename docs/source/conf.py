@@ -35,6 +35,7 @@ load_profile(temp_profile, allow_switch=True)
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
+    "sphinx.ext.napoleon",
     "sphinx.ext.autodoc",
     "sphinx.ext.mathjax",
     "sphinx.ext.intersphinx",
