@@ -31,6 +31,7 @@ Workflows:
 * `castep_addons.alloy`: Workflow to generate alloy structures with `Bsym` or `ICET` and calculate thermodynamic properties of mixing after relaxing each structure.
 * `castep_addons.nmr`: Workflow for calculations of NMR chemical shifts.
 * `castep_addons.competing_phases`: Workflow for calculations of competing phase formation energies and chemical potential limits
+* `castep_addons.defects`: Workflow to generate point defect structures, calculate defect formation energies and plot transition level diagrams using `Doped`
 
 Parsers:
 * `castep_addons.phonon`: Parser for CASTEP .phonon output files to extract the structure, vibrational spectrum data, q-points, phonon frequencies and eigenvectors.

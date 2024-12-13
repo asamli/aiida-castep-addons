@@ -13,7 +13,7 @@
         "Development Status :: 3 - Alpha",
         "Framework :: AiiDA"
     ],
-    "version": "0.5.0",
+    "version": "0.6.0",
     "entry_points": {
         "aiida.parsers": [
             "castep_addons.phonon_parser = aiida_castep_addons.parsers:PhononParser"
@@ -26,7 +26,8 @@
             "castep_addons.core_loss = aiida_castep_addons.workflows.core_loss:CastepCoreLossWorkChain",
             "castep_addons.alloy = aiida_castep_addons.workflows.alloy:CastepAlloyWorkChain",
             "castep_addons.nmr = aiida_castep_addons.workflows.nmr:CastepNMRWorkChain",
-            "castep_addons.competing_phases = aiida_castep_addons.workflows.competing_phases:CastepCompetingPhasesWorkChain"
+            "castep_addons.competing_phases = aiida_castep_addons.workflows.competing_phases:CastepCompetingPhasesWorkChain",
+            "castep_addons.defects = aiida_castep_addons.workflows.defects:CastepDefectsWorkChain"
         ],
         "aiida.schedulers": [
             "mscastep.slurm = aiida_castep_addons.schedulers.slurm_mscastep:MSCastepSlurmScheduler"

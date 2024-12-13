@@ -3,7 +3,6 @@ name: ci
 on: [push, pull_request]
 
 jobs:
-
   tests:
     runs-on: ubuntu-latest
     timeout-minutes: 30
@@ -16,7 +15,7 @@ jobs:
         image: postgres:10
         env:
           POSTGRES_DB: test_${{ matrix.backend }}
-          POSTGRES_PASSWORD: ''
+          POSTGRES_PASSWORD: ""
           POSTGRES_HOST_AUTH_METHOD: trust
         options: >-
           --health-cmd pg_isready
@@ -31,57 +30,57 @@ jobs:
           - 5672:5672
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
-      with:
-        python-version: ${{ matrix.python-version }}
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
 
-    - name: Install python dependencies
-      run: |
-        pip install --upgrade pip
-        pip install -e .[testing]
+      - name: Install python dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -e .[testing]
 
-    - name: Run test suite
-      env:
-        AIIDA_TEST_BACKEND: ${{ matrix.backend }}
-        # show timings of tests
-        PYTEST_ADDOPTS: "--durations=0"
-        MOCK_CODE_BASE: ${{ github.workspace }}/tests/registry
-      working-directory: ./tests
-      run: pytest || exit 0
+      - name: Run test suite
+        env:
+          AIIDA_TEST_BACKEND: ${{ matrix.backend }}
+          # show timings of tests
+          PYTEST_ADDOPTS: "--durations=0"
+          MOCK_CODE_BASE: ${{ github.workspace }}/tests/registry
+        working-directory: ./tests
+        run: pytest || exit 0
 
   docs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python 3.8
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.8
-    - name: Install python dependencies
-      run: |
-        pip install --upgrade pip
-        pip install -e .[docs]
-    - name: Build docs
-      run: cd docs && make
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Install python dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -e .[docs]
+      - name: Build docs
+        run: cd docs && make
 
   pre-commit:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python 3.8
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.8
-    - name: Install python dependencies
-      run: |
-        pip install --upgrade pip
-        pip install -e .[pre-commit,docs,testing]
-    - name: Run pre-commit
-      run: |
-        pre-commit install
-        pre-commit run --all-files || ( git status --short ; git diff ; exit 0 )
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Install python dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -e .[pre-commit,docs,testing]
+      - name: Run pre-commit
+        run: |
+          pre-commit install
+          pre-commit run --all-files || ( git status --short ; git diff ; exit 0 )
