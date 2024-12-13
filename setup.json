@@ -66,10 +66,11 @@
         ],
         "docs": [
             "sphinx",
+            "furo",
             "sphinxcontrib-contentui",
-            "sphinxcontrib-details-directive; python_version>='3.0'",
+            "sphinxcontrib-details-directive",
             "sphinx-rtd-theme",
-            "markupsafe==2.0.1"
+            "markupsafe<2.1"
         ]
     }
 }
