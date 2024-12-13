@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #
 # Sphinx configuration for aiida-castep-addons
 #
@@ -15,21 +14,16 @@ import os
 import sys
 import time
 
+from aiida import load_profile
+from aiida.storage.sqlite_temp import SqliteTempBackend
+
 import aiida_castep_addons
-from aiida.manage.configuration import load_documentation_profile
 
 # -- AiiDA-related setup --------------------------------------------------
 
-# Load the dummy profile even if we are running locally, this way the documentation will succeed even if the current
-# default profile of the AiiDA installation does not use a Django backend.
-load_documentation_profile()
-
-# If we are not on READTHEDOCS load the Sphinx theme manually
-if not os.environ.get("READTHEDOCS", None):
-    import sphinx_rtd_theme
-
-    html_theme = "sphinx_rtd_theme"
-    html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
+# Load AiiDA profile
+temp_profile = SqliteTempBackend.create_profile("temp-profile")
+load_profile(temp_profile, allow_switch=True)
 
 # -- General configuration ------------------------------------------------
 
@@ -37,14 +31,10 @@ if not os.environ.get("READTHEDOCS", None):
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 
-# If your documentation needs a minimal Sphinx version, state it here.
-needs_sphinx = "1.5"
-
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    "sphinx.ext.napoleon",
     "sphinx.ext.autodoc",
     "sphinx.ext.mathjax",
     "sphinx.ext.intersphinx",
@@ -55,7 +45,7 @@ extensions = [
 
 intersphinx_mapping = {
     "python": ("https://docs.python.org/3", None),
-    "aiida": ("https://aiida-core.readthedocs.io/en/latest", None),
+    "aiida": ("https://aiida.readthedocs.io/projects/aiida-core/en/latest", None),
 }
 
 # Add any paths that contain templates here, relative to this directory.
@@ -80,12 +70,10 @@ current_year = str(time.localtime().tm_year)
 copyright_year_string = (
     current_year
     if current_year == copyright_first_year
-    else "{}-{}".format(copyright_first_year, current_year)
+    else f"{copyright_first_year}-{current_year}"
 )
 # pylint: disable=redefined-builtin
-copyright = "{}, {}. All rights reserved".format(
-    copyright_year_string, copyright_owners
-)
+copyright = f"{copyright_year_string}, {copyright_owners}. All rights reserved"
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -114,17 +102,6 @@ language = "en"
 # exclude_patterns = ['doc.rst']
 # ~ exclude_patterns = ['index.rst']
 
-# The reST default role (used for this markup: `text`) to use for all
-# documents.
-# default_role = None
-
-# If true, '()' will be appended to :func: etc. cross-reference text.
-# add_function_parentheses = True
-
-# If true, the current module name will be prepended to all description
-# unit titles (such as .. function::).
-# add_module_names = True
-
 # If true, sectionauthor and moduleauthor directives will be shown in the
 # output. They are ignored by default.
 show_authors = True
@@ -132,39 +109,15 @@ show_authors = True
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = "sphinx"
 
-# A list of ignored prefixes for module index sorting.
-# modindex_common_prefix = []
-
-# If true, keep warnings as "system message" paragraphs in the built documents.
-# keep_warnings = False
-
 # -- Options for HTML output ----------------------------------------------
 
-# The theme to use for HTML and HTML Help pages.  See the documentation for
-# a list of builtin themes.
-# ~ html_theme = 'basicstrap'
-## SET BELOW
-
-# Theme options are theme-specific and customize the look and feel of a theme
-# further.  For a list of options available for each theme, see the
-# documentation.
-html_theme_options = {
-    "display_version": True,
-}
+html_theme = "furo"
+html_logo = "images/AiiDA_transparent_logo.png"
+html_title = f"aiida-castep-addons v{release}"
+html_theme_options = {}
 
 # Add any paths that contain custom themes here, relative to this directory.
 # ~ html_theme_path = ["."]
-
-# The name for this set of Sphinx documents.  If None, it defaults to
-# "<project> v<release> documentation".
-# html_title = None
-
-# A shorter title for the navigation bar.  Default is the same as html_title.
-# html_short_title = None
-
-# The name of an image file (relative to this directory) to place at the top
-# of the sidebar.
-# html_logo = "images/.png"
 
 # The name of an image file (within the static path) to use as favicon of the
 # docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
@@ -217,7 +170,7 @@ html_show_sourcelink = False
 # If true, an OpenSearch description file will be output, and all pages will
 # contain a <link> tag referring to it.  The value of this option must be the
 # base URL from which the finished HTML is served.
-html_use_opensearch = "http://aiida-castep-addons.readthedocs.io"
+html_use_opensearch = "https://aiida-castep-addons.readthedocs.io"
 
 # This is the file name suffix for HTML files (e.g. ".xhtml").
 # html_file_suffix = None
@@ -228,55 +181,11 @@ html_use_opensearch = "http://aiida-castep-addons.readthedocs.io"
 #   'nl', 'no', 'pt', 'ro', 'ru', 'sv', 'tr'
 html_search_language = "en"
 
-# A dictionary with options for the search language support, empty by default.
-# Now only 'ja' uses this config value
-# html_search_options = {'type': 'default'}
-
-# The name of a javascript file (relative to the configuration directory) that
-# implements a search results scorer. If empty, the default will be used.
-# html_search_scorer = 'scorer.js'
-
-# Output file base name for HTML help builder.
-htmlhelp_basename = "aiida-castep-addons-doc"
-
-# -- Options for LaTeX output ---------------------------------------------
-
-latex_elements = {
-    # The paper size ('letterpaper' or 'a4paper').
-    #'papersize': 'letterpaper',
-    # The font size ('10pt', '11pt' or '12pt').
-    #'pointsize': '10pt',
-    # Additional stuff for the LaTeX preamble.
-    #'preamble': '',
-    # Latex figure (float) alignment
-    #'figure_align': 'htbp',
-}
-
-# Grouping the document tree into LaTeX files. List of tuples
-# (source start file, target name, title,
-#  author, documentclass [howto, manual, or own class]).
-# latex_documents = [
-# ]
-
-# The name of an image file (relative to this directory) to place at the top of
-# the title page.
-# latex_logo = None
-
-# For "manual" documents, if this is true, then toplevel headings are parts,
-# not chapters.
-# latex_use_parts = False
-
-# If true, show page references after internal links.
-# latex_show_pagerefs = False
-
-# If true, show URL addresses after external links.
-# latex_show_urls = False
-
-# Documents to append as an appendix to all manuals.
-# latex_appendices = []
-
-# If false, no module index is generated.
-# latex_domain_indices = True
+# Warnings to ignore when using the -n (nitpicky) option
+# We should ignore any python built-in exception, for instance
+nitpick_ignore = [
+    ("py:class", "Logger"),
+]
 
 
 def run_apidoc(_):
@@ -322,38 +231,3 @@ def run_apidoc(_):
 
 def setup(app):
     app.connect("builder-inited", run_apidoc)
-
-
-# -- Options for manual page output ---------------------------------------
-
-# One entry per manual page. List of tuples
-# (source start file, name, description, authors, manual section).
-# man_pages = [
-# ]
-
-# If true, show URL addresses after external links.
-# man_show_urls = False
-
-# -- Options for Texinfo output -------------------------------------------
-
-# Grouping the document tree into Texinfo files. List of tuples
-# (source start file, target name, title, author,
-#  dir menu entry, description, category)
-# texinfo_documents = [
-# ]
-
-# Documents to append as an appendix to all manuals.
-# texinfo_appendices = []
-
-# If false, no module index is generated.
-# texinfo_domain_indices = True
-
-# How to display URL addresses: 'footnote', 'no', or 'inline'.
-# texinfo_show_urls = 'footnote'
-
-# If true, do not generate a @detailmenu in the "Top" node's menu.
-# texinfo_no_detailmenu = False
-
-# Warnings to ignore when using the -n (nitpicky) option
-# We should ignore any python built-in exception, for instance
-nitpick_ignore = []
