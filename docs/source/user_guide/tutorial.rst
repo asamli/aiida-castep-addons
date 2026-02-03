@@ -8,7 +8,7 @@ shell with ``verdi shell`` or all the code can be saved in a Python file (e.g. t
 Si convergence testing
 +++++++++++++++++++++++
 
-Before starting make sure you follow the instructions in the 'Get Started' page to set up an AiiDA profile, computer and code.
+Before starting, please follow the instructions in the 'Get Started' page to set up an AiiDA profile, computer and code.
 Ensure the daemon is running and if not, start it with ``verdi daemon start`` because it will be needed to submit the workflow.
 
 The first step is to import some necessary modules using::
@@ -56,7 +56,7 @@ or as an AiiDA ``KpointsData`` node::
     kpoints.set_kpoints_mesh((4, 4, 4))
     bld.calc.kpoints = kpoints
 
-For the structure you can simply use ``ase.bulk`` to create the primitive unit cell and provide it as StructureData::
+For the structure you can simply use ``ase.bulk`` to create the primitive unit cell and provide it as ``StructureData``::
 
     StructureData = DataFactory("core.structure")
     silicon = StructureData(ase=bulk("Si", "diamond", 5.43))

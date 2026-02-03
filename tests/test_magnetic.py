@@ -2,9 +2,8 @@ import aiida.orm as orm
 from aiida.engine import run_get_node
 from aiida.plugins import WorkflowFactory
 from aiida_castep.data.otfg import upload_otfg_family
-from ase.build import bulk
-
 from aiida_castep_addons.workflows.magnetic import enumerate_spins
+from ase.build import bulk
 
 
 def test_enumerate_spins():

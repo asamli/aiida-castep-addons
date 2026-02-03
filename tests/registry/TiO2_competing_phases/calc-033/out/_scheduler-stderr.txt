@@ -13,27 +13,27 @@ GERun: Using environment: intel
 GERun: Running on 18 slots:
 GERun:    18 MPI tasks
 GERun:     1 threads per task
-GERun: TMPDIR=/tmpdir/job/377475.undefined
+GERun: TMPDIR=/tmpdir/job/377472.undefined
 GERun: 
 GERun: Contents of machinefile:
-GERun: node-d00a-137
-GERun: node-d00a-137
-GERun: node-d00a-137
-GERun: node-d00a-137
-GERun: node-d00a-137
-GERun: node-d00a-137
-GERun: node-d00a-137
-GERun: node-d00a-137
-GERun: node-d00a-137
-GERun: node-d00a-137
-GERun: node-d00a-137
-GERun: node-d00a-137
-GERun: node-d00a-137
-GERun: node-d00a-137
-GERun: node-d00a-137
-GERun: node-d00a-137
-GERun: node-d00a-137
-GERun: node-d00a-137
+GERun: node-d00a-023
+GERun: node-d00a-023
+GERun: node-d00a-023
+GERun: node-d00a-023
+GERun: node-d00a-023
+GERun: node-d00a-023
+GERun: node-d00a-023
+GERun: node-d00a-023
+GERun: node-d00a-023
+GERun: node-d00a-023
+GERun: node-d00a-023
+GERun: node-d00a-023
+GERun: node-d00a-023
+GERun: node-d00a-023
+GERun: node-d00a-023
+GERun: node-d00a-023
+GERun: node-d00a-023
+GERun: node-d00a-023
 GERun: 
 GERun: GErun command being run:
-GERun:  mpirun --rsh=ssh -machinefile /tmpdir/job/377475.undefined/machines.unique -np 18 -rr /home/zccaesa/bin/CASTEP-20.11/bin/linux_x86_64_ifort--mpi/castep.mpi aiida
+GERun:  mpirun --rsh=ssh -machinefile /tmpdir/job/377472.undefined/machines.unique -np 18 -rr /home/zccaesa/bin/CASTEP-20.11/bin/linux_x86_64_ifort--mpi/castep.mpi aiida

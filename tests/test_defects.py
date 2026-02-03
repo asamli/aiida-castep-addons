@@ -70,9 +70,9 @@ def test_defects_wc(mock_castep_code):
     bld.doped_settings = {"extrinsic": ["Zr"]}
     bld.defect_metadata = {
         "dielectric": 0,
-        "cbm": 6.175,
-        "vbm": 4.295,
-        "gap": 1.880,
+        "cbm": 1.86,
+        "vbm": 0,
+        "gap": 1.86,
         "num_elec_cbm": 0,
         "num_hole_vbm": 0,
         "bandfilling_meta": {
@@ -83,8 +83,8 @@ def test_defects_wc(mock_castep_code):
         },
         "is_compatible": True,
         "phasediagram_meta": {
-            "vbm": 4.295,
-            "gap": 1.880,
+            "vbm": 0,
+            "gap": 1.86,
         },
     }
     bld.chempots = orm.SinglefileData(

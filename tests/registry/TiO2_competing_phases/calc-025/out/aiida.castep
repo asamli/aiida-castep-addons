@@ -188,7 +188,7 @@
  output    efield chi2 unit                     : pm/V
   
  wavefunctions paging                           : none
- random number generator seed                   : randomised (133332450)
+ random number generator seed                   : randomised (133332563)
  data distribution                              : optimal for this architecture
  optimization strategy                          : balance speed and memory
 
@@ -359,25 +359,25 @@ Calculating total energy with cut-off of  850.000 eV.
 SCF loop      Energy           Fermi           Energy gain       Timer   <-- SCF
                                energy          per atom          (sec)   <-- SCF
 ------------------------------------------------------------------------ <-- SCF
-Initial  -7.43730485E+003  0.00000000E+000                        10.15  <-- SCF
-      1  -8.18661411E+003  1.07403710E+001   6.24424388E+001      11.43  <-- SCF
-      2  -8.70131905E+003  5.18816660E+000   4.28920779E+001      12.61  <-- SCF
-      3  -8.72195019E+003  4.55368966E+000   1.71926184E+000      13.81  <-- SCF
-      4  -8.72334495E+003  9.29160808E+000   1.16230206E-001      15.35  <-- SCF
-      5  -8.70721177E+003  6.96879143E+000  -1.34443191E+000      16.81  <-- SCF
-      6  -8.70712212E+003  7.57826796E+000  -7.47092170E-003      18.26  <-- SCF
-      7  -8.70712683E+003  7.47961424E+000   3.92876674E-004      19.90  <-- SCF
-      8  -8.70712368E+003  7.47992584E+000  -2.62876542E-004      21.31  <-- SCF
-      9  -8.70712400E+003  7.47459449E+000   2.69939355E-005      22.55  <-- SCF
-     10  -8.70712402E+003  7.47831075E+000   1.34315393E-006      23.44  <-- SCF
-     11  -8.70712402E+003  7.47926746E+000   4.64647445E-007      24.30  <-- SCF
+Initial  -7.43961728E+003  0.00000000E+000                         9.97  <-- SCF
+      1  -8.17864248E+003  1.09028468E+001   6.15854331E+001      11.36  <-- SCF
+      2  -8.70044088E+003  5.28545125E+000   4.34832006E+001      12.68  <-- SCF
+      3  -8.72200755E+003  4.55012265E+000   1.79722191E+000      13.96  <-- SCF
+      4  -8.72351255E+003  9.29316592E+000   1.25417016E-001      15.53  <-- SCF
+      5  -8.70720516E+003  6.96920380E+000  -1.35894884E+000      17.03  <-- SCF
+      6  -8.70712410E+003  7.57681040E+000  -6.75552536E-003      18.59  <-- SCF
+      7  -8.70712672E+003  7.47814531E+000   2.18588832E-004      20.18  <-- SCF
+      8  -8.70712366E+003  7.47893798E+000  -2.55496961E-004      21.70  <-- SCF
+      9  -8.70712400E+003  7.47507284E+000   2.84277212E-005      22.95  <-- SCF
+     10  -8.70712402E+003  7.47832233E+000   1.58874459E-006      24.01  <-- SCF
+     11  -8.70712402E+003  7.47907360E+000   5.02607948E-007      24.97  <-- SCF
 ------------------------------------------------------------------------ <-- SCF
  
-Final energy, E             =  -8707.124022588     eV
-Final free energy (E-TS)    =  -8707.124022588     eV
+Final energy, E             =  -8707.124021823     eV
+Final free energy (E-TS)    =  -8707.124021823     eV
 (energies not corrected for finite basis set)
  
-NB est. 0K energy (E-0.5TS)      =  -8707.124022588     eV
+NB est. 0K energy (E-0.5TS)      =  -8707.124021823     eV
  
 
 Writing analysis data to aiida.castep_bin
@@ -390,18 +390,18 @@ Writing model to aiida.check
  * -------------------------------------------------------- *
  *                         x            y            z      *
  *                                                          *
- * O               1      0.07848     -0.06349      0.07429 *
- * O               2     -0.07848     -0.06349      0.07429 *
- * O               3     -0.05466      0.12088      0.10454 *
- * O               4     -0.05466     -0.12088     -0.10454 *
- * O               5      0.05466      0.12088      0.10454 *
- * O               6      0.05466     -0.12088     -0.10454 *
- * O               7      0.07848      0.06349     -0.07429 *
- * O               8     -0.07848      0.06349     -0.07429 *
- * Zr              1      0.08991     -0.23279      0.14798 *
- * Zr              2     -0.08991     -0.23279      0.14798 *
- * Zr              3      0.08991      0.23279     -0.14798 *
- * Zr              4     -0.08991      0.23279     -0.14798 *
+ * O               1      0.07887     -0.06342      0.07438 *
+ * O               2     -0.07887     -0.06342      0.07438 *
+ * O               3     -0.05473      0.12101      0.10454 *
+ * O               4     -0.05473     -0.12101     -0.10454 *
+ * O               5      0.05473      0.12101      0.10454 *
+ * O               6      0.05473     -0.12101     -0.10454 *
+ * O               7      0.07887      0.06342     -0.07438 *
+ * O               8     -0.07887      0.06342     -0.07438 *
+ * Zr              1      0.09003     -0.23296      0.14811 *
+ * Zr              2     -0.09003     -0.23296      0.14811 *
+ * Zr              3      0.09003      0.23296     -0.14811 *
+ * Zr              4     -0.09003      0.23296     -0.14811 *
  *                                                          *
  ************************************************************
  
@@ -419,7 +419,7 @@ Charge spilling parameter for spin component 1 = 0.20%
   -------------------------------------------
       O     1      S                    1.838
       O     1      Px                   1.627
-      O     1      Py                   1.620
+      O     1      Py                   1.621
       O     1      Pz                   1.630
       O     2      S                    1.838
       O     2      Px                   1.627
@@ -432,7 +432,7 @@ Charge spilling parameter for spin component 1 = 0.20%
       O     4      S                    1.847
       O     4      Px                   1.632
       O     4      Py                   1.628
-      O     4      Pz                   1.635
+      O     4      Pz                   1.634
       O     5      S                    1.847
       O     5      Px                   1.632
       O     5      Py                   1.628
@@ -446,7 +446,7 @@ Charge spilling parameter for spin component 1 = 0.20%
       O     7      Py                   1.620
       O     7      Pz                   1.632
       O     8      S                    1.838
-      O     8      Px                   1.627
+      O     8      Px                   1.626
       O     8      Py                   1.621
       O     8      Pz                   1.630
      Zr     1      S                    1.997
@@ -491,11 +491,11 @@ Charge spilling parameter for spin component 1 = 0.20%
      Zr     4      S                    1.997
      Zr     4      Px                   1.991
      Zr     4      Py                   1.990
-     Zr     4      Pz                   1.993
+     Zr     4      Pz                   1.994
      Zr     4      S                    0.311
      Zr     4      Dzz                  0.356
      Zr     4      Dzy                  0.381
-     Zr     4      Dzx                  0.415
+     Zr     4      Dzx                  0.414
      Zr     4      Dxx-yy               0.324
      Zr     4      Dxy                  0.447
      Zr     4      Px                   0.128
@@ -581,17 +581,17 @@ Writing model to aiida.check
  A BibTeX formatted list of references used in this run has been written to 
  aiida.bib
  
-Initialisation time =      9.41 s
-Calculation time    =     16.54 s
-Finalisation time   =      0.16 s
-Total time          =     26.11 s
-Peak Memory Use     = 886152 kB
+Initialisation time =      9.24 s
+Calculation time    =     17.38 s
+Finalisation time   =      0.26 s
+Total time          =     26.88 s
+Peak Memory Use     = 876760 kB
   
-Overall parallel efficiency rating: Poor (48%)                                  
+Overall parallel efficiency rating: Mediocre (50%)                              
   
 Data was distributed by:-
 G-vector (3-way); efficiency rating: Satisfactory (60%)                         
-k-point (5-way); efficiency rating: Satisfactory (62%)                          
+k-point (5-way); efficiency rating: Satisfactory (66%)                          
   
 Parallel notes:
-1) Calculation only took 26.0 s, so efficiency estimates may be inaccurate.     
+1) Calculation only took 26.6 s, so efficiency estimates may be inaccurate.     

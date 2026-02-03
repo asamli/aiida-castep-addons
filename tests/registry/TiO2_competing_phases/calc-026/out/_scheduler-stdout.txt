@@ -17,3 +17,7 @@ node-d00a-157
 node-d00a-157
 node-d00a-157
 node-d00a-157
+MOCK PREPEND: START ----------------------
+MOCK PREPEND: Mock directory: /home/alp/aiida/63/a8/3ff8-c92d-4d4f-8acb-ca28aaf25d57
+MOCK PREPEND: AIIDA_PATH: /home/alp/.aiida
+MOCK PREPEND: Using test data in path /home/alp/aiida-castep-addons/tests/registry/TiO2_competing_phases/calc-026 based detection from inputs.

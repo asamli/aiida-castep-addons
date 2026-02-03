@@ -1,20 +1,19 @@
 """
 Scheduler module for MS CASTEP
 """
+
 from aiida.schedulers.plugins.slurm import SlurmScheduler
 from aiida.common.escaping import escape_for_bash
+from aiida.common.datastructures import CodeRunMode
 
 
 class MSCastepSlurmScheduler(SlurmScheduler):
     """
     Special SLURM scheduler for MS CASTEP
-
     """
 
     def _get_run_line(self, codes_info, codes_run_mode):
-        # Alter the run line
-        from aiida.common.datastructures import CodeRunMode
-
+        """Get the run line for the scheduler"""
         list_of_runlines = []
 
         for code_info in codes_info:

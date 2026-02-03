@@ -62,84 +62,50 @@
  FFT Lib : mkl
  Fundamental constants values: CODATA 2014
  
- Run started: Thu, 02 Nov 2023 12:58:11 +0000
+ Run started: Thu, 02 Nov 2023 13:20:47 +0000
  
- Atomic calculation performed for O: 1s2 2s2 2p4
+ Atomic calculation performed for Zr: 1s2 2s2 2p6 3s2 3p6 3d10 4s2 4p6 4d2 5s2
  
- Converged in 57 iterations to an ae energy of -2034.019 eV
+ Converged in 74 iterations to an ae energy of -97865.213 eV
  
+ Warning: ion_atom_descreen_psp: negative charge density encountered
    ============================================================                
    | Pseudopotential Report - Date of generation  2-11-2023   |                
    ------------------------------------------------------------                
-   | Element: O Ionic charge:  6.00 Level of theory: PBESOL   |                
+   | Element: Zr Ionic charge: 12.00 Level of theory: PBESOL  |                
    | Atomic Solver: Koelling-Harmon                           |                
    |                                                          |                
    |               Reference Electronic Structure             |                
    |         Orbital         Occupation         Energy        |                
-   |            2s              2.000           -0.875        |                
-   |            2p              4.000           -0.330        |                
+   |            4s              2.000           -2.001        |                
+   |            4p              6.000           -1.192        |                
+   |            5s              2.000           -0.164        |                
+   |            4d              2.000           -0.133        |                
    |                                                          |                
    |                 Pseudopotential Definition               |                
    |        Beta     l      e      Rc     scheme   norm       |                
-   |          1      0   -0.875   1.100     qc      0         |                
-   |          2      0    0.250   1.100     qc      0         |                
-   |          3      1   -0.330   1.100     qc      0         |                
-   |          4      1    0.250   1.100     qc      0         |                
-   |         loc     2    0.000   1.100     pn      0         |                
+   |          1      0   -2.001   2.105     qc      0         |                
+   |          2      0   -0.164   2.105     qc      0         |                
+   |          3      0    0.250   2.105     qc      0         |                
+   |          4      1   -1.192   2.105     qc      0         |                
+   |          5      1    0.250   2.105     qc      0         |                
+   |          6      2   -0.133   2.105     qc      0         |                
+   |          7      2    0.250   2.105     qc      0         |                
+   |         loc     3    0.000   2.105     pn      0         |                
    |                                                          |                
-   | Augmentation charge Rinner = 0.769                       |                
-   | Partial core correction Rc = 0.769                       |                
+   | Augmentation charge Rinner = 1.471                       |                
+   | Partial core correction Rc = 1.471                       |                
    ------------------------------------------------------------                
-   | "2|1.1|17|20|23|20:21(qc=8)"                             |                
+   | "3|2.1|7|8|9|40U:50:41:42"                               |                
    ------------------------------------------------------------                
    |      Author: Chris J. Pickard, Cambridge University      |                
    ============================================================                
  
- Atomic calculation performed for Ti: 1s2 2s2 2p6 3s2 3p6 3d2 4s2
+ Pseudo atomic calculation performed for Zr 4s2 4p6 4d2 5s2
  
- Converged in 72 iterations to an ae energy of -23200.392 eV
- 
-   ============================================================                
-   | Pseudopotential Report - Date of generation  2-11-2023   |                
-   ------------------------------------------------------------                
-   | Element: Ti Ionic charge: 12.00 Level of theory: PBESOL  |                
-   | Atomic Solver: Koelling-Harmon                           |                
-   |                                                          |                
-   |               Reference Electronic Structure             |                
-   |         Orbital         Occupation         Energy        |                
-   |            3s              2.000           -2.295        |                
-   |            3p              6.000           -1.425        |                
-   |            4s              2.000           -0.165        |                
-   |            3d              2.000           -0.157        |                
-   |                                                          |                
-   |                 Pseudopotential Definition               |                
-   |        Beta     l      e      Rc     scheme   norm       |                
-   |          1      0   -2.295   1.793     qc      0         |                
-   |          2      0   -0.165   1.793     qc      0         |                
-   |          3      0    0.250   1.793     qc      0         |                
-   |          4      1   -1.425   1.793     qc      0         |                
-   |          5      1    0.250   1.793     qc      0         |                
-   |          6      2   -0.157   1.793     qc      0         |                
-   |          7      2    0.250   1.793     qc      0         |                
-   |         loc     3    0.000   1.793     pn      0         |                
-   |                                                          |                
-   | Augmentation charge Rinner = 1.263                       |                
-   | Partial core correction Rc = 1.263                       |                
-   ------------------------------------------------------------                
-   | "3|1.8|9|10|11|30U:40:31:32(qc=5.5)"                     |                
-   ------------------------------------------------------------                
-   |      Author: Chris J. Pickard, Cambridge University      |                
-   ============================================================                
- 
- Pseudo atomic calculation performed for O 2s2 2p4
- 
- Converged in 14 iterations to a total energy of -431.1268 eV
- 
- Pseudo atomic calculation performed for Ti 3s2 3p6 3d2 4s2
- 
- Converged in 31 iterations to a total energy of -1585.3732 eV
- Calculation parallelised over 14 processes.
- Data is distributed by k-point(14-way)
+ Converged in 24 iterations to a total energy of -1285.5743 eV
+ Calculation parallelised over 16 processes.
+ Data is distributed by G-vector(2-way) and k-point(8-way)
 
  ************************************ Title ************************************
  
@@ -187,7 +153,7 @@
  output    efield chi2 unit                     : pm/V
   
  wavefunctions paging                           : none
- random number generator seed                   : randomised (125811195)
+ random number generator seed                   : randomised (132047489)
  data distribution                              : optimal for this architecture
  optimization strategy                          : balance speed and memory
 
@@ -212,10 +178,10 @@
 
  **************************** Electronic Parameters ****************************
   
- number of  electrons                           :  96.00    
+ number of  electrons                           :  24.00    
  net charge of system                           :  0.000    
  treating system as non-spin-polarized
- number of bands                                :         58
+ number of bands                                :         16
 
  ********************* Electronic Minimization Parameters **********************
   
@@ -253,42 +219,32 @@
                                       Unit Cell
                            -------------------------------
         Real Lattice(A)                      Reciprocal Lattice(1/A)
-     1.8834680     6.1535770     0.0000000        1.667983026   0.510531136  -0.155549944
-    -1.8834680     6.1535770     0.0000000       -1.667983026   0.510531136  -0.155549944
-     0.0000000     1.9283260     6.3289670        0.000000000   0.000000000   0.992766325
+     1.6196160    -2.8052570     0.0000000        1.939714509  -1.119894774   0.000000000
+     1.6196160     2.8052570     0.0000000        1.939714509   1.119894774   0.000000000
+     0.0000000     0.0000000     5.1722200        0.000000000   0.000000000   1.214794674
  
                        Lattice parameters(A)       Cell Angles
-                    a =      6.435368          alpha =   73.817816
-                    b =      6.435368          beta  =   73.817816
-                    c =      6.616212          gamma =   34.036283
+                    a =      3.239232          alpha =   90.000000
+                    b =      3.239232          beta  =   90.000000
+                    c =      5.172220          gamma =  119.999996
  
-                       Current cell volume =           146.706282       A**3
-                                   density =             2.177570   AMU/A**3
-                                           =             3.615940     g/cm^3
+                       Current cell volume =            46.999333       A**3
+                                   density =             3.881927   AMU/A**3
+                                           =             6.446092     g/cm^3
  
                            -------------------------------
                                      Cell Contents
                            -------------------------------
-                         Total number of ions in cell =   12
-                      Total number of species in cell =    2
-                        Max number of any one species =    8
+                         Total number of ions in cell =    2
+                      Total number of species in cell =    1
+                        Max number of any one species =    2
  
             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             x  Element    Atom        Fractional coordinates of atoms  x
             x            Number           u          v          w      x
             x----------------------------------------------------------x
-            x  O            1         0.941648   0.941648   0.369979   x 
-            x  O            2         0.361932   0.361932   0.706603   x 
-            x  O            3         0.867189   0.867189   0.004709   x 
-            x  O            4         0.058352   0.058352   0.630021   x 
-            x  O            5         0.263489   0.263489   0.347500   x 
-            x  O            6         0.132811   0.132811   0.995291   x 
-            x  O            7         0.736511   0.736511   0.652500   x 
-            x  O            8         0.638068   0.638068   0.293397   x 
-            x  Ti           1         0.195286   0.195286   0.716238   x 
-            x  Ti           2         0.900071   0.900071   0.710398   x 
-            x  Ti           3         0.804714   0.804714   0.283762   x 
-            x  Ti           4         0.099929   0.099929   0.289602   x 
+            x  Zr           1         0.333333   0.666667   0.250000   x 
+            x  Zr           2         0.666667   0.333333   0.750000   x 
             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
  
  
@@ -299,42 +255,57 @@
                            -------------------------------
  
                                Mass of species in AMU
-                                    O   15.9994000
-                                    Ti   47.8670000
+                                    Zr   91.2240000
  
                           Electric Quadrupole Moment (Barn)
-                                    O   -0.0255800 Isotope 17
-                                    Ti    0.3020000 Isotope 47
+                                    Zr   -0.1760000 Isotope 91
  
                           Files used for pseudopotentials:
-                                    O 2|1.1|17|20|23|20:21(qc=8)
-                                    Ti 3|1.8|9|10|11|30U:40:31:32(qc=5.5)
+                                    Zr 3|2.1|7|8|9|40U:50:41:42
  
                            -------------------------------
                               k-Points For BZ Sampling
                            -------------------------------
-                       MP grid size for SCF calculation is  6  6  4
+                       MP grid size for SCF calculation is  8  8  4
                             with an offset of   0.000  0.000  0.000
-                       Number of kpoints used =            42
+                       Number of kpoints used =            40
  
                            -------------------------------
                                Symmetry and Constraints
                            -------------------------------
  
-                      Maximum deviation from symmetry = 0.125932E-14     ANG
+                      Maximum deviation from symmetry = 0.647833E-05     ANG
  
-                      Number of symmetry operations   =           4
+ !-----------------------------------------------------------------------------!
+ !                                                                             !
+ !                     * * *      W A R N I N G     * * *                      !
+ !                                                                             !
+ !   Atomic positions are slightly inconsistent with symmetry operations,      !
+ !   (although the discrepancy is lower than value of SYMMETRY_TOL).           !
+  !   In severe cases this could lead to seriously inaccurate results.         !
+ !                                                                             !
+ !   It is recommended that symmetries are satisfied to a tolerance of 1e-8au  !
+ !   or better. Consider one or more of the following:                         !
+ !     - Adjust input so that atomic positions and symmetry are consistent.    !
+ !     - Use SNAP_TO_SYMMETRY keyword in the cell file to adjust co-ordinates. !
+ !     - Reduce the value of SYMMETRY_TOL in the cell file.                    !
+ !     - Remove incorrect symmetry operations from .cell file.                 !
+ !                                                                             !
+ !-----------------------------------------------------------------------------!
+ 
+ 
+                      Number of symmetry operations   =          24
                       Number of ionic constraints     =           3
-                      Point group of crystal =     5: C2h, 2/m, 2/m
-                      Space group of crystal =    12: C2/m, -C 2y
+                      Point group of crystal =    27: D6h, 6/mmm, 6/m 2/m 2/m
+                      Space group of crystal =   194: P6_3/mmc, -P 6c 2c
  
              Set iprint > 1 for details on symmetry rotations/translations
  
                          Centre of mass is constrained
              Set iprint > 1 for details of linear ionic constraints
  
-                         Number of cell constraints= 2
-                         Cell constraints are:  1 1 3 4 4 6
+                         Number of cell constraints= 3
+                         Cell constraints are:  1 1 3 0 0 6
  
                          External pressure/stress (GPa)
                           0.00000   0.00000   0.00000
@@ -343,13 +314,13 @@
   
 +---------------- MEMORY AND SCRATCH DISK ESTIMATES PER PROCESS --------------+
 |                                                     Memory          Disk    |
-| Baseline code, static data and system overhead      229.0 MB         0.0 MB |
+| Baseline code, static data and system overhead      231.0 MB         0.0 MB |
 | BLAS internal memory storage                          0.0 MB         0.0 MB |
-| Model and support data                              254.9 MB       613.8 MB |
-| Electronic energy minimisation requirements         105.8 MB         0.0 MB |
-| Force calculation requirements                       25.4 MB         0.0 MB |
+| Model and support data                              101.8 MB        47.6 MB |
+| Electronic energy minimisation requirements           9.3 MB         0.0 MB |
+| Force calculation requirements                        3.3 MB         0.0 MB |
 |                                               ----------------------------- |
-| Approx. total storage required per process          589.7 MB       613.8 MB |
+| Approx. total storage required per process          342.1 MB        47.6 MB |
 |                                                                             |
 | Requirements will fluctuate during execution and may exceed these estimates |
 +-----------------------------------------------------------------------------+
@@ -358,29 +329,45 @@ Calculating total energy with cut-off of  850.000 eV.
 SCF loop      Energy           Fermi           Energy gain       Timer   <-- SCF
                                energy          per atom          (sec)   <-- SCF
 ------------------------------------------------------------------------ <-- SCF
-Initial  -8.90310157E+003  0.00000000E+000                        11.17  <-- SCF
-      1  -9.37529401E+003  8.23868634E+000   3.93493700E+001      18.21  <-- SCF
-      2  -9.88609261E+003  5.52548882E+000   4.25665502E+001      24.39  <-- SCF
-      3  -9.91616801E+003  6.18027576E+000   2.50628348E+000      30.65  <-- SCF
-      4  -9.96094202E+003  4.17821812E+000   3.73116709E+000      38.94  <-- SCF
-      5  -9.96379729E+003  4.18816769E+000   2.37939557E-001      45.85  <-- SCF
-      6  -9.90255049E+003  6.57144120E+000  -5.10390020E+000      53.09  <-- SCF
-      7  -9.90364170E+003  6.54838351E+000   9.09342199E-002      58.89  <-- SCF
-      8  -9.90116287E+003  5.88276162E+000  -2.06569001E-001      65.96  <-- SCF
-      9  -9.89954057E+003  5.23870105E+000  -1.35191776E-001      72.95  <-- SCF
-     10  -9.89938196E+003  5.04628465E+000  -1.32180920E-002      81.12  <-- SCF
-     11  -9.89935027E+003  4.83665005E+000  -2.64056922E-003      88.43  <-- SCF
-     12  -9.89934995E+003  4.85253577E+000  -2.65706823E-005      96.09  <-- SCF
-     13  -9.89934920E+003  4.87045100E+000  -6.23182554E-005     102.66  <-- SCF
-     14  -9.89934912E+003  4.87538148E+000  -6.58493458E-006     107.66  <-- SCF
-     15  -9.89934911E+003  4.87993715E+000  -9.74168506E-007     112.38  <-- SCF
+Initial  -2.15817049E+003  0.00000000E+000                         8.94  <-- SCF
+      1  -2.53603155E+003  1.16771000E+001   1.88930532E+002       9.38  <-- SCF
+      2  -2.58607235E+003  1.00149433E+001   2.50203961E+001       9.71  <-- SCF
+      3  -2.58712543E+003  9.95463458E+000   5.26541085E-001      10.09  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 13.                              
+  
+      4  -2.58693732E+003  9.73367751E+000  -9.40521022E-002      10.55  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 13.                              
+  
+      5  -2.58693727E+003  9.73777196E+000  -2.45383925E-005      11.06  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 13.                              
+  
+      6  -2.58693726E+003  9.73461557E+000  -7.70001420E-006      11.49  <-- SCF
+ Warning: There are no empty bands for at least one kpoint and spin; this may
+          slow the convergence and/or lead to an inaccurate groundstate.
+          If this warning persists, you should consider increasing nextra_bands
+          and/or reducing smearing_width in the param file.
+          Recommend using nextra_bands of 6 to 13.                              
+  
+      7  -2.58693726E+003  9.73516405E+000   1.60772703E-006      11.83  <-- SCF
 ------------------------------------------------------------------------ <-- SCF
  
-Final energy, E             =  -9899.349111006     eV
-Final free energy (E-TS)    =  -9899.349111006     eV
+Final energy, E             =  -2586.900445594     eV
+Final free energy (E-TS)    =  -2586.937262498     eV
 (energies not corrected for finite basis set)
  
-NB est. 0K energy (E-0.5TS)      =  -9899.349111006     eV
+NB est. 0K energy (E-0.5TS)      =  -2586.918854046     eV
  
 
 Writing analysis data to aiida.castep_bin
@@ -393,185 +380,59 @@ Writing model to aiida.check
  * -------------------------------------------------------- *
  *                         x            y            z      *
  *                                                          *
- * O               1     -0.00000      0.05080      0.01499 *
- * O               2     -0.00000     -0.14079      0.00041 *
- * O               3     -0.00000     -0.14206      0.08206 *
- * O               4      0.00000     -0.05080     -0.01499 *
- * O               5     -0.00000     -0.09055     -0.01244 *
- * O               6      0.00000      0.14206     -0.08206 *
- * O               7      0.00000      0.09055      0.01244 *
- * O               8      0.00000      0.14079     -0.00041 *
- * Ti              1      0.00000      0.00062      0.16462 *
- * Ti              2      0.00000     -0.01328      0.04457 *
- * Ti              3     -0.00000     -0.00062     -0.16462 *
- * Ti              4     -0.00000      0.01328     -0.04457 *
+ * Zr              1      0.00000     -0.00000      0.00000 *
+ * Zr              2     -0.00000      0.00000      0.00000 *
  *                                                          *
  ************************************************************
  
- Pseudo atomic calculation performed for O 2s2 2p4
+ Pseudo atomic calculation performed for Zr 4s2 4p6 4d2 5s2
  
- Converged in 14 iterations to a total energy of -431.1268 eV
- 
- Pseudo atomic calculation performed for Ti 3s2 3p6 3d2 4s2
- 
- Converged in 31 iterations to a total energy of -1585.3732 eV
-Charge spilling parameter for spin component 1 = 0.13%
+ Converged in 24 iterations to a total energy of -1285.5743 eV
+Charge spilling parameter for spin component 1 = 0.08%
  
             Orbital Populations       
      Ion    Atom   Orbital             Charge
   -------------------------------------------
-      O     1      S                    1.845
-      O     1      Px                   1.645
-      O     1      Py                   1.531
-      O     1      Pz                   1.623
-      O     2      S                    1.841
-      O     2      Px                   1.526
-      O     2      Py                   1.608
-      O     2      Pz                   1.660
-      O     3      S                    1.851
-      O     3      Px                   1.612
-      O     3      Py                   1.601
-      O     3      Pz                   1.504
-      O     4      S                    1.845
-      O     4      Px                   1.645
-      O     4      Py                   1.531
-      O     4      Pz                   1.623
-      O     5      S                    1.842
-      O     5      Px                   1.548
-      O     5      Py                   1.628
-      O     5      Pz                   1.657
-      O     6      S                    1.851
-      O     6      Px                   1.612
-      O     6      Py                   1.601
-      O     6      Pz                   1.504
-      O     7      S                    1.842
-      O     7      Px                   1.548
-      O     7      Py                   1.628
-      O     7      Pz                   1.657
-      O     8      S                    1.841
-      O     8      Px                   1.526
-      O     8      Py                   1.608
-      O     8      Pz                   1.660
-     Ti     1      S                    1.992
-     Ti     1      Px                   1.992
-     Ti     1      Py                   1.991
-     Ti     1      Pz                   1.988
-     Ti     1      S                    0.260
-     Ti     1      Dzz                  0.527
-     Ti     1      Dzy                  0.396
-     Ti     1      Dzx                  0.406
-     Ti     1      Dxx-yy               0.517
-     Ti     1      Dxy                  0.312
-     Ti     1      Px                   0.136
-     Ti     1      Py                   0.113
-     Ti     1      Pz                   0.105
-     Ti     2      S                    1.992
-     Ti     2      Px                   1.991
-     Ti     2      Py                   1.991
-     Ti     2      Pz                   1.990
-     Ti     2      S                    0.273
-     Ti     2      Dzz                  0.523
-     Ti     2      Dzy                  0.363
-     Ti     2      Dzx                  0.372
-     Ti     2      Dxx-yy               0.528
-     Ti     2      Dxy                  0.360
-     Ti     2      Px                   0.131
-     Ti     2      Py                   0.106
-     Ti     2      Pz                   0.122
-     Ti     3      S                    1.992
-     Ti     3      Px                   1.992
-     Ti     3      Py                   1.991
-     Ti     3      Pz                   1.988
-     Ti     3      S                    0.260
-     Ti     3      Dzz                  0.527
-     Ti     3      Dzy                  0.396
-     Ti     3      Dzx                  0.406
-     Ti     3      Dxx-yy               0.517
-     Ti     3      Dxy                  0.312
-     Ti     3      Px                   0.136
-     Ti     3      Py                   0.113
-     Ti     3      Pz                   0.105
-     Ti     4      S                    1.992
-     Ti     4      Px                   1.991
-     Ti     4      Py                   1.991
-     Ti     4      Pz                   1.990
-     Ti     4      S                    0.273
-     Ti     4      Dzz                  0.523
-     Ti     4      Dzy                  0.363
-     Ti     4      Dzx                  0.372
-     Ti     4      Dxx-yy               0.528
-     Ti     4      Dxy                  0.360
-     Ti     4      Px                   0.131
-     Ti     4      Py                   0.106
-     Ti     4      Pz                   0.122
+     Zr     1      S                    2.006
+     Zr     1      Px                   2.012
+     Zr     1      Py                   2.012
+     Zr     1      Pz                   2.012
+     Zr     1      S                    0.437
+     Zr     1      Dzz                  0.623
+     Zr     1      Dzy                  0.516
+     Zr     1      Dzx                  0.509
+     Zr     1      Dxx-yy               0.600
+     Zr     1      Dxy                  0.596
+     Zr     1      Px                   0.235
+     Zr     1      Py                   0.233
+     Zr     1      Pz                   0.210
+     Zr     2      S                    2.006
+     Zr     2      Px                   2.012
+     Zr     2      Py                   2.012
+     Zr     2      Pz                   2.012
+     Zr     2      S                    0.437
+     Zr     2      Dzz                  0.622
+     Zr     2      Dzy                  0.516
+     Zr     2      Dzx                  0.509
+     Zr     2      Dxx-yy               0.600
+     Zr     2      Dxy                  0.596
+     Zr     2      Px                   0.235
+     Zr     2      Py                   0.233
+     Zr     2      Pz                   0.210
   -------------------------------------------
-                           Total:      96.000
+                           Total:      24.000
   -------------------------------------------
  
      Atomic Populations (Mulliken)
      -----------------------------
 Species          Ion     s      p      d      f     Total  Charge (e)
 =====================================================================
-  O               1     1.85   4.80   0.00   0.00   6.65    -0.65
-  O               2     1.84   4.79   0.00   0.00   6.63    -0.63
-  O               3     1.85   4.72   0.00   0.00   6.57    -0.57
-  O               4     1.85   4.80   0.00   0.00   6.65    -0.65
-  O               5     1.84   4.83   0.00   0.00   6.68    -0.68
-  O               6     1.85   4.72   0.00   0.00   6.57    -0.57
-  O               7     1.84   4.83   0.00   0.00   6.68    -0.68
-  O               8     1.84   4.79   0.00   0.00   6.63    -0.63
-  Ti              1     2.25   6.32   2.16   0.00  10.74     1.26
-  Ti              2     2.26   6.33   2.15   0.00  10.74     1.26
-  Ti              3     2.25   6.32   2.16   0.00  10.74     1.26
-  Ti              4     2.26   6.33   2.15   0.00  10.74     1.26
+  Zr              1     2.44   6.71   2.84   0.00  12.00     0.00
+  Zr              2     2.44   6.71   2.84   0.00  12.00     0.00
 =====================================================================
  
                  Bond                   Population      Length (A)
 ======================================================================
-               O 3 -- Ti 3                   0.56        1.78113
-               O 6 -- Ti 1                   0.56        1.78113
-               O 1 -- Ti 4                   0.41        1.86376
-               O 4 -- Ti 2                   0.41        1.86376
-               O 6 -- Ti 4                   0.47        1.86979
-               O 3 -- Ti 2                   0.47        1.86979
-               O 4 -- Ti 1                   0.40        1.93026
-               O 1 -- Ti 3                   0.40        1.93026
-               O 8 -- Ti 4                   0.80        1.94301
-               O 2 -- Ti 2                   0.80        1.94301
-               O 5 -- Ti 3                   0.69        1.96418
-               O 7 -- Ti 1                   0.69        1.96418
-               O 8 -- Ti 3                   0.35        2.03327
-               O 2 -- Ti 1                   0.35        2.03327
-               O 7 -- Ti 2                   0.24        2.15597
-               O 5 -- Ti 4                   0.24        2.15597
-               O 4 -- Ti 4                   0.18        2.15936
-               O 1 -- Ti 2                   0.18        2.15936
-               O 7 -- Ti 3                   0.14        2.33726
-               O 5 -- Ti 1                   0.14        2.33726
-               O 2 -- O 7                   -0.11        2.52592
-               O 5 -- O 8                   -0.11        2.52592
-               O 1 -- O 4                   -0.05        2.54234
-               O 1 -- O 7                   -0.04        2.66778
-               O 4 -- O 5                   -0.04        2.66778
-               O 5 -- O 7                   -0.08        2.70910
-               O 2 -- O 3                   -0.05        2.74155
-               O 6 -- O 8                   -0.05        2.74155
-               O 1 -- O 3                   -0.02        2.82332
-               O 4 -- O 6                   -0.02        2.82332
-               O 4 -- O 8                   -0.04        2.86297
-               O 1 -- O 2                   -0.04        2.86297
-               O 1 -- O 6                   -0.01        2.87765
-               O 3 -- O 4                   -0.01        2.87765
-               O 3 -- O 8                   -0.01        2.90862
-               O 2 -- O 6                   -0.01        2.90862
-               O 1 -- O 5                   -0.02        2.92699
-               O 4 -- O 7                   -0.02        2.92699
-               O 3 -- O 5                   -0.01        2.93816
-               O 6 -- O 7                   -0.01        2.93816
-               O 2 -- O 5                   -0.01        2.96491
-               O 7 -- O 8                   -0.01        2.96491
-               O 1 -- O 8                   -0.01        2.98896
-               O 2 -- O 4                   -0.01        2.98896
 ======================================================================
  
 
@@ -582,16 +443,17 @@ Writing model to aiida.check
  A BibTeX formatted list of references used in this run has been written to 
  aiida.bib
  
-Initialisation time =      9.01 s
-Calculation time    =    108.67 s
-Finalisation time   =      0.71 s
-Total time          =    118.39 s
-Peak Memory Use     = 1254516 kB
+Initialisation time =      8.18 s
+Calculation time    =      4.37 s
+Finalisation time   =      0.11 s
+Total time          =     12.66 s
+Peak Memory Use     = 718576 kB
   
-Overall parallel efficiency rating: Excellent (91%)                             
+Overall parallel efficiency rating: Terrible (28%)                              
   
 Data was distributed by:-
-k-point (14-way); efficiency rating: Excellent (91%)                            
+G-vector (2-way); efficiency rating: Satisfactory (60%)                         
+k-point (8-way); efficiency rating: Poor (35%)                                  
   
 Parallel notes:
-1) Calculation only took 117.7 s, so efficiency estimates may be inaccurate.    
+1) Calculation only took 12.6 s, so efficiency estimates may be inaccurate.     

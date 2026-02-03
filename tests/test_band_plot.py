@@ -6,9 +6,8 @@ import numpy as np
 from aiida.engine import run_get_node
 from aiida.plugins import WorkflowFactory
 from aiida_castep.data.otfg import upload_otfg_family
-from ase.build import bulk
-
 from aiida_castep_addons.workflows.band_plot import analysis, seekpath_analysis
+from ase.build import bulk
 
 
 def test_analysis():

@@ -13,7 +13,6 @@ import matplotlib.pyplot as plt
 from aiida.engine import ToContext, WorkChain, calcfunction
 from aiida.orm.nodes.data.base import to_aiida_type
 from aiida_castep.workflows.base import CastepBaseWorkChain
-
 from aiida_castep_addons.utils import add_metadata
 
 
@@ -236,6 +235,6 @@ class CastepCoreLossWorkChain(WorkChain):
         self.report("Core loss spectrum plotted")
 
     def results(self):
-        """Add the plots to WorkChain outputs along with their raw data"""
+        """Add the plots and the raw data to WorkChain outputs"""
         self.out("optados_data", self.ctx.optados_data)
         self.out("core_loss_spectrum", self.ctx.core_loss_spectrum)

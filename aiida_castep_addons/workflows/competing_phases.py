@@ -11,34 +11,25 @@ import aiida.orm as orm
 from aiida.engine import WorkChain, calcfunction
 from aiida.orm.nodes.data.base import to_aiida_type
 from aiida_castep.workflows.relax import CastepRelaxWorkChain
+from aiida_castep_addons.workflows.converge import CastepConvergeWorkChain
+from aiida_castep_addons.utils import add_metadata
 from doped.chemical_potentials import (
     CompetingPhases,
     CompetingPhasesAnalyzer,
-    ExtrinsicCompetingPhases,
-    _calculate_formation_energies,
-    combine_extrinsic,
 )
 from monty.serialization import dumpfn
-from pymatgen.analysis.chempot_diagram import ChemicalPotentialDiagram
-from pymatgen.core.composition import Composition
 from pymatgen.io.ase import AseAtomsAdaptor
-
-from aiida_castep_addons.utils import add_metadata
-from aiida_castep_addons.workflows.converge import CastepConvergeWorkChain
+from pymatgen.analysis.chempot_diagram import ChemicalPotentialDiagram
+from pymatgen.entries.computed_entries import ComputedStructureEntry
 
 
 @calcfunction
-def generate_competing_phases(
-    chem_formula, extrinsic_species, doped_settings, extrinsic_settings
-):
+def generate_competing_phases(chem_formula, extrinsic_species, doped_settings):
     """Use Doped to generate defect structures"""
-    competing_phases = CompetingPhases(chem_formula.value, **doped_settings)
+    competing_phases = CompetingPhases(
+        chem_formula.value, extrinsic=extrinsic_species, **doped_settings
+    )
     entries = competing_phases.entries
-    if extrinsic_species:
-        extrinsic_phases = ExtrinsicCompetingPhases(
-            chem_formula.value, extrinsic_species.get_list(), **extrinsic_settings
-        )
-        entries += extrinsic_phases.entries
     phase_entries = {}
     names = orm.List()
     molecules = orm.List()
@@ -56,94 +47,51 @@ def generate_competing_phases(
 
 
 @calcfunction
-def competing_phases_analysis(
-    entry_names, chem_formula, extrinsic_species, prefix, **kwargs
-):
+def competing_phases_analysis(entry_names, chem_formula, prefix, **kwargs):
     """Use Doped and competing phase relaxation output data to calculate chemical potential limits and plot a phase diagram"""
-    # Save data in a csv file
-    elemental_energies = {}
-    data = []
-    extrinsic_species = []
+    # Create a list of new pymatgen computed structure entries
+    entry_list = []
     for i, name in enumerate(entry_names):
-        structure = kwargs[f"{name}_{i}_relaxed_structure"].get_pymatgen()
-        out_params = kwargs[f"{name}_{i}_out_params"]
+        try:
+            structure = kwargs[f"{entry_names[i]}_{i}_relaxed_structure"].get_pymatgen()
+            out_params = kwargs[f"{entry_names[i]}_{i}_out_params"]
+        except:
+            continue
         total_energy = out_params["total_energy"]
-        energy_per_atom = total_energy / out_params["num_ions"]
-        red_formula_and_factor = structure.composition.get_reduced_formula_and_factor()
-        phase_formula = red_formula_and_factor[0]
-        num_formula_units = red_formula_and_factor[1]
-        energy_per_fu = total_energy / num_formula_units
-        elements = structure.elements
-        if len(elements) == 1:
-            element = elements[0].name
-            if element not in elemental_energies:
-                elemental_energies[element] = energy_per_atom
-                if element not in Composition(chem_formula.value):
-                    extrinsic_species.append(element)
-                elif energy_per_atom < elemental_energies[element]:
-                    elemental_energies[element] = energy_per_atom
+        composition = structure.composition
+        entry = ComputedStructureEntry(
+            structure, total_energy, composition=composition, entry_id=name
+        )
+        entry_list.append(entry)
 
-        d = {
-            "Formula": phase_formula,
-            "DFT Energy (eV/atom)": energy_per_atom,
-            "DFT Energy (eV/fu)": energy_per_fu,
-        }
-        data.append(d)
-    formation_energy_df = _calculate_formation_energies(data, elemental_energies)
     with TemporaryDirectory() as temp:
+        # Reading list of pymatgen entries and calculating potential limits
+        cpa = CompetingPhasesAnalyzer(
+            chem_formula.value,
+            entry_list,
+        )
+        formation_energy_df = cpa.get_formation_energy_df()
         formation_energy_df.to_csv(
             f"{temp}/{prefix.value}_competing_phase_energies.csv", index=False
         )
         formation_energies = orm.SinglefileData(
             f"{temp}/{prefix.value}_competing_phase_energies.csv"
         )
-
-        # Read formation energies from csv, calculate potential limits
-        if extrinsic_species:
-            all_chempots = []
-            for i, _ in enumerate(extrinsic_species):
-                cpa = CompetingPhasesAnalyzer(
-                    chem_formula.value, extrinsic_species=extrinsic_species[i]
-                )
-                cpa.from_csv(f"{temp}/{prefix.value}_competing_phase_energies.csv")
-                all_chempots.append(cpa.chempots)
-            if len(all_chempots) == 1:
-                dumpfn(cpa.chempots, f"{temp}/{prefix.value}_chempots.json")
-                chempots = orm.SinglefileData(f"{temp}/{prefix.value}_chempots.json")
-                cpd = ChemicalPotentialDiagram(cpa.intrinsic_phase_diagram.entries)
-                plot = cpd.get_plot()
-                plot.write_image(f"{temp}/{prefix.value}_phase_diagram.pdf")
-                phase_diagram_plot = orm.SinglefileData(
-                    f"{temp}/{prefix.value}_phase_diagram.pdf"
-                )
-            else:
-                for i in range(0, len(all_chempots) - 1):
-                    combined_chempots = combine_extrinsic(
-                        all_chempots[i], all_chempots[i + 1], extrinsic_species[i + 1]
-                    )
-                dumpfn(combined_chempots, f"{temp}/{prefix.value}_chempots.json")
-                chempots = orm.SinglefileData(f"{temp}/{prefix.value}_chempots.json")
-                cpd = ChemicalPotentialDiagram(cpa.intrinsic_phase_diagram.entries)
-                plot = cpd.get_plot()
-                plot.write_image(f"{temp}/{prefix.value}_phase_diagram.pdf")
-                phase_diagram_plot = orm.SinglefileData(
-                    f"{temp}/{prefix.value}_phase_diagram.pdf"
-                )
-        else:
-            cpa = CompetingPhasesAnalyzer(chem_formula.value)
-            cpa.from_csv(f"{temp}/{prefix.value}_competing_phase_energies.csv")
-            dumpfn(cpa.chempots, f"{temp}/{prefix.value}_chempots.json")
-            chempots = orm.SinglefileData(f"{temp}/{prefix.value}_chempots.json")
-            cpd = ChemicalPotentialDiagram(cpa.intrinsic_phase_diagram.entries)
-            plot = cpd.get_plot()
-            plot.write_image(f"{temp}/{prefix.value}_phase_diagram.pdf")
-            phase_diagram_plot = orm.SinglefileData(
-                f"{temp}/{prefix.value}_phase_diagram.pdf"
-            )
+        dumpfn(cpa.chempots, f"{temp}/{prefix.value}_chempots.json")
+        chempots = orm.SinglefileData(f"{temp}/{prefix.value}_chempots.json")
+        cpd = ChemicalPotentialDiagram(cpa.phase_diagram.entries)
+        plot = cpd.get_plot()
+        plot.write_image(f"{temp}/{prefix.value}_phase_diagram.pdf")
+        phase_diagram_plot = orm.SinglefileData(
+            f"{temp}/{prefix.value}_phase_diagram.pdf"
+        )
+        dumpfn(cpa, f"{temp}/{prefix.value}_cpa.json")
+        cpa_file = orm.SinglefileData(f"{temp}/{prefix.value}_cpa.json")
     return {
         "formation_energies": formation_energies,
         "chempots": chempots,
         "phase_diagram_plot": phase_diagram_plot,
+        "cpa_file": cpa_file,
     }
 
 
@@ -166,7 +114,7 @@ class CastepCompetingPhasesWorkChain(WorkChain):
             serializer=to_aiida_type,
             help="Settings for Doped competing phase generation (optional, e_above_hull=0 by default)",
             required=False,
-            default=lambda: orm.Dict(dict={"e_above_hull": 0}),
+            default=lambda: orm.Dict(dict={"energy_above_hull": 0}),
         )
         spec.input(
             "extrinsic_species",
@@ -175,14 +123,6 @@ class CastepCompetingPhasesWorkChain(WorkChain):
             help="A list of extrinsic species or dopants (optional, none by default)",
             required=False,
             default=lambda: orm.List(),
-        )
-        spec.input(
-            "extrinsic_settings",
-            valid_type=orm.Dict,
-            serializer=to_aiida_type,
-            help="Settings for Doped extrinsic competing phase generation (optional, e_above_hull=0 by default)",
-            required=False,
-            default=lambda: orm.Dict(dict={"e_above_hull": 0}),
         )
         spec.input(
             "file_prefix",
@@ -208,7 +148,13 @@ class CastepCompetingPhasesWorkChain(WorkChain):
         spec.output(
             "phase_diagram_plot",
             valid_type=orm.SinglefileData,
-            help="A plot of the mixing free energies and enthalpies for each composition",
+            help="A phase diagram showing the stability regions for all competing phases",
+            required=True,
+        )
+        spec.output(
+            "competing_phases_analyzer",
+            valid_type=orm.SinglefileData,
+            help="The CompetingPhasesAnalyzer object as a json file",
             required=True,
         )
 
@@ -242,7 +188,6 @@ class CastepCompetingPhasesWorkChain(WorkChain):
             self.ctx.chem_formula,
             self.inputs.extrinsic_species,
             self.inputs.doped_settings,
-            self.inputs.extrinsic_settings,
         )
 
     def converge_competing_phases(self):
@@ -281,9 +226,12 @@ class CastepCompetingPhasesWorkChain(WorkChain):
                 inputs.calc.kpoints = kpoints
             else:
                 converge_key = f"{name}_{i}_converge"
-                inputs.base.kpoints_spacing = self.ctx[
-                    converge_key
-                ].outputs.converged_kspacing.value
+                if self.ctx[converge_key].is_finished_ok:
+                    inputs.base.kpoints_spacing = self.ctx[
+                        converge_key
+                    ].outputs.converged_kspacing.value
+                else:
+                    continue
             key = f"{name}_{i}_relax"
             inputs.structure = self.ctx.phases[f"{name}_{i}_structure"]
             inputs.calc.parameters = relax_parameters
@@ -297,14 +245,19 @@ class CastepCompetingPhasesWorkChain(WorkChain):
         kwargs = {}
         for i, name in enumerate(self.ctx.phases["names"]):
             key = f"{name}_{i}_relax"
-            structure = self.ctx[key].outputs.output_structure
-            kwargs[f"{name}_{i}_relaxed_structure"] = structure
-            output_parameters = self.ctx[key].outputs.output_parameters
-            kwargs[f"{name}_{i}_out_params"] = output_parameters
+            try:
+                if self.ctx[key].is_finished_ok:
+                    structure = self.ctx[key].outputs.output_structure
+                    kwargs[f"{name}_{i}_relaxed_structure"] = structure
+                    output_parameters = self.ctx[key].outputs.output_parameters
+                    kwargs[f"{name}_{i}_out_params"] = output_parameters
+                else:
+                    self.ctx.relaxed_structures.append("failed")
+            except:
+                continue
         outputs = competing_phases_analysis(
             self.ctx.phases["names"],
             self.ctx.chem_formula,
-            self.inputs.extrinsic_species,
             orm.Str(self.ctx.prefix),
             **kwargs,
         )
@@ -318,9 +271,11 @@ class CastepCompetingPhasesWorkChain(WorkChain):
             orm.Str(self.inputs.metadata.get("label", "")),
             orm.Str(self.inputs.metadata.get("description", "")),
         )
+        self.ctx.cpa_file = outputs["cpa_file"]
 
     def results(self):
-        """Add the relaxed structures, mixing energies and the mixing energy plot to WorkChain outputs"""
+        """Add the formation energies, chemical potentials, phase diagram and the competing phases analyzer to WorkChain outputs"""
         self.out("formation_energies", self.ctx.formation_energies)
         self.out("chemical_potentials", self.ctx.chempots)
         self.out("phase_diagram_plot", self.ctx.phase_diagram_plot)
+        self.out("competing_phases_analyzer", self.ctx.cpa_file)

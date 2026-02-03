@@ -14,12 +14,11 @@ import numpy as np
 from aiida.engine import ToContext, WorkChain, calcfunction, if_
 from aiida.orm.nodes.data.base import to_aiida_type
 from aiida_castep.workflows.base import CastepBaseWorkChain
+from aiida_castep_addons.parsers.phonon import PhononParser
+from aiida_castep_addons.utils import add_metadata, seekpath_analysis
 from pymatgen.core.lattice import Lattice
 from pymatgen.phonon.bandstructure import PhononBandStructureSymmLine
 from sumo.plotting.phonon_bs_plotter import SPhononBSPlotter
-
-from aiida_castep_addons.parsers.phonon import PhononParser
-from aiida_castep_addons.utils import add_metadata, seekpath_analysis
 
 
 @calcfunction
@@ -66,7 +65,7 @@ def phonon_analysis(prefix, ir_folder, kpoints, raman_folder, experimental_spect
         phonon_plotter.close()
         band_plot = orm.SinglefileData(f"{temp}/{prefix.value}_phonon_bands.pdf")
 
-        # Create BandsData for the phonon band structure
+        # Creating BandsData for the phonon band structure
         band_data = orm.BandsData()
         aiida_structure = orm.StructureData(pymatgen=pmg_structure)
         band_data.set_cell_from_structure(aiida_structure)

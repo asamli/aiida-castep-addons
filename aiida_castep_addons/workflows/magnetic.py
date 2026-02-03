@@ -45,13 +45,13 @@ def assemble_enum_data(indices, origins, spins, **kwargs):
     for i in indices:
         out_params = kwargs[f"out_params_{i}"]
 
-        # Fetch the right relax WorkChain node
+        # Fetching the right relax WorkChain node
         qb = orm.QueryBuilder()
         qb.append(CastepRelaxWorkChain, project="*")
         qb.append(orm.Dict, filters={"id": out_params.pk})
         wc_node = qb.one()[0]
 
-        # Assemble the list of dictionaries
+        # Assembling the list of dictionaries
         initial_structure = wc_node.inputs.structure
         final_structure = wc_node.outputs.output_structure
         num_formula_units = final_structure.get_pymatgen().composition.get_reduced_composition_and_factor()[

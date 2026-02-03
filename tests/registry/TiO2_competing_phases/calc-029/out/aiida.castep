@@ -62,7 +62,7 @@
  FFT Lib : mkl
  Fundamental constants values: CODATA 2014
  
- Run started: Thu, 02 Nov 2023 13:48:09 +0000
+ Run started: Thu, 02 Nov 2023 13:44:46 +0000
  
  Atomic calculation performed for O: 1s2 2s2 2p4
  
@@ -188,7 +188,7 @@
  output    efield chi2 unit                     : pm/V
   
  wavefunctions paging                           : none
- random number generator seed                   : randomised (134809581)
+ random number generator seed                   : randomised (134446883)
  data distribution                              : optimal for this architecture
  optimization strategy                          : balance speed and memory
 
@@ -359,25 +359,25 @@ Calculating total energy with cut-off of  850.000 eV.
 SCF loop      Energy           Fermi           Energy gain       Timer   <-- SCF
                                energy          per atom          (sec)   <-- SCF
 ------------------------------------------------------------------------ <-- SCF
-Initial  -7.43015963E+003  0.00000000E+000                        11.73  <-- SCF
-      1  -8.19068523E+003  1.07660518E+001   6.33771337E+001      13.45  <-- SCF
-      2  -8.70172578E+003  8.66525281E+000   4.25867124E+001      15.15  <-- SCF
-      3  -8.72202245E+003  9.33837454E+000   1.69138911E+000      16.74  <-- SCF
-      4  -8.72362512E+003  9.24286156E+000   1.33555421E-001      18.96  <-- SCF
-      5  -8.70720178E+003  9.08243517E+000  -1.36861157E+000      21.10  <-- SCF
-      6  -8.70712244E+003  8.96500022E+000  -6.61153835E-003      23.24  <-- SCF
-      7  -8.70712766E+003  8.96469483E+000   4.34815964E-004      25.42  <-- SCF
-      8  -8.70712475E+003  8.97180078E+000  -2.42625225E-004      27.39  <-- SCF
-      9  -8.70712507E+003  8.97447658E+000   2.74436151E-005      29.24  <-- SCF
-     10  -8.70712509E+003  8.97463645E+000   1.16069467E-006      30.55  <-- SCF
-     11  -8.70712509E+003  8.97468447E+000   4.57812962E-007      31.85  <-- SCF
+Initial  -7.43266279E+003  0.00000000E+000                        10.27  <-- SCF
+      1  -8.18491509E+003  1.05123874E+001   6.26876915E+001      11.97  <-- SCF
+      2  -8.70204107E+003  9.05359898E+000   4.30938318E+001      13.62  <-- SCF
+      3  -8.72203181E+003  9.34983804E+000   1.66589560E+000      15.23  <-- SCF
+      4  -8.72363114E+003  9.24223810E+000   1.33277317E-001      17.31  <-- SCF
+      5  -8.70720996E+003  9.08288288E+000  -1.36843180E+000      19.29  <-- SCF
+      6  -8.70712432E+003  8.96410936E+000  -7.13663176E-003      21.32  <-- SCF
+      7  -8.70712762E+003  8.96385202E+000   2.74857997E-004      23.40  <-- SCF
+      8  -8.70712473E+003  8.97162118E+000  -2.40400552E-004      25.35  <-- SCF
+      9  -8.70712507E+003  8.97447052E+000   2.83322317E-005      27.11  <-- SCF
+     10  -8.70712509E+003  8.97466076E+000   1.21039478E-006      28.39  <-- SCF
+     11  -8.70712509E+003  8.97470726E+000   4.70294382E-007      29.67  <-- SCF
 ------------------------------------------------------------------------ <-- SCF
  
-Final energy, E             =  -8707.125094402     eV
-Final free energy (E-TS)    =  -8707.125094402     eV
+Final energy, E             =  -8707.125094221     eV
+Final free energy (E-TS)    =  -8707.125094221     eV
 (energies not corrected for finite basis set)
  
-NB est. 0K energy (E-0.5TS)      =  -8707.125094402     eV
+NB est. 0K energy (E-0.5TS)      =  -8707.125094221     eV
  
 
 Writing analysis data to aiida.castep_bin
@@ -390,18 +390,18 @@ Writing model to aiida.check
  * -------------------------------------------------------- *
  *                         x            y            z      *
  *                                                          *
- * O               1      0.07788     -0.06393      0.07389 *
- * O               2     -0.07788     -0.06393      0.07389 *
- * O               3     -0.05549      0.12107      0.10477 *
- * O               4     -0.05549     -0.12107     -0.10477 *
- * O               5      0.05549      0.12107      0.10477 *
- * O               6      0.05549     -0.12107     -0.10477 *
- * O               7      0.07788      0.06393     -0.07389 *
- * O               8     -0.07788      0.06393     -0.07389 *
- * Zr              1      0.08951     -0.23386      0.14813 *
- * Zr              2     -0.08951     -0.23386      0.14813 *
- * Zr              3      0.08951      0.23386     -0.14813 *
- * Zr              4     -0.08951      0.23386     -0.14813 *
+ * O               1      0.07798     -0.06385      0.07393 *
+ * O               2     -0.07798     -0.06385      0.07393 *
+ * O               3     -0.05554      0.12104      0.10486 *
+ * O               4     -0.05554     -0.12104     -0.10486 *
+ * O               5      0.05554      0.12104      0.10486 *
+ * O               6      0.05554     -0.12104     -0.10486 *
+ * O               7      0.07798      0.06385     -0.07393 *
+ * O               8     -0.07798      0.06385     -0.07393 *
+ * Zr              1      0.08967     -0.23379      0.14806 *
+ * Zr              2     -0.08967     -0.23379      0.14806 *
+ * Zr              3      0.08967      0.23379     -0.14806 *
+ * Zr              4     -0.08967      0.23379     -0.14806 *
  *                                                          *
  ************************************************************
  
@@ -581,16 +581,16 @@ Writing model to aiida.check
  A BibTeX formatted list of references used in this run has been written to 
  aiida.bib
  
-Initialisation time =     10.50 s
-Calculation time    =     23.88 s
-Finalisation time   =      0.42 s
-Total time          =     34.80 s
-Peak Memory Use     = 1072632 kB
+Initialisation time =      9.26 s
+Calculation time    =     22.78 s
+Finalisation time   =      0.28 s
+Total time          =     32.31 s
+Peak Memory Use     = 1069864 kB
   
-Overall parallel efficiency rating: Satisfactory (68%)                          
+Overall parallel efficiency rating: Good (71%)                                  
   
 Data was distributed by:-
-k-point (16-way); efficiency rating: Satisfactory (69%)                         
+k-point (16-way); efficiency rating: Good (72%)                                 
   
 Parallel notes:
-1) Calculation only took 34.4 s, so efficiency estimates may be inaccurate.     
+1) Calculation only took 32.0 s, so efficiency estimates may be inaccurate.     

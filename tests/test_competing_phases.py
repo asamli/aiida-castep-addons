@@ -10,14 +10,12 @@ def test_generate_competing_phases():
     intrinsic_entries = generate_competing_phases(
         orm.Str("TiO2"),
         orm.List(),
-        orm.Dict(dict={"e_above_hull": 0}),
-        orm.Dict(dict={"e_above_hull": 0}),
+        orm.Dict(dict={"energy_above_hull": 0}),
     )
     extrinsic_entries = generate_competing_phases(
         orm.Str("TiO2"),
         orm.List(list=["Zr"]),
-        orm.Dict(dict={"e_above_hull": 0}),
-        orm.Dict(dict={"e_above_hull": 0}),
+        orm.Dict(dict={"energy_above_hull": 0}),
     )
 
 
@@ -36,12 +34,14 @@ def test_competing_phases_wc(mock_castep_code):
         "geom_force_tol": 0.01,
         "max_scf_cycles": 200,
         "geom_max_iter": 200,
+        "mixing_scheme": "pulay",
     }
     bld.converge.calc.parameters = {
         "xc_functional": "pbesol",
         "cut_off_energy": 850,
         "symmetry_generate": True,
         "max_scf_cycles": 200,
+        "mixing_scheme": "pulay",
     }
     bld.extrinsic_species = ["Zr"]
     rutile = orm.StructureData(
@@ -59,13 +59,14 @@ def test_competing_phases_wc(mock_castep_code):
     rutile.append_atom(position=(3.18968363, 3.18968363, 0), symbols="O")
     bld.structure = rutile
     bld.converge.calc.structure = rutile
-    bld.calc.metadata.options.max_wallclock_seconds = 3600
+    bld.calc.metadata.options.max_wallclock_seconds = 3600 * 12
     bld.calc.metadata.options.resources = {"num_machines": 1, "tot_num_mpiprocs": 4}
     bld.converge.calc_options = {
-        "max_wallclock_seconds": 3600,
+        "max_wallclock_seconds": 3600 * 12,
         "resources": {"num_machines": 1, "tot_num_mpiprocs": 4},
     }
     bld.clean_workdir = True
+    bld.converge.clean_workdir = True
     _, competing_phases_node = run_get_node(bld)
 
     assert competing_phases_node.is_finished_ok

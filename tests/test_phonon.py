@@ -4,13 +4,12 @@ import aiida.orm as orm
 from aiida.engine import run_get_node
 from aiida.plugins import WorkflowFactory
 from aiida_castep.data.otfg import upload_otfg_family
-from ase.build import bulk
-
 from aiida_castep_addons.workflows.phonon import (
     phonon_analysis,
     seekpath_analysis,
     thermo_analysis,
 )
+from ase.build import bulk
 
 
 def test_phonon_analysis():
@@ -24,7 +23,6 @@ def test_phonon_analysis():
         ir_folder,
         kpoints,
         raman_folder,
-        silicon,
         orm.ArrayData(),
     )
 

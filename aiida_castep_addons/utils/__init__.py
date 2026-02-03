@@ -25,7 +25,7 @@ def seekpath_analysis(structure, parameters):
 
 @calcfunction
 def add_metadata(file, fname, formula, uuid, label, description):
-    """Add workflow metadata to a PDF file with PyPDF2"""
+    """Add workflow metadata to a PDF file with PyPDF"""
     with TemporaryDirectory() as temp:
         with file.open(mode="rb") as fin:
             reader = PdfReader(fin)

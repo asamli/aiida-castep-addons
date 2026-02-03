@@ -49,6 +49,7 @@ def defect_analysis(
     """Use defect relaxation output data to calculate and plot defect formation energies"""
     defect_dict = {}
     for i, key in enumerate(keys):
+        # Using calculation outputs to make a ComputedStructureEntry for each defect and the bulk
         try:
             pmg_structure = kwargs[f"structure_{i}"].get_pymatgen()
             final_energy = kwargs[f"out_params_{i}"]["total_energy"]
@@ -64,6 +65,8 @@ def defect_analysis(
             bulk_supercell = pmg_structure
             bulk_entry = cse
             continue
+
+        # Adding the new ComputedStructureEntry for the defect and the bulk as well as additional metadata to the original defect entries from the DefectsGenerator
         with defects_generator.as_path() as defects_path:
             defect_gen = DefectsGenerator.from_json(defects_path)
         defect_entries = defect_gen.defect_entries
@@ -85,7 +88,11 @@ def defect_analysis(
             }
         )
         entry.calculation_metadata = calculation_metadata
+
+        # Creating a defect dictionary with the updated defect entries
         defect_dict[key] = entry
+
+    # Obtaining defect thermodynamics data from the data in the defect dictionary
     with chempots.as_path() as chempots_path:
         defect_thermo = thermodynamics.DefectThermodynamics(
             defect_dict, loadfn(chempots_path)
@@ -102,6 +109,8 @@ def defect_analysis(
         formation_energies = orm.SinglefileData(
             f"{temp}/{prefix.value}_formation_energies.csv"
         )
+
+        # Plotting a transition level diagram only if the material has a non-zero band gap and returning the correct outputs in each case
         if band_gap > 0:
             def_plot = defect_thermo.plot(limit=chempot_limit.value)
             def_plot.savefig(
@@ -137,7 +146,7 @@ class CastepDefectsWorkChain(WorkChain):
             "defect_metadata",
             valid_type=orm.Dict,
             serializer=to_aiida_type,
-            help="A dictionary of metadata needed for Doped defect analysis. Must include ",
+            help="A dictionary of metadata needed for Doped defect analysis. Must include 'cbm', 'vbm' and 'gap'.",
             required=False,
             default=lambda: orm.Dict(
                 dict={
@@ -228,7 +237,7 @@ class CastepDefectsWorkChain(WorkChain):
             "defect_plot",
             valid_type=orm.SinglefileData,
             help="A plot of the defect transition level diagram",
-            required=True,
+            required=False,
         )
 
         # Outline of the WorkChain (the class methods to be run and their order)
@@ -254,11 +263,14 @@ class CastepDefectsWorkChain(WorkChain):
         with defects_generator.as_path() as defects_path:
             defect_gen = DefectsGenerator.from_json(defects_path)
         defect_entries = defect_gen.defect_entries
+
+        # Removing charged defects if the material is metallic
         if self.inputs.defect_metadata.get("gap", 0) == 0:
             defect_keys = list(defect_entries.keys())
             for key in defect_keys:
                 if key[-1] != "0":
                     defect_entries.pop(key)
+
         charges = {}
         keys = ["bulk"]
         keys += list(defect_entries.keys())
@@ -315,14 +327,15 @@ class CastepDefectsWorkChain(WorkChain):
         )
         self.ctx.defect_thermodynamics = outputs["defect_thermodynamics"]
         self.ctx.formation_energies = outputs["formation_energies"]
-        self.ctx.defect_plot = add_metadata(
-            outputs["defect_plot"],
-            orm.Str(f"{self.ctx.prefix}_defect_plot.pdf"),
-            orm.Str(self.ctx.inputs.structure.get_formula()),
-            orm.Str(self.uuid),
-            orm.Str(self.inputs.metadata.get("label", "")),
-            orm.Str(self.inputs.metadata.get("description", "")),
-        )
+        if self.inputs.defect_metadata.get("gap", 0) != 0:
+            self.ctx.defect_plot = add_metadata(
+                outputs["defect_plot"],
+                orm.Str(f"{self.ctx.prefix}_defect_plot.pdf"),
+                orm.Str(self.ctx.inputs.structure.get_formula()),
+                orm.Str(self.uuid),
+                orm.Str(self.inputs.metadata.get("label", "")),
+                orm.Str(self.inputs.metadata.get("description", "")),
+            )
 
     def results(self):
         """Add the relaxed structures, defect thermodynamics, formation energies and the defect plot to WorkChain outputs"""
@@ -330,4 +343,5 @@ class CastepDefectsWorkChain(WorkChain):
         self.out("defects_generator", self.ctx.defects_generator)
         self.out("defect_thermodynamics", self.ctx.defect_thermodynamics)
         self.out("formation_energies", self.ctx.formation_energies)
-        self.out("defect_plot", self.ctx.defect_plot)
+        if self.inputs.defect_metadata.get("gap", 0) != 0:
+            self.out("defect_plot", self.ctx.defect_plot)

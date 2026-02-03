@@ -15,14 +15,14 @@ Use the following commands to install the plugin::
     cd aiida-castep-addons
     pip install -e .  # also installs all dependencies
     #pip install -e .[pre-commit,testing] # install extras for more features
-    verdi quicksetup  # set up a new profile
 
-Then use ``verdi computer setup`` and ``verdi code setup`` to add computer and code nodes
-to the AiiDA database.
+The `AiiDA installation guide <https://aiida.readthedocs.io/projects/aiida-core/en/stable/installation/guide_quick.html#installation-guide-quick>`_ provides instructions on how to install AiiDA and create a profile. 
+The commands ``verdi computer setup`` and ``verdi code create`` can be used to add computer and code nodes to the AiiDA database as explained in the 
+`AiiDA basic tutorial. <https://aiida.readthedocs.io/projects/aiida-core/en/stable/tutorials/basic.html#tutorial-basic>`_
 
 If you want to use the magnetic enumeration workflow, the `EnumLib <https://github.com/msg-byu/enumlib>`_ package must be installed first. 
 
 Usage
 +++++
 
-See the tutorial page for an example calculation using a workflow.
+Please see the 'Tutorial' page for an example calculation using a workflow.

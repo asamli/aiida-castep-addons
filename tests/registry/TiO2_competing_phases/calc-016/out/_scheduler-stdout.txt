@@ -1,4 +1,4 @@
-/var/opt/sge/node-d00a-157/active_jobs/374895.1/pe_hostfile
+/var/opt/sge/node-d00a-157/active_jobs/374901.1/pe_hostfile
 node-d00a-157
 node-d00a-157
 node-d00a-157
@@ -17,3 +17,7 @@ node-d00a-157
 node-d00a-157
 node-d00a-157
 node-d00a-157
+MOCK PREPEND: START ----------------------
+MOCK PREPEND: Mock directory: /home/alp/aiida/29/9d/768f-b127-43fc-a819-f9907e4b4b0b
+MOCK PREPEND: AIIDA_PATH: /home/alp/.aiida
+MOCK PREPEND: Using test data in path /home/alp/aiida-castep-addons/tests/registry/TiO2_competing_phases/calc-022 based detection from inputs.

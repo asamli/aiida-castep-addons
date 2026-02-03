@@ -16,16 +16,15 @@ from aiida.engine import ToContext, WorkChain, calcfunction
 from aiida.orm.nodes.data.base import to_aiida_type
 from aiida_castep.utils.dos import DOSProcessor
 from aiida_castep.workflows.base import CastepBaseWorkChain
-from castepxbin.pdos import compute_pdos
-from pymatgen.electronic_structure.dos import CompleteDos, Dos, Spin
-from sumo.electronic_structure.dos import get_pdos
-from sumo.plotting.dos_plotter import SDOSPlotter
-
 from aiida_castep_addons.utils import add_metadata, seekpath_analysis
 from aiida_castep_addons.utils.sumo_plotter import (
     get_pmg_bandstructure,
     get_sumo_bands_plotter,
 )
+from castepxbin.pdos import compute_pdos
+from pymatgen.electronic_structure.dos import CompleteDos, Dos, Spin
+from sumo.electronic_structure.dos import get_pdos
+from sumo.plotting.dos_plotter import SDOSPlotter
 
 
 @calcfunction
@@ -263,7 +262,8 @@ def analysis(
         pmg_bands = get_pmg_bandstructure(labelled_bands, bands_efermi)
         if labelled_bands.get_attribute("nspins") > 1:
             pmg_bands.efermi = bands_efermi
-        band_gap = pmg_bands.get_band_gap()
+        pmg_band_gap = pmg_bands.get_band_gap()
+        band_gap = orm.Dict(dict=pmg_band_gap)
         band_plotter = get_sumo_bands_plotter(labelled_bands, bands_efermi).get_plot(
             ymin=-12, ymax=12
         )
@@ -277,7 +277,7 @@ def analysis(
     return {
         "dos_plot": dos_plot,
         "labelled_bands": labelled_bands,
-        "band_gap": orm.Dict(dict=band_gap),
+        "band_gap": band_gap,
         "band_plot": band_plot,
         "ups_spectrum": ups_spectrum,
         "xps_spectrum": xps_spectrum,
@@ -450,7 +450,6 @@ class CastepBandPlotWorkChain(WorkChain):
 
     def analyse_calculations(self):
         """Analyse the two calculations to plot the density of states, band structure and photoelectron spectra"""
-
         outputs = analysis(
             self.ctx.dos.outputs.output_bands,
             self.ctx.dos.called[-1].outputs.retrieved,

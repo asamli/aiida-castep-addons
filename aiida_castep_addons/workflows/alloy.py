@@ -13,19 +13,22 @@ import numpy as np
 from aiida.engine import WorkChain, calcfunction, if_, while_
 from aiida.orm.nodes.data.base import to_aiida_type
 from aiida_castep.workflows.relax import CastepRelaxWorkChain
+from aiida_castep_addons.utils import add_metadata
 from bsym.interface.pymatgen import unique_structure_substitutions
 from icet import ClusterExpansion, ClusterSpace
 from icet.tools.structure_generation import generate_sqs_from_supercells
 from pymatgen.core.periodic_table import Element
 from pymatgen.io.ase import AseAtomsAdaptor
-from scipy.optimize import brentq, curve_fit, minimize_scalar
-
-from aiida_castep_addons.utils import add_metadata
+from scipy.optimize import brentq, minimize_scalar, curve_fit
 
 
 @calcfunction
 def generate_bsym_structures(
-    structure, to_substitute, susbtituent, supercell_matrix, xs
+    structure,
+    to_substitute,
+    susbtituent,
+    supercell_matrix,
+    xs,
 ):
     """Use Pymatgen and Bsym to generate symmetry-inequivalent configurations at different compositions"""
     supercell = structure.get_pymatgen() * supercell_matrix
@@ -36,8 +39,6 @@ def generate_bsym_structures(
         pass
     element = Element(to_substitute)
     num_atoms = supercell.species.count(element)
-    # charged_supercell = structure.get_pymatgen() * supercell_matrix
-    # charged_supercell.add_oxidation_state_by_guess()
     structures = {"structure_0_0": orm.StructureData(ase=ase_supercell)}
     degens = [[1]]
     if not xs:
@@ -54,7 +55,6 @@ def generate_bsym_structures(
             x = i / num_atoms
             xs.append(x)
             for j, struc in enumerate(strucs):
-                # struc.add_oxidation_state_by_guess()
                 ase_struc = AseAtomsAdaptor.get_atoms(struc)
                 structures[f"structure_{i}_{j}"] = orm.StructureData(ase=ase_struc)
     else:
@@ -79,7 +79,6 @@ def generate_bsym_structures(
             degens.append([struc.full_configuration_degeneracy for struc in strucs])
             lens.append(len(strucs))
             for j, struc in enumerate(strucs):
-                # struc.add_oxidation_state_by_guess()
                 ase_struc = AseAtomsAdaptor.get_atoms(struc)
                 structures[f"structure_{i}_{j}"] = orm.StructureData(ase=ase_struc)
     structures["xs"] = orm.List(list=xs)
@@ -90,7 +89,11 @@ def generate_bsym_structures(
 
 @calcfunction
 def generate_sqs_structures(
-    structure, to_substitute, susbtituent, supercell_matrix, xs
+    structure,
+    to_substitute,
+    susbtituent,
+    supercell_matrix,
+    xs,
 ):
     """Use ICET and ASE to generate special quasirandom structures at different compositions"""
     chemical_symbols = []
@@ -163,6 +166,7 @@ def generate_sqs_structures(
 
 
 def cubic(x, a, b, c, d):
+    """Return a cubic polynomial in the form ax^3 + bx^2 + cx + d"""
     return a * (x**3) + b * (x**2) + c * x + d
 
 
@@ -201,7 +205,7 @@ def analysis(xs, lens, degens, temperatures, prefix, **kwargs):
     kB = 8.617343e-5
     T = 298
 
-    # Storing the minimum energy for each composition in a list
+    # Storing the total energies for each composition in a list
     for i in range(len(xs)):
         for j in range(lens[i]):
             key = f"out_params_{i}_{j}"
@@ -282,7 +286,12 @@ def analysis(xs, lens, degens, temperatures, prefix, **kwargs):
         xc = 0.5
         x1_bin = 0.0001
         x2_bin = 0.9999
-        popt, _ = curve_fit(cubic, xs.get_list(), boltzmann_enthalpies)
+        try:
+            popt, _ = curve_fit(cubic, xs.get_list(), boltzmann_enthalpies)
+        except:
+            popt, _ = curve_fit(
+                cubic, xs.get_list(), boltzmann_enthalpies, method="trf"
+            )
         fail_count = 0
         x_diff = x2_bin - x1_bin
         while x_diff > 0.001:
@@ -442,7 +451,7 @@ def ce_analysis(ce_file, structures, xs, lens, degens, temperatures, prefix):
     for i in range(len(xs)):
         for j in range(lens[i]):
             if i == 0 or i == len(xs) - 1:
-                mixing_enthalpy = 0
+                mixing_enthalpy = 0.0
             else:
                 mixing_enthalpy = ce.predict(
                     orm.load_node(structures[f"structure_{i}_{j}"]).get_ase()
@@ -501,7 +510,12 @@ def ce_analysis(ce_file, structures, xs, lens, degens, temperatures, prefix):
         xc = 0.5
         x1_bin = 0.0001
         x2_bin = 0.9999
-        popt, _ = curve_fit(cubic, xs.get_list(), boltzmann_enthalpies)
+        try:
+            popt, _ = curve_fit(cubic, xs.get_list(), boltzmann_enthalpies)
+        except:
+            popt, _ = curve_fit(
+                cubic, xs.get_list(), boltzmann_enthalpies, method="trf"
+            )
         fail_count = 0
         x_diff = x2_bin - x1_bin
         while x_diff > 0.001:
@@ -696,7 +710,7 @@ class CastepAlloyWorkChain(WorkChain):
             "supercell_matrix",
             valid_type=orm.List,
             serializer=to_aiida_type,
-            help="The transformation matrix for the supercell to be used for the calculations as an array.",
+            help="The transformation matrix for the supercell to be used for the calculations as an array",
             required=False,
             default=lambda: orm.List(list=[1, 1, 1]),
         )
@@ -704,7 +718,7 @@ class CastepAlloyWorkChain(WorkChain):
             "xs",
             valid_type=orm.List,
             serializer=to_aiida_type,
-            help="The percentage(s) of substituent to be used as a list of numbers from 0 to 1. All valid compositions for the specified supercell will be used if not provided.",
+            help="The percentage(s) of substituent to be used as a list of numbers from 0 to 1. All valid compositions for the specified supercell will be used if not provided",
             required=False,
             default=lambda: orm.List(),
         )
@@ -712,7 +726,7 @@ class CastepAlloyWorkChain(WorkChain):
             "temperatures",
             valid_type=orm.List,
             serializer=to_aiida_type,
-            help="The temperatures to use in K as an array.",
+            help="The temperatures to use in K as an array",
             required=False,
             default=lambda: orm.List(list=[298]),
         )
@@ -729,7 +743,7 @@ class CastepAlloyWorkChain(WorkChain):
             "relaxed_structures",
             valid_type=orm.List,
             help="A list of the relaxed symmetry-inequivalent structures for different compositions",
-            required=True,
+            required=False,
         )
         spec.output(
             "mixing_energies",
@@ -798,17 +812,18 @@ class CastepAlloyWorkChain(WorkChain):
             self.ctx.degens = self.ctx.structures["degens"]
         self.ctx.xs = self.ctx.structures["xs"]
         self.ctx.lens = self.ctx.structures["lens"]
-        if sum(self.ctx.lens) > 100:
-            self.ctx.num_groups = np.ceil(sum(self.ctx.lens) / 100)
-        elif self.inputs.use_ce:
+        if self.inputs.use_ce:
             self.ctx.num_groups = 0
             self.ctx.ce_file = self.inputs.ce_file
+        elif sum(self.ctx.lens) > 100:
+            self.ctx.num_groups = np.ceil(sum(self.ctx.lens) / 100)
         else:
             self.ctx.num_groups = 1
         self.ctx.current_x = 0
         self.ctx.current_len = 0
 
     def should_run_relax(self):
+        """Whether more relaxation calculations should be run or not"""
         return self.ctx.num_groups > 0
 
     def run_relax(self):
@@ -820,7 +835,6 @@ class CastepAlloyWorkChain(WorkChain):
         count = 0
         end_of_group = False
         for i in range(self.ctx.current_x, len(self.ctx.xs)):
-            # Change current_len to 0 after a new group and new x
             for j in range(self.ctx.current_len, self.ctx.lens[i]):
                 if count == 100:
                     end_of_group = True
@@ -911,7 +925,7 @@ class CastepAlloyWorkChain(WorkChain):
         )
 
     def results(self):
-        """Add the relaxed structures, mixing energies and the mixing energy plot to WorkChain outputs"""
+        """Add the relaxed structures, plots and their data to WorkChain outputs"""
         if not self.inputs.use_ce:
             self.out("relaxed_structures", self.ctx.relaxed_structures)
         self.out("mixing_energies", self.ctx.mixing_energies)

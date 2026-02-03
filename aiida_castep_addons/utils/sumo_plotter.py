@@ -1,5 +1,5 @@
 """
-Use sumo to plot the AiiDA BandsData
+Use sumo to plot the AiiDA BandsData (taken from Bonan Zhu's aiida-user-addons plugin)
 """
 
 import warnings

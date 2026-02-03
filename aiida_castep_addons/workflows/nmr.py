@@ -25,10 +25,8 @@ def nmr_analysis(folder):
     eta = []
     read = False
     for line in nmr_lines:
-        if " Chemical Shielding and Electric Field Gradient Tensors " in line:
+        if "Nucleus" in line:
             read = True
-            next(nmr_lines)
-            next(nmr_lines)
             next(nmr_lines)
             continue
         elif read and len(line.split()) < 2:

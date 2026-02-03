@@ -4,13 +4,12 @@ import aiida.orm as orm
 from aiida.engine import run_get_node
 from aiida.plugins import WorkflowFactory
 from aiida_castep.data.otfg import upload_otfg_family
-from ase.build import bulk
-
 from aiida_castep_addons.workflows.nmr import nmr_analysis
+from ase.build import bulk
 
 
 def test_nmr_analysis():
-    folder = orm.FolderData(tree=Path("registry/Si_NMR/out").resolve())
+    folder = orm.FolderData(tree=Path("registry/Si_nmr/out").resolve())
     results = nmr_analysis(folder)
 
 

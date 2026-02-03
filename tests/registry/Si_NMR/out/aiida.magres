@@ -70,8 +70,11 @@ atom Si      Si   2          1.3574999999999999E+00          1.3574999999999999E
 [/atoms]
 [magres]
 units ms ppm
-ms Si  1          4.0252613574660501E+02         -2.4633699929666170E-16         -4.9261385772435443E-16         -1.5396062456041356E-17          4.0252613574660546E+02         -1.8481289034146518E-16         -4.3102960790018904E-16         -4.3114988963812686E-16          4.0252613574660518E+02
-ms Si  2          4.0252613574660552E+02          1.5396062456041356E-17         -2.4639714016563061E-16         -2.5403503052468237E-16          4.0252613574660501E+02         -6.7736660719685083E-16         -4.3114988963812686E-16         -4.3102960790018904E-16          4.0252613574660518E+02
+ms Si  1          4.0252498840713821E+02          2.0014881192853762E-16          3.0792124912082712E-17          4.8497596736530267E-16          4.0252498840713821E+02         -1.8469260860352736E-16         -2.4633699929666170E-16         -1.5390048369144464E-16          4.0252498840713798E+02
+ms Si  2          4.0252498840713821E+02         -3.0792124912082710E-16         -6.0140868968911547E-20          2.5403503052468237E-16          4.0252498840713821E+02          3.0912406650020534E-17         -1.5402076542938246E-16         -2.4621671755872388E-16          4.0252498840713798E+02
+units efg au
+efg Si  1          4.9452147239108411E-17         -7.0116321941875826E-16         -8.3703134802861219E-17         -7.0116321941875826E-16          2.3324917726490860E-16          4.6692488448422287E-17         -8.3703134802861219E-17          4.6692488448422287E-17          9.8654217330850685E-17
+efg Si  2         -1.3054569320949458E-17         -7.9304851717850132E-16         -4.7904293456053537E-17         -7.9304851717850132E-16          2.5822237864175877E-16          1.6187624267098308E-17         -4.7904293456053537E-17          1.6187624267098308E-17          1.0615921498423594E-16
 [/magres]
 [magres_old]
 ============
@@ -81,18 +84,18 @@ Si       1 Coordinates      0.000    0.000    0.000   A
 
 TOTAL Shielding Tensor
 
-             402.5261     -0.0000     -0.0000
-              -0.0000    402.5261     -0.0000
-              -0.0000     -0.0000    402.5261
+             402.5250      0.0000      0.0000
+               0.0000    402.5250     -0.0000
+              -0.0000     -0.0000    402.5250
 
-Si       1 Eigenvalue  sigma_xx     402.5261 (ppm)
-Si       1 Eigenvector sigma_xx      -0.1614      0.9869     -0.0000
-Si       1 Eigenvalue  sigma_yy     402.5261 (ppm)
-Si       1 Eigenvector sigma_yy       0.0000      0.0000      1.0000
-Si       1 Eigenvalue  sigma_zz     402.5261 (ppm)
-Si       1 Eigenvector sigma_zz       0.9869      0.1614      0.0000
+Si       1 Eigenvalue  sigma_xx     402.5250 (ppm)
+Si       1 Eigenvector sigma_xx       0.8436     -0.5370      0.0000
+Si       1 Eigenvalue  sigma_yy     402.5250 (ppm)
+Si       1 Eigenvector sigma_yy      -0.5370     -0.8436      0.0000
+Si       1 Eigenvalue  sigma_zz     402.5250 (ppm)
+Si       1 Eigenvector sigma_zz       0.0000      0.0000      1.0000
 
-Si       1 Isotropic:      402.5261 (ppm)
+Si       1 Isotropic:      402.5250 (ppm)
 Si       1 Anisotropy:      -0.0000 (ppm)
 Si       1 Asymmetry:     N/A
 
@@ -103,19 +106,64 @@ Si       2 Coordinates      1.357    1.357    1.357   A
 
 TOTAL Shielding Tensor
 
-             402.5261      0.0000     -0.0000
-              -0.0000    402.5261     -0.0000
-              -0.0000     -0.0000    402.5261
+             402.5250     -0.0000     -0.0000
+               0.0000    402.5250      0.0000
+              -0.0000     -0.0000    402.5250
 
-Si       2 Eigenvalue  sigma_xx     402.5261 (ppm)
-Si       2 Eigenvector sigma_xx      -0.1122      0.9937     -0.0000
-Si       2 Eigenvalue  sigma_yy     402.5261 (ppm)
-Si       2 Eigenvector sigma_yy       0.0000      0.0000      1.0000
-Si       2 Eigenvalue  sigma_zz     402.5261 (ppm)
-Si       2 Eigenvector sigma_zz      -0.9937     -0.1122      0.0000
+Si       2 Eigenvalue  sigma_xx     402.5250 (ppm)
+Si       2 Eigenvector sigma_xx       0.0000      0.0000      1.0000
+Si       2 Eigenvalue  sigma_yy     402.5250 (ppm)
+Si       2 Eigenvector sigma_yy      -0.9901      0.1407      0.0000
+Si       2 Eigenvalue  sigma_zz     402.5250 (ppm)
+Si       2 Eigenvector sigma_zz       0.1407      0.9901     -0.0000
 
-Si       2 Isotropic:      402.5261 (ppm)
-Si       2 Anisotropy:       0.0000 (ppm)
+Si       2 Isotropic:      402.5250 (ppm)
+Si       2 Anisotropy:      -0.0000 (ppm)
 Si       2 Asymmetry:     N/A
 
+==========================================================================
+  Using the following values of the electric quadrupole moment            
+  Si     No EFG isotope defined. Q =    1.0000 Barn
+==========================================================================
+
+============
+Atom: Si       1
+============
+Si       1 Coordinates      0.000    0.000    0.000   A
+
+TOTAL tensor
+
+               0.0000     -0.0000     -0.0000
+              -0.0000      0.0000      0.0000
+              -0.0000      0.0000      0.0000
+
+Si       1 Eigenvalue  V_xx       0.0000      
+Si       1 Eigenvector V_xx       0.0413     -0.1208      0.9918
+Si       1 Eigenvalue  V_yy      -0.0000      
+Si       1 Eigenvector V_yy      -0.7528     -0.6565     -0.0486
+Si       1 Eigenvalue  V_zz       0.0000      
+Si       1 Eigenvector V_zz       0.6570     -0.7446     -0.1180
+
+Si       1 Cq:        0.0000 (MHz)
+Si       1 Eta: N/A
+============
+Atom: Si       2
+============
+Si       2 Coordinates      1.357    1.357    1.357   A
+
+TOTAL tensor
+
+              -0.0000     -0.0000     -0.0000
+              -0.0000      0.0000      0.0000
+              -0.0000      0.0000      0.0000
+
+Si       2 Eigenvalue  V_xx       0.0000      
+Si       2 Eigenvector V_xx       0.0085     -0.0615      0.9981
+Si       2 Eigenvalue  V_yy      -0.0000      
+Si       2 Eigenvector V_yy       0.7645      0.6437      0.0332
+Si       2 Eigenvalue  V_zz       0.0000      
+Si       2 Eigenvector V_zz      -0.6445      0.7628      0.0525
+
+Si       2 Cq:        0.0000 (MHz)
+Si       2 Eta: N/A
 [/magres_old]

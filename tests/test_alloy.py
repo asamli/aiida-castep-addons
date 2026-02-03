@@ -1,14 +1,12 @@
-from pathlib import Path
-
 import aiida.orm as orm
 from aiida.engine import run_get_node
 from aiida.plugins import WorkflowFactory
 from aiida_castep.data.otfg import upload_otfg_family
-
 from aiida_castep_addons.workflows.alloy import (
     generate_bsym_structures,
     generate_sqs_structures,
 )
+from pathlib import Path
 
 
 def test_generate_bsym_structures():

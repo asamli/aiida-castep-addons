@@ -1,9 +1,8 @@
 from pathlib import Path
 
 import aiida.orm as orm
-from ase.build import bulk
-
 from aiida_castep_addons.utils import add_metadata, seekpath_analysis
+from ase.build import bulk
 
 
 def test_seekpath_analysis():
