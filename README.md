@@ -17,14 +17,14 @@ pip install -e .
 
 Usage
 -----
-Create an AiiDA profile using `verdi quicksetup` followed by a computer and code using `verdi computer setup` and `verdi code setup` respectively.
+Before using this plugin, please ensure an AiiDA profile, computer node and CASTEP code node are set up as explained in the AiiDA installation guide and basic tutorial.
 The workflows can be accessed using `WorkflowFactory('entry point')` (see features for the workflow entry points).
 
 Features
 --------
 Workflows:
 * `castep_addons.converge`: Workflow to converge the plane-wave energy cutoff, k-point mesh density and/or the phonon supercell size.
-* `castep_addons.band_plot`: Workflow to calculate the density of states and band structures which are then plotted using `Sumo`. `Galore` is also integrated to plot UPS, XPS and HAXPES spectra.
+* `castep_addons.band_plot`: Workflow to calculate the density of states and band structures which are then plotted using `Sumo`. `Galore` is also integrated to plot UPS, XPS and HAXPES spectra. Note: `Galore` needs `matplotlib` at version 3.7 or below to plot simulated spectra. 
 * `castep_addons.phonon`: Workflow to calculate the phonon band structure (plotted using `Sumo`), IR and Raman spectra, and thermodynamics data (plotted using `matplotlib.pyplot`). The spectra are broadened with `Galore` and an old calculation can be continued with different settings instead of doing a new calculation.
 * `castep_addons.magnetic`: Workflow to enumerate magnetic orderings for a structure using `Pymatgen`, relax each structure and analyse the results. Note: The [EnumLib](https://github.com/msg-byu/enumlib) package must be installed in order to use this workflow.
 * `castep_addons.core_loss`: Workflow to do spectral core loss calculations and plot EELS/XANES spectra using `OptaDOS`.

@@ -12,7 +12,7 @@
         "Natural Language :: English",
         "Framework :: AiiDA"
     ],
-    "version": "1.0.0",
+    "version": "1.0.1",
     "entry_points": {
         "aiida.parsers": [
             "castep_addons.phonon_parser = aiida_castep_addons.parsers:PhononParser"
@@ -50,7 +50,7 @@
         "bsym",
         "icet",
         "doped",
-        "matplotlib==3.7"
+        "matplotlib"
     ],
     "extras_require": {
         "testing": [
