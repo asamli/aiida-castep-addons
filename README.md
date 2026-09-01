@@ -1,6 +1,7 @@
 [![Build Status](https://github.com/asamli/aiida-castep-addons/workflows/ci/badge.svg?branch=master)](https://github.com/asamli/aiida-castep-addons/actions)
 [![Docs status](https://readthedocs.org/projects/aiida-castep-addons/badge)](http://aiida-castep-addons.readthedocs.io/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![DOI](https://zenodo.org/badge/447657238.svg)](https://doi.org/10.5281/zenodo.22226393)
 
 # aiida-castep-addons
 
